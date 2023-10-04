@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         id="WebApp_ID"
+         version="4.0">
+
+    <env-entry>
+        <env-entry-name>PATH_REPO</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@pathRepo@</env-entry-value>
+    </env-entry>
+
+    <!-- App -->
+    <env-entry>
+        <env-entry-name>ACTIVE_PROFILE</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@activatedProperties@</env-entry-value>
+    </env-entry>
+
+    <env-entry>
+        <env-entry-name>CONTEXT_PATH</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@contextPath@</env-entry-value>
+    </env-entry>
+    <!-- / App -->
+
+    <!-- Database resources -->
+    <env-entry>
+        <env-entry-name>DB_JNDI_NAME</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@jndi.db.name@</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>DB_SCHEMA_NAME</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@jndi.db.schemaName@</env-entry-value>
+    </env-entry>
+    <!-- / Database resources -->
+
+    <!-- Logging resource -->
+    <env-entry>
+        <env-entry-name>AUTH_LOGGING_FILENAME</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@pathLogs@/@project.name@_${weblogic.Name}.log</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>AUTH_LOGGING_MAX_FILESIZE</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>50MB</env-entry-value>
+    </env-entry>
+    <!-- / Logging resource -->
+
+    <!-- JWT resources -->
+    <env-entry>
+        <env-entry-name>JWT_ISSUER</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@jwt.issuer@</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>JWT_SECRET</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@jwt.secret@</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>JWT_TOKEN_TTL</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@jwt.authTokenTTL@</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>JWT_TEMP_TOKEN_TTL</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>@jwt.tempTokenTTL@</env-entry-value>
+    </env-entry>
+    <!-- / JWT resources -->
+</web-app>

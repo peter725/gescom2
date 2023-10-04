@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>es.dgc</groupId>
+        <artifactId>gesco</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>es.dgc.gesco</groupId>
+	<artifactId>rest</artifactId>
+	<name>rest</name>
+
+	<packaging>war</packaging>
+
+	<description>servicios rest para la aplicacion principal</description>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<contextPath>/rest</contextPath>
+	</properties>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>es.dgc.gesco.service</groupId>
+			<artifactId>service</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+	</dependencies>
+
+
+	<profiles>
+
+		<profile>
+
+			<id>local</id>
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<properties>
+				<activatedProperties>local</activatedProperties>
+				<env.domain>local</env.domain>
+				<baseURL>http://localhost:9090</baseURL>
+				<pathRepo>./</pathRepo>
+				<pathLogs>./</pathLogs>
+				<jndi.db.refName>not-used</jndi.db.refName>
+				<jndi.db.name>not-used</jndi.db.name>
+				<jndi.db.schemaName>WEB_BD_A_O</jndi.db.schemaName>
+				<jndi.mail.refName>not-used</jndi.mail.refName>
+				<jndi.mail.name>not-used</jndi.mail.name>
+				<jndi.mail.fromAddress>rgsavv@local</jndi.mail.fromAddress>
+				<jwt.issuer>RGSEAVV Local</jwt.issuer>
+				<jwt.secret>oU7nzvi5HVkkSQKbVWnN2o934nEW3fzMbV2Y2bPYkM9bgW7WnYMZKEJFhrStuM29</jwt.secret>
+				<jwt.authTokenTTL>480</jwt.authTokenTTL>
+				<jwt.tempTokenTTL>40</jwt.tempTokenTTL>
+				<shared.lib>restdep</shared.lib>
+				<shared.lib.ver>1.0.0</shared.lib.ver>
+			</properties>
+
+		</profile>
+
+	</profiles>
+
+	<build>
+
+		<finalName>rest</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+
+			<resource>
+				<directory>src/main/webapp</directory>
+				<targetPath>${project.build.directory}/${project.build.finalName}</targetPath>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>es.dgc.gesco.rest.ServletInitializer</mainClass>
+					<classifier>exec</classifier>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+</project>

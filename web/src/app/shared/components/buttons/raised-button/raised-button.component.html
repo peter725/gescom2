@@ -1,0 +1,44 @@
+<button
+  [color]="color"
+  [disabled]="disabled"
+  [type]="type"
+  mat-raised-button
+>
+  <div
+    *ngIf="status.is$('LOAD', 'PROCESS') | async"
+    class="inline-block animate__animated animate__fast animate__rotateIn mr-2"
+  >
+    <mat-spinner
+      [color]="loadingColor"
+      diameter="20"
+    ></mat-spinner>
+  </div>
+
+  <mat-icon
+    *ngIf="status.is$('ERROR') | async"
+    [color]="errorIconColor"
+    class="animate__animated animate__fast animate__headShake mr-2"
+  >{{ errorIcon }}</mat-icon>
+
+  <mat-icon
+    *ngIf="status.is$('SUCCESS') | async"
+    [color]="successIconColor"
+    class="animate__animated animate__fast animate__rotateInDownRight mr-2"
+  >{{ successIcon }}</mat-icon>
+
+  <mat-icon
+    *ngIf="startIcon && (status.is$('IDLE') | async)"
+    class="animate__animated animate__fast animate__fadeIn"
+    [class.mr-2]="!!displayTextAndParams.text"
+  >{{ startIcon }}</mat-icon>
+
+  <ng-container>
+    {{ displayTextAndParams.text | translate: displayTextAndParams.params }}
+  </ng-container>
+
+  <mat-icon
+    *ngIf="endIcon && (status.is$('IDLE') | async)"
+    class="animate__animated animate__fast animate__fadeIn"
+    [class.ml-2]="!!displayTextAndParams.text"
+  >{{ endIcon }}</mat-icon>
+</button>

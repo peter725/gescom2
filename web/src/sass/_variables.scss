@@ -1,0 +1,80 @@
+/* Colors */
+$white: #fff;
+$black: #333;
+$gray: #F3F3F3;
+$gray-200: #ECECE2;
+
+/* Header variables */
+$header-action-btn-width: 55px;
+$header-bg: $white;
+$header-height: 65px;
+$header-bg-shadow: 0 2px 4px rgb(0 0 0 / 8%);
+
+/* Sidebar variables */
+$sidebar-width: 280px;
+$sidebar-short-width: $header-action-btn-width;
+
+/* Footer variables */
+$footer-bg: $black;
+$footer-color: $gray-200;
+
+/* Typography */
+$font-family-sans-serif: Lato;
+$font-family-base: $font-family-sans-serif;
+
+/* Scrollbar */
+$scrollbar-type: thin;
+$scrollbar-size: 10px;
+$scrollbar-size-hover: 15px;
+$scrollbar-track-bg: $gray;
+$scrollbar-thumb-bg: $black;
+
+/* ZIndex master */
+// Valores copiados de bootstrap y adaptados para Angular Material
+$zindex-base: 900 !default;
+$zindex-sticky: 920 !default;
+$zindex-fixed: 930 !default;
+$zindex-offcanvas-backdrop: 940 !default;
+$zindex-offcanvas: 945 !default;
+$zindex-modal-backdrop: 950 !default;
+$zindex-modal: 1000 !default;
+$zindex-popover: 1070 !default;
+$zindex-tooltip: 1080 !default;
+$zindex-toast: 1090 !default;
+
+
+/* Global variables */
+:root {
+  // Header
+  --header-action-btn-width: #{$header-action-btn-width};
+  --header-bg: #{$header-bg};
+  --header-height: #{$header-height};
+  --header-bg-shadow: #{$header-bg-shadow};
+
+  // Sidebar
+  --sidebar-width: #{$sidebar-width};
+  --sidebar-short-width: #{$sidebar-short-width};
+
+  // Footer
+  --footer-bg: #{$footer-bg};
+  --footer-color: #{$footer-color};
+
+  // Scrollbar
+  --scrollbar-type: #{$scrollbar-type};
+  --scrollbar-size: #{$scrollbar-size};
+  --scrollbar-size-hover: #{$scrollbar-size-hover};
+  --scrollbar-track-bg: #{$scrollbar-track-bg};
+  --scrollbar-thumb-bg: #{$scrollbar-thumb-bg};
+
+  // ZIndex
+  --zindex-base: #{$zindex-base};
+  --zindex-sticky: #{$zindex-sticky};
+  --zindex-fixed: #{$zindex-fixed};
+  --zindex-offcanvas-backdrop: #{$zindex-offcanvas-backdrop};
+  --zindex-offcanvas: #{$zindex-offcanvas};
+  --zindex-modal-backdrop: #{$zindex-modal-backdrop};
+  --zindex-modal: #{$zindex-modal};
+  --zindex-popover: #{$zindex-popover};
+  --zindex-tooltip: #{$zindex-tooltip};
+  --zindex-toast: #{$zindex-toast};
+}

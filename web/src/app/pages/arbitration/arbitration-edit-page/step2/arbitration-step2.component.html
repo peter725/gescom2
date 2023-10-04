@@ -1,0 +1,65 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<form [formGroup]="form">
+    <tsw-form-container>
+        <tsw-section-wrapper
+                class="mb-5"
+                headerLabel="{{'text.arbitration.step2.title' | translate}}"
+                icon="edit_note">
+            <div section-content>
+                <div class="container mx-auto px-4">
+                    <tsw-section-label
+                            label="{{ 'text.arbitration.step2.requiredDocument' | translate}}"></tsw-section-label>
+
+                    <div class="grid grid-cols-3 gap-1.5 text-center justify-center items-center">
+                        <mat-label>{{ 'fields.arbitration.step2.doc1' | translate }}</mat-label>
+                        <input type="file">
+                        <button mat-fab color="warn">
+                            <mat-icon style="color: white">delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="container mx-auto px-4 mt-3">
+                    <tsw-section-label
+                            label="{{ 'text.arbitration.step2.attachDocument' | translate}}"></tsw-section-label>
+
+                    <div class="grid grid-cols-4 gap-1.5  ">
+
+                        <mat-form-field class="col-start-2">
+                            <mat-label>{{ 'fields.arbitration.step2.optionalDocTypes' | translate }}</mat-label>
+                            <tsw-custom-select
+                                    resourceName="arbitrations"
+                            ></tsw-custom-select>
+                            <!--                            <mat-error>{{ form.controls.arbitrationType.errors | extractValidationError }}</mat-error>-->
+                        </mat-form-field>
+
+                        <button mat-raised-button color="primary" class="w-16 mt-2">{{'generic.actions.add' | translate}}</button>
+                    </div>
+                    <div class="mt-3">
+                        <div class="grid grid-cols-3 gap-1.5 text-center justify-center items-center pb-1">
+                            <mat-label>{{ 'fields.arbitration.step2.opc1' | translate }}</mat-label>
+                            <input type="file">
+                            <button mat-fab color="warn">
+                                <mat-icon style="color: white">delete</mat-icon>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5 text-center justify-center items-center">
+                            <mat-label>{{ 'fields.arbitration.step2.opc1' | translate }}</mat-label>
+                            <input type="file">
+                            <button mat-fab color="warn">
+                                <mat-icon style="color: white">delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tsw-section-wrapper>
+        <tsw-form-actions
+                [saveBtnSkipConfirmation]="skipSaveConfirmation"
+                saveBtnLabel="generic.actions.next"
+                (reset)="resetForm()"
+                (save)="submitForm()"
+                cancelBtnLabel="generic.actions.previous"
+        ></tsw-form-actions>
+    </tsw-form-container>
+</form>

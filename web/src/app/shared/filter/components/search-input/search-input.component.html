@@ -1,0 +1,26 @@
+<ng-container [formGroup]="form">
+  <mat-select
+    class="select"
+    formControlName="operation"
+    matTooltip="Modo de la consulta"
+  >
+    <mat-option
+      *ngFor="let op of operations"
+      [value]="op.code"
+    >{{ op.text | translate }}</mat-option>
+  </mat-select>
+  <mat-divider
+    [vertical]="true"
+    class="divider"
+  ></mat-divider>
+  <input
+    formControlName="query"
+    [ngStyle]="{ opacity: disabled ? 0.5 : 1 }"
+    matInput
+    [placeholder]="placeholder"
+    [type]="type"
+    [step]="step"
+    name="advanced-search"
+    class="input"
+  />
+</ng-container>

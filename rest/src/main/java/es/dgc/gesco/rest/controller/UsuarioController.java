@@ -1,6 +1,6 @@
 package es.dgc.gesco.rest.controller;
 
-import es.dgc.gesco.service.service.UsuarioService;
+import es.dgc.gesco.service.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UserService userService;
 
 
     @GetMapping

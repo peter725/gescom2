@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
 @Import(TestFactory.class)
-public class UsuarioServiceTest extends AbstractGenericTest {
+public class UsersServiceTest extends AbstractGenericTest {
 
     @Autowired
-    UsuarioService usuarioService;
+    UserService userService;
 
     @Test
     public void addTest(){
-        usuarioService.add("Mensaje");
+        userService.add("Mensaje");
     }
 
 }

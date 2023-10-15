@@ -1,17 +1,19 @@
 package es.dgc.gesco.model.commom.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
+
 import java.time.LocalDateTime;
 
 /**
@@ -24,6 +26,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = false)
 public abstract class AuditedBaseEntity extends StandardEntity {
 
@@ -39,12 +42,12 @@ public abstract class AuditedBaseEntity extends StandardEntity {
 
     @JsonIgnore
     @CreatedBy
-    @Column(name = "CREATED_BY", nullable = false)
+    @Column(name = "CREATED_BY", nullable = true)
     private Long createdBy;
 
     @JsonIgnore
     @LastModifiedBy
-    @Column(name = "UPDATE_BY", nullable = false)
+    @Column(name = "UPDATE_BY", nullable = true)
     private Long updatedBy;
 
 }

@@ -1,4 +1,4 @@
-package es.dgc.gesco.commom.db.id;
+package es.dgc.gesco.model.commom.db.id;
 
 import java.io.Serializable;
 

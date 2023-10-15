@@ -1,9 +1,9 @@
-package es.dgc.gesco.commom.db.id;
+package es.dgc.gesco.model.commom.db.id;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 

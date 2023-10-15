@@ -1,8 +1,8 @@
 package es.dgc.gesco.model.commom.db.entity;
 
 import es.dgc.gesco.model.commom.dto.LongIdModel;
+import jakarta.persistence.MappedSuperclass;
 
-import javax.persistence.MappedSuperclass;
 
 /**
  * Clase abstracta que sirve como definición base para las entidades de la aplicación. No proporciona una definición

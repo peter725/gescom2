@@ -3,7 +3,7 @@ import { MenuItem } from './model';
 
 export const SIDEBAR_ITEMS: MenuItem[] = [
   {
-    text: 'ARCHIVO',
+    /*text: 'ARCHIVO',
     path: 'home',
     icon: 'manage_accounts',
     expanded: false,
@@ -194,26 +194,33 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     }
     ]
   },
-  {
+  {*/
     text: 'USUARIOS',
     icon: 'person',
     expanded: false,
     children: [{
       text: 'Nuevo usuario',
-      icon: 'person_add',
+      //icon: 'person_add',
       // requireAccess?: ResourceAccessKey;
-      expanded:false,
-      path:'arbitrationManagementCreate'
+      //expanded:false,
+      path:'userManagementCreate'
     },
     {
       text: 'Listar usuarios',
-      icon: 'lists',
+      //icon: 'lists',
       // requireAccess?: ResourceAccessKey;
-      expanded:false,
-      path:'arbitrationManagementCreate'
-    }
+      //expanded:false,
+      path:'userManagementList'
+    },
+      {
+        text: 'Modificar usuarios',
+        //icon: 'lists',
+        // requireAccess?: ResourceAccessKey;
+        //expanded:false,
+        path:'userManagementEdit'
+      }
     ]
-  },
+  }/*,
   {
     text: 'ENLACES',
     icon: 'link',
@@ -226,6 +233,7 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
       path:'arbitrationManagementCreate'
     }
     ]
-  }
+  }*/
 
 ];
+

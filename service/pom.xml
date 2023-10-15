@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>es.dgc.gesco</groupId>
+    <groupId>es.dgc.gesco.service</groupId>
     <artifactId>service</artifactId>
     <packaging>jar</packaging>
 
@@ -30,7 +30,7 @@
         </dependency>
 
         <dependency>
-            <groupId>es.dgc.gesco</groupId>
+            <groupId>es.dgc.gesco.model</groupId>
             <artifactId>model</artifactId>
             <version>1.0.0</version>
         </dependency>

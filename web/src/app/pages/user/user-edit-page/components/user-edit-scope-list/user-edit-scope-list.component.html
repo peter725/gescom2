@@ -1,0 +1,39 @@
+<tsw-section-title
+  label="text.other.userScopes"
+>
+  <div class="inline-block">
+    <tsw-raised-button
+      text="generic.actions.addScope"
+      (click)="editScope()"
+    ></tsw-raised-button>
+  </div>
+</tsw-section-title>
+
+<table
+  tsw-table
+  [dataSource]="source"
+>
+  <tr mat-header-row *matHeaderRowDef="columns.columns | async; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns.columns | async;"></tr>
+
+  <tr *matNoDataRow tsw-table-empty-row [columns]="columns"></tr>
+
+  <ng-container matColumnDef="entity">
+    <th mat-header-cell *matHeaderCellDef>{{ 'fields.entity' | translate }}</th>
+    <td mat-cell *matCellDef="let element">{{ element.entityName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions" [stickyEnd]="true">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td *matCellDef="let element" mat-cell class="text-right">
+      <tsw-button
+        startIcon="edit"
+        (click)="editScope(element)"
+      ></tsw-button>
+      <tsw-state-toggle
+        [data]="element"
+        [resource]="resourceName"
+      ></tsw-state-toggle>
+    </td>
+  </ng-container>
+</table>

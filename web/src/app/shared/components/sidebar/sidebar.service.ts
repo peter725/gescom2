@@ -1,10 +1,10 @@
 import {Injectable, NgZone} from '@angular/core';
+import { SIDEBAR_ITEMS } from '@base/shared/components/sidebar/items';
 import { PreferencesService } from '@base/shared/preferences';
 // import { AclService, AuthContextService } from '@libs/security';
 import { AsyncListFilter } from '@libs/utils/async-list-filter';
 import { BehaviorSubject } from 'rxjs';
 import { MenuItem, SidebarMode } from './model';
-import { SIDEBAR_ITEMS } from './items';
 
 
 @Injectable({ providedIn: 'root' })

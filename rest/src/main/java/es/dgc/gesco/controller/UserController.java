@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping(Url.API+Url.USERS)
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController{
 
     @Autowired
@@ -79,7 +80,7 @@ public class UserController{
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
-    @GetMapping(Url.PAGE)
+    @PostMapping(Url.PAGE)
     public ResponseEntity<Page<User>> getAllUser(final @RequestBody UserCriteria criteria){
         Page<User> userPage;
 

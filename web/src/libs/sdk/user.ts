@@ -1,7 +1,5 @@
 import { SimpleModel, StatefulAltModel, StatefulModel } from './common';
 import { AppQuerySource } from '../commons';
-import { Module } from './module';
-import { Profile } from './profile';
 
 /**
  * Default user structure.
@@ -17,11 +15,11 @@ export interface User extends SimpleModel, StatefulModel {
   email: string;
   phone: string;
 
-  modules: Module[];
-  profile: Profile;
+  //modules: Module[];
+  //profile: Profile;
 
-  multiScope: false;
-  scopes: string[];
+  //multiScope: false;
+  //scopes: string[];
 }
 
 export interface UserView extends SimpleModel, StatefulAltModel {
@@ -32,9 +30,9 @@ export interface UserView extends SimpleModel, StatefulAltModel {
   email: string;
   ccaa: string;
   provinces: string;
-  entities: string;
-  modules: string;
-  profile: string;
+  //entities: string;
+  //modules: string;
+  //profile: string;
   fullName: string;
 }
 
@@ -49,10 +47,10 @@ export interface CreateUser {
   secondSurname: string | null;
   nif: string | null;
   email: string | null;
-  phone: string | null;
+  //phone: string | null;
 
-  profile: Profile[] | null;
-  modules: Module[] | null;
+  //profile: TulsaProfile[] | null;
+ // modules: TulsaModule[] | null;
 }
 
 /**

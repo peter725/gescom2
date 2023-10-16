@@ -200,25 +200,22 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     expanded: false,
     children: [{
       text: 'Nuevo usuario',
-      //icon: 'person_add',
       // requireAccess?: ResourceAccessKey;
-      //expanded:false,
-      path:'userManagementCreate'
+      expanded:false,
+      path:'arbitrationManagementCreate'
     },
     {
       text: 'Listar usuarios',
-      //icon: 'lists',
       // requireAccess?: ResourceAccessKey;
-      //expanded:false,
-      path:'userManagementList'
+      expanded:false,
+      path:'arbitrationManagementCreate'
     },
-      {
-        text: 'Modificar usuarios',
-        //icon: 'lists',
-        // requireAccess?: ResourceAccessKey;
-        //expanded:false,
-        path:'userManagementEdit'
-      }
+    {
+      text: 'Editar usuarios',
+      // requireAccess?: ResourceAccessKey;
+      expanded:false,
+      path:'arbitrationManagementCreate'
+    }
     ]
   }/*,
   {
@@ -236,4 +233,3 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
   }*/
 
 ];
-

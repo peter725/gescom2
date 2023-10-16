@@ -36,19 +36,19 @@ public class User extends AuditedBaseEntity{
             sequenceName = SEQ_USERS,
             allocationSize = 1
     )
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NIF", nullable = false, unique = true, length = 9)
+    @Column(name = "NIF", unique = true, length = 9)
     @NIF
     private String nif;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME" )
     @NotNull(message = "Debes especificar el nombre")
     @Size(min = 1, max = 100)
     private String name;
 
-    @Column(name = "FIRST_SURNAME", nullable = false)
+    @Column(name = "FIRST_SURNAME")
     @NotNull(message = "Debes especificar el primer apellido")
     @Size(min = 1, max = 100, message = "El primer apellido debe medir entre 1 y 100")
     private String firstSurname;

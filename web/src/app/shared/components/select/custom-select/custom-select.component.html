@@ -1,0 +1,65 @@
+<mat-select
+  [required]="required"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [multiple]="multiple"
+  [compareWith]="compareWith"
+  [sortComparator]="sortComparator"
+  [(value)]="value"
+  (selectionChange)="onChange($event.value)"
+>
+  <mat-select-trigger>
+    <div class="flex justify-between align-middle">
+      <ng-template
+        [ngIf]="!animationLoading"
+        *ngTemplateOutlet="
+          (triggerTmpl || defOptionTemplate);
+          context: { $implicit: value };
+          "
+      ></ng-template>
+
+      <div *ngIf="animationLoading">
+        <ng-container [ngTemplateOutlet]="loadingAnimationTmpl"></ng-container>
+      </div>
+    </div>
+  </mat-select-trigger>
+
+  <mat-option
+    *ngIf="animationLoading"
+    [value]="undefined"
+    disabled
+  >
+    <ng-container [ngTemplateOutlet]="loadingAnimationTmpl"></ng-container>
+  </mat-option>
+
+  <mat-option
+    *ngIf="showNoneValue && !animationLoading && !multiple"
+    [value]="undefined"
+  >{{ 'generic.actions.none' | translate }}</mat-option>
+
+  <mat-option
+    *ngFor="let item of (displayDataSrc | async)"
+    [value]="item"
+  >
+    <ng-template *ngTemplateOutlet="
+      (optionTmpl || defOptionTemplate);
+      context: { $implicit: item }
+    "></ng-template>
+  </mat-option>
+
+  <mat-option
+    *ngIf="hasMorePages"
+    [value]="undefined"
+    (onSelectionChange)="loadNext()"
+  >{{ 'generic.actions.loadMore' | translate }}</mat-option>
+</mat-select>
+
+<ng-template #defOptionTemplate let-context>
+  <span class="overflow-hidden overflow-ellipsis">
+    {{ context | extractModelPath: displayPath || '-' }}
+  </span>
+</ng-template>
+
+<ng-template #loadingAnimationTmpl>
+  <span>{{ 'generic.actions.loading' | translate }}...</span>
+</ng-template>

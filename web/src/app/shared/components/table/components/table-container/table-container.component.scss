@@ -1,0 +1,27 @@
+:host {
+  display: block;
+
+  &:fullscreen,
+  &:-webkit-full-screen {
+    background-color: var(--header-bg);
+    overflow-y: auto;
+  }
+}
+
+.table__responsive {
+  overflow: auto;
+  tab-index: 0;
+}
+
+/*.mat-cell,
+.mat-header-cell,
+.mat-footer-cell {
+  word-wrap: initial;
+  padding: 0 10px;
+  line-break: unset;
+  min-width: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+  box-sizing: border-box;
+}*/

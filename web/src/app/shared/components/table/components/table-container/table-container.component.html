@@ -1,0 +1,96 @@
+<mat-card>
+  <mat-card-content>
+    <div class="flex justify-between align-middle">
+      <div>
+        <ng-content select="[left-actions-start]"></ng-content>
+        <ng-container *ngIf="exportActions.length">
+          <button
+            mat-stroked-button
+            [matMenuTriggerFor]="exportActionsTemplate"
+          >
+            <mat-icon>cloud_download</mat-icon>
+            Exportar
+          </button>
+          <mat-menu #exportActionsTemplate>
+            <button
+              *ngFor="let action of exportActions"
+              mat-menu-item
+              [matTooltip]="action.title"
+              [matTooltipDisabled]="!action.compact"
+              (click)="action.action()"
+            >
+              <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+              {{ action.title }}
+            </button>
+          </mat-menu>
+        </ng-container>
+        <ng-content select="[left-actions-end]"></ng-content>
+      </div>
+
+      <div>
+        <ng-content select="[right-actions-start]"></ng-content>
+
+        <button
+          *ngIf="showRefresh"
+          mat-button
+          matTooltip="Recargar"
+          (click)="reload.emit()"
+        >
+          <mat-icon>refresh</mat-icon>
+        </button>
+
+        <button
+          *ngIf="showSettings"
+          mat-button
+          [matTooltip]="'fields.settings' | translate"
+          (click)="openSettings()"
+        >
+          <mat-icon>settings</mat-icon>
+        </button>
+
+        <ng-container *ngIf="tableActions.length">
+          <button
+            mat-button
+            [matMenuTriggerFor]="tableActionsTemplate"
+            matTooltip="Opciones"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #tableActionsTemplate>
+            <button
+              *ngFor="let action of tableActions"
+              mat-menu-item
+              [matTooltip]="action.title"
+              [matTooltipDisabled]="!action.compact"
+              (click)="action.action()"
+            >
+              <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+            </button>
+          </mat-menu>
+        </ng-container>
+
+        <ng-content select="[right-actions-end]"></ng-content>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-content class="pt-3">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <div *ngIf="false" class="flex justify-center align-middle">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div class="table__responsive slim__scrollbar">
+      <ng-content select="table"></ng-content>
+    </div>
+
+    <mat-paginator
+      *ngIf="paginator"
+      [length]="paginator.length"
+      [pageSize]="paginator.pageSize"
+      [pageIndex]="paginator.pageIndex"
+      (page)="page.emit($event)"
+    ></mat-paginator>
+  </mat-card-content>
+</mat-card>

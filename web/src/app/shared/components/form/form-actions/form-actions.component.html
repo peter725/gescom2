@@ -1,0 +1,42 @@
+<ng-container *ngIf="control">
+  <div class="flex">
+    <div class="mr-2">
+      <a
+        *ngIf="redirectOnCancel"
+        mat-stroked-button
+        [routerLink]="cancelRedirectPath"
+        (click)="cancel.emit()"
+      >{{ cancelBtnLabel | translate: cancelBtnLabelParams }}</a>
+
+      <tsw-stroked-button
+        *ngIf="!redirectOnCancel"
+        [text]="cancelBtnLabel"
+        [textParams]="cancelBtnLabelParams"
+        (click)="cancel.emit()"
+      ></tsw-stroked-button>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div class="ml-2">
+      <tsw-stroked-button
+        *ngIf="control.dirty"
+        [text]="resetBtnLabel"
+        [textParams]="resetBtnLabelParams"
+        (click)="reset.emit()"
+      ></tsw-stroked-button>
+    </div>
+
+    <div class="ml-2">
+      <tsw-raised-button
+        [color]="saveBtnColor"
+        [type]="saveBtnType"
+        [text]="saveBtnLabel"
+        [textParams]="saveBtnLabelParams"
+        tswConfirmAction
+        [disableConfirmation]="saveBtnSkipConfirmation"
+        (confirmed)="save.emit()"
+      ></tsw-raised-button>
+    </div>
+  </div>
+</ng-container>

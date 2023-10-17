@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="search()">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>{{ 'generic.actions.search' | translate }}</mat-label>
+    <tsw-search-input
+      placeholder="Escribe el término de tu búsqueda..."
+      formControlName="search"
+    ></tsw-search-input>
+
+    <div matSuffix>
+      <button
+        *ngIf="form.value.search"
+        type="button"
+        mat-icon-button
+        [matTooltip]="'generic.actions.clear' | translate"
+        class="animate__animated animate__fadeIn"
+        (click)="clear()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </mat-form-field>
+
+  <tsw-filters-container-actions (resetEv)="clear()">
+    <tsw-filter-hidden formControlName="state"></tsw-filter-hidden>
+  </tsw-filters-container-actions>
+</form>

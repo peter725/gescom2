@@ -1,0 +1,106 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<mat-card class="mat-elevation-z0">
+
+  <mat-card-header >
+    <mat-card-title>Usuario - Listado</mat-card-title>
+    <mat-card-subtitle>Listado de usuarios registrados</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <table mat-table class="demo-table" [dataSource]="dataSource">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="firstSurname">
+        <th mat-header-cell *matHeaderCellDef>Primer apellido</th>
+        <td mat-cell *matCellDef="let element"> {{element.firstSurname}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="secondSurname">
+        <th mat-header-cell *matHeaderCellDef>Segundo apellido</th>
+        <td mat-cell *matCellDef="let element"> {{element.secondSurname}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nif">
+        <th mat-header-cell *matHeaderCellDef>NIF</th>
+        <td mat-cell *matCellDef="let element"> {{element.nif}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="password">
+        <th mat-header-cell *matHeaderCellDef>Password</th>
+        <td mat-cell *matCellDef="let element"> {{element.password}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" *ngIf="element.state===1">check_circle</mat-icon>
+          <mat-icon aria-hidden="false" aria-label="Example home icon" *ngIf="element.state===0">highlight_off</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef>Accion</th>
+        <td mat-cell *matCellDef="let element">
+
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+
+            <button mat-menu-item [routerLink]="['/user/update/', element.id]">
+              <mat-icon color="primary">edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <!--
+            <button mat-menu-item disabled>
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+            -->
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button color="warn">Volver</button>
+  </mat-card-actions>
+
+</mat-card>
+
+
+
+
+

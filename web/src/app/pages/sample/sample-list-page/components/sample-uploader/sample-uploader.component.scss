@@ -1,0 +1,17 @@
+.status__indicator {
+  font-size: 100px;
+  width: 100px;
+  height: 100px;
+}
+
+.file__dropzone {
+  background-color: var(--bg-color-darker-5);
+  border: 2px solid;
+  border-color: var(--bg-color-darker-10);
+
+  &:hover {
+    background-color: var(--bg-color-darker-10);
+    border-color: var(--primary-color);
+    transition: border-color 200ms linear;
+  }
+}

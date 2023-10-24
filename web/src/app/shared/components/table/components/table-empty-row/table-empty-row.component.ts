@@ -4,6 +4,7 @@ import { ColumnSource } from '@base/shared/collections';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-table-empty-row, tr[tsw-table-empty-row]',
   template: `
     <td class="mat-cell py-3" [colSpan]="colSpan">

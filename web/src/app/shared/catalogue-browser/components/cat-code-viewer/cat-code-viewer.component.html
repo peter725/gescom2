@@ -1,0 +1,49 @@
+<mat-card>
+  <tsw-section-title
+    icon="tag"
+    label="fields.fullCode"
+  ></tsw-section-title>
+
+  <div class="w-full border border-slate-200 bg-slate-50 rounded px-2 py-3 overflow-y-auto max-h-16 slim__scrollbar">
+    <p>{{ ((generatedCode$ | async)?.code) || '-' }}</p>
+  </div>
+
+  <div class="w-full border border-slate-200 bg-slate-50 rounded mt-3 px-2 py-3 overflow-y-auto max-h-36 slim__scrollbar">
+    <p>{{ ((generatedCode$ | async)?.description) || '-' }}</p>
+  </div>
+
+  <div
+    *ngIf="showActions"
+    class="flex justify-end align-middle mt-3"
+  >
+    <tsw-stroked-button
+      class="mr-1"
+      type="button"
+      text="generic.actions.reset"
+      (click)="clearBrowser()"
+    ></tsw-stroked-button>
+
+    <tsw-stroked-button
+      #copyDescBtn
+      class="mr-1"
+      text="generic.actions.copyDescription"
+      startIcon="content_copy"
+      successText="text.other.copied"
+      [successIconColor]="undefined"
+      [autoStateRestAfter]="1500"
+      (click)="copyDescription();"
+    ></tsw-stroked-button>
+
+    <tsw-raised-button
+      #copyBtn
+      class="mr-1"
+      text="generic.actions.copyCode"
+      color="primary"
+      startIcon="content_copy"
+      successText="text.other.copied"
+      [successIconColor]="undefined"
+      [autoStateRestAfter]="1500"
+      (click)="copyCode()"
+    ></tsw-raised-button>
+  </div>
+</mat-card>

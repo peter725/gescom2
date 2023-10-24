@@ -4,8 +4,8 @@ import { ControlValueAccessor, NgControl, ValidationErrors } from '@angular/form
 
 @Directive()
 export abstract class BaseFileInputAccessorDirective<T> implements ControlValueAccessor {
-  protected _disabled = false;
-  protected _multiple = false;
+  private _disabled = false;
+  private _multiple = false;
   private _accept = '';
 
   protected _onChangeFn: (value: T | null) => void = () => undefined;
@@ -36,11 +36,18 @@ export abstract class BaseFileInputAccessorDirective<T> implements ControlValueA
     this._multiple = coerceBooleanProperty(value);
   }
 
+  get multiple(): boolean {
+    return this._multiple;
+  }
+
   @Input()
   set disabled(value: unknown) {
     this._disabled = coerceBooleanProperty(value);
   }
 
+  get disabled(): boolean {
+    return this._disabled;
+  }
 
   @HostListener('change', ['$event.target.files'])
   handleChangeInput(list: FileList) {
@@ -77,7 +84,7 @@ export abstract class BaseFileInputAccessorDirective<T> implements ControlValueA
   }
 
   protected verifyInput(list: FileList) {
-    if (this._disabled) {
+    if (this.disabled) {
       const message = `Input is disabled`;
       console.error(message);
       this.setErrors({ disabled: true });

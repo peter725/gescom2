@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserService} from "@base/pages/user/user.service";
-import {Router} from "@angular/router";
+import {Component} from '@angular/core';
+import { Validators } from '@angular/forms';
+import { FORM_STATUS } from '@base/shared/components/form';
+import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
+import { ComponentStatus, ControlsOf } from '@libs/commons';
+import { CreateUser, User } from '@libs/sdk/user';
+import { CustomValidators } from '@libs/validators';
 
 
 @Component({
@@ -9,35 +12,26 @@ import {Router} from "@angular/router";
   selector: 'tsw-user-add-page',
   templateUrl: './user-add-page.component.html',
   styleUrls: ['./user-add-page.component.scss'],
-
+  providers: [
+    { provide: FORM_STATUS, useValue: new ComponentStatus('IDLE') }
+  ]
 })
-export class UserAddPageComponent implements OnInit {
+export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser> {
+  readonly resourceName = 'users';
+  protected override _createResourceTitle = 'pages.user.add';
 
-  form! : FormGroup;
-
-  constructor(
-      public userService : UserService,
-      private router : Router
-  ) { }
-
-  ngOnInit(): void {
-
-    this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      firstSurname: new FormControl('', [Validators.required]),
-      secondSurname: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      nif: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+  protected buildForm() {
+    return this.fb.group<ControlsOf<CreateUser>>({
+      id: this.fb.control(null),
+      name: this.fb.control(null, [Validators.required]),
+      firstSurname: this.fb.control(null, [Validators.required]),
+      secondSurname: this.fb.control(null, []),
+      nif: this.fb.control(null, [Validators.required, CustomValidators.nif]),
+      email: this.fb.control(null, [Validators.required, Validators.email]),
+      phone: this.fb.control(null, [Validators.required]),
+      profile: this.fb.control(null, [Validators.required]),
+      modules: this.fb.control([], [Validators.required, Validators.min(1)]),
     });
-  }
-
-  submit(){
-    console.log(this.form.value);
-    this.userService.add(this.form.value).subscribe((res:any) => {
-      console.log('Post created successfully!');
-      this.router.navigateByUrl('post/index');
-    })
   }
 
 

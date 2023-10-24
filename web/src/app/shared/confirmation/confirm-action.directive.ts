@@ -5,6 +5,7 @@ import { GENERIC_CONFIRMATION_PROMPT } from './constants';
 
 type ExpectedEv = 'click' | 'submit';
 
+// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({ selector: '[tswConfirmAction]' })
 export class ConfirmActionDirective {
 

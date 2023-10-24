@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { BaseFileInputAccessorDirective } from '@libs/file';
+import { BaseFileInputAccessorDirective } from './base-file-input-accessor.directive';
 
 /**
  * Links a file input raw value with its respective NgControl value.

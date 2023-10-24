@@ -10,6 +10,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +21,13 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping(Url.API+Url.USERS)
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = {"Authorization", "Content-Type"}, maxAge = 3600)
 public class UserController{
 
     @Autowired
     private UserFacade userFacade;
 
-    @PostMapping
+    @PostMapping(Url.CREATE)
     public ResponseEntity<Void> saveUser(final @RequestBody UserDto userDto) {
 
         User user;
@@ -80,12 +82,12 @@ public class UserController{
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
-    @PostMapping(Url.PAGE)
-    public ResponseEntity<Page<User>> getAllUser(final @RequestBody UserCriteria criteria){
+    @GetMapping
+    public ResponseEntity<Page<User>> getAllUser(@PageableDefault(page = 0, size = 25, sort ="id") final Pageable pageable){
         Page<User> userPage;
 
         try {
-            userPage = userFacade.getAllUser(criteria);
+            userPage = userFacade.getAllUser(pageable);
         } catch (Exception e) {
             log.error(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -94,7 +96,7 @@ public class UserController{
         return ResponseEntity.status(HttpStatus.OK).body(userPage);
     }
 
-    @PutMapping
+    @PostMapping(Url.UPDATE)
     public ResponseEntity<String> updateUser(final @RequestBody UserDto userDto) {
 
         try {

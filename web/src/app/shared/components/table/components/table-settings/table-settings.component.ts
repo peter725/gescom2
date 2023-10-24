@@ -9,6 +9,7 @@ export type TempCol = { name: string, label: string, visible: boolean };
 export const LABEL_TRANSLATION_PREFIX = 'fields.';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-table-settings',
   templateUrl: './table-settings.component.html',
   styleUrls: ['./table-settings.component.scss'],

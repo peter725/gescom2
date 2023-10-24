@@ -2,7 +2,7 @@ import { Directive, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FORM_STATUS } from '@base/shared/components/form';
-import { NotificationService } from '@base/shared/notification';
+//import { NotificationService } from '@base/shared/notification';
 import { AppError, ComponentStatus } from '@libs/commons';
 import { ControlsOf, FormMapper } from '@libs/commons/form';
 import { CrudImplService, RequestConfig } from '@libs/crud-api';
@@ -78,7 +78,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     protected route: ActivatedRoute,
     protected router: Router,
     protected namedRoutes: NamedRoutes,
-    protected notification: NotificationService,
+    //protected notification: NotificationService,
     protected mapper: FormMapper<T, F>,
     @Inject(FORM_STATUS) public status: ComponentStatus,
   ) {
@@ -101,10 +101,10 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   }
 
   submitForm() {
-    if (this.form.invalid) {
-      this.notification.show({ message: 'text.other.pleaseReview' });
-      return;
-    }
+    //if (this.form.invalid) {
+      //this.notification.show({ message: 'text.other.pleaseReview' });
+      //return;
+    //}
     this.save();
   }
 
@@ -183,7 +183,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   protected afterLoadDataError(e: any) {
     this.status.status = 'ERROR';
     const err = AppError.parse(e);
-    this.notification.show({ type: 'warn', message: err.error });
+    //this.notification.show({ type: 'warn', message: err.error });
   }
 
   /**
@@ -254,7 +254,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     this.activeOperation = undefined;
 
     this.status.status = 'IDLE';
-    this.notification.show({ message: 'text.other.dataSaved' });
+    //this.notification.show({ message: 'text.other.dataSaved' });
 
     if (this.redirectAfterSave) {
       await this.router.navigate(this.redirectAfterSavePath, { relativeTo: this.route });
@@ -266,10 +266,10 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    */
   protected async afterSaveError(e: any) {
     const err = AppError.parse(e);
-    this.notification.show({
+    /*this.notification.show({
       title: 'text.err.dataSave',
       message: err.error,
-    });
+    });*/
     this.activeOperation = undefined;
     this.status.status = 'ERROR';
   }

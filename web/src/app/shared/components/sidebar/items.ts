@@ -3,6 +3,11 @@ import { MenuItem } from './model';
 
 export const SIDEBAR_ITEMS: MenuItem[] = [
   {
+    text: 'pages.home',
+    path: 'home',
+    icon: 'home',
+  },
+  {
     /*text: 'ARCHIVO',
     path: 'home',
     icon: 'manage_accounts',
@@ -195,23 +200,12 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     ]
   },
   {*/
-    text: 'USUARIOS',
+    text: 'pages.user.title',
     icon: 'person',
     expanded: false,
     children: [{
-      text: 'Nuevo usuario',
-      //icon: 'person_add',
-      // requireAccess?: ResourceAccessKey;
-      //expanded:false,
-      path:'userManagementCreate'
-    },
-    {
-      text: 'Listar usuarios',
-      //icon: 'lists',
-      // requireAccess?: ResourceAccessKey;
-      //expanded:false,
-      path:'userManagementList'
-    }
+      text: 'pages.user.add', path:'userManagementCreate' },
+    { text: 'pages.user.list', path:'userManagementList' }
     ]
   }/*,
   {

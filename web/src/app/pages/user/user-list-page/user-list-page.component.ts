@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from "@angular/material/paginator";
-import {UserService} from "@base/pages/user/user.service";
-import {Router} from "@angular/router";
-import {MatTableDataSource} from "@angular/material/table";
-import {Paginator} from "@base/config/paginator";
-import {UserCriterial} from "@base/pages/user/userCriterial";
+import { Component, OnInit } from '@angular/core';
+import { ColumnSrc } from '@base/shared/collections';
+import { ExportFileType } from '@base/shared/export-file/export-file.model';
+import { FilterService } from '@base/shared/filter';
+import { BaseListPageComponent } from '@base/shared/pages/list';
+import { AppContextService } from '@base/shared/app-context';
+import { CrudImplService, RequestConfig, RequestParams } from '@libs/crud-api';
+import { User } from '@libs/sdk/user';
+//import { firstValueFrom, Observable } from 'rxjs';
+import { takeUntil, skip } from 'rxjs/operators';
 
 
 @Component({
@@ -13,65 +16,56 @@ import {UserCriterial} from "@base/pages/user/userCriterial";
   templateUrl: './user-list-page.component.html',
   styleUrls: ['./user-list-page.component.scss'],
 })
+export class UserListPageComponent extends BaseListPageComponent<User> implements OnInit {
 
-export class UserListPageComponent implements AfterViewInit {
+  readonly resourceName = 'users';
 
-  displayedColumns: string[] = ['id', 'name', 'firstSurname', 'secondSurname', 'nif', 'email', 'password', 'accion'];
-  userElement: UserElement[] = [];
-  pagination = new Paginator();
-  dataSource: any;
-  userCriterial!: UserCriterial;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  override exportFormats = [ExportFileType.CSV];
+  override downloadFileName = 'pages.user.title';
 
   constructor(
-      public userService: UserService,
-      private router: Router
+      crudService: CrudImplService<User>,
+      filterService: FilterService,
+      private sampleCtx: AppContextService,
   ) {
+    super(crudService, filterService);
   }
 
-  ngAfterViewInit(): void {
-    this.pagination.index = 0;
-    this.pagination.size = 10;
-    this.pagination.sort = "id";
-    this.pagination.sortDirection = "ASC";
-
-    this.userCriterial = new UserCriterial();
-
-    this.userService.all(this.userCriterial).subscribe((res: any) => {
-
-      console.log(res.content);
-
-      res.content.forEach((item: { id: any; name: any; firstSurname: any; secondSurname: any; nif: any; email: any; password: any; state: any; }) => {
-
-        let userItem: UserElement = {
-          id: item.id,
-          name: item.name,
-          firstSurname: item.firstSurname,
-          secondSurname: item.secondSurname,
-          nif: item.nif,
-          email: item.email,
-          password: item.password,
-          state: item.state
-        };
-        this.userElement.push(userItem)
-      });
-
-      this.dataSource = new MatTableDataSource<UserElement>(this.userElement);
-      this.dataSource.paginator = this.paginator;
-
-    });
+  override async ngOnInit() {
+    await super.ngOnInit();
+    // this.monitorCtxChanges();
   }
+
+  protected override async getRequestConfig(): Promise<RequestConfig> {
+    const config = await super.getRequestConfig();
+    //const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
+
+    config.queryParams = {
+      ...config.queryParams,
+      //scope,
+    };
+    return config;
+  }
+
+  protected getColumns(): ColumnSrc[] {
+    return [
+      'select',
+      'name',
+      {
+        name: 'surnames',
+        compositionProps: ['firstSurname', 'secondSurname'],
+      },
+      { name: 'firstSurname', visible: false },
+      { name: 'secondSurname', visible: false },
+      'phone',
+      'email',
+      //{ name: 'profile', isReportable: false },
+      'actions'
+    ];
+  }
+
+  private monitorCtxChanges() {
+    this.sampleCtx.scope$.pipe(takeUntil(this.destroyed$), skip(1)).subscribe(() => this.reloadData());
+  }
+
 }
-    export interface UserElement {
-      id: number;
-      name: string;
-      firstSurname: string;
-      secondSurname: string;
-      nif: string;
-      email: string;
-      password: string;
-      state: number;
-    }
-
-

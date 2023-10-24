@@ -5,8 +5,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ColumnSource, ColumnSrc } from '@base/shared/collections';
-import { AppliedFilter, FilterService, TulsaQuery } from '@base/shared/filter';
-import { AppQuery } from '@libs/commons';
+import { AppliedFilter, FilterService, Query } from '@base/shared/filter';
+import { AppQuery, BtnSrc } from '@libs/commons';
 import { CrudService, Page, PageReqBuilder, RequestConfig, SortBuilder } from '@libs/crud-api';
 import { PaginatorOptions } from '@libs/mat/paginator';
 import { filter, firstValueFrom, Observable, ReplaySubject, Subscription, switchMap, takeUntil, tap } from 'rxjs';
@@ -23,6 +23,9 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
   readonly filter = this.createFilterSource();
 
   loading = false;
+  exportFormats: (string | BtnSrc)[] = [];
+  downloadFileName = '';
+  previousRequestConfig: RequestConfig | undefined;
   ongoingDataLoad: Subscription | undefined;
 
   abstract readonly resourceName: string;
@@ -30,10 +33,10 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
   protected readonly destroyed$ = new ReplaySubject<boolean>(1);
 
   protected constructor(
-    protected crudService: CrudService<T, ID>,
-    protected filterService: FilterService,
-    // config service
-    // columns service
+      protected crudService: CrudService<T, ID>,
+      protected filterService: FilterService,
+      // config service
+      // columns service
   ) {
   }
 
@@ -105,8 +108,8 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
 
   selectAll(ev: MatCheckboxChange) {
     ev.checked
-      ? this.selection.select(...this.source.data)
-      : this.selection.clear();
+        ? this.selection.select(...this.source.data)
+        : this.selection.clear();
   }
 
   protected async setupComponentOptions() {
@@ -141,7 +144,7 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
   protected createFilterSource() {
     return {
       name: this.resourceName,
-      query: (new TulsaQuery({})) as AppQuery,
+      query: (new Query({})) as AppQuery,
     } as AppliedFilter; // to be defined
   }
 
@@ -161,27 +164,22 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
   }
 
   protected registerFiltersListener() {
-
     this.filterService.get(this.resourceName).pipe(
-      takeUntil(this.destroyed$),
-      filter(value => JSON.stringify(this.filter.query.getSource()) !== JSON.stringify(value.query.getSource()))
+        takeUntil(this.destroyed$),
+        filter(value => JSON.stringify(this.filter.query.getSource()) !== JSON.stringify(value.query.getSource()))
     ).subscribe(
-      value => this.afterQueryDetected(value)
-
-    )
-    ;
-
+        value => this.afterQueryDetected(value)
+    );
   }
 
   protected fetchData(): Observable<Page<T>> {
     return fromPromise(this.getRequestConfig()).pipe(
-      tap(() => this.stopOngoingDataLoad()),
-      switchMap(config => {
-        // const next = this.filter.mode === SearchMode.SEARCH
-        //   ? this.crudService.findAll(config)
-        //   : this.crudService.findAll(config);
-        return this.crudService.findAll(config);
-      })
+        tap((config) => {
+          this.stopOngoingDataLoad();
+          // Estaría bien almacenar el request config global para la página y emitir actualizaciones en vez de sobrescribir
+          this.previousRequestConfig = config;
+        }),
+        switchMap(config => this.crudService.findAll(config))
     );
   }
 
@@ -233,8 +231,8 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
     const { pageSize, pageIndex, length } = this.paginator;
     const { active, direction } = this.sort;
     const sort = (active && direction)
-      ? SortBuilder.fromArray([[active, direction]])
-      : [];
+        ? SortBuilder.fromArray([[active, direction]])
+        : [];
     const pageReq = PageReqBuilder.fromEvent({ pageSize, pageIndex, length }, sort);
     const queryParams = this.filter.query ? this.filter.query.toObject() : {};
     return Promise.resolve({

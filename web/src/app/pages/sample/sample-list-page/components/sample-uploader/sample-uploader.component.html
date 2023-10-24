@@ -1,0 +1,132 @@
+<h1 matDialogTitle>{{ 'text.other.sample.uploadTitle' | translate }}</h1>
+
+<mat-dialog-content>
+  <ng-container *ngIf="process.is$('IDLE') | async">
+    <form class="grid grid-cols-3 gap-1.5" [formGroup]="form">
+      <mat-form-field>
+        <mat-label>{{ 'fields.module' | translate }}</mat-label>
+        <mat-select formControlName="module">
+          <mat-option
+            *ngFor="let item of (ctx.modules$ | async)"
+            [value]="item"
+            (click)="ctx.useModule(item)"
+          >{{ item.name }}</mat-option>
+        </mat-select>
+        <mat-error>{{ form.errors | extractValidationError }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'fields.scope' | translate }}</mat-label>
+        <mat-select formControlName="scope">
+          <mat-option
+            *ngFor="let item of (ctx.scopes$ | async)"
+            [value]="item"
+            (click)="ctx.useScope(item)"
+          >{{ item.entityName }}</mat-option>
+        </mat-select>
+        <mat-error>{{ form.errors | extractValidationError }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'fields.season' | translate }}</mat-label>
+        <mat-select formControlName="season">
+          <mat-option
+            *ngFor="let item of (ctx.seasons$ | async)"
+            [value]="item"
+            (click)="ctx.useSeason(item)"
+          >{{ item.name }}</mat-option>
+        </mat-select>
+        <mat-error>{{ form.errors | extractValidationError }}</mat-error>
+      </mat-form-field>
+    </form>
+
+    <div
+      class="mt-3 h-56 flex justify-center items-center rounded file__dropzone"
+      (drop)="fileDropped($event)"
+      (dragover)="dragOverEv($event)"
+      (click)="filePicker.click()"
+    >
+      <div class="text-center">
+        <ng-container *ngIf="form.controls.file.invalid">
+          <mat-icon class="status__indicator" color="primary">note_add</mat-icon>
+          <div class="py-2">
+            <p>{{ 'text.other.dragAndDropFile' | translate }}</p>
+
+            <small>{{ 'text.other.sample.uploadFileFormat' | translate }}</small>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="form.controls.file.valid && form.controls.file.value">
+          <mat-icon class="status__indicator" color="primary">task</mat-icon>
+          <div class="py-2">
+            <p>{{ form.controls.file.value.name }}</p>
+          </div>
+        </ng-container>
+
+        <input
+          #filePicker
+          appB64FileAccessor
+          class="hidden"
+          type="file"
+          accept="text/xml"
+          [formControl]="form.controls.file"
+        >
+      </div>
+    </div>
+
+    <div class="mt-3">
+
+    </div>
+  </ng-container>
+
+  <div
+    *ngIf="process.isNot$('IDLE') | async"
+    class="mt-3 h-56 flex flex-col justify-center items-center"
+  >
+    <div *ngIf="process.is$('PROCESS') | async">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="process.is$('DONE') | async" class="animate__animated animate__rotateIn">
+      <mat-icon color="primary" class="status__indicator">task_alt</mat-icon>
+    </div>
+
+    <div *ngIf="process.is$('ERROR') | async" class="animate__animated animate__headShake">
+      <mat-icon color="warn" class="status__indicator">error_outline</mat-icon>
+    </div>
+
+    <div class="mt-3">
+      <p *ngIf="process.is$('PROCESS') | async">{{ 'text.other.sample.uploading' | translate }}</p>
+      <p *ngIf="process.is$('DONE') | async">{{ 'text.other.sample.uploadDone' | translate }}</p>
+
+      <mat-error *ngIf="!form.controls.file.pristine && form.controls.file.errors">
+        {{ form.controls.file.errors | extractValidationError }}
+      </mat-error>
+      <mat-error *ngIf="process.is$('ERROR') | async">{{ 'text.other.uploadError' | translate }}</mat-error>
+      <mat-error *ngIf="uploadError">{{ uploadError.error }}</mat-error>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex justify-between">
+  <div>
+    <button mat-stroked-button (click)="cancelProcess()">
+      <ng-container *ngIf="process.isNot$('DONE') | async">
+        {{ 'generic.actions.cancel' | translate }}
+      </ng-container>
+      <ng-container *ngIf="process.is$('DONE') | async">
+        {{ 'generic.actions.close' | translate }}
+      </ng-container>
+    </button>
+  </div>
+
+  <div>
+    <button
+      *ngIf="process.is$('IDLE') | async"
+      mat-raised-button
+      color="primary"
+      [disabled]="form.invalid"
+      (click)="uploadSample()"
+    >{{ 'generic.actions.uploadFile' | translate }}</button>
+  </div>
+</mat-dialog-actions>

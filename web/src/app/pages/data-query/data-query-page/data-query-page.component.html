@@ -1,0 +1,63 @@
+<tsw-form-container>
+    <tsw-section-wrapper headerLabel="Consulta de datos">
+        <!-- si configurar: data-query-config -->
+
+        <mat-stepper section-content orientation="horizontal" (selectionChange)="loadFields();">
+            <mat-step>
+                <ng-template matStepLabel>Preparación</ng-template>
+                <tsw-data-query-config-preparation></tsw-data-query-config-preparation>
+
+                <div class="w-full flex justify-end  mt-3 p-2 rounded">
+                    <button mat-raised-button color="primary" matStepperNext [disabled]="!isModuleSelected()">
+                        {{ "generic.actions.next" | translate }}
+                    </button>
+                </div>
+
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Campos</ng-template>
+                <tsw-data-query-config-fields></tsw-data-query-config-fields>
+
+                <div class="w-full flex justify-between  mt-3 p-2 rounded">
+                    <button mat-raised-button matStepperPrevious>
+                        {{ "generic.actions.previous" | translate }}
+                    </button>
+                    <button mat-raised-button color="primary" matStepperNext>
+                        {{ "generic.actions.next" | translate }}
+                    </button>
+                </div>
+
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Orientacion</ng-template>
+                <tsw-data-query-config></tsw-data-query-config>
+                <div class="w-full flex justify-between  mt-3 p-2 rounded">
+                    <button mat-raised-button matStepperPrevious>
+                        {{ "generic.actions.previous" | translate }}
+                    </button>
+                    <button mat-raised-button color="primary" matStepperNext>
+                        {{ "generic.actions.next" | translate }}
+                    </button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Resumen</ng-template>
+                <tsw-data-query-config-summary></tsw-data-query-config-summary>
+                <div class="w-full flex justify-between  mt-3 p-2 rounded">
+                    <button mat-raised-button matStepperPrevious>
+                        {{ "generic.actions.previous" | translate }}
+                    </button>
+                    <button mat-raised-button color="primary" matStepperNext>
+                        {{ "generic.actions.next" | translate }}
+                    </button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+
+        <!-- si visualizar: data-query-view -->
+    </tsw-section-wrapper>
+</tsw-form-container>
+
+<div class="mt-4">
+    <pre>{{ form.value | json }}</pre>
+</div>

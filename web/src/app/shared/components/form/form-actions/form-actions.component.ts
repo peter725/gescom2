@@ -6,6 +6,7 @@ import { FORM_STATUS } from '../tokens';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-form-actions',
   templateUrl: './form-actions.component.html',
 })
@@ -28,6 +29,7 @@ export class FormActionsComponent implements OnInit {
   @Input() cancelRedirectPath: string | string[] = ['../'];
 
   @Output() save = new EventEmitter<void>();
+  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() reset = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -42,7 +44,7 @@ export class FormActionsComponent implements OnInit {
   ) {
   }
 
-  @Input('class')
+  @Input()
   set setHostClass(hostClass: string) {
     const tmp = hostClass?.trim();
     if (tmp) this.hostClass = tmp;

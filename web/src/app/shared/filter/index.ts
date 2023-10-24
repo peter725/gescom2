@@ -3,4 +3,4 @@ export * from './constants';
 export * from './filter.module';
 export * from './filter.service';
 export * from './models';
-export * from './tulsa-query';
+export * from './query';

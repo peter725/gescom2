@@ -1,0 +1,61 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<form [formGroup]="form">
+    <tsw-form-container>
+        <tsw-section-wrapper
+                class="mb-5"
+                headerLabel="Datos del Usuario"
+                icon="edit_note"
+        >
+
+            <div section-content>
+                <div class="grid grid-cols-4 gap-1.5">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.name' | translate }}</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.firstSurname' | translate }}</mat-label>
+                        <input matInput formControlName="firstSurname">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.secondSurname' | translate }}</mat-label>
+                        <input matInput formControlName="secondSurname">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.nif' | translate }}</mat-label>
+                        <input matInput formControlName="nif">
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-6 gap-1.5">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.email' | translate }}</mat-label>
+                        <input matInput formControlName="email">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.phone' | translate }}</mat-label>
+                        <input matInput formControlName="phone">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <tsw-user-edit-scope-list
+                    *ngIf="!isNew"
+                    section-content
+                    [user]="srcData"
+            ></tsw-user-edit-scope-list>
+
+        </tsw-section-wrapper>
+
+        <tsw-form-actions
+                [saveBtnSkipConfirmation]="skipSaveConfirmation"
+                (reset)="resetForm()"
+                (save)="submitForm()"
+        ></tsw-form-actions>
+    </tsw-form-container>
+</form>

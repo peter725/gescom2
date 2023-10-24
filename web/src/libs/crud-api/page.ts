@@ -139,7 +139,7 @@ export class SortBuilder {
    * Creates a formatted sort order from the provided property and direction.
    */
   public static from(property: string, direction: SortDirection) {
-    return `${property.trim()};${direction.trim()}`
+    return `${property.trim()},${direction.trim()}`
   }
 }
 

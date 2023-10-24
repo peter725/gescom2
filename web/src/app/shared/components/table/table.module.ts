@@ -15,13 +15,14 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
-
 import {
   TableContainerComponent,
   TableEmptyRowComponent,
   TableSettingsComponent,
   TswTableComponent
 } from './components';
+import {FullScreenElementModule} from "@base/shared/full-screen-element";
+import { FileDownloaderImplService } from '../../export-file/file-downloader-impl.service';
 
 
 const EXPORTED_DECLARATIONS = [
@@ -32,31 +33,33 @@ const EXPORTED_DECLARATIONS = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatPaginatorModule,
-    CdkTableModule,
-    MatTableModule,
-    MatTooltipModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatSortModule,
-    MatDialogModule,
-    DragDropModule,
-    MatCheckboxModule,
-    TranslateModule,
-  ],
-  declarations: EXPORTED_DECLARATIONS,
-  exports: [
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    ...EXPORTED_DECLARATIONS
-  ],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatPaginatorModule,
+        CdkTableModule,
+        MatTableModule,
+        MatTooltipModule,
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatSortModule,
+        MatDialogModule,
+        DragDropModule,
+        MatCheckboxModule,
+        TranslateModule,
+        FullScreenElementModule,
+    ],
+    declarations: EXPORTED_DECLARATIONS,
+    providers: [FileDownloaderImplService],
+    exports: [
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        ...EXPORTED_DECLARATIONS
+    ],
 })
 export class TableModule {
 }

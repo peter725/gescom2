@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterModule} from "@angular/router";
 import {NamedRoutesConfig} from "@base/config/named-routes.config";
-
+import { HttpClientConfig } from '@base/config/http-client.config';
 import {routes} from './pages/routes';
 import {HttpClientModule} from "@angular/common/http";
 import {CrudApiConfig} from "@base/config/crud-api.config";
@@ -23,6 +23,7 @@ import {LocaleConfig} from "@base/config/locale.config";
     BrowserAnimationsModule,
     RouterModule.forRoot(routes, {initialNavigation: 'enabledNonBlocking'}),
     NamedRoutesConfig,
+    HttpClientConfig,
     HttpClientModule,
     CrudApiConfig,
     TranslateConfig,

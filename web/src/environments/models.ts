@@ -15,4 +15,31 @@ export type EnvironmentData = {
    * de despliegue.
    */
   baseHref: string;
-}
+
+  /**
+   * Definición de los servicios disponibles.
+   */
+  srv: Services;
+};
+
+/**
+ * Parámetros de configuración del servicio.
+ */
+export type Services = {
+  app: ServiceItem;
+  auth: ServiceItem;
+};
+
+/**
+ * Configuración específica para el servicio
+ */
+export type ServiceItem = {
+  /**
+   * URL base del servicio definido.
+   */
+  host: string;
+  /**
+   * URL para la API pública del servicio.
+   */
+  api: string;
+};

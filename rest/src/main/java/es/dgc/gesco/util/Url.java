@@ -12,6 +12,7 @@ public class Url {
     public static final String EDIT = "/edit";
     public static final String LISTA = "/list";
     public static final String DELETE = "/delete";
+    public static final String UPDATE = "/update";
 
 
 }

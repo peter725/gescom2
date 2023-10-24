@@ -10,6 +10,7 @@ import es.dgc.gesco.service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,9 +40,9 @@ public class UserService {
         return userDto;
     }
 
-    public Page<User> getAllByCriteria(UserCriteria criteria){
+    public Page<User> getAllByPage(Pageable pageable){
 
-        Page<User> userPage = userRepository.findAllByCriteria(criteria, criteria.toPageable());
+        Page<User> userPage = userRepository.findAll(pageable);
         return userPage;
     }
 

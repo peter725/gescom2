@@ -1,4 +1,6 @@
-import { ErrorDetails } from '@libs/commons';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { ControlsOf, ErrorDetails } from '@libs/commons';
+import { Origin } from '@libs/sdk/origin';
 
 export interface EvaluableBusinessRules {
   moduleId: number;
@@ -12,10 +14,13 @@ export interface EvaluableBusinessRule {
   infoMessage: string;
   infoType: string;
   ignoreNull: boolean;
-  condition: EvaluableExpression;
+  condition: EvaluableExpression | null;
   verification: EvaluableExpression;
   checkedElements: string[];
   verifiedElements: string[];
+  forEachElements: string[];
+  lastUpdate: Date;
+  origin: Origin;
 }
 
 export interface EvaluableBusinessRuleForm {
@@ -29,6 +34,63 @@ export interface EvaluableBusinessRuleForm {
   verification: EvaluableExpression | null;
   checkedElements: string[] | null;
   verifiedElements: string[] | null;
+}
+
+export interface BusinessRuleOperandForm {
+  id: number | null;
+  type: OperandType | null;
+
+  element: string | null;
+  elements: string[] | null;
+  value: string | null;
+  values: string[] | null;
+
+  yearElement: string | null;
+  monthElement: string | null;
+  dayElement: string | null;
+}
+
+export interface LogicalExpressionForm {
+  id: number | null;
+  parentId: number | null;
+  position: string | null;
+  type: 'empty' | 'simple' | 'connected' | null;
+}
+
+export interface SimpleLogicalExpressionForm extends LogicalExpressionForm {
+  targetOperand: Operand | null;
+  logicalOperator: string | null;
+  valueOperand: Operand | null;
+}
+
+export interface Operand {
+  id: number | null;
+  type: OperandType;
+  element: string | null;
+}
+
+export interface ConnectedLogicalExpressionForm extends LogicalExpressionForm {
+  conector: string | null;
+  expressions: SimpleLogicalExpressionForm[];
+  // expressions: SimpleLogicalExpressionForm[] | ConnectedLogicalExpressionForm[];
+}
+
+export type ConnectedLogicalExpressionFormGroup = {
+  id: FormControl<number | null>;
+  parentId: FormControl<number | null>;
+  position: FormControl<string>;
+  type: FormControl<'empty' | 'simple' | 'connected'>;
+
+  connector: FormControl<ExpressionConnector>;
+  expressions: FormArray<FormGroup<ControlsOf<SimpleLogicalExpressionForm>> | FormGroup<ConnectedLogicalExpressionFormGroup>>;
+};
+
+export interface EvaluableFunctionExpression {
+  id: number | null;
+  type: string | null;
+  dataElements: string | null;
+  constant: string | null;
+  value: string | null;
 }
 
 export interface EvaluableExpression {
@@ -94,27 +156,29 @@ export enum OperandType {
   VALUE_LIST = 'VALUE_LIST',
   CATALOGUE_ANCESTOR = 'CATALOGUE_ANCESTOR',
   CATALOGUE_TERM = 'CATALOGUE_TERM',
+  CATALOGUE_ATTRIBUTE = 'CATALOGUE_ATTRIBUTE',
   FUNCTION = 'FUNCTION',
 }
 
-export interface Operand {
-  type: OperandType;
-}
 
 export interface DataElementOperand extends Operand {
+  type: OperandType.SINGLE_ELEMENT;
   element: string;
 }
 
 export interface DataElementListOperand extends Operand {
+  type: OperandType.ELEMENT_LIST;
   elements: string[];
 }
 
 export interface ValueOperand extends Operand {
+  type: OperandType.SINGLE_VALUE;
   value: string;
 }
 
 export interface ValueListOperand extends Operand {
-  value: string;
+  type: OperandType.VALUE_LIST;
+  value: string[];
 }
 
 export enum EvaluationInfoType {
@@ -135,7 +199,7 @@ export interface RuleEvaluationSummary {
   type: EvaluationInfoType;
 }
 
-export const isElementOperand = (obj: Operand): obj is DataElementOperand => obj.type === OperandType.SINGLE_ELEMENT;
-export const isElementListOperand = (obj: Operand): obj is DataElementListOperand => obj.type === OperandType.ELEMENT_LIST;
-export const isValueOperand = (obj: Operand): obj is ValueOperand => obj.type === OperandType.SINGLE_VALUE;
-export const isValueListOperand = (obj: Operand): obj is ValueListOperand => obj.type === OperandType.VALUE_LIST;
+export const isElementOperand = (obj: Operand): obj is DataElementOperand => obj?.type === OperandType.SINGLE_ELEMENT;
+export const isElementListOperand = (obj: Operand): obj is DataElementListOperand => obj?.type === OperandType.ELEMENT_LIST;
+export const isValueOperand = (obj: Operand): obj is ValueOperand => obj?.type === OperandType.SINGLE_VALUE;
+export const isValueListOperand = (obj: Operand): obj is ValueListOperand => obj?.type === OperandType.VALUE_LIST;

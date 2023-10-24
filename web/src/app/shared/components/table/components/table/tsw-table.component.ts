@@ -11,6 +11,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 import { MatTable } from '@angular/material/table';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-table, table[tsw-table]',
   exportAs: 'tswTable',
   templateUrl: './tsw-table.component.html',

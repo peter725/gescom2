@@ -8,6 +8,7 @@ import es.dgc.gesco.service.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,8 +27,8 @@ public class UserFacade {
         return newUser;
     }
 
-    public Page<User> getAllUser(UserCriteria criteria){
-        Page<User> userPage = userService.getAllByCriteria(criteria);
+    public Page<User> getAllUser(Pageable pageable){
+        Page<User> userPage = userService.getAllByPage(pageable);
         return userPage;
     }
 

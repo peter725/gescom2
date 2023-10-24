@@ -3,55 +3,55 @@
 <form [formGroup]="form">
   <tsw-form-container>
     <tsw-section-wrapper
-      class="mb-5"
-      headerLabel="Datos del Usuario"
-      icon="edit_note"
+            class="mb-5"
+            headerLabel="Datos del Usuario"
+            icon="edit_note"
     >
 
       <div section-content>
-        <div class="grid grid-cols-4 gap-1.5" >
+        <div class="grid grid-cols-4 gap-1.5">
           <mat-form-field>
-            <mat-label>Nombre</mat-label>
-            <input formControlName="name" matInput placeholder="Nombre" value="">
+            <mat-label>{{ 'fields.name' | translate }}</mat-label>
+            <input matInput formControlName="name">
+            <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Primer apellido</mat-label>
+            <mat-label>{{ 'fields.firstSurname' | translate }}</mat-label>
             <input matInput formControlName="firstSurname">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Segundo apellido</mat-label>
+            <mat-label>{{ 'fields.secondSurname' | translate }}</mat-label>
             <input matInput formControlName="secondSurname">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'fields.nif' | translate }}</mat-label>
+            <input matInput formControlName="nif">
           </mat-form-field>
         </div>
 
         <div class="grid grid-cols-6 gap-1.5">
           <mat-form-field>
-            <mat-label>NIF</mat-label>
-            <input matInput formControlName="nif">
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Email</mat-label>
+            <mat-label>{{ 'fields.email' | translate }}</mat-label>
             <input matInput formControlName="email">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password">
+            <mat-label>{{ 'fields.phone' | translate }}</mat-label>
+            <input matInput formControlName="phone">
           </mat-form-field>
-        </div>
-        <tsw-form-actions
-                (click)="submit()"
-        ></tsw-form-actions>
 
+
+        </div>
       </div>
 
     </tsw-section-wrapper>
 
-
-
-
+    <tsw-form-actions
+            (reset)="resetForm()"
+            (save)="submitForm()"
+    ></tsw-form-actions>
   </tsw-form-container>
 </form>

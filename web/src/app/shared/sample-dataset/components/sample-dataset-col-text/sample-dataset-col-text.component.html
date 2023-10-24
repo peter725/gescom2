@@ -1,0 +1,26 @@
+<mat-form-field class="w-full">
+  <mat-label>{{ container.label }}</mat-label>
+
+  <div matPrefix class="mr-2">
+    <mat-icon class="cursor-help" title="Campo de texto">abc</mat-icon>
+  </div>
+
+  <input
+    matInput
+    type="text"
+    [formControl]="container.formCtrl"
+  >
+
+  <div matSuffix class="flex justify-between items-center">
+    <mat-icon
+      *ngIf="helpIndicator$ | async"
+      class="cursor-help"
+      [title]="container.label + ': ' + container.description"
+    >help_outline
+    </mat-icon>
+  </div>
+
+  <mat-error>
+    {{ container.formCtrl.errors | extractValidationError }}
+  </mat-error>
+</mat-form-field>

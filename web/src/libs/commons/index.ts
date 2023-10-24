@@ -46,6 +46,13 @@ export enum OperationMode {
   LESSER_OR_EQUAL = 'lte',
 }
 
+/**
+ * Utility type que elimina la definición de campos nulos dentro del objeto T
+ */
+export type NoNullFields<T> = { [K in keyof T]: T[K] extends object ? NoNullFields<T[K]> : NonNullable<T[K]> };
+
 export const  FORMATTED_QUERY = /.+(__)(\w){2,3}$/;
 
 export const OPERATION_SEPARATOR = '__';
+
+export const NO_VALUE = -1;

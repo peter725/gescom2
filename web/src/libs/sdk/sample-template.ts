@@ -1,39 +1,47 @@
-import { SimpleModel, TranslatedModel } from '@libs/sdk/common';
+import { SimpleModel, StatefulModel, TranslatedModel } from '@libs/sdk/common';
 import { AppQuerySource } from '../commons';
+import { SampleDataset, SampleDatasetSave } from './sample-dataset';
 
-export interface SampleTemplate extends SimpleModel, TranslatedModel {
-  name: string,
-  sharedAccess: boolean,
-  scopeCode: string,
-  moduleId: number,
-  seasonId: number,
-  seasonName: string,
-  providerEntity: string,
-  useRangeFrom: string,
-  useRangeUntil: string,
-  sampleId: number,
-  ownerId: number,
+export interface SampleTemplate extends SimpleModel, SampleDataset, StatefulModel, TranslatedModel {
+  templateId: number | null;
+  datasetId: number | null;
+  scopeCode: string | null;
+
+  moduleName: string;
+  moduleCode: string;
+
+  seasonName: string;
+
+  name: string;
+  sharedAccess: boolean;
 }
 
-export interface SampleTemplateForm {
-  id: number | null;
-  name: string| null;
-  sharedAccess: boolean| null;
-  scopeCode: string| null;
-  moduleId: number| null;
-  seasonId: number| null;
-  seasonName: string| null;
-  providerEntity: string| null;
-  useRangeFrom: Date| null;
-  useRangeUntil: Date| null;
-  sampleId: number| null;
-  ownerId: number| null;
+export interface VSampleTemplate extends SimpleModel, StatefulModel, TranslatedModel {
+  sampleDatasetId: number;
+  name: string;
+  sharedAccess: boolean;
+  scopeCode: string;
+  moduleId: number;
+  seasonId: number;
+  seasonName: string;
+  providerEntity: string;
+  useRangeFrom: Date;
+  useRangeUntil: Date;
+  ownerId: number;
+  state: number;
 }
 
-export interface TulsaSampleTemplateFilterForm extends AppQuerySource {
+export interface SampleTemplateSave extends SimpleModel<number | null>, SampleDatasetSave {
+  templateId: number | null;
+  name: string | null;
+  sharedAccess: boolean;
+}
+
+export interface SampleTemplateFilterForm extends AppQuerySource {
   name?: string,
   sharedAccess?: boolean,
   seasonName?: string,
   useRangeFrom?: string,
   useRangeUntil?: string,
+  state?: number[];
 }

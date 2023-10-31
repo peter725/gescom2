@@ -14,6 +14,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -32,12 +33,12 @@ public abstract class AuditedBaseEntity extends StandardEntity {
 
     @JsonIgnore
     @CreatedDate
-    @Column(name = "CREATED_AT", nullable = false, updatable = false)
+    @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
 
     @JsonIgnore
     @LastModifiedDate
-    @Column(name = "UPDATE_AT", nullable = false)
+    @Column(name = "UPDATED_AT", nullable = false)
     private LocalDateTime updatedAt;
 
     @JsonIgnore
@@ -47,7 +48,7 @@ public abstract class AuditedBaseEntity extends StandardEntity {
 
     @JsonIgnore
     @LastModifiedBy
-    @Column(name = "UPDATE_BY", nullable = true)
+    @Column(name = "UPDATED_BY", nullable = true)
     private Long updatedBy;
 
 }

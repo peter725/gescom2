@@ -46,9 +46,11 @@ public class UserServiceTest extends AbstractGenericTest {
         user.setNif("Y5552524A");
         user.setPosition("Position");
         user.setAreaResponsabilidad("Area Resposable");
-        user.setEmailId(1L);
-        user.setPhoneId(1L);
         user.setRolId(1L);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setCreatedBy(1L);
+        user.setUpdatedAt(LocalDateTime.now());
+        user.setUpdatedBy(1L);
 
 
         user = userService.saveUser(user);

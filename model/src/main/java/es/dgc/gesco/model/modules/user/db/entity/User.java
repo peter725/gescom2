@@ -4,15 +4,13 @@ import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 
 import es.dgc.gesco.model.commom.validation.constraints.NIF;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+
+import java.util.List;
 
 import static es.dgc.gesco.model.util.ConstanteBD.SEQ_USERS;
 import static es.dgc.gesco.model.util.ConstanteBD.TABLE_USERS;
@@ -63,12 +61,15 @@ public class User extends AuditedBaseEntity{
     @Column(name = "AREA_RESPONSABILIDAD", unique = true, length = 9)
     private String areaResponsabilidad;
 
-    @Column(name = "EMAIL_ID")
-    @Email
-    private Long emailId;
+    @Column(name = "EMAIL")
+    @Transient
+    @ToString.Exclude
+    private List<Email> emails;
 
-    @Column(name = "PHONE_ID")
-    private Long phoneId;
+    @Column(name = "PHONE")
+    @Transient
+    @ToString.Exclude
+    private List<Phone> phones;
 
     @Column(name = "ROL_ID")
     private Long rolId;

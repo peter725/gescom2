@@ -1,5 +1,5 @@
 {
-  "name": "junta-arbitral",
+  "name": "gesco",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
@@ -12,7 +12,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/junta-arbitral",
+        "outputPath": "dist/gesco",
         "index": "./src/index.html",
         "main": "./src/main.ts",
         "polyfills": [
@@ -60,10 +60,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "junta-arbitral:build:production"
+          "browserTarget": "gesco:build:production"
         },
         "development": {
-          "browserTarget": "junta-arbitral:build:development"
+          "browserTarget": "gesco:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "junta-arbitral:build"
+        "browserTarget": "gesco:build"
       }
     },
     "lint": {
@@ -105,7 +105,7 @@
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "junta-arbitral:build"
+        "buildTarget": "gesco:build"
       }
     }
   }

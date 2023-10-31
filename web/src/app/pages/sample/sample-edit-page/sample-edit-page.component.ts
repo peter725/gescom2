@@ -1,21 +1,22 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FORM_STATUS } from '@tulsa/app/shared/components/form';
-import { NotificationService } from '@tulsa/app/shared/notification';
+import { FORM_STATUS } from '@base/shared/components/form';
+import { NotificationService } from '@base/shared/notification';
 import {
   DatasetContainer,
   DatasetForm,
   datasetTrackByFn,
   SampleDatasetManagerService
-} from '@tulsa/app/shared/sample-dataset';
-import { AppError, ComponentStatus } from '@tulsa/libs/commons';
+} from '@base/shared/sample-dataset';
+import { AppError, ComponentStatus } from '@libs/commons';
 import { filter, Observable, ReplaySubject, takeUntil, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigForm } from './sample-edit-page.model';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-sample-edit-page',
   templateUrl: './sample-edit-page.component.html',
   providers: [

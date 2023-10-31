@@ -1,21 +1,21 @@
 import { FormControl } from '@angular/forms';
-import { TulsaModule } from '@tulsa/libs/sdk/module';
-import { TulsaSampleSeason } from '@tulsa/libs/sdk/sample-season';
-import { VTulsaSampleTemplate } from '@tulsa/libs/sdk/sample-template';
-import { TulsaScopeView } from '@tulsa/libs/sdk/scope';
+import { Module } from '@libs/sdk/module';
+import { SampleSeason } from '@libs/sdk/sample-season';
+import { VSampleTemplate } from '@libs/sdk/sample-template';
+import { ScopeView } from '@libs/sdk/scope';
 import { Observable } from 'rxjs';
 
 export type ConfigForm = {
-  module: FormControl<TulsaModule | null>;
-  season: FormControl<TulsaSampleSeason | null>;
-  scope: FormControl<TulsaScopeView | null>;
+  module: FormControl<Module | null>;
+  season: FormControl<SampleSeason | null>;
+  scope: FormControl<ScopeView | null>;
   useTemplate: FormControl<boolean>;
-  template: FormControl<VTulsaSampleTemplate | null>;
+  template: FormControl<VSampleTemplate | null>;
 };
 
 export type ConfigData = {
-  modules$: Observable<TulsaModule[]>,
-  scopes$: Observable<TulsaScopeView[]>,
-  seasons$: Observable<TulsaSampleSeason[]>,
-  templates$: Observable<VTulsaSampleTemplate[]>,
+  modules$: Observable<Module[]>,
+  scopes$: Observable<ScopeView[]>,
+  seasons$: Observable<SampleSeason[]>,
+  templates$: Observable<VSampleTemplate[]>,
 };

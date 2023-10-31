@@ -1,4 +1,4 @@
-import { Directive, Inject, OnDestroy, OnInit } from '@angular/core';
+import {Directive, inject, Inject, OnDestroy, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FORM_STATUS } from '@base/shared/components/form';
@@ -9,6 +9,11 @@ import { CrudImplService, RequestConfig } from '@libs/crud-api';
 import { NamedRoutes } from '@libs/named-routes';
 import { filter, firstValueFrom, Observable, of, ReplaySubject, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {MatChipEditedEvent, MatChipInputEvent} from "@angular/material/chips";
+import {Email} from "@libs/sdk/email";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {LiveAnnouncer} from "@angular/cdk/a11y";
+import {Phone} from "@libs/sdk/phone";
 
 
 @Directive()
@@ -32,7 +37,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   /**
    * Whether to require a confirmation before saving or not.
    */
-  skipSaveConfirmation = true;
+  skipSaveConfirmation = false;
 
   /**
    * Whether to redirect the user after saving the data
@@ -71,6 +76,15 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   private _activeOperation: Observable<T> | undefined;
 
   protected readonly destroyed$ = new ReplaySubject<boolean>(1);
+
+  emails: Email[] = [];
+
+  phones: Phone[] = [];
+
+  announcer = inject(LiveAnnouncer);
+
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   constructor(
     protected crudService: CrudImplService<T>,
@@ -276,6 +290,76 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
 
   protected getRedirectAfterSaveRoute(): string[] {
     return ['../consulta'];
+  }
+
+  protected addEmail(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our email
+    if (value) {
+      this.emails.push({id: 0, name: value, state: 0, email: value});
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  protected removeEmail(emails: Email): void {
+    const index = this.emails.indexOf(emails);
+    if (index >= 0) {
+      this.emails.splice(index, 1);
+
+      this.announcer.announce(`Removed ${emails.name}`);
+    }
+  }
+
+  editEmail(emails: Email, event:  MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    // Remove email if it no longer has a name
+    if (!value) {
+      this.removeEmail(emails);
+      return;
+    }
+
+    // Edit existing email
+    const index = this.emails.indexOf(emails);
+    if (index >= 0) {
+      this.emails[index].name = value;
+    }
+  }
+
+  protected addPhone(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our email
+    if (value) {
+      this.phones.push({id: 0, name: value, state: 0, phone: value});
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  protected removePhone(phones: Phone): void {
+    const index = this.phones.indexOf(phones);
+    if (index >= 0) {
+      this.phones.splice(index, 1);
+
+      this.announcer.announce(`Removed ${phones.phone}`);
+    }
+  }
+
+  editPhone(phones: Phone, event:  MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    // Remove phone if it no longer has a name
+    if (!value) {
+      this.removePhone(phones);
+      return;
+    }
+
+    // Edit existing email
+    const index = this.phones.indexOf(phones);
+    if (index >= 0) {
+      this.phones[index].phone = value;
+    }
   }
 
   protected abstract buildForm(): FormGroup<ControlsOf<F>>;

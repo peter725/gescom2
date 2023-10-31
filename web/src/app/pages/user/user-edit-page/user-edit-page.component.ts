@@ -21,6 +21,7 @@ export class UserEditPageComponent extends EditPageBaseComponent<User, CreateUse
     protected override _createResourceTitle = 'pages.user.add';
     protected override _editResourceTitle = 'pages.user.edit';
 
+
     protected buildForm() {
         return this.fb.group<ControlsOf<CreateUser>>({
             id: this.fb.control(null),
@@ -28,11 +29,17 @@ export class UserEditPageComponent extends EditPageBaseComponent<User, CreateUse
             firstSurname: this.fb.control(null, [Validators.required, CustomValidators.allowedName]),
             secondSurname: this.fb.control(null, [CustomValidators.allowedName]),
             nif: this.fb.control(null, [Validators.required, CustomValidators.nif]),
-            email: this.fb.control(null, [Validators.required, Validators.email]),
-            phone: this.fb.control(null, [Validators.required]),
+            emails: this.fb.control([], [Validators.required, Validators.email]),
+            phones: this.fb.control([], [Validators.required, Validators.minLength(9)]),
+            role: this.fb.control(null, [Validators.required]),
             profile: this.fb.control(null, [Validators.required]),
             modules: this.fb.control([], [Validators.required, Validators.min(1)]),
+            position: this.fb.control(null, [Validators.required]),
+            nationalAuthority: this.fb.control(null, [Validators.required]),
+            areaResponsability: this.fb.control(null, [Validators.required]),
+            generalDirection: this.fb.control(null, [Validators.required]),
         });
     }
+
 
 }

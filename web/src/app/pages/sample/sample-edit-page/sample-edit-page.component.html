@@ -11,7 +11,7 @@
   <tsw-section-wrapper *ngIf="datasetForm" headerLabel="text.other.sample.dataset">
     <div section-content class="my-4 flex justify-between items-center">
       <mat-slide-toggle
-        [checked]="helpIndicator$ | async"
+        [checked]="(helpIndicator$ | async) === 'on'"
         (change)="toggleHelpIndicator()"
       >
         {{ 'fields.helpIndicator' | translate }}
@@ -22,7 +22,7 @@
 
     <div section-content>
       <mat-stepper orientation="horizontal">
-        <mat-step *ngFor="let item of (datasetContainer.common | async); trackBy: trackByFn;">
+        <mat-step *ngFor="let item of ((datasetContainer.common | async) ); trackBy: trackByFn;">
           <ng-template matStepLabel>{{ item.label }}</ng-template>
           <ng-template matStepContent>
             <tsw-sample-dataset-group

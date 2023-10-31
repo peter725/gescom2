@@ -57,6 +57,7 @@ export const SearchBaseMixin = mixinDisabled(mixinErrorState(CustomSearch));
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-search-input',
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],

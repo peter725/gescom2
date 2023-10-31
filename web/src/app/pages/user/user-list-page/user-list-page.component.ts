@@ -6,7 +6,7 @@ import { BaseListPageComponent } from '@base/shared/pages/list';
 import { AppContextService } from '@base/shared/app-context';
 import { CrudImplService, RequestConfig, RequestParams } from '@libs/crud-api';
 import { User } from '@libs/sdk/user';
-//import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { takeUntil, skip } from 'rxjs/operators';
 
 
@@ -33,16 +33,16 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
 
   override async ngOnInit() {
     await super.ngOnInit();
-    // this.monitorCtxChanges();
+    //this.monitorCtxChanges();
   }
 
   protected override async getRequestConfig(): Promise<RequestConfig> {
     const config = await super.getRequestConfig();
-    //const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
+    const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
 
     config.queryParams = {
       ...config.queryParams,
-      //scope,
+      scope,
     };
     return config;
   }
@@ -59,7 +59,7 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
       { name: 'secondSurname', visible: false },
       'phone',
       'email',
-      //{ name: 'profile', isReportable: false },
+      { name: 'profile', isReportable: false },
       'actions'
     ];
   }

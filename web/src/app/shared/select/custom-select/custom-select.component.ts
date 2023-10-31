@@ -6,6 +6,7 @@ import { ComboValue } from '../combo';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-custom-select',
   templateUrl: './custom-select.component.html',
   providers: [

@@ -16,6 +16,7 @@ import { FilterComponent } from '../filter.component';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-filters-container',
   templateUrl: './filters-container.component.html',
   styleUrls: ['./filters-container.component.scss'],

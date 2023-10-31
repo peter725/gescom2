@@ -8,6 +8,7 @@ import { UserEditScopeFormComponent, UserEditScopeListComponent } from './compon
 import { UserEditPageRoutingModule } from './user-edit-page-routing.module';
 import { UserEditPageComponent } from './user-edit-page.component';
 import {StateToggleModule} from "@base/shared/components/state-toggle";
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {StateToggleModule} from "@base/shared/components/state-toggle";
         TableModule,
         MatDialogModule,
         StateToggleModule,
+        MatChipsModule,
     ],
     declarations: [
         UserEditPageComponent,

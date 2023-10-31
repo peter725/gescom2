@@ -64,7 +64,11 @@ input[type=number]::-webkit-outer-spin-button {
   zoom: 1.65;
 }
 
-.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
+.mat-mdc-table{
+  width: 100%;
+}
+
+.mat-mdc-form-field .mdc-notched-outline__notch {
   border-right-style: hidden;
 }
 
@@ -94,6 +98,9 @@ input[type=number]::-webkit-outer-spin-button {
   color: rgba(0, 0, 0, 0.87);
 }
 
+.chip-list {
+  width: 100%;
+}
 
 .mat-mdc-raised-button:not(:disabled) {
   color: var(--text-primary-color) !important;
@@ -104,13 +111,20 @@ input[type=number]::-webkit-outer-spin-button {
     margin-left: 0 !important;
   }
 }
+
 .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
+
+
 .mat-mdc-form-field-infix{
-  min-height: 32px;
+  min-height: 20px;
 }
+
 .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
   top: 50%;
 }
+
+
+

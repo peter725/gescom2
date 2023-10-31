@@ -206,7 +206,10 @@ export class AppContextService {
         };
         return this.crudService.findById<User>(id, config).pipe(
             map(value => value.modules),
-            map(list => list.filter(v => v.state === ModelStates.ON).sort((a, b) => a.id < b.id ? -1 : 1)),
+            map(list => list.filter(v => v.state === ModelStates.ON).sort((a, b) => {
+                if (a.id === b.id) return 0;
+                return a.id < b.id ? -1 : 1;
+            })),
         );
     }
 

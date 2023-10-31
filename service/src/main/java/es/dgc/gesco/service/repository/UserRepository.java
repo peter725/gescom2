@@ -21,18 +21,15 @@ public interface UserRepository
     @Query(value = """
             SELECT t FROM User t WHERE 
             (:#{#criteria.name} is null or t.name LIKE :#{#criteria.name}) 
-            AND (t.state IN (:#{#criteria.state}))
             AND (:#{#criteria.firstSurname} is null OR UPPER(t.firstSurname) LIKE UPPER(:#{#criteria.firstSurname})) 
             AND (:#{#criteria.secondSurname} is null OR UPPER(t.secondSurname) LIKE UPPER(:#{#criteria.secondSurname})) 
             AND (:#{#criteria.nif} is null OR UPPER(t.nif) LIKE UPPER(:#{#criteria.nif})) 
-            AND (:#{#criteria.email} is null OR UPPER(t.email) LIKE UPPER(:#{#criteria.email})) 
             AND (
             :#{#criteria.search} IS null 
             OR UPPER(t.name) LIKE UPPER(:#{#criteria.search}) 
             OR UPPER(t.firstSurname) LIKE UPPER(:#{#criteria.search}) 
             OR UPPER(t.secondSurname) LIKE UPPER(:#{#criteria.search}) 
             OR UPPER(t.nif) LIKE UPPER(:#{#criteria.search}) 
-            OR UPPER(t.email) LIKE UPPER(:#{#criteria.search}) 
             )
             """
     )

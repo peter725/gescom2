@@ -23,11 +23,6 @@ public class UserDto implements LongIdModel {
 
     @NotNull
     @NotBlank
-    @NIF
-    private String nif;
-
-    @NotNull
-    @NotBlank
     @Size(max = 100)
     private String name;
 
@@ -43,12 +38,26 @@ public class UserDto implements LongIdModel {
 
     @NotNull
     @NotBlank
-    @Email
-    private String email;
+    @NIF
+    private String nif;
 
     @NotNull
     @NotBlank
-    private String password;
+    private String position;
+
+    @NotNull
+    @NotBlank
+    @Email
+    private Long emailId;
+
+    @NotNull
+    @NotBlank
+    private Long phoneId;
+
+
+    @NotNull
+    @NotBlank
+    private Long roleId;
 
     public String getFullName() {
         String fullName = getName() + " " + getFirstSurname() + " " + getSecondSurname();

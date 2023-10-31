@@ -9,12 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,13 +43,13 @@ public class UserServiceTest extends AbstractGenericTest {
         user.setName("alexander");
         user.setFirstSurname("maldonado");
         user.setSecondSurname("zambrano");
-        user.setEmail("amzambrano@serikat.es");
-        user.setPassword("serikat1");
-        user.setState(1);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
-        user.setCreatedBy(1L);
-        user.setUpdatedBy(1L);
+        user.setNif("Y5552524A");
+        user.setPosition("Position");
+        user.setAreaResponsabilidad("Area Resposable");
+        user.setEmailId(1L);
+        user.setPhoneId(1L);
+        user.setRolId(1L);
+
 
         user = userService.saveUser(user);
 

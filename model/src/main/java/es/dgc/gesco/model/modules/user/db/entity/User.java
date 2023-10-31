@@ -39,10 +39,6 @@ public class User extends AuditedBaseEntity{
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NIF", unique = true, length = 9)
-    @NIF
-    private String nif;
-
     @Column(name = "NAME" )
     @NotNull(message = "Debes especificar el nombre")
     @Size(min = 1, max = 100)
@@ -57,12 +53,25 @@ public class User extends AuditedBaseEntity{
     // @Size(min = 1, max = 100, message = "El segundo apellido debe medir entre 1 y 100")
     private String secondSurname;
 
-    @Column(name = "EMAIL")
-    @Email
-    private String email;
+    @Column(name = "NIF", unique = true, length = 9)
+    @NIF
+    private String nif;
 
-    @Column(name = "PASSWORD")
-    private String password;
+    @Column(name = "POSITION", unique = true, length = 9)
+    private String position;
+
+    @Column(name = "AREA_RESPONSABILIDAD", unique = true, length = 9)
+    private String areaResponsabilidad;
+
+    @Column(name = "EMAIL_ID")
+    @Email
+    private Long emailId;
+
+    @Column(name = "PHONE_ID")
+    private Long phoneId;
+
+    @Column(name = "ROL_ID")
+    private Long rolId;
 
 }
 

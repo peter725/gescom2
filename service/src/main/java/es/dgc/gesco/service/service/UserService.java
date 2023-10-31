@@ -76,4 +76,7 @@ public class UserService {
         return userDto;
     }
 
+    public Page<User> getAllByCriteria(UserCriteria userCriteria) {
+        return null;
+    }
 }

@@ -66,7 +66,7 @@ export class AuthManagerService {
 
       // Registrar un timeout para eliminar el token caducado automáticamente
       this.updateProcess('DONE', 'Autenticación realizada con éxito, redirigiendo');
-      await this.router.navigate(this.namedRoutes.getRoute('home'));
+      await this.router.navigate(this.namedRoutes.getRoute('phone'));
     } catch (e) {
       const err = AppError.parse(e);
       const message = err.message || 'Login falso erróneo';
@@ -279,7 +279,7 @@ export class AuthManagerService {
     const isCompleted = this.processStatus.is('DONE');
     const isAuthenticated = this.authContext.instant().isAuthenticated();
     if (isCompleted && isAuthenticated) {
-      await this.router.navigate(this.namedRoutes.getRoute('home'));
+      await this.router.navigate(this.namedRoutes.getRoute('phone'));
       this.updateProcess('INIT');
     }
   }

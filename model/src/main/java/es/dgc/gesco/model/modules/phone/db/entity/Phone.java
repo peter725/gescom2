@@ -1,6 +1,7 @@
-package es.dgc.gesco.model.modules.user.db.entity;
+package es.dgc.gesco.model.modules.phone.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
+import es.dgc.gesco.model.modules.user.db.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -37,7 +38,7 @@ public class Phone extends AuditedBaseEntity {
     private String phone;
 
     @ManyToOne
-    @JoinColumn
-    private User usuario;
+    @JoinColumn(name = "users_id")
+    private User user;
 
 }

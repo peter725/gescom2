@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.user.db.entity;
+package es.dgc.gesco.model.modules.role.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import jakarta.persistence.*;

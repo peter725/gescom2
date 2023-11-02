@@ -4,8 +4,8 @@ import { NamedRoutes } from './named-routes';
 
 
 const routes = createStorage([
-  { key: 'home', value: '/home' },
-  { key: 'home-params', value: '/home/:param' }
+  { key: 'phone', value: '/phone' },
+  { key: 'phone-params', value: '/phone/:param' }
 ]);
 
 describe('NamedRoutePipe', () => {
@@ -17,14 +17,14 @@ describe('NamedRoutePipe', () => {
   });
 
   it('Should return segments', () => {
-    const result = pipe.transform('home');
-    const expected = ['/', 'home'];
+    const result = pipe.transform('phone');
+    const expected = ['/', 'phone'];
     expect(result).toStrictEqual(expected);
   });
 
   it('Should return segments with parsed params', () => {
-    const result = pipe.transform('home-params', { param: 42 });
-    const expected = ['/', 'home', '42'];
+    const result = pipe.transform('phone-params', { param: 42 });
+    const expected = ['/', 'phone', '42'];
     expect(result).toStrictEqual(expected);
   });
 

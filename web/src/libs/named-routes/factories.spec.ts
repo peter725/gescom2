@@ -3,19 +3,19 @@ import { of, createStorage } from './factories';
 
 describe('Create named route value', () => {
   it('Should create a valid named route', () => {
-    const result = of({ key: 'home ', value: 'home' });
+    const result = of({ key: 'phone ', value: 'phone' });
     expect(result).toBeTruthy();
   });
 
   it('Should sanitize source input', () => {
-    const result = of({ key: 'home ', value: 'home' });
-    const expected = { key: 'home', value: 'home' };
+    const result = of({ key: 'phone ', value: 'phone' });
+    const expected = { key: 'phone', value: 'phone' };
     expect(result).toStrictEqual(expected);
   });
 
   it('Should not create routes with a root forward slash ("/")', () => {
-    const result = of({ key: 'home', value: '/home' });
-    const expected = { key: 'home', value: 'home' };
+    const result = of({ key: 'phone', value: '/phone' });
+    const expected = { key: 'phone', value: 'phone' };
     expect(result).toStrictEqual(expected);
   });
 
@@ -27,7 +27,7 @@ describe('Create named route value', () => {
 
 describe('Create a storage with routes', () => {
   it('Should create a routes storage', () => {
-    const result = createStorage([{ key: 'home', value: 'home' }]);
+    const result = createStorage([{ key: 'phone', value: 'phone' }]);
     expect(result).toBeTruthy();
   });
 

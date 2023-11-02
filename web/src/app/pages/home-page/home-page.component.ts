@@ -3,7 +3,7 @@ import { isDevEnvironment } from '@base/config/app';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'tsw-home-page',
+  selector: 'tsw-phone-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })

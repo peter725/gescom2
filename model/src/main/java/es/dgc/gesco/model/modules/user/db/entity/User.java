@@ -3,6 +3,10 @@ package es.dgc.gesco.model.modules.user.db.entity;
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 
 import es.dgc.gesco.model.commom.validation.constraints.NIF;
+import es.dgc.gesco.model.modules.email.db.entity.Email;
+import es.dgc.gesco.model.modules.nationalAuthority.db.entity.NationalAuthority;
+import es.dgc.gesco.model.modules.phone.db.entity.Phone;
+import es.dgc.gesco.model.modules.role.db.entity.Role;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
@@ -12,14 +16,14 @@ import lombok.*;
 
 import java.util.List;
 
-import static es.dgc.gesco.model.util.ConstanteBD.SEQ_USERS;
-import static es.dgc.gesco.model.util.ConstanteBD.TABLE_USERS;
+import static es.dgc.gesco.model.util.ConstanteBD.SEQ_USER;
+import static es.dgc.gesco.model.util.ConstanteBD.TABLE_USER;
 
 /**
  * @author serikat
  */
 @Entity
-@Table(name = TABLE_USERS)
+@Table(name = TABLE_USER)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -28,10 +32,10 @@ import static es.dgc.gesco.model.util.ConstanteBD.TABLE_USERS;
 public class User extends AuditedBaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_USERS)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_USER)
     @SequenceGenerator(
-            name = SEQ_USERS,
-            sequenceName = SEQ_USERS,
+            name = SEQ_USER,
+            sequenceName = SEQ_USER,
             allocationSize = 1
     )
     @Column(name = "ID")
@@ -48,31 +52,38 @@ public class User extends AuditedBaseEntity{
     private String firstSurname;
 
     @Column(name = "SECOND_SURNAME")
-    // @Size(min = 1, max = 100, message = "El segundo apellido debe medir entre 1 y 100")
+    @Size(min = 1, max = 100, message = "El segundo apellido debe medir entre 1 y 100")
     private String secondSurname;
 
-    @Column(name = "NIF", unique = true, length = 9)
+    @Column(name = "NIF", unique = true, length = 10)
     @NIF
     private String nif;
 
-    @Column(name = "POSITION", unique = true, length = 9)
+    @Column(name = "POSITION", length = 100)
     private String position;
 
-    @Column(name = "AREA_RESPONSABILIDAD", unique = true, length = 9)
-    private String areaResponsabilidad;
+    @Column(name = "AREA_RESPONSABILITY", length = 50)
+    private String areaResponsability;
 
-    @Column(name = "EMAIL")
+
+    @ManyToOne
+    @JoinColumn(name = "AUTHORITY_ID")
+    private NationalAuthority nationalAuthority;
+
+
+    @ManyToOne
+    @JoinColumn(name = "ROLE_ID")
+    private Role role;
+
     @Transient
     @ToString.Exclude
     private List<Email> emails;
 
-    @Column(name = "PHONE")
     @Transient
     @ToString.Exclude
     private List<Phone> phones;
 
-    @Column(name = "ROL_ID")
-    private Long rolId;
+
 
 }
 

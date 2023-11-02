@@ -1,7 +1,8 @@
-package es.dgc.gesco.model.modules.user.db.entity;
+package es.dgc.gesco.model.modules.email.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 
+import es.dgc.gesco.model.modules.user.db.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,16 +30,16 @@ public class Email extends AuditedBaseEntity {
             sequenceName = SEQ_EMAIL,
             allocationSize = 1
     )
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "EMAIL" )
+    @Column(name = "email" )
     @NotNull(message = "Debes especificar el email")
     @Size(min = 1, max = 100)
     private String email;
 
     @ManyToOne
-    @JoinColumn
-    private User usuario;
+    @JoinColumn(name = "users_id")
+    private User user;
 
 }

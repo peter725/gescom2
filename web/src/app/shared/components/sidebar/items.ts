@@ -3,18 +3,18 @@ import { MenuItem } from './model';
 
 export const SIDEBAR_ITEMS: MenuItem[] = [
   {
-    text: 'pages.home',
-    path: 'home',
-    icon: 'home',
+    text: 'pages.phone',
+    path: 'phone',
+    icon: 'phone',
   },
   {
     /*text: 'ARCHIVO',
-    path: 'home',
+    path: 'phone',
     icon: 'manage_accounts',
     expanded: false,
     children: [{
         text: 'Inicio',
-        icon: 'home',
+        icon: 'phone',
         expanded: false,
         path:'arbitrationManagementList'
       },

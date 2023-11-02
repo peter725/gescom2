@@ -1,7 +1,6 @@
 package es.dgc.gesco.service.service;
 
 
-import es.dgc.gesco.model.commom.constants.EntityState;
 import es.dgc.gesco.model.modules.user.converter.UserConverter;
 import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.UserDto;
@@ -13,8 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 
 @Service

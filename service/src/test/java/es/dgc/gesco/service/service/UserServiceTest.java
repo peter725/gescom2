@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,6 +36,11 @@ public class UserServiceTest extends AbstractGenericTest {
         userCriteria.setName("jhon");
         Page<User> userPage = userService.getAllByCriteria(userCriteria);
         assertTrue(userPage.getSize()>0);
+    }
+
+    @Test
+    public void fidAllUsers(){
+       List<User> users = userService.findAllUser();
     }
 
 

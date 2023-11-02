@@ -57,6 +57,8 @@ public class UserFacade {
     }
 
 
-
-
+    public List<User> findAll() {
+        List<User> user = userService.findAllUser();
+        return  user;
+    }
 }

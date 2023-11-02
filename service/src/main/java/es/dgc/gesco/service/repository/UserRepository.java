@@ -40,6 +40,6 @@ public interface UserRepository
     @Override
     List<User> findAll();
 
+    Page<User>findAll(@Param("pageable") Pageable pageable);
 
-    Page<User> findAll(@Param("pageable") Pageable pageable);
 }

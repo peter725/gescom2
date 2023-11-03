@@ -1,6 +1,7 @@
 package es.dgc.gesco.service.service;
 
 
+import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
 import es.dgc.gesco.model.modules.nationalAuthority.db.entity.NationalAuthority;
 import es.dgc.gesco.service.repository.AbstractGenericTest;
 import es.dgc.gesco.service.util.TestFactory;
@@ -14,11 +15,11 @@ import java.util.List;
 public class NationalAuthorityTest extends AbstractGenericTest {
 
     @Autowired
-    NationalAuthorityService nationalAuthorityService;
+    AuthorityOEUService authorityOEUService;
 
     @Test
     public void fidAllNationalAuthority(){
-        List<NationalAuthority> nationalAuthority = nationalAuthorityService.findAllNationalAuthority();
+        List<AuthorityOEU> authorityOEUList = authorityOEUService.findAllNationalAuthority();
     }
 
 }

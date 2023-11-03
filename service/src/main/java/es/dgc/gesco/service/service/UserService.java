@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,6 +64,12 @@ public class UserService {
         return userDto;
     }
 
+    public List<User> findAllUser(){
+
+        List<User> users = userRepository.findAll();
+        return users;
+    }
+
     public User loadUser(final UserDto userDto){
 
         User user = userConverter.convertDtoToUsuer(userDto);
@@ -74,7 +81,9 @@ public class UserService {
         return userDto;
     }
 
+
     public Page<User> getAllByCriteria(UserCriteria userCriteria) {
         return null;
     }
+
 }

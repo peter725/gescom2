@@ -17,11 +17,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Log4j2
 @RestController
 @RequestMapping(Url.API+Url.USERS)
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = {"Authorization", "Content-Type"}, maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = {"Authorization", "Content-Type"}, maxAge = 3600)
 public class UserController{
 
     @Autowired
@@ -37,6 +39,25 @@ public class UserController{
             user = userFacade.loadUser(userDto);
 
             user = userFacade.saveUser(user);
+
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            log.error(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping(Url.USERS)
+    public ResponseEntity<Void> findAll() {
+
+        List<User> user;
+
+        try {
+
+            user = userFacade.findAll();
 
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);

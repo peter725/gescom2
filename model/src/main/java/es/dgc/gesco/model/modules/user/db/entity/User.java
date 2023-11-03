@@ -4,7 +4,7 @@ import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 
 import es.dgc.gesco.model.commom.validation.constraints.NIF;
 import es.dgc.gesco.model.modules.email.db.entity.Email;
-import es.dgc.gesco.model.modules.nationalAuthority.db.entity.NationalAuthority;
+import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
 import es.dgc.gesco.model.modules.phone.db.entity.Phone;
 import es.dgc.gesco.model.modules.role.db.entity.Role;
 import jakarta.persistence.*;
@@ -68,7 +68,7 @@ public class User extends AuditedBaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "AUTHORITY_ID")
-    private NationalAuthority nationalAuthority;
+    private AuthorityOEU authorityOEU;
 
 
     @ManyToOne

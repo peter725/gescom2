@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.nationalAuthority.db.entity;
+package es.dgc.gesco.model.modules.authorityOEU.db.entity;
 
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
@@ -25,7 +25,7 @@ import static es.dgc.gesco.model.util.ConstanteBD.*;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class NationalAuthority  extends AuditedBaseEntity {
+public class AuthorityOEU extends AuditedBaseEntity {
 
     //genera el campo id
     @Id

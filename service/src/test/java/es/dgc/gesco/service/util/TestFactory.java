@@ -23,9 +23,6 @@ public class TestFactory {
     }
 
     @Bean
-    public RoleService roleService(RoleRepository roleRepository){
-        return new RoleService(roleRepository);
-        };
-
+    public RoleService roleService(RoleRepository roleRepository){ return new RoleService(roleRepository);  }
 
 }

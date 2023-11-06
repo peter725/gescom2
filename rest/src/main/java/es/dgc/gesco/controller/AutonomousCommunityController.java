@@ -32,11 +32,11 @@ public class AutonomousCommunityController {
     private AutonomousCommunityFacade autonomousCommunityFacade;
 
     @GetMapping
-    public ResponseEntity<Page<AutonomousCommunity>> getAll(@PageableDefault(page = 0, size = 25, sort ="id") Pageable pageable){
+    public ResponseEntity<Page<AutonomousCommunity>> getAllPage(@PageableDefault(page = 0, size = 25, sort ="id") Pageable pageable){
         Page<AutonomousCommunity> autonomousCommunityPage;
 
         try {
-            autonomousCommunityPage = autonomousCommunityFacade.getAll(pageable);
+            autonomousCommunityPage = autonomousCommunityFacade.getAllPage(pageable);
         } catch (Exception e) {
             log.error(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);

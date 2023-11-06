@@ -19,7 +19,6 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
   }
 
   findAny<Result = T>(config: RequestConfig): Observable<Result> {
-    console.log("entro aqui findAny");
     const def = this.operations.get(config.resourceName);
     const operation = def.findAll(config.pathParams);
     const params = this.buildHttpParams(config);
@@ -27,7 +26,6 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
   }
 
   findAll<Result = T>(config: RequestConfig): Observable<Page<Result>> {
-    console.log("entro aqui findAll");
     const def = this.operations.get(config.resourceName);
     const operation = def.findAll(config.pathParams);
     const params = this.buildHttpParams(config);
@@ -37,7 +35,6 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
   }
 
   findById<Result = T>(id: ID, config: RequestConfig): Observable<Result> {
-    console.log("entro aqui findById");
     const def = this.operations.get(config.resourceName);
     const operation = def.findById(config.pathParams);
     const params = this.buildHttpParams(config);
@@ -45,7 +42,6 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
   }
 
   create<Result = T>(payload: T, config: RequestConfig): Observable<Result> {
-    console.log("entro aqui create");
     const def = this.operations.get(config.resourceName);
     const operation = def.create(config.pathParams);
     const params = this.buildHttpParams(config);
@@ -53,7 +49,6 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
   }
 
   update<Result = T>(id: ID, payload: T, config: RequestConfig): Observable<Result> {
-    console.log("entro aqui update");
     const def = this.operations.get(config.resourceName);
     const operation = def.update({ ...id, ...config.pathParams });
     const params = this.buildHttpParams(config);
@@ -61,7 +56,6 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
   }
 
   changeState<Result = T>(id: ID, payload: ChangeStateReq, config: RequestConfig): Observable<any> {
-    console.log("entro aqui changeState");
     const def = this.operations.get(config.resourceName);
     const operation = def.changeState({ ...id, ...config.pathParams });
     const params = this.buildHttpParams(config);
@@ -69,7 +63,6 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
   }
 
   delete(id: ID, config: RequestConfig): Observable<void> {
-    console.log("entro aqui delete");
     const def = this.operations.get(config.resourceName);
     const operation = def.delete(config.pathParams);
     const params = this.buildHttpParams(config);

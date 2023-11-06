@@ -24,7 +24,7 @@ public class AutonomousCommunityService {
     }
 
 
-    public Page<AutonomousCommunity> getAll(Pageable pageable) {
+    public Page<AutonomousCommunity> getAllPage(Pageable pageable) {
 
         Page<AutonomousCommunity> autonomousCommunityPage = autonomousCommunityRepository.findAll(pageable);
         return autonomousCommunityPage;

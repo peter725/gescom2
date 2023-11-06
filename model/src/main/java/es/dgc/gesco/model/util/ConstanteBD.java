@@ -9,6 +9,7 @@ public class ConstanteBD {
     public static final String TABLE_PUBLIC_LABORATORIES="public_laboratories";
     public static final String TABLE_LEGISLATION="legislation";
     public static final String TABLE_AUTHORITY_DGC="authority_dgc";
+    public static final String TABLE_CCAA ="autonomous_community";
 
 
 
@@ -20,4 +21,5 @@ public class ConstanteBD {
     public static final String SEQ_PUBLIC_LABORATORIES="seq_public_laboratories";
     public static final String SEQ_LEGISLATION="seq_legislation";
     public static final String SEQ_AUTHORITY_DGC="seq_authority_dgc";
+    public static final String SEQ_CCAA ="seq_autonomous_community";
 }

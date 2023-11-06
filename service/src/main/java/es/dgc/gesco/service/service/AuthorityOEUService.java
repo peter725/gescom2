@@ -15,7 +15,7 @@ public class AuthorityOEUService {
     @Autowired
     private final AuthorityOEURepository authorityOEURepository;
 
-    public List<AuthorityOEU> findAllNationalAuthority() {
+    public List<AuthorityOEU> findAll() {
 
         List<AuthorityOEU> authorityOEUList = authorityOEURepository.findAll();
         return authorityOEUList;

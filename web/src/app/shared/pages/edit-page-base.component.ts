@@ -14,6 +14,7 @@ import {Email} from "@libs/sdk/email";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {Phone} from "@libs/sdk/phone";
+import {AutonomousCommunity} from "@libs/sdk/AutonomousCommunity";
 
 
 @Directive()

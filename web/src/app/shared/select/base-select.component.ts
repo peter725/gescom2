@@ -173,6 +173,7 @@ export abstract class CustomSelectBaseComponent<T = ComboValue>
    */
   @Input()
   set resourceName(resource: string) {
+    console.log("entro aqui primero");
     this._resourceName = resource;
     this._automaticLoad = true;
   }

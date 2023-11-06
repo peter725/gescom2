@@ -33,9 +33,10 @@ export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser
       profile: this.fb.control(null, [Validators.required]),
       modules: this.fb.control([], [Validators.required, Validators.min(1)]),
       position: this.fb.control(null, [Validators.required]),
-      nationalAuthority: this.fb.control(null, [Validators.required]),
+      authorityOEU: this.fb.control(null, [Validators.required]),
       areaResponsability: this.fb.control(null, [Validators.required]),
       generalDirection: this.fb.control(null, [Validators.required]),
+      autonomousCommunity: this.fb.control(null, [Validators.required]),
     });
   }
 

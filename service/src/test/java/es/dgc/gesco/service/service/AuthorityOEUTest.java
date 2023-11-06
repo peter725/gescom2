@@ -13,12 +13,6 @@ import java.util.List;
 @Import(TestFactory.class)
 public class AuthorityOEUTest extends AbstractGenericTest {
 
-    @Autowired
-    AuthorityOEUService authorityOEUService;
 
-    @Test
-    public void fidAllNationalAuthority(){
-        List<AuthorityOEU> authorityOEUList = authorityOEUService.findAllNationalAuthority();
-    }
 
 }

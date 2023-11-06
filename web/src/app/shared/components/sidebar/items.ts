@@ -3,9 +3,9 @@ import { MenuItem } from './model';
 
 export const SIDEBAR_ITEMS: MenuItem[] = [
   {
-    text: 'pages.phone',
-    path: 'phone',
-    icon: 'phone',
+    text: 'pages.home',
+    path: 'home',
+    icon: 'home',
   },
   {
     /*text: 'ARCHIVO',

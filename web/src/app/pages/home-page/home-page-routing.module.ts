@@ -5,7 +5,7 @@ import { HomePageComponent } from './home-page.component';
 const routes: Routes = [
   {
     path: '',
-    title: 'pages.phone',
+    title: 'pages.home',
     component: HomePageComponent
   }
 ];

@@ -62,10 +62,6 @@ public class User extends AuditedBaseEntity{
     @Column(name = "POSITION", length = 100)
     private String position;
 
-    @Column(name = "AREA_RESPONSABILITY", length = 50)
-    private String areaResponsability;
-
-
     @ManyToOne
     @JoinColumn(name = "AUTHORITY_ID")
     private AuthorityOEU authorityOEU;

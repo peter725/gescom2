@@ -19,7 +19,7 @@ import static es.dgc.gesco.model.util.ConstanteBD.*;
  * @author serikat
  */
 @Entity
-@Table(name = TABLE_NATIONAL_AUTHORITY)
+@Table(name = TABLE_AUTHORITY_OEU)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -29,10 +29,10 @@ public class AuthorityOEU extends AuditedBaseEntity {
 
     //genera el campo id
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NATIONAL_AUTHORITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_AUTHORITY_OEU)
     @SequenceGenerator(
-            name = SEQ_NATIONAL_AUTHORITY,
-            sequenceName = SEQ_NATIONAL_AUTHORITY,
+            name = SEQ_AUTHORITY_OEU,
+            sequenceName = SEQ_AUTHORITY_OEU,
             allocationSize = 1
     )
     @Column(name = "ID")

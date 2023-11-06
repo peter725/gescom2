@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 import java.util.List;
 
 @Import(TestFactory.class)
-public class NationalAuthorityTest extends AbstractGenericTest {
+public class AuthorityOEUTest extends AbstractGenericTest {
 
 
 

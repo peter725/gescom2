@@ -22,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Log4j2
 @RestController
-@RequestMapping(Url.API+Url.NATIONAL_AUTHORITY)
+@RequestMapping(Url.API+Url.AUTHORITY_OEU)
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = {"Authorization", "Content-Type"}, maxAge = 3600)
 public class AuthorityOEUController {
@@ -31,7 +31,8 @@ public class AuthorityOEUController {
     private AuthorityOEUFacade authorityOEUFacade;
 
 
-    @PostMapping(Url.NATIONAL_AUTHORITY)
+
+    @PostMapping(Url.AUTHORITY_OEU)
     public ResponseEntity<Void> getAllPage(@PageableDefault(page = 0, size = 25, sort ="id") Pageable pageable) {
 
         Page<AuthorityOEU> authorityOEUPage;
@@ -39,6 +40,7 @@ public class AuthorityOEUController {
         try {
 
             authorityOEUPage = authorityOEUFacade.getAllPage(pageable);
+
 
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);

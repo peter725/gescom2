@@ -1,7 +1,6 @@
 package es.dgc.gesco.facade;
-
-import es.dgc.gesco.model.modules.nationalAuthority.db.entity.NationalAuthority;
-import es.dgc.gesco.service.service.NationalAuthorityService;
+import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
+import es.dgc.gesco.service.service.AuthorityOEUService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +11,11 @@ import java.util.List;
 public class NationalAuthorityFacade {
 
     @Autowired
-    private NationalAuthorityService nationalAuthorityService;
+    private AuthorityOEUService authorityOEUService;
 
-    public List<NationalAuthority> findAll() {
+    public List<AuthorityOEU> findAll() {
 
-        List<NationalAuthority> nationalAuthorities = nationalAuthorityService.findAllNationalAuthority();
+        List<AuthorityOEU> nationalAuthorities = authorityOEUService.findAll();
         return  nationalAuthorities;
     }
 

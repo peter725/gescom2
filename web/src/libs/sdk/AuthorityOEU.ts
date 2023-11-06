@@ -1,7 +1,7 @@
 import {SimpleModel, StatefulModel} from "@libs/sdk/common";
 
 //create a new nationalAutority interface with name, minsty, ministryAcronym, generalDirection, deputyDirectorate, legislation, areaResponsability, commentsAreaResponsability, committee, postalAddress, web, legalReferFunctAuthority, icsms, typeAuthority, publicLaboratories, generalComments
-export interface NationalAuthority extends SimpleModel, StatefulModel {
+export interface AuthorityOEU extends SimpleModel, StatefulModel {
     name: string;
     minsty: string;
     ministryAcronym: string;
@@ -20,7 +20,7 @@ export interface NationalAuthority extends SimpleModel, StatefulModel {
     generalComments: string;
 }
 
-export interface NationalAuthorityView extends SimpleModel, StatefulModel {
+export interface AuthorityOEUView extends SimpleModel, StatefulModel {
     name: string;
     minsty: string;
     ministryAcronym: string;
@@ -40,7 +40,7 @@ export interface NationalAuthorityView extends SimpleModel, StatefulModel {
 }
 
 //create a new nationalAutority request structure
-export interface CreateNationalAuthority {
+export interface CreateAuthorityOEU {
     id: number | null;
     name: string | null;
     minsty: string | null;

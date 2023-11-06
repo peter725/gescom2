@@ -1,13 +1,7 @@
 package es.dgc.gesco.service.util;
 
-import es.dgc.gesco.service.repository.EmailRepository;
-import es.dgc.gesco.service.repository.AuthorityOEURepository;
-import es.dgc.gesco.service.repository.RoleRepository;
-import es.dgc.gesco.service.repository.UserRepository;
-import es.dgc.gesco.service.service.EmailService;
-import es.dgc.gesco.service.service.AuthorityOEUService;
-import es.dgc.gesco.service.service.RoleService;
-import es.dgc.gesco.service.service.UserService;
+import es.dgc.gesco.service.repository.*;
+import es.dgc.gesco.service.service.*;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -32,5 +26,10 @@ public class TestFactory {
     @Bean
     public AuthorityOEUService authorityOEUService(AuthorityOEURepository authorityOEURepository){
         return new AuthorityOEUService(authorityOEURepository);
+    };
+
+    @Bean
+    public AutonomousCommunityService autonomousCommunityService(AutonomousCommunityRepository autonomousCommunityRepository){
+        return new AutonomousCommunityService(autonomousCommunityRepository);
     };
 }

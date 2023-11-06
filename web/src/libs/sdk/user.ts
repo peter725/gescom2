@@ -4,7 +4,8 @@ import { Module } from './module';
 import {Profile } from './profile';
 import {Email} from "@libs/sdk/email";
 import {Phone} from "@libs/sdk/phone";
-import {NationalAuthority} from "@libs/sdk/national-authority";
+import {AuthorityOEU} from "@libs/sdk/AuthorityOEU";
+import {AutonomousCommunity} from "@libs/sdk/AutonomousCommunity";
 
 /**
  * Default user structure.
@@ -15,7 +16,7 @@ export interface User extends SimpleModel, StatefulModel {
   firstSurname: string;
   secondSurname: string;
   fullName: string;
-
+  autonomousCommunity: AutonomousCommunity;
   nif: string;
   emails: Email[];
   phone: Phone[];
@@ -23,7 +24,7 @@ export interface User extends SimpleModel, StatefulModel {
   modules: Module[];
   profile: Profile;
   position: string;
-  nationalAuthority: NationalAuthority;
+  authorityOEU: AuthorityOEU;
   generalDirection: string;
   areaResponsability: string;
 
@@ -39,14 +40,14 @@ export interface UserView extends SimpleModel, StatefulAltModel {
   secondSurname: string;
   emails: Email[];
   phones: Phone[];
-  ccaa: string;
+  autonomousCommunity: string;
   provinces: string;
   entities: string;
   modules: string;
   profile: string;
   fullName: string;
   position: string;
-  nationalAuthority: string;
+  authorityOEU: string;
   generalDirection: string;
   areaResponsability: string;
 }
@@ -63,12 +64,12 @@ export interface CreateUser {
   nif: string | null;
   emails: Email[] | null;
   phones: Phone[] | null;
-
+  autonomousCommunity: AutonomousCommunity[] | null;
   role: string | null;
   profile: Profile[] | null;
   modules: Module[] | null;
   position: string | null;
-  nationalAuthority: NationalAuthority | null;
+  authorityOEU: AuthorityOEU | null;
   generalDirection: string | null;
   areaResponsability: string | null;
 
@@ -94,8 +95,9 @@ export interface UserFilterForm extends AppQuerySource {
   profile?: string;
   state?: number[];
   position?: string;
-  nationalAuthority?: string;
+  authorityOEU?: string;
   generalDirection?: string;
   areaResponsability?: string;
+  autonomousCommunity?: string;
 
 }

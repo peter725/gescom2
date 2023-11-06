@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { NamedRoutesModule, NamedRouteSource } from '@libs/named-routes';
 
 const routes: NamedRouteSource[] = [
-  { key: 'phone', value: '/app/inicio' },
+  { key: 'home', value: '/app/inicio' },
   { key: 'login', value: '/auth/login' },
   { key: 'logout', value: '/auth/logout' },
 

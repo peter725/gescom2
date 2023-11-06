@@ -2,7 +2,7 @@ package es.dgc.gesco.controller;
 
 import es.dgc.gesco.facade.NationalAuthorityFacade;
 
-import es.dgc.gesco.model.modules.nationalAuthority.db.entity.NationalAuthority;
+import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,11 +33,11 @@ public class NationalAuthorityController{
     @PostMapping(Url.NATIONAL_AUTHORITY)
     public ResponseEntity<Void> findAll() {
 
-        List<NationalAuthority> nationalAuthorities;
+        List<AuthorityOEU> authorityOEUList;
 
         try {
 
-            nationalAuthorities = nationalAuthorityFacade.findAll();
+            authorityOEUList = nationalAuthorityFacade.findAll();
 
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);

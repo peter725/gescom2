@@ -18,7 +18,6 @@ public class UserCriteria extends FilterCriteria {
     private String secondSurname;
     private String nif;
     private String position;
-    private String areaResponsabilidad;
     private Long rolId;
     private Long phoneId;
     private Long emaild;

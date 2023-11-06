@@ -1,8 +1,8 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.facade.NationalAuthorityFacade;
+import es.dgc.gesco.facade.AuthorityOEUFacade;
 
-import es.dgc.gesco.model.modules.nationalAuthority.db.entity.NationalAuthority;
+import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,23 +21,23 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@RequestMapping(Url.API+Url.NATIONAL_AUTHORITY)
+@RequestMapping(Url.API+Url.AUTHORITY_OEU)
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = {"Authorization", "Content-Type"}, maxAge = 3600)
-public class NationalAuthorityController{
+public class AuthorityOEUController {
 
     @Autowired
-    private NationalAuthorityFacade nationalAuthorityFacade;
+    private AuthorityOEUFacade authorityOEUFacade;
 
 
-    @PostMapping(Url.NATIONAL_AUTHORITY)
+    @PostMapping(Url.AUTHORITY_OEU)
     public ResponseEntity<Void> findAll() {
 
-        List<NationalAuthority> nationalAuthorities;
+        List<AuthorityOEU> authorityOEUS;
 
         try {
 
-            nationalAuthorities = nationalAuthorityFacade.findAll();
+            authorityOEUS = authorityOEUFacade.findAll();
 
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);

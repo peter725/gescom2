@@ -34,6 +34,12 @@ public class TestFactory {
     };
 
     @Bean
+    public AuthorityDGCService authorityDGCservice(AuthorityDGCRepository authorityDGCRepository){
+        return new AuthorityDGCService(authorityDGCRepository);
+    };
+
+
+    @Bean
     public ProfileService profileService(ProfileRepository profileRepository){
         return new ProfileService(profileRepository);
     };

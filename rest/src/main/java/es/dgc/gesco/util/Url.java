@@ -2,6 +2,7 @@ package es.dgc.gesco.util;
 
 public class Url {
 
+    public static final String PROFILE ="/profiles";
     public static final String ALL ="/all";
     public static final String API ="/api";
     public static final String NIF ="/nif";
@@ -14,5 +15,5 @@ public class Url {
     public static final String DELETE = "/delete";
     public static final String UPDATE = "/update";
     public static final String AUTHORITY_OEU ="/authority_oeu";
-    public static final String AUTONOMOUS_COMMUNITY ="/autonomous_community";
+    public static final String AUTONOMOUS_COMMUNITY ="/autonomous_communitys";
 }

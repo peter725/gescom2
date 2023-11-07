@@ -32,4 +32,9 @@ public class TestFactory {
     public AutonomousCommunityService autonomousCommunityService(AutonomousCommunityRepository autonomousCommunityRepository){
         return new AutonomousCommunityService(autonomousCommunityRepository);
     };
+
+    @Bean
+    public ProfileService profileService(ProfileRepository profileRepository){
+        return new ProfileService(profileRepository);
+    };
 }

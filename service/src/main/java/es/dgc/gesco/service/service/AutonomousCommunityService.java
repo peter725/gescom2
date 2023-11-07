@@ -31,4 +31,8 @@ public class AutonomousCommunityService {
     }
 
 
+    public List<AutonomousCommunity> getAll() {
+
+        return null;
+    }
 }

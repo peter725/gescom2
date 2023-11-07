@@ -1,6 +1,7 @@
 package es.dgc.gesco.facade;
 
 import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
+import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.service.service.AuthorityOEUService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,6 @@ public class AuthorityOEUFacade {
         return  authorityOEUPage;
 
     }
-
 
 }
 

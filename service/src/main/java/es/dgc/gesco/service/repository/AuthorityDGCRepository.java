@@ -1,15 +1,14 @@
 package es.dgc.gesco.service.repository;
 
-import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
+import es.dgc.gesco.model.modules.authorityDGC.db.entity.AuthorityDGC;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface AuthorityOEURepository extends BaseRepository<AuthorityOEU, Long>{
+public interface AuthorityDGCRepository extends BaseRepository<AuthorityDGC, Long>{
+
     @Override
-    Page<AuthorityOEU> findAll(@Param("pageable") Pageable pageable);
+    Page<AuthorityDGC> findAll(@Param("pageable") Pageable pageable);
 }

@@ -16,7 +16,7 @@ public class AutonomousCommunityFacade {
     @Autowired
     private AutonomousCommunityService autonomousCommunityService;
 
-    public Page<AutonomousCommunity> getAllPage(Pageable pageable) {
+    public Page<AutonomousCommunity> getAllPage (Pageable pageable) {
         Page<AutonomousCommunity> autonomousCommunityPage = autonomousCommunityService.getAllPage(pageable);
         return  autonomousCommunityPage;
     }

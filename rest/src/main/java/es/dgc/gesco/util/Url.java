@@ -16,5 +16,5 @@ public class Url {
 
     public static final String AUTHORITY_OEU ="/authority_oeu";
 
-
+    public static final String AUTONOMOUS_COMMUNITY ="/autonomous_community";
 }

@@ -37,7 +37,7 @@ public class UserFacade {
         return userDto;
     }
 
-    @Transactional
+
     public void updateUser(final UserDto userDto){
         userService.updateUser(userDto);
     }

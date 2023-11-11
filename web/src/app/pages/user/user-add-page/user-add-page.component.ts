@@ -23,20 +23,17 @@ export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser
   protected buildForm() {
     return this.fb.group<ControlsOf<CreateUser>>({
       id: this.fb.control(null),
-      name: this.fb.control(null, [Validators.required]),
+      name: this.fb.control(null, ),
       firstSurname: this.fb.control(null, [Validators.required]),
       secondSurname: this.fb.control(null, []),
       nif: this.fb.control(null, [Validators.required, CustomValidators.nif]),
       emails: this.fb.control([], [Validators.required, Validators.email]),
       phones: this.fb.control([], [Validators.required, Validators.minLength(9)]),
-      role: this.fb.control(null, [Validators.required]),
       profile: this.fb.control(null, [Validators.required]),
-      modules: this.fb.control([], [Validators.required, Validators.min(1)]),
       position: this.fb.control(null, [Validators.required]),
-      authorityOEU: this.fb.control(null, [Validators.required]),
       areaResponsability: this.fb.control(null, [Validators.required]),
-      generalDirection: this.fb.control(null, [Validators.required]),
       autonomousCommunity: this.fb.control(null, [Validators.required]),
+      authority: this.fb.control(null, [Validators.required]),
     });
   }
 

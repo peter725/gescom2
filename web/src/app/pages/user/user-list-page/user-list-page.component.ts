@@ -26,7 +26,7 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
   constructor(
       crudService: CrudImplService<User>,
       filterService: FilterService,
-      private sampleCtx: AppContextService,
+      //private sampleCtx: AppContextService,
   ) {
     super(crudService, filterService);
   }
@@ -38,11 +38,11 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
 
   protected override async getRequestConfig(): Promise<RequestConfig> {
     const config = await super.getRequestConfig();
-    const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
+    //const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
 
     config.queryParams = {
-      ...config.queryParams,
-      scope,
+      ...config.queryParams
+      //scope,
     };
     return config;
   }
@@ -64,8 +64,8 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
     ];
   }
 
-  private monitorCtxChanges() {
-    this.sampleCtx.scope$.pipe(takeUntil(this.destroyed$), skip(1)).subscribe(() => this.reloadData());
-  }
+  //private monitorCtxChanges() {
+   // this.sampleCtx.scope$.pipe(takeUntil(this.destroyed$), skip(1)).subscribe(() => this.reloadData());
+  //}
 
 }

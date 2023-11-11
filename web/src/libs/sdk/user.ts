@@ -4,8 +4,9 @@ import { Module } from './module';
 import {Profile } from './profile';
 import {Email} from "@libs/sdk/email";
 import {Phone} from "@libs/sdk/phone";
-import {AuthorityOEU} from "@libs/sdk/AuthorityOEU";
-import {AutonomousCommunity} from "@libs/sdk/AutonomousCommunity";
+import {AutonomousCommunity} from "@libs/sdk/autonomousCommunity";
+import {Role} from "@libs/sdk/role";
+import {Authority} from "@libs/sdk/authority";
 
 /**
  * Default user structure.
@@ -20,11 +21,11 @@ export interface User extends SimpleModel, StatefulModel {
   nif: string;
   emails: Email[];
   phone: Phone[];
-  role: string;
+  role: Role;
   modules: Module[];
   profile: Profile;
   position: string;
-  authorityOEU: AuthorityOEU;
+  authority: Authority;
   generalDirection: string;
   areaResponsability: string;
 
@@ -41,13 +42,10 @@ export interface UserView extends SimpleModel, StatefulAltModel {
   emails: Email[];
   phones: Phone[];
   autonomousCommunity: string;
-  provinces: string;
-  entities: string;
-  modules: string;
   profile: string;
   fullName: string;
   position: string;
-  authorityOEU: string;
+  authority: string;
   generalDirection: string;
   areaResponsability: string;
 }
@@ -65,12 +63,9 @@ export interface CreateUser {
   emails: Email[] | null;
   phones: Phone[] | null;
   autonomousCommunity: AutonomousCommunity[] | null;
-  role: string | null;
   profile: Profile[] | null;
-  modules: Module[] | null;
   position: string | null;
-  authorityOEU: AuthorityOEU | null;
-  generalDirection: string | null;
+  authority: Authority[] | null;
   areaResponsability: string | null;
 
 }
@@ -90,13 +85,10 @@ export interface UserFilterForm extends AppQuerySource {
   nif?: string;
   emails?: string[];
   phone?: string[];
-  role?: string;
-  modules?: string[];
   profile?: string;
   state?: number[];
   position?: string;
-  authorityOEU?: string;
-  generalDirection?: string;
+  authority?: string;
   areaResponsability?: string;
   autonomousCommunity?: string;
 

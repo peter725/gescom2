@@ -3,7 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
-import {AutonomousCommunity, CcaaForm} from "@libs/sdk/AutonomousCommunity";
+import {AutonomousCommunity, CcaaForm} from "@libs/sdk/autonomousCommunity";
 
 @Component({
     selector: 'tsw-autonomous-community-edit-page',

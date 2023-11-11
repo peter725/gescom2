@@ -13,6 +13,7 @@
                     <mat-form-field>
                         <mat-label>{{ 'fields.name' | translate }}</mat-label>
                         <input matInput formControlName="name">
+                        <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
@@ -30,16 +31,10 @@
                         <input matInput formControlName="nif">
                     </mat-form-field>
                 </div>
-                <div class="grid grid-cols-4 gap-1.5">
-                    <mat-form-field>
-                        <mat-label>{{ 'fields.role' | translate }}</mat-label>
-                        <tsw-custom-select
-                                resourceName="roles"
-                                formControlName="role"
-                        ></tsw-custom-select>
-                    </mat-form-field>
 
-                    <mat-form-field>
+
+                <div  class="grid grid-cols-6 gap-1.5">
+                    <mat-form-field class="col-span-2">
                         <mat-label>{{ 'fields.profile' | translate }}</mat-label>
                         <tsw-custom-select
                                 resourceName="profiles"
@@ -47,12 +42,12 @@
                         ></tsw-custom-select>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field class="col-span-2">
                         <mat-label>{{ 'fields.position' | translate }}</mat-label>
                         <input matInput formControlName="position">
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field class="col-span-2">
                         <mat-label>{{ 'fields.ccaa' | translate }}</mat-label>
                         <tsw-custom-select
                                 resourceName="autonomousCommunity"
@@ -61,18 +56,13 @@
                     </mat-form-field>
                 </div>
 
-                <div class="grid grid-cols-6 gap-1.5">
+                <div class="grid grid-cols-4 gap-1.5">
                     <mat-form-field class="col-span-2">
                         <mat-label>{{ 'fields.aann' | translate }}</mat-label>
                         <tsw-custom-select
                                 resourceName="authorityOEU"
                                 formControlName="authorityOEU"
                         ></tsw-custom-select>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-span-2">
-                        <mat-label>{{ 'fields.generalDirection' | translate }}</mat-label>
-                        <input matInput formControlName="generalDirection">
                     </mat-form-field>
 
                     <mat-form-field class="col-span-2">
@@ -132,11 +122,11 @@
 
             </div>
 
-            <tsw-user-edit-scope-list
+            <!--<tsw-user-edit-scope-list
                     *ngIf="!isNew"
                     section-content
                     [user]="srcData"
-            ></tsw-user-edit-scope-list>
+            ></tsw-user-edit-scope-list>-->
 
         </tsw-section-wrapper>
 

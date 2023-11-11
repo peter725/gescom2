@@ -14,7 +14,7 @@ public class ConstanteBD {
 
 
 
-    public static final String SEQ_USER="seq_user";
+    public static final String SEQ_USER="seq_users";
     public static final String SEQ_EMAIL="seq_email";
     public static final String SEQ_PHONE="seq_phone";
     public static final String SEQ_ROLE="seq_role";

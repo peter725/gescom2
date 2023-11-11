@@ -68,7 +68,6 @@ public class User extends AuditedBaseEntity{
 
     //declara campo area_responsability de tipo string notnull maximo 100
     @Column(name = "AREA_RESPONSABILITY" )
-    @NotNull(message = "Debes especificar el area de responsabilidad")
     @Size(min = 1, max = 100)
     private String areaResponsability;
 

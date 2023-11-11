@@ -37,4 +37,9 @@ public class TestFactory {
     public ProfileService profileService(ProfileRepository profileRepository){
         return new ProfileService(profileRepository);
     };
+
+    @Bean
+    public RoleService profileRoleService(RoleRepository RoleRepository){
+        return new RoleService(RoleRepository);
+    };
 }

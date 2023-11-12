@@ -29,8 +29,8 @@ public class Proposal extends AuditedBaseEntity {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "ENVIADA")
-    private Boolean enviada;
+    @Column(name = "SENT")
+    private Boolean sent;
 
     @Column(name = "ID_CCAA")
     private Long id_ccaa;

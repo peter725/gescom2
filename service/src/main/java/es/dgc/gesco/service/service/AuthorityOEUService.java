@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthorityOEUService {
@@ -21,4 +23,15 @@ public class AuthorityOEUService {
         return authorityOEUPage;
     }
 
+    public AuthorityOEU saveAutonomousCommunity(final AuthorityOEU authorityOEU){
+
+        AuthorityOEU newAuthorityOEU1 = authorityOEURepository.save(authorityOEU);
+        return newAuthorityOEU1;
+    }
+
+
+    public List<AuthorityOEU> getAll() {
+
+        return null;
+    }
 }

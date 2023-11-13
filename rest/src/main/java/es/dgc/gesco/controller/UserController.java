@@ -133,12 +133,12 @@ public class UserController{
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(final @PathVariable Long id) {
+    @PostMapping(Url.CHANGE_STATE+"/{id}"+Url.STATUS)
+    public ResponseEntity<String> changeStateUser(final @PathVariable Long id) {
 
         try {
 
-            userFacade.deleteUser(id);
+            userFacade.changeStateUser(id);
         } catch (Exception e) {
             log.error(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);

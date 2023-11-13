@@ -28,13 +28,18 @@ public class AuthorityDGC  extends AuditedBaseEntity {
     @Column(name = "ID")
     private Long id;
 
+    //genera el campo name string de 50 caracteres
+    @Column(name = "NAME" )
+    @Size(min = 1, max = 50)
+    private String name;
+
     //genear el campo directionName string de 50 caracteres
     @Column(name = "DIRECTION_NAME" )
     @Size(min = 1, max = 50)
     private String directionName;
 
     //genera el campo comunidadAutonoma string de 50 caracteres
-    @Column(name = "COMUNIDAD_AUTONOMA" )
+    @Column(name = "AUTONOMOUS_COMMUNITY" )
     @Size(min = 1, max = 50)
     private String comunidadAutonoma;
 

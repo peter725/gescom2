@@ -9,7 +9,17 @@ export interface Authority extends SimpleModel, StatefulModel {
     address: string;
 }
 
-export interface CreateAuthorityForm {
+export interface AuthorityForm {
+    id: number | null;
+    name: string | null;
+    autonomousCommunity: string | null;
+    directionName: string | null;
+    concierge: string | null;
+    address: string | null;
+
+}
+
+export interface CreateAuthority {
     id: number | null;
     name: string | null;
     autonomousCommunity: string | null;

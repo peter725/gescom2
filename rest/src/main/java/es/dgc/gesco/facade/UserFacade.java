@@ -33,13 +33,15 @@ public class UserFacade {
     }
 
     public UserDto getUserById(final Long id){
-        UserDto userDto = userService.getUserById(id);
+        User user = userService.getUserById(id);
+        UserDto userDto = userService.loadUserDto(user);
         return userDto;
     }
 
 
     public void updateUser(final UserDto userDto){
-        userService.updateUser(userDto);
+        User userActual = loadUser(userDto);
+        userService.updateUser(userActual);
     }
 
     public UserDto getUserByNif(final String nif){
@@ -47,8 +49,8 @@ public class UserFacade {
         return userDto;
     }
 
-    public void deleteUser(final Long id){
-        userService.deleteUser(id);
+    public void changeStateUser(final Long id){
+        userService.changeStateUser(id);
     }
 
     public User loadUser(final UserDto userDto){

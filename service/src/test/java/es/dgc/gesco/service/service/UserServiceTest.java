@@ -25,8 +25,8 @@ public class UserServiceTest extends AbstractGenericTest {
     //@Test
     public void getUserByIdTest(){
 
-        UserDto userDto = userService.getUserById(5L);
-        assertNotNull(userDto);
+        User user = userService.getUserById(5L);
+        assertNotNull(user);
 
     }
 
@@ -68,21 +68,21 @@ public class UserServiceTest extends AbstractGenericTest {
 
         String nifEdited = "000000000";
 
-        UserDto userDto = userService.getUserById(1L);
+        User user = userService.getUserById(1L);
 
-        userDto.setNif(nifEdited);
+        user.setNif(nifEdited);
 
-        userService.updateUser(userDto);
+        userService.updateUser(user);
 
-        assertNotNull(userDto);
+        assertNotNull(user);
     }
 
     //@Test
     public void deleteUserTest(){
 
-        userService.deleteUser(1L);
-        UserDto userDto = userService.getUserById(1L);
-        assertEquals(userDto.getState(),2);
+        userService.changeStateUser(1L);
+        User user = userService.getUserById(1L);
+        assertEquals(user.getState(),2);
     }
 
 }

@@ -13,6 +13,8 @@ public class Url {
     public static final String CREATE = "/create";
     public static final String EDIT = "/edit";
     public static final String LISTA = "/list";
+    public static final String CHANGE_STATE = "/patch";
+    public static final String STATUS = "/status";
     public static final String DELETE = "/delete";
     public static final String UPDATE = "/update/1";
     public static final String AUTHORITY_OEU ="/authority_oeu";

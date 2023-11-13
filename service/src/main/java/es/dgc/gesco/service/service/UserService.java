@@ -32,11 +32,10 @@ public class UserService {
         return newUser;
     }
 
-    public UserDto getUserById(Long id){
+    public User getUserById(Long id){
 
         Optional<User> user = userRepository.findById(id);
-        UserDto userDto = loadUserDto(user.get());
-        return userDto;
+        return user.get();
     }
 
     public Page<User> getAllByPage(Pageable pageable){
@@ -45,16 +44,18 @@ public class UserService {
         return userPage;
     }
 
-    public User updateUser(final UserDto userDto) {
+    public User updateUser(final User user) {
 
-        User userActual = loadUser(userDto);
-        return userRepository.save(userActual);
+        return userRepository.save(user);
     }
 
-    public void deleteUser(final Long id){
+    public void changeStateUser(final Long id){
 
-        User user = loadUser(this.getUserById(id));
-        user.setState(2);
+        User user = this.getUserById(id);
+        if (user.getState() == 2)
+            user.setState(1);
+        else
+            user.setState(2);
         userRepository.save(user);
     }
 

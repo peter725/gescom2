@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.proposal.db.entity;
+package es.dgc.gesco.model.modules.approach.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import es.dgc.gesco.model.modules.user.db.entity.User;
@@ -17,7 +17,7 @@ import static es.dgc.gesco.model.util.ConstanteBD.TABLE_ROLE;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class Proposal extends AuditedBaseEntity {
+public class Approach extends AuditedBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_ROLE)
@@ -32,21 +32,21 @@ public class Proposal extends AuditedBaseEntity {
     @Column(name = "SENT")
     private Boolean sent;
 
-    @Column(name = "ID_CCAA")
-    private Long id_ccaa;
+    @Column(name = "ID_AUTONOMOUS_COMMUNITY")
+    private Long id_autonomous_community;
 
     @ManyToOne
     @JoinColumn(name = "ID_USER")
     private User user;
 
-    @Column(name = "ID_CAMPAIGNTYPE")
+    @Column(name = "ID_CAMPAIGN_TYPE")
     private Long idCampaignType;
 
     @Column(name = "DATE", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "PROPOSAL")
-    private String proposal;
+    @Column(name = "APPROACH")
+    private String approach;
 
     @Column(name = "JUSTIFICATION")
     private String justification;

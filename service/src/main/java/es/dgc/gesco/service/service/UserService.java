@@ -1,6 +1,5 @@
 package es.dgc.gesco.service.service;
 
-
 import es.dgc.gesco.model.modules.user.converter.UserConverter;
 import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.UserDto;
@@ -81,7 +80,6 @@ public class UserService {
         UserDto userDto = userConverter.convertUserToDto(user);
         return userDto;
     }
-
 
     public Page<User> getAllByCriteria(UserCriteria userCriteria) {
         return null;

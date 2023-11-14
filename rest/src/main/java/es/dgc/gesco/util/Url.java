@@ -9,6 +9,7 @@ public class Url {
     public static final String NIF ="/nif";
     public static final String PAGE ="/page";
     public static final String USERS ="/users";
+    public static final String APPROACH = "/approach";
     public static final String LOGIN ="/login";
     public static final String CREATE = "/create";
     public static final String EDIT = "/edit";

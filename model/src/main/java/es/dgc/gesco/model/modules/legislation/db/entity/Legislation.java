@@ -1,11 +1,11 @@
 package es.dgc.gesco.model.modules.legislation.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import static es.dgc.gesco.model.util.ConstanteBD.*;
 

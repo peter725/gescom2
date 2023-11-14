@@ -2,7 +2,7 @@ package es.dgc.gesco.model.modules.proposal.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import es.dgc.gesco.model.modules.user.db.entity.User;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;

@@ -6,9 +6,9 @@ import es.dgc.gesco.model.modules.email.db.entity.Email;
 import es.dgc.gesco.model.modules.legislation.db.entity.Legislation;
 import es.dgc.gesco.model.modules.phone.db.entity.Phone;
 import es.dgc.gesco.model.modules.publicLaboratories.db.entity.PublicLaboratories;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.*;
 
 import java.util.List;

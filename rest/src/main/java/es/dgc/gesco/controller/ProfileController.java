@@ -1,6 +1,6 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.facade.ProfileFacade;
+import es.dgc.gesco.service.facade.ProfileFacade;
 import es.dgc.gesco.model.modules.profile.db.entity.Profile;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;

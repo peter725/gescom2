@@ -1,6 +1,6 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.facade.RoleFacade;
+import es.dgc.gesco.service.facade.RoleFacade;
 import es.dgc.gesco.model.modules.role.db.entity.Role;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;

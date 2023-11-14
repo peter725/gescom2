@@ -1,9 +1,7 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.facade.AutonomousCommunityFacade;
-import es.dgc.gesco.facade.UserFacade;
+import es.dgc.gesco.service.facade.AutonomousCommunityFacade;
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
-import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Log4j2
 @RestController

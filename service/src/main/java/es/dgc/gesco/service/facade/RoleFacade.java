@@ -1,4 +1,4 @@
-package es.dgc.gesco.facade;
+package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.modules.role.db.entity.Role;
 import es.dgc.gesco.service.service.RoleService;

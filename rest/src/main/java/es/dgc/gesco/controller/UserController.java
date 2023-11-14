@@ -1,6 +1,6 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.facade.UserFacade;
+import es.dgc.gesco.service.facade.UserFacade;
 import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.UserDto;
 import es.dgc.gesco.util.Url;

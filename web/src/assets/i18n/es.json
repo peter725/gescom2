@@ -8,6 +8,7 @@
       "addValidation": "Añadir validaciones",
       "all": "Todos",
       "apply": "Aplicar",
+      "approach": "Propuesta",
       "cancel": "Cancelar",
       "clear": "Limpiar",
       "close": "Cerrar",
@@ -77,6 +78,19 @@
     "address": "Dirección",
     "affectedProgrammesCode": "Programas afectados",
     "amendmentInterval": "Intervalo de revisión EFSA",
+    "approach": {
+      "campaign-proposal": {
+        "title": "Propuesta de campaña",
+        "campaign-type": {
+          "key1": "Alimenticios",
+          "key2": "No alimenticios",
+          "key3": "Servicios"
+        }
+      },
+      "justification": "Justificación",
+      "objectives": "Objetivos",
+      "technical-legal-viability": "Viabilidad técnica y legal"
+    },
     "areaResposability": "Área de responsabilidad",
     "attribute": "Atributo",
     "attributeCode": "Código del atributo",
@@ -247,6 +261,12 @@
     "yearV0": "Año V0"
   },
   "text": {
+    "approach": {
+      "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},
+      "justification": {"title": "2. JUSTIFICACIÓN"},
+      "objectives": {"title": "3. OBJETIVOS"},
+      "technical-legal-viability": {"title": "4. VIABILIDAD TÉCNICA Y LEGAL"}
+    },
     "err": {
       "dataSave": "Ha ocurrido un error al intentar guardar los datos",
       "loginFailed": "Ha ocurrido un error en el proceso de conexión",
@@ -515,6 +535,12 @@
       "add": "Alta de usuario",
       "edit": "Modificar usuario",
       "list": "Consulta de usuarios"
+    },
+    "approach": {
+      "title": "Propuestas",
+      "add": "Alta de propuesta",
+      "edit": "Mis propuestas",
+      "list": "Generar listados"
     },
     "helpModule": {
       "title": "Ayuda",

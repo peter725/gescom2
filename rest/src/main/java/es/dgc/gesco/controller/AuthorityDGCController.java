@@ -1,6 +1,6 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.facade.AuthorityDGCFacade;
+import es.dgc.gesco.service.facade.AuthorityDGCFacade;
 import es.dgc.gesco.model.modules.authorityDGC.db.entity.AuthorityDGC;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;

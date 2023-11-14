@@ -1,6 +1,7 @@
-package es.dgc.gesco.facade;
+package es.dgc.gesco.service.facade;
 
 
+import es.dgc.gesco.model.modules.email.db.entity.Email;
 import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.UserDto;
 import es.dgc.gesco.model.modules.user.dto.criteria.UserCriteria;
@@ -20,8 +21,16 @@ public class UserFacade {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailFacade emailFacade;
+
     @Transactional
     public User saveUser(final User user){
+        List<Email> emailList = user.getEmails();
+        emailList.forEach(email -> {
+            email.setUser(user);
+        });
+        emailFacade.saveEmail(emailList);
         User newUser = userService.saveUser(user);
 
         return newUser;

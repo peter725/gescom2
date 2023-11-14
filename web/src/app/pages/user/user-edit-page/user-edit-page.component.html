@@ -86,12 +86,13 @@
                                         <mat-icon>cancel</mat-icon>
                                     </button>
                                 </mat-chip-row>
-                                <input placeholder=""
+                                <input placeholder="Agregue un email"
                                        matInput formControlName="emails"
                                        [matChipInputFor]="chipGridEmail"
                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                        [matChipInputAddOnBlur]="addOnBlur"
-                                       (matChipInputTokenEnd)="addEmail($event)"/>
+                                       (matChipInputTokenEnd)="addEmail($event)"
+                                       multiple/>
                             </mat-chip-grid>
                     </mat-form-field>
 

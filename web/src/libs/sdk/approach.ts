@@ -25,5 +25,9 @@ export interface ApproachFilterForm extends AppQuerySource {
     approach?: string;
     autonomousCommunity?: string;
     type?: string;
+    createdAtGTE?: string;
+    createdAtLTE?: string;
+    updatedAtGTE?: string;
+    updatedAtLTE?: string;
 
 }

@@ -7,7 +7,7 @@ export const crudOperationsStorageFactory = () => {
   const apiOperations: OperationsDefSrc = {
     health: { type: HttpOperationType.SIMPLE, path: `/health` },
     provinces: { type: HttpOperationType.READ, path: `/provinces` },
-    approach: { type: HttpOperationType.CRUD, path: `/approaches` },
+    approach: { type: HttpOperationType.CRUD, path: `/approach` },
     autonomousCommunity: { type: HttpOperationType.CRUD, path: '/autonomous_communitys', },
     authority: { type: HttpOperationType.READ, path: '/authority_dgc', },
     origins: { type: HttpOperationType.READ, path: '/origins', },

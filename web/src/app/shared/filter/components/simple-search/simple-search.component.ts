@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ControlsOf } from '@libs/commons';
 import { SearchMode, SimpleSearchForm } from '../../models';
 import { FilterComponent } from '../filter.component';
@@ -12,6 +12,7 @@ export class SimpleSearchComponent extends FilterComponent<SimpleSearchForm> {
 
   readonly resourceName = 'global';
   override readonly searchMode = SearchMode.SEARCH;
+  @Input() showHiddenInput: boolean = true;
 
   protected buildQueryForm() {
     return this.fb.group<ControlsOf<SimpleSearchForm>>({

@@ -1,17 +1,17 @@
 <form [formGroup]="form" (ngSubmit)="search()">
     <div class="grid grid-cols-4 gap-1.5">
 
-
         <mat-form-field>
-            <mat-label>{{ 'fields.arbitration.step1.socialReason' | translate }}</mat-label>
-            <tsw-search-input formControlName="claimedSocialReason"></tsw-search-input>
+            <mat-label>{{ 'fields.approach.year' | translate }}</mat-label>
+            <tsw-search-input formControlName="year"></tsw-search-input>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>{{ 'fields.arbitration.step1.nif' | translate }}</mat-label>
-            <tsw-search-input formControlName="claimedNif"></tsw-search-input>
+            <mat-label>{{ 'fields.ccaa' | translate }}</mat-label>
+            <tsw-search-input formControlName="autonomusCommunity"></tsw-search-input>
         </mat-form-field>
 
     </div>
+
     <div class="grid grid-cols-4 gap-1.5">
 
         <mat-form-field>

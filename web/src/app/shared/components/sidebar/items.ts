@@ -15,10 +15,7 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
       text: 'pages.approach.add', path:'approachManagementCreate'
     },
     {
-      text: 'pages.approach.edit', path:'arbitrationManagementCreate'
-    },
-    {
-      text: 'pages.approach.list', path:'arbitrationManagementCreate'
+      text: 'pages.approach.list', path:'approachManagementList'
     }
     ]
   },

@@ -11,7 +11,6 @@ import { takeUntil, skip } from 'rxjs/operators';
 
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-user-list-page',
   templateUrl: './user-list-page.component.html',
   styleUrls: ['./user-list-page.component.scss'],

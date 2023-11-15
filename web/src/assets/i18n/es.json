@@ -539,8 +539,7 @@
     "approach": {
       "title": "Propuestas",
       "add": "Alta de propuesta",
-      "edit": "Mis propuestas",
-      "list": "Generar listados"
+      "list": "Mis propuestas"
     },
     "helpModule": {
       "title": "Ayuda",

@@ -4,7 +4,6 @@ import { ControlsOf } from '@libs/commons';
 import { UserFilterForm } from '@libs/sdk/user';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-user-list-page-filter',
   templateUrl: './user-list-page-filter.component.html'
 })

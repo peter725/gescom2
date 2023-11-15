@@ -1,8 +1,8 @@
 package es.dgc.gesco.model.modules.authorityDGC.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import lombok.*;
 
 import static es.dgc.gesco.model.util.ConstanteBD.SEQ_AUTHORITY_DGC;

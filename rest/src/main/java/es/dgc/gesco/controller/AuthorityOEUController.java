@@ -1,6 +1,6 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.facade.AuthorityOEUFacade;
+import es.dgc.gesco.service.facade.AuthorityOEUFacade;
 
 import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
 import es.dgc.gesco.util.Url;

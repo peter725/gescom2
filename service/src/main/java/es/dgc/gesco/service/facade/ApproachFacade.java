@@ -1,12 +1,12 @@
-package es.dgc.gesco.facade;
+package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
 import es.dgc.gesco.service.service.ApproachService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component

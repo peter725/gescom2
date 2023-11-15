@@ -2,8 +2,8 @@ package es.dgc.gesco.model.commom.validation.constraints;
 
 
 import es.dgc.gesco.model.commom.validation.validator.NifValidator;
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
+import javax.validation.Constraint;
+import javax.validation.Payload;
 
 
 import java.lang.annotation.Documented;

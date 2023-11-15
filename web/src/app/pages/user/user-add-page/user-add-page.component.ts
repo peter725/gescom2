@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { Validators } from '@angular/forms';
+import {FormGroup, Validators} from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
@@ -20,14 +20,14 @@ export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser
   readonly resourceName = 'users';
   protected override _createResourceTitle = 'pages.user.add';
 
-  protected buildForm() {
+  protected buildForm(): FormGroup<ControlsOf<CreateUser>>{
     return this.fb.group<ControlsOf<CreateUser>>({
       id: this.fb.control(null),
       name: this.fb.control(null, ),
       firstSurname: this.fb.control(null, [Validators.required]),
       secondSurname: this.fb.control(null, []),
-      nif: this.fb.control(null, [Validators.required, CustomValidators.nif]),
-      emails: this.fb.control([], [Validators.required, Validators.email]),
+      nif: this.fb.control(null),
+      emails: this.fb.control([], [Validators.required]),
       phones: this.fb.control([], [Validators.required, Validators.minLength(9)]),
       profile: this.fb.control(null, [Validators.required]),
       position: this.fb.control(null, [Validators.required]),

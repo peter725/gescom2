@@ -10,6 +10,8 @@ const routes: NamedRouteSource[] = [
   { key: 'userManagementList', value: '/app/usuarios/consulta' },
   { key: 'userManagementEdit', value: '/app/usuarios/:id' },
 
+  { key: 'approachManagementCreate', value: '/app/propuestas/0' },
+
 ];
 
 

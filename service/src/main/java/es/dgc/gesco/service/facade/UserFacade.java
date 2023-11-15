@@ -1,11 +1,12 @@
-package es.dgc.gesco.facade;
+package es.dgc.gesco.service.facade;
 
 
+import es.dgc.gesco.model.modules.email.db.entity.Email;
 import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.UserDto;
 import es.dgc.gesco.model.modules.user.dto.criteria.UserCriteria;
 import es.dgc.gesco.service.service.UserService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +21,16 @@ public class UserFacade {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailFacade emailFacade;
+
     @Transactional
     public User saveUser(final User user){
+        List<Email> emailList = user.getEmails();
+        emailList.forEach(email -> {
+            email.setUser(user);
+        });
+        emailFacade.saveEmail(emailList);
         User newUser = userService.saveUser(user);
 
         return newUser;

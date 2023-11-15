@@ -1,4 +1,4 @@
-package es.dgc.gesco.facade;
+package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
 import es.dgc.gesco.model.modules.user.db.entity.User;

@@ -1,4 +1,4 @@
-package es.dgc.gesco.facade;
+package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
 import es.dgc.gesco.model.modules.user.db.entity.User;

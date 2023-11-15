@@ -4,15 +4,17 @@ import { CommonsModule } from '@base/shared/pages/commons.module';
 import { EditPageModule } from '@base/shared/pages/edit-page.module';
 import { UserAddPageRoutingModule } from './user-add-page-routing.module';
 import { UserAddPageComponent } from './user-add-page.component';
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    UserAddPageRoutingModule,
-    CommonsModule,
-    EditPageModule,
-  ],
+    imports: [
+        CommonModule,
+        UserAddPageRoutingModule,
+        CommonsModule,
+        EditPageModule,
+        MatChipsModule,
+    ],
   declarations: [
     UserAddPageComponent
   ],

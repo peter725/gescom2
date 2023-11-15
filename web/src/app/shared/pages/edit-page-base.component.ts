@@ -77,6 +77,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
 
   protected readonly destroyed$ = new ReplaySubject<boolean>(1);
 
+
   emails: Email[] = [];
 
   phones: Phone[] = [];
@@ -206,6 +207,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   protected async save() {
     try {
       const payload = await this.createSavePayload();
+      console.log("payload",payload);
       this.activeOperation = this.createSaveOperation(payload);
 
       this.status.status = 'PROCESS';
@@ -222,6 +224,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    */
   protected createSavePayload() {
     const copy = { ...this.form.getRawValue() } as F;
+    console.log("copy",copy);
     return firstValueFrom(this.mapFormToModel(copy));
   }
 
@@ -293,13 +296,28 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   }
 
   protected addEmail(event: MatChipInputEvent): void {
+    const input = event.chipInput;
     const value = (event.value || '').trim();
     // Add our email
     if (value) {
-      this.emails.push({id: 0, name: value, state: 0, email: value});
+      const newEmails = value.split(',')
+                            .map(email => email.trim())
+                            .filter(email => email)
+                            .map(trimmedEmail => ({ id: 0, name: trimmedEmail, state: 0, email: trimmedEmail }));
+      if (newEmails.length > 0) {
+        // Agrega los nuevos correos electrónicos al arreglo this.emails
+        this.emails.push(...newEmails);
+        console.log("entra aqui if",this.emails, newEmails);
+
+        // Actualiza el control emails en el FormGroup
+        //this.form.get('emails')?.setValue(...this.emails);
+      }
     }
+
     // Clear the input value
-    event.chipInput!.clear();
+    if (input) {
+        input.clear();
+    }
   }
 
   protected removeEmail(emails: Email): void {
@@ -329,7 +347,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
 
   protected addPhone(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    // Add our email
+    // Add our phone
     if (value) {
       this.phones.push({id: 0, name: value, state: 0, phone: value});
     }

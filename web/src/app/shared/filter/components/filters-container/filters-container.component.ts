@@ -44,6 +44,7 @@ export class FiltersContainerComponent<T> implements AfterViewInit {
 
   constructor(
     private detectionRef: ChangeDetectorRef
+
   ) {
   }
 
@@ -100,6 +101,5 @@ export class FiltersContainerComponent<T> implements AfterViewInit {
 
     this.baseHeight = baseHeight;
     this.containerHeight = baseHeight;
-    console.log('baseHeight', baseHeight);
   }
 }

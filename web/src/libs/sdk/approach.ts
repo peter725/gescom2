@@ -11,6 +11,18 @@ export interface Approach extends SimpleModel, StatefulModel, TranslatedModel {
     type: string;
 }
 
+export interface CreateApproach {
+    id: number | null;
+    year: number | null;
+    autonomousCommunity: string | null;
+    approach: string | null;
+    justification: string | null;
+    objective: string | null;
+    viability: string | null;
+    type: string | null;
+
+}
+
 export interface ApproachForm {
     id: number | null;
     approach: string | null;

@@ -30,4 +30,5 @@ export class ApproachListPageComponent extends BaseListPageComponent implements 
     return ['year', 'autonomusCommunity', 'approach', 'type'];
   }
 
+  protected readonly console = console;
 }

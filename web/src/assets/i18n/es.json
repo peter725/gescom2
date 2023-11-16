@@ -79,7 +79,9 @@
     "affectedProgrammesCode": "Programas afectados",
     "amendmentInterval": "Intervalo de revisión EFSA",
     "approach": {
-      "year": "Año de la campaña",
+      "approach": "Propuesta",
+      "type": "Tipo de propuesta",
+      "year": "Año",
       "campaign-proposal": {
         "title": "Propuesta de campaña",
         "campaign-type": {

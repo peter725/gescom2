@@ -1,8 +1,8 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.facade.ApproachFacade;
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
+import es.dgc.gesco.service.facade.ApproachFacade;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

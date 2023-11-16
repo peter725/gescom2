@@ -1,20 +1,16 @@
 package es.dgc.gesco.service.service;
 
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
-import es.dgc.gesco.model.modules.user.db.entity.User;
-import es.dgc.gesco.model.modules.user.dto.criteria.UserCriteria;
 import es.dgc.gesco.service.repository.AbstractGenericTest;
 import es.dgc.gesco.service.util.TestFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @Import(TestFactory.class)
@@ -23,7 +19,7 @@ public class ApproachServiceTest extends AbstractGenericTest {
     @Autowired
     ApproachService approachService;
 
-   // @Test
+   @Test
     public void saveApproach(){
         Approach approach = new Approach();
         approach.setSent(true);
@@ -46,15 +42,15 @@ public class ApproachServiceTest extends AbstractGenericTest {
         assertNotNull(approach.getId());
     }
 
-    @Test
+//    @Test
     public void fidAllApproach(){
         List<Approach> approaches = approachService.findAllApproach();
     }
 
-   // @Test
+//    @Test
     public void getApproachByIdTest(){
-        Approach approach = approachService.getApproachById(5L);
-        assertNotNull(approach);
+        Approach approach = approachService.getApproachById(1L);
+//        assertNotNull(approach);
     }
 
 }

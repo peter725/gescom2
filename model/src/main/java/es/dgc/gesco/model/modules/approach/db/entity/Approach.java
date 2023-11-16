@@ -7,11 +7,10 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-import static es.dgc.gesco.model.util.ConstanteBD.SEQ_ROLE;
-import static es.dgc.gesco.model.util.ConstanteBD.TABLE_ROLE;
+import static es.dgc.gesco.model.util.ConstanteBD.*;
 
 @Entity
-@Table(name = TABLE_ROLE)
+@Table(name = TABLE_APPROACH)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

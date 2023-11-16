@@ -5,6 +5,7 @@ public class ConstanteBD {
     public static final String TABLE_EMAIL="email";
     public static final String TABLE_PHONE="phone";
     public static final String TABLE_ROLE="role";
+    public static final String TABLE_APPROACH="campaign_proposal";
     public static final String TABLE_PROFILE="profile";
     public static final String TABLE_AUTHORITY_OEU="authority_oeu";
     public static final String TABLE_PUBLIC_LABORATORIES="public_laboratories";

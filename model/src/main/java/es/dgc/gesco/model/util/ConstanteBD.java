@@ -25,4 +25,6 @@ public class ConstanteBD {
     public static final String SEQ_LEGISLATION="seq_legislation";
     public static final String SEQ_AUTHORITY_DGC="seq_authority_dgc";
     public static final String SEQ_CCAA ="seq_autonomous_community";
+
+    public static final String SEQ_APPROACH="seq_campaign_proposal";
 }

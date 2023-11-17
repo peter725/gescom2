@@ -18,20 +18,17 @@ export interface User extends SimpleModel, StatefulModel {
   secondSurname: string;
   fullName: string;
   autonomousCommunity: AutonomousCommunity;
+
   nif: string;
-  emails: Email[];
-  phone: Phone[];
-  role: Role;
+  email: string;
+  phone: string;
+
   modules: Module[];
   profile: Profile;
-  position: string;
-  authority: Authority;
-  generalDirection: string;
-  areaResponsability: string;
 
+  multiScope: false;
+  scopes: string[];
 
-  //multiScope: false;
-  //scopes: string[];
 }
 
 export interface UserView extends SimpleModel, StatefulAltModel {
@@ -39,15 +36,13 @@ export interface UserView extends SimpleModel, StatefulAltModel {
   name: string;
   firstSurname: string;
   secondSurname: string;
-  emails: Email[];
-  phones: Phone[];
+  email: string;
   autonomousCommunity: string;
+  provinces: string;
+  entities: string;
+  modules: string;
   profile: string;
   fullName: string;
-  position: string;
-  authority: string;
-  generalDirection: string;
-  areaResponsability: string;
 }
 
 /**
@@ -60,13 +55,12 @@ export interface CreateUser {
   firstSurname: string | null;
   secondSurname: string | null;
   nif: string | null;
-  emails: Email[] | null;
-  phones: Phone[] | null;
-  autonomousCommunity: AutonomousCommunity[] | null;
+  email: string | null;
+  phone: string | null;
+
   profile: Profile[] | null;
-  position: string | null;
-  authority: Authority[] | null;
-  areaResponsability: string | null;
+  modules: Module[] | null;
+  autonomousCommunity: AutonomousCommunity | null;
 
 }
 
@@ -83,13 +77,9 @@ export interface UserFilterForm extends AppQuerySource {
   firstSurname?: string;
   secondSurname?: string;
   nif?: string;
-  emails?: string[];
-  phone?: string[];
+  email?: string;
+  phone?: string;
   profile?: string;
   state?: number[];
-  position?: string;
-  authority?: string;
-  areaResponsability?: string;
-  autonomousCommunity?: string;
 
 }

@@ -8,17 +8,17 @@
                 headerLabel="{{'text.approach.campaign-proposal.title' | translate}}"
                 icon="edit_note">
             <div section-content>
-                <fieldset formGroupName="CreateApproach">
+                <fieldset>
                     <tsw-section-label class="w-full"
                                        label="{{ 'text.approach.campaign-proposal.title' | translate}}"></tsw-section-label>
                     <div class="grid grid-cols-1">
                         <mat-radio-group aria-label="Select an option" formControlName="type">
                             <mat-radio-button
-                                    value="ALIMENTICIOS">{{ 'fields.approach.campaign-proposal.campaign-type.key1' | translate }}</mat-radio-button>
+                                    value="1">{{ 'fields.approach.campaign-proposal.campaign-type.key1' | translate }}</mat-radio-button>
                             <mat-radio-button
-                                    value="NO ALIMENTICIOS">{{ 'fields.approach.campaign-proposal.campaign-type.key2' | translate }}</mat-radio-button>
+                                    value="2">{{ 'fields.approach.campaign-proposal.campaign-type.key2' | translate }}</mat-radio-button>
                             <mat-radio-button
-                                    value="SERVICIOS">{{ 'fields.approach.campaign-proposal.campaign-type.key3' | translate }}</mat-radio-button>
+                                    value="3">{{ 'fields.approach.campaign-proposal.campaign-type.key3' | translate }}</mat-radio-button>
                         </mat-radio-group>
                     </div>
 
@@ -53,12 +53,11 @@
                 </fieldset>
             </div>
 
-            <tsw-form-actions
-                    [saveBtnSkipConfirmation]="skipSaveConfirmation"
-                    saveBtnLabel="generic.actions.next"
-                    (reset)="resetForm()"
-                    (save)="submitForm()"
-            ></tsw-form-actions>
         </tsw-section-wrapper>
+        <tsw-form-actions
+                [saveBtnSkipConfirmation]="skipSaveConfirmation"
+                (reset)="resetForm()"
+                (save)="submitForm()"
+        ></tsw-form-actions>
     </tsw-form-container>
 </form>

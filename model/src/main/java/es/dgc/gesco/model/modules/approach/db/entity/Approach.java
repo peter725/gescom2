@@ -19,10 +19,10 @@ import static es.dgc.gesco.model.util.ConstanteBD.*;
 public class Approach extends AuditedBaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_ROLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_APPROACH)
     @SequenceGenerator(
-            name = SEQ_ROLE,
-            sequenceName = SEQ_ROLE,
+            name = SEQ_APPROACH,
+            sequenceName = SEQ_APPROACH,
             allocationSize = 1
     )
     @Column(name = "ID")

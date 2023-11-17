@@ -46,7 +46,7 @@ public class ApproachController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(Url.USERS)
+    @PostMapping(Url.APPROACH)
     public ResponseEntity<Void> findAll() {
 
         List<Approach> approaches;

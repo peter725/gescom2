@@ -40,7 +40,7 @@ public class ApproachService {
     }
 
     public ApproachDto loadApproachDto(Approach approach) {
-        ApproachDto approachDto = approachConverter.convertProposalToDto(approach);
+        ApproachDto approachDto = approachConverter.convertApproachToDto(approach);
         return approachDto;
     }
 

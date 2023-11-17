@@ -5,35 +5,34 @@ import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.compone
 import { ComponentStatus, ControlsOf } from '@libs/commons';
 import { CreateUser, User } from '@libs/sdk/user';
 import { CustomValidators } from '@libs/validators';
+import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-user-add-page',
   templateUrl: './user-add-page.component.html',
   styleUrls: ['./user-add-page.component.scss'],
   providers: [
-    { provide: FORM_STATUS, useValue: new ComponentStatus('IDLE') }
+    { provide: FORM_STATUS, useValue: new ComponentStatus('IDLE') },
+    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' }},
   ]
 })
 export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser> {
   readonly resourceName = 'users';
   protected override _createResourceTitle = 'pages.user.add';
 
-  protected buildForm(): FormGroup<ControlsOf<CreateUser>>{
+  protected buildForm(){
     return this.fb.group<ControlsOf<CreateUser>>({
       id: this.fb.control(null),
-      name: this.fb.control(null, ),
+      name: this.fb.control(null, [Validators.required]),
       firstSurname: this.fb.control(null, [Validators.required]),
       secondSurname: this.fb.control(null, []),
-      nif: this.fb.control(null),
-      emails: this.fb.control([], [Validators.required]),
-      phones: this.fb.control([], [Validators.required, Validators.minLength(9)]),
+      nif: this.fb.control(null, [Validators.required, CustomValidators.nif]),
+      email: this.fb.control(null, [Validators.required, Validators.email]),
+      phone: this.fb.control(null, [Validators.required]),
       profile: this.fb.control(null, [Validators.required]),
-      position: this.fb.control(null, [Validators.required]),
-      areaResponsability: this.fb.control(null, [Validators.required]),
+      modules: this.fb.control([], [Validators.required, Validators.min(1)]),
       autonomousCommunity: this.fb.control(null, [Validators.required]),
-      authority: this.fb.control(null, [Validators.required]),
     });
   }
 

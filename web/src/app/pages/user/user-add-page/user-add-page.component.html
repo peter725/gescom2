@@ -19,104 +19,53 @@
           <mat-form-field>
             <mat-label>{{ 'fields.firstSurname' | translate }}</mat-label>
             <input matInput formControlName="firstSurname">
+            <mat-error>{{ form.controls.firstSurname.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'fields.secondSurname' | translate }}</mat-label>
             <input matInput formControlName="secondSurname">
+            <mat-error>{{ form.controls.secondSurname.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'fields.nif' | translate }}</mat-label>
             <input matInput formControlName="nif">
+            <mat-error>{{ form.controls.nif.errors | extractValidationError }}</mat-error>
           </mat-form-field>
         </div>
 
+        <div class="grid grid-cols-6 gap-1.5">
+          <mat-form-field>
+            <mat-label>{{ 'fields.email' | translate }}</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
 
-        <div  class="grid grid-cols-6 gap-1.5">
+          <mat-form-field>
+            <mat-label>{{ 'fields.phone' | translate }}</mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
           <mat-form-field class="col-span-2">
             <mat-label>{{ 'fields.profile' | translate }}</mat-label>
             <tsw-custom-select
                     resourceName="profiles"
                     formControlName="profile"
             ></tsw-custom-select>
+            <mat-error>{{ form.controls.profile.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field class="col-span-2">
-            <mat-label>{{ 'fields.position' | translate }}</mat-label>
-            <input matInput formControlName="position">
-          </mat-form-field>
-
-          <mat-form-field class="col-span-2">
-            <mat-label>{{ 'fields.ccaa' | translate }}</mat-label>
+            <mat-label>{{ 'fields.modules' | translate }}</mat-label>
             <tsw-custom-select
-                    resourceName="autonomousCommunity"
-                    formControlName="autonomousCommunity"
+                    resourceName="modules"
+                    formControlName="modules"
+                    multiple
             ></tsw-custom-select>
-          </mat-form-field>
-        </div>
-
-        <div class="grid grid-cols-4 gap-1.5">
-          <mat-form-field class="col-span-2">
-            <mat-label>{{ 'fields.aann' | translate }}</mat-label>
-            <tsw-custom-select
-                    resourceName="authority"
-                    formControlName="authority"
-            ></tsw-custom-select>
-          </mat-form-field>
-
-          <mat-form-field class="col-span-2">
-            <mat-label>{{ 'fields.areaResposability' | translate }}</mat-label>
-            <input matInput formControlName="areaResponsability">
-          </mat-form-field>
-
-        </div>
-
-        <div class="grid grid-cols-4 gap-1.5">
-          <mat-form-field class="chip-list col-span-2">
-            <mat-label>{{ 'fields.email' | translate }}</mat-label>
-            <mat-chip-grid #chipGridEmail aria-label="Enter email">
-              <mat-chip-row *ngFor="let email of emails"
-                            (removed)="removeEmail(email)"
-                            [editable]="true"
-                            (edited)="editEmail(email, $event)"
-                            [aria-description]="'press enter to edit ' + email.name">
-                {{email.name}}
-                <button matChipRemove [attr.aria-label]="'remove ' + email.name">
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip-row>
-              <input placeholder="Agregue un email"
-                     matInput formControlName="emails"
-                     [matChipInputFor]="chipGridEmail"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="addEmail($event)"/>
-            </mat-chip-grid>
-          </mat-form-field>
-
-          <mat-form-field class="chip-list col-span-2">
-            <mat-label>{{ 'fields.phone' | translate }}</mat-label>
-            <mat-chip-grid #chipGridPhone aria-label="Enter phone">
-              <mat-chip-row *ngFor="let phone of phones"
-                            (removed)="removePhone(phone)"
-                            [editable]="true"
-                            (edited)="editPhone(phone, $event)"
-                            [aria-description]="'press enter to edit ' + phone">
-                {{phone.phone}}
-                <button matChipRemove [attr.aria-label]="'remove ' + phone">
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip-row>
-              <input placeholder=""
-                     [matChipInputFor]="chipGridPhone"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="addPhone($event)"/>
-            </mat-chip-grid>
           </mat-form-field>
         </div>
       </div>
+
     </tsw-section-wrapper>
 
     <tsw-form-actions
@@ -124,5 +73,6 @@
             (reset)="resetForm()"
             (save)="submitForm()"
     ></tsw-form-actions>
+
   </tsw-form-container>
 </form>

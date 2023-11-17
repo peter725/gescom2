@@ -16,6 +16,6 @@ public interface ApproachConverter {
     @Mapping(target = "id", source = "id")
     Approach convertDtoToUsuer(ApproachDto approachDto);
 
-    @Mapping(target = "id", source = "id")
-    ApproachDto convertProposalToDto(Approach approach);
+    @Mapping(target = "campaignType", source = "campaignTypeId")
+    ApproachDto convertApproachToDto(Approach approach);
 }

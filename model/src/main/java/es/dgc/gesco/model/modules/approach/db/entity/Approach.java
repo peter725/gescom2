@@ -1,8 +1,9 @@
 package es.dgc.gesco.model.modules.approach.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
-import es.dgc.gesco.model.modules.user.db.entity.User;
 import javax.persistence.*;
+
+import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaingnType;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,10 +20,10 @@ import static es.dgc.gesco.model.util.ConstanteBD.*;
 public class Approach extends AuditedBaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_ROLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_APPROACH)
     @SequenceGenerator(
-            name = SEQ_ROLE,
-            sequenceName = SEQ_ROLE,
+            name = SEQ_APPROACH,
+            sequenceName = SEQ_APPROACH,
             allocationSize = 1
     )
     @Column(name = "ID")
@@ -31,15 +32,18 @@ public class Approach extends AuditedBaseEntity {
     @Column(name = "SENT")
     private Boolean sent;
 
-    @Column(name = "ID_AUTONOMOUS_COMMUNITY")
-    private Long id_autonomous_community;
+    @Column(name = "AUTONOMOUS_COMMUNITY_ID")
+    private Long autonomous_community_id;
 
+//    @ManyToOne
+//    @JoinColumn(name = "USER_ID")
+    @Column(name = "USER_ID")
+    private Long userId;
+
+//    @Column(name = "CAMPAIGN_TYPE_ID")
     @ManyToOne
-    @JoinColumn(name = "ID_USER")
-    private User user;
-
-    @Column(name = "ID_CAMPAIGN_TYPE")
-    private Long idCampaignType;
+    @JoinColumn(name = "CAMPAIGN_TYPE_ID")
+    private CampaingnType campaignTypeId;
 
     @Column(name = "DATE", nullable = false)
     private LocalDateTime date;

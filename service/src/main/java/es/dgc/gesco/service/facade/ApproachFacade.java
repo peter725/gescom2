@@ -1,5 +1,6 @@
 package es.dgc.gesco.service.facade;
 
+import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaingnType;
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
 import es.dgc.gesco.service.service.ApproachService;
@@ -29,7 +30,14 @@ public class ApproachFacade {
 
     public ApproachDto getUserById(final Long id){
         Approach approach = approachService.getApproachById(id);
-        ApproachDto approachDto = approachService.loadApproachDto(approach);
+        ApproachDto approachDto = new ApproachDto();
+        if(approach.getCampaignTypeId() != null && !approach.getCampaignTypeId().getType().isEmpty()){
+            String campaingnType = approach.getCampaignTypeId().getType();
+            approachDto.setCampaignType(campaingnType);
+        }
+//        String campaingn = campaingnType.getType();
+//        approachDto.setSent(approach.getSent());
+        approachDto = approachService.loadApproachDto(approach);
         return approachDto;
     }
 

@@ -19,7 +19,6 @@ import javax.validation.constraints.Size;
 public class ApproachDto implements LongIdModel {
 
     private Long id;
-    private Integer state = EntityState.ON.getValue();
 
     @NotNull
     @NotBlank

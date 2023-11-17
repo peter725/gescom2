@@ -6,6 +6,7 @@ import javax.persistence.*;
 import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaingnType;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static es.dgc.gesco.model.util.ConstanteBD.*;
@@ -45,8 +46,8 @@ public class Approach extends AuditedBaseEntity {
     @JoinColumn(name = "CAMPAIGN_TYPE_ID")
     private CampaingnType campaignTypeId;
 
-    @Column(name = "DATE", nullable = false)
-    private LocalDateTime date;
+    @Column(name = "DATE")
+    private LocalDate date;
 
     @Column(name = "APPROACH")
     private String approach;

@@ -16,7 +16,7 @@ public class ApproachFacade {
     @Autowired
     private ApproachService approachService;
 
-    @Transactional
+
     public Approach saveApproach(final Approach approach){
         Approach newApproach = approachService.saveApproach(approach);
 

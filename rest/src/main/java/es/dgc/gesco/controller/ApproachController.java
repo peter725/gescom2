@@ -2,6 +2,7 @@ package es.dgc.gesco.controller;
 
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
+import es.dgc.gesco.model.util.exception.Constante;
 import es.dgc.gesco.service.facade.ApproachFacade;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +35,10 @@ public class ApproachController {
 
             approach = approachFacade.loadApproach(approachDto);
 
-            approach = approachFacade.saveApproach(approach);
+            approachFacade.saveApproach(approach);
 
         } catch (DataIntegrityViolationException ex) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, Constante.REASON,ex);
         } catch (Exception e) {
             log.error(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);

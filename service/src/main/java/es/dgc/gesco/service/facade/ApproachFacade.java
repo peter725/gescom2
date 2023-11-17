@@ -3,8 +3,11 @@ package es.dgc.gesco.service.facade;
 import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaingnType;
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
+import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.service.service.ApproachService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -44,4 +47,10 @@ public class ApproachFacade {
         Approach approach = approachService.loadApproach(approachDto);
         return approach;
     }
+
+    public Page<Approach> getAllApproach(Pageable pageable) {
+        Page<Approach> approachPage = approachService.getAllByPage(pageable);
+        return approachPage;
+    }
+
 }

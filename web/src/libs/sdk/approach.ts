@@ -2,24 +2,22 @@ import {SimpleModel, StatefulModel, TranslatedModel} from "@libs/sdk/common";
 import {AppQuerySource} from "@libs/commons";
 
 export interface Approach extends SimpleModel, StatefulModel, TranslatedModel {
-    year: number;
     autonomousCommunity: string;
     approach: string;
     justification: string;
     objetive: string;
     viability: string;
-    type: string;
+    campaignTypeId: number;
 }
 
 export interface CreateApproach {
     id: number | null;
-    year: number | null;
     autonomousCommunity: string | null;
     approach: string | null;
     justification: string | null;
     objective: string | null;
     viability: string | null;
-    type: string | null;
+    campaignTypeId: number | null;
 
 }
 
@@ -29,14 +27,13 @@ export interface ApproachForm {
     justification: string | null;
     objective: string | null;
     viability: string | null;
-    type: string | null;
+    campaignTypeId: number | null;
 }
 
 export interface ApproachFilterForm extends AppQuerySource {
-    year?: number;
     approach?: string;
     autonomousCommunity?: string;
-    type?: string;
+    campaignTypeId?: number;
     createdAtGTE?: string;
     createdAtLTE?: string;
     updatedAtGTE?: string;

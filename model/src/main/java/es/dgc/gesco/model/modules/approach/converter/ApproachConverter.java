@@ -13,7 +13,6 @@ public interface ApproachConverter {
 
     final public ApproachConverter INSTANCE = Mappers.getMapper(ApproachConverter.class);
 
-    @Mapping(target = "id", source = "id")
     Approach convertDtoToUsuer(ApproachDto approachDto);
 
     @Mapping(target = "id", source = "id")

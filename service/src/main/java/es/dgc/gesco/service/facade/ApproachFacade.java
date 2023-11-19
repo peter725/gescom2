@@ -30,13 +30,12 @@ public class ApproachFacade {
 
     public ApproachDto getUserById(final Long id){
         Approach approach = approachService.getApproachById(id);
-        ApproachDto approachDto = new ApproachDto();
-        approachDto = approachService.loadApproachDto(approach);
+        ApproachDto approachDto = approachService.loadApproachDto(approach);
 
-        if(approach.getCampaignTypeId() != null && !approach.getCampaignTypeId().getType().isEmpty()){
+        /*if(approach.getCampaignTypeId()){
             String campaingnType = approach.getCampaignTypeId().getType();
             approachDto.setCampaignType(campaingnType);
-        }
+        }*/
         return approachDto;
     }
 

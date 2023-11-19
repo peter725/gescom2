@@ -18,43 +18,23 @@ import javax.validation.constraints.Size;
 @Setter
 public class ApproachDto implements LongIdModel {
 
-    private Long id;
+    Long id;
 
-    @NotNull
-    @NotBlank
-    private Boolean sent;
+    Boolean sent;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String autonomousCommunity;
+    String autonomousCommunity;
 
-    @NotNull
-    @NotBlank
-    private Long userId;
+    Long userId;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String approach;
+    String approach;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String campaignType;
+    Long campaignTypeId;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String justification;
+    String campaignTypeName;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String objective;
+    String justification;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String viability;
+    String objective;
+
+    String viability;
 }

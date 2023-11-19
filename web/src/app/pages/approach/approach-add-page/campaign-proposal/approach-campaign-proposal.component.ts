@@ -35,13 +35,14 @@ export class ApproachCampaignProposalComponent extends EditPageBaseComponent<App
     protected buildForm(): FormGroup<ControlsOf<CreateApproach>> {
         return this.fb.group<ControlsOf<CreateApproach>>({
             id: this.fb.control(null),
-            type: this.fb.control(null, [Validators.required]),
+            campaignTypeId: this.fb.control(null, [Validators.required]),
             approach: this.fb.control(null, [Validators.required]),
             justification: this.fb.control(null, [Validators.required]),
             objective: this.fb.control(null, [Validators.required]),
             viability: this.fb.control(null, [Validators.required]),
             autonomousCommunity: this.fb.control(null),
-            year: this.fb.control(null),
         });
+
     }
+
 }

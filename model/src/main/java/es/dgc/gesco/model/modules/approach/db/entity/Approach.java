@@ -41,10 +41,9 @@ public class Approach extends AuditedBaseEntity {
     @Column(name = "USER_ID")
     private Long userId;
 
-//    @Column(name = "CAMPAIGN_TYPE_ID")
-    @ManyToOne
-    @JoinColumn(name = "CAMPAIGN_TYPE_ID")
-    private CampaingnType campaignTypeId;
+
+    @Column(name = "CAMPAIGN_TYPE_ID")
+    private Long campaignTypeId;
 
     @Column(name = "DATE")
     private LocalDate date;

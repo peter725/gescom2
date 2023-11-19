@@ -78,10 +78,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   protected readonly destroyed$ = new ReplaySubject<boolean>(1);
 
 
-  emails: Email[] = [];
-
-  phones: Phone[] = [];
-
   announcer = inject(LiveAnnouncer);
 
   addOnBlur = true;
@@ -98,6 +94,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     @Inject(FORM_STATUS) public status: ComponentStatus,
   ) {
     this.form = this.buildForm();
+    console.log("al construirlo",this.form.value);
     this.redirectAfterSavePath = this.getRedirectAfterSaveRoute();
   }
 
@@ -107,7 +104,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy')
+    console.log('ngOnDestroy',this.form.value)
     this.destroyed$.next(true);
   }
 
@@ -120,6 +117,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
       //this.notification.show({ message: 'text.other.pleaseReview' });
       //return;
     //}
+    console.log("antes de enviarlo",this.form.value);
     this.save();
   }
 
@@ -180,7 +178,9 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   protected resetDataBeforeLoad() {
     this.srcData = undefined;
     this.startValue = undefined;
+    console.log("antes de RESET",this.form.value);
     this.form.reset(); // Force reset to null
+    console.log("Despues de RESET",this.form.value);
   }
 
   /**
@@ -207,7 +207,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   protected async save() {
     try {
       const payload = await this.createSavePayload();
-      console.log("payload",payload);
       this.activeOperation = this.createSaveOperation(payload);
 
       this.status.status = 'PROCESS';
@@ -224,7 +223,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    */
   protected createSavePayload() {
     const copy = { ...this.form.getRawValue() } as F;
-    console.log("copy",copy);
     return firstValueFrom(this.mapFormToModel(copy));
   }
 
@@ -293,91 +291,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
 
   protected getRedirectAfterSaveRoute(): string[] {
     return ['../consulta'];
-  }
-
-  protected addEmail(event: MatChipInputEvent): void {
-    const input = event.chipInput;
-    const value = (event.value || '').trim();
-    // Add our email
-    if (value) {
-      const newEmails = value.split(',')
-                            .map(email => email.trim())
-                            .filter(email => email)
-                            .map(trimmedEmail => ({ id: 0, name: trimmedEmail, state: 0, email: trimmedEmail }));
-      if (newEmails.length > 0) {
-        // Agrega los nuevos correos electrónicos al arreglo this.emails
-        this.emails.push(...newEmails);
-        console.log("entra aqui if",this.emails, newEmails);
-
-        // Actualiza el control emails en el FormGroup
-        //this.form.get('emails')?.setValue(...this.emails);
-      }
-    }
-
-    // Clear the input value
-    if (input) {
-        input.clear();
-    }
-  }
-
-  protected removeEmail(emails: Email): void {
-    const index = this.emails.indexOf(emails);
-    if (index >= 0) {
-      this.emails.splice(index, 1);
-
-      this.announcer.announce(`Removed ${emails.name}`);
-    }
-  }
-
-  editEmail(emails: Email, event:  MatChipEditedEvent) {
-    const value = event.value.trim();
-
-    // Remove email if it no longer has a name
-    if (!value) {
-      this.removeEmail(emails);
-      return;
-    }
-
-    // Edit existing email
-    const index = this.emails.indexOf(emails);
-    if (index >= 0) {
-      this.emails[index].name = value;
-    }
-  }
-
-  protected addPhone(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-    // Add our phone
-    if (value) {
-      this.phones.push({id: 0, name: value, state: 0, phone: value});
-    }
-    // Clear the input value
-    event.chipInput!.clear();
-  }
-
-  protected removePhone(phones: Phone): void {
-    const index = this.phones.indexOf(phones);
-    if (index >= 0) {
-      this.phones.splice(index, 1);
-
-      this.announcer.announce(`Removed ${phones.phone}`);
-    }
-  }
-
-  editPhone(phones: Phone, event:  MatChipEditedEvent) {
-    const value = event.value.trim();
-
-    // Remove phone if it no longer has a name
-    if (!value) {
-      this.removePhone(phones);
-      return;
-    }
-
-    // Edit existing email
-    const index = this.phones.indexOf(phones);
-    if (index >= 0) {
-      this.phones[index].phone = value;
-    }
   }
 
   protected abstract buildForm(): FormGroup<ControlsOf<F>>;

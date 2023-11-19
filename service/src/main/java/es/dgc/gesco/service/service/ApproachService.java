@@ -3,9 +3,12 @@ package es.dgc.gesco.service.service;
 import es.dgc.gesco.model.modules.approach.converter.ApproachConverter;
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
+import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.service.repository.ApproachRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,4 +51,10 @@ public class ApproachService {
         Approach approach = approachConverter.convertDtoToUsuer(approachDto);
         return approach;
     }
+
+    public Page<Approach> getAllByPage(Pageable pageable) {
+        Page<Approach> approachPage = approachRepository.findAll(pageable);
+        return approachPage;
+    }
+
 }

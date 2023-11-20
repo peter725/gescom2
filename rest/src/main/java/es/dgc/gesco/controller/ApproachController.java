@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,17 +74,17 @@ public class ApproachController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Approach>> getAllApproach(@PageableDefault(page = 0, size = 25, sort ="id") final Pageable pageable){
-        Page<Approach> approachPage;
+    public ResponseEntity<Page<ApproachDto>> getAllApproach(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
+        Page<ApproachDto> approachDtoPage;
 
         try {
-            approachPage = approachFacade.getAllApproach(pageable);
+            approachDtoPage = approachFacade.getAllApproach(pageable);
         } catch (Exception e) {
             log.error(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(approachPage);
+        return ResponseEntity.status(HttpStatus.OK).body(approachDtoPage);
     }
 
     @GetMapping("/{id}")

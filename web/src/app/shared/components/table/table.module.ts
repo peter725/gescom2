@@ -12,7 +12,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -23,6 +22,7 @@ import {
 } from './components';
 import {FullScreenElementModule} from "@base/shared/full-screen-element";
 import { FileDownloaderImplService } from '../../export-file/file-downloader-impl.service';
+import {MatTableModule} from "@angular/material/table";
 
 
 const EXPORTED_DECLARATIONS = [

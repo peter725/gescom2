@@ -20,7 +20,6 @@ import { TableSettingsComponent } from '../table-settings/table-settings.compone
 // demo: https://stackblitz.com/edit/angular-wm1psg?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fcomponents%2Fdyn-table%2Fdyn-column.component.ts,src%2Fapp%2Fcomponents%2Fdyn-table%2Fdyn-table.component.ts
 // https://lightrun.com/answers/angular-components-table-add-a-full-featured-but-limited-table-component-and-array-based-data-source
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-table-container',
   templateUrl: './table-container.component.html',
   styleUrls: ['./table-container.component.scss'],
@@ -63,6 +62,7 @@ export class TableContainerComponent<T = any> implements OnInit {
   ) {
     this.tagName = elem.nativeElement.tagName.toLowerCase();
   }
+
 
   ngOnInit() {
     this.configureExportActions();

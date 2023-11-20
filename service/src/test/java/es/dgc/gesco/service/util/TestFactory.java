@@ -53,4 +53,9 @@ public class TestFactory {
     public ApproachService approachService(ApproachRepository approachRepository){
         return new ApproachService(approachRepository);
     };
+
+    @Bean
+    public CampaignTypeService campaignTypeService(CampaignTypeRepository campaignTypeRepository){
+        return new CampaignTypeService(campaignTypeRepository);
+    };
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 
 @NoArgsConstructor
@@ -22,7 +23,11 @@ public class ApproachDto implements LongIdModel {
 
     Boolean sent;
 
-    String autonomousCommunity;
+    LocalDate date;
+
+    Long autonomousCommunityId;
+
+    String autonomousCommunityName;
 
     Long userId;
 

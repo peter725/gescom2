@@ -2,6 +2,7 @@ package es.dgc.gesco.service.repository;
 
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.user.dto.criteria.UserCriteria;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

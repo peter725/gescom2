@@ -31,8 +31,8 @@ public class AutonomousCommunityService {
     }
 
 
-    public List<AutonomousCommunity> getAll() {
-
-        return null;
+    public AutonomousCommunity getAutonomousCommunityById(final Long id){
+        AutonomousCommunity autonomousCommunity = autonomousCommunityRepository.findById(id).get();
+        return autonomousCommunity;
     }
 }

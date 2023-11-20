@@ -157,10 +157,10 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
   }
 
   protected createSortSource(): Sort {
-    return {
-      active: 'id',
-      direction: 'asc',
-    };
+      return {
+        active: 'id',
+        direction: 'desc',
+      };
   }
 
   protected registerFiltersListener() {

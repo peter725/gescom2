@@ -10,6 +10,7 @@ import { ApproachListPageComponent } from './approach-list-page.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {ApproachListPageFilterComponent} from "@base/pages/approach/approach-list-page/components";
+import {StateToggleModule} from "@base/shared/components/state-toggle";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {ApproachListPageFilterComponent} from "@base/pages/approach/approach-lis
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        StateToggleModule
     ],
     declarations: [
         ApproachListPageComponent,

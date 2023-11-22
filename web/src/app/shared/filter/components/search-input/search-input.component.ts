@@ -23,6 +23,7 @@ import { take } from 'rxjs/operators';
 const AVAILABLE_OPERATIONS: {
   text: { code: OperationMode, text: string }[],
   number: { code: OperationMode, text: string }[],
+
 } = {
   text: [
     { code: OperationMode.CONTAINS, text: 'text.searchModes.contains' },
@@ -35,8 +36,8 @@ const AVAILABLE_OPERATIONS: {
     { code: OperationMode.LESSER_OR_EQUAL, text: 'text.searchModes.lesserOrEqual' },
     { code: OperationMode.GREATER_OR_EQUAL, text: 'text.searchModes.greaterOrEqual' },
   ]
-};
 
+};
 export interface FormFieldValue {
   query: string;
   operation: OperationMode;
@@ -57,7 +58,6 @@ export const SearchBaseMixin = mixinDisabled(mixinErrorState(CustomSearch));
 
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-search-input',
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
@@ -75,6 +75,7 @@ export class SearchInputComponent
   static nextId = 0;
 
   @ViewChild(MatInput, { read: ElementRef, static: true }) input: ElementRef | undefined;
+
 
   @HostBinding() id = `custom-form-field-id-${ SearchInputComponent.nextId++ }`;
   @HostBinding('attr.aria-describedby') describedBy = '';
@@ -113,15 +114,21 @@ export class SearchInputComponent
       operation: fb.control(OperationMode.CONTAINS),
     });
     this.updateOperations();
+    console.log('constructor', this.input);
+    console.log('constructor 2', this.form.value);
   }
 
   @Input()
   set value(value: FormFieldValue) {
     this.form.patchValue(value);
     this.stateChanges.next();
+    console.log('set value', value);
+    console.log('set value 2', this.form.value);
+    console.log('set value 3', this.stateChanges);
   }
 
   get value(): FormFieldValue {
+    console.log('get value', this.form.value);
     return this.form.value as any;
   }
 
@@ -129,6 +136,9 @@ export class SearchInputComponent
   set placeholder(value: string) {
     this._placeholder = value;
     this.stateChanges.next();
+    console.log('set placeholder', value);
+    console.log('set placeholder 2', this.form.value);
+    console.log('set placeholder 3', this.stateChanges);
   }
 
   get placeholder() {
@@ -156,13 +166,16 @@ export class SearchInputComponent
   }
 
   writeValue(obj: FormFieldValue | string): void {
+    console.log('writeValue', obj);
     if (!obj) {
       this.form.controls.query.reset(null, { emitEvent: false });
+      console.log('writeValue 2', this.form.value);
       return;
     }
 
     let next: FormFieldValue;
     if (typeof obj === 'string') {
+      console.log('writeValue ENTRA AQUI');
       const [query, operation] = obj.split(OPERATION_SEPARATOR);
       next = {
         query: query.trim(),
@@ -170,6 +183,7 @@ export class SearchInputComponent
       };
     } else {
       next = obj;
+      console.log('writeValue 3', next);
     }
     // write external value
     this.value = next;
@@ -184,6 +198,7 @@ export class SearchInputComponent
   }
 
   setDisabledState(isDisabled: boolean): void {
+    console.log('setDisabledState', isDisabled);
     this.disabled = isDisabled;
     this.form.disable();
     this.stateChanges.next();
@@ -199,6 +214,7 @@ export class SearchInputComponent
   }
 
   ngOnInit(): void {
+    console.log('ngOnInit', this.input);
     if (!this.input) {
       setTimeout(() => this.ngOnInit(), 1000);
       return;

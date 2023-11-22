@@ -1,0 +1,45 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<tsw-form-container>
+    <tsw-tab-panel></tsw-tab-panel>
+    <tsw-section-wrapper
+            class="mb-2"
+            headerLabel="{{'text.approach.campaign-proposal.title' | translate}}"
+            icon="edit_note">
+        <div section-content>
+            <fieldset>
+
+                <div class="grid grid-cols-1 gap-1.5">
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.approach.campaign-proposal.title' | translate }}</mat-label>
+                        <textarea matInput formControlName="approach" rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1.5">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.approach.justification' | translate }}</mat-label>
+                        <textarea matInput formControlName="justification" rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1.5">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.approach.objectives' | translate }}</mat-label>
+                        <textarea matInput formControlName="objective" rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1.5">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.approach.technical-legal-viability' | translate }}</mat-label>
+                        <textarea matInput formControlName="viability" rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+            </fieldset>
+        </div>
+
+    </tsw-section-wrapper>
+
+</tsw-form-container>

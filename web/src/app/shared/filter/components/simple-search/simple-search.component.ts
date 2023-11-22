@@ -12,7 +12,6 @@ export class SimpleSearchComponent extends FilterComponent<SimpleSearchForm> {
 
   readonly resourceName = 'global';
   override readonly searchMode = SearchMode.SEARCH;
-  @Input() showHiddenInput: boolean = true;
 
   protected buildQueryForm() {
     return this.fb.group<ControlsOf<SimpleSearchForm>>({

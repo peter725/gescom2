@@ -12,7 +12,7 @@ const routes: NamedRouteSource[] = [
 
   { key: 'approachManagementCreate', value: '/app/propuestas/0' },
   { key: 'approachManagementList', value: '/app/propuestas/consulta' },
-
+  { key: 'approachManagementSee', value: '/app/propuestas/:id' },
 ];
 
 

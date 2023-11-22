@@ -412,6 +412,12 @@
     }
   },
   "pages": {
+    "approach": {
+      "title": "Propuestas",
+      "add": "Alta de propuesta",
+      "list": "Mis propuestas",
+      "see": "Ver propuesta"
+    },
     "businessRule": {
       "title": "Reglas de validación",
       "add": "Alta de regla de validación",
@@ -538,11 +544,6 @@
       "add": "Alta de usuario",
       "edit": "Modificar usuario",
       "list": "Consulta de usuarios"
-    },
-    "approach": {
-      "title": "Propuestas",
-      "add": "Alta de propuesta",
-      "list": "Mis propuestas"
     },
     "helpModule": {
       "title": "Ayuda",

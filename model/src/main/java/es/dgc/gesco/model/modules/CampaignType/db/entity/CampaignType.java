@@ -8,19 +8,19 @@ import javax.persistence.*;
 import static es.dgc.gesco.model.util.ConstanteBD.*;
 
 @Entity
-@Table(name = TABLE_CAMPAINGN_TYPE)
+@Table(name = TABLE_CAMPAIGN_TYPE)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class CampaingnType extends AuditedBaseEntity {
+public class CampaignType extends AuditedBaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_CAMPAINGN_TYPE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_CAMPAIGN_TYPE)
     @SequenceGenerator(
-            name = SEQ_CAMPAINGN_TYPE,
-            sequenceName = SEQ_CAMPAINGN_TYPE,
+            name = SEQ_CAMPAIGN_TYPE,
+            sequenceName = SEQ_CAMPAIGN_TYPE,
             allocationSize = 1
     )
     @Column(name = "ID")

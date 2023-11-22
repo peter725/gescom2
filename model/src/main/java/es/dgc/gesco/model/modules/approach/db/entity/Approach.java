@@ -3,11 +3,9 @@ package es.dgc.gesco.model.modules.approach.db.entity;
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import javax.persistence.*;
 
-import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaingnType;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static es.dgc.gesco.model.util.ConstanteBD.*;
 
@@ -34,10 +32,9 @@ public class Approach extends AuditedBaseEntity {
     private Boolean sent;
 
     @Column(name = "AUTONOMOUS_COMMUNITY_ID")
-    private Long autonomous_community_id;
+    private Long autonomousCommunityId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "USER_ID")
+
     @Column(name = "USER_ID")
     private Long userId;
 

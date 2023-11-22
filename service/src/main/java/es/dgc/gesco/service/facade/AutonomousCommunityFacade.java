@@ -20,4 +20,6 @@ public class AutonomousCommunityFacade {
         Page<AutonomousCommunity> autonomousCommunityPage = autonomousCommunityService.getAllPage(pageable);
         return  autonomousCommunityPage;
     }
+
+
 }

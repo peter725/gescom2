@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -65,4 +66,21 @@ public class ApproachServiceTest extends AbstractGenericTest {
 //        assertEquals(1, approachPage.getTotalElements());
     }
 
+    @Test
+    public void findByAutonomousCommunityId(){
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Approach> approach = approachService.getApproachByAutonomousCommunityId(10L, pageable);
+//        assertNotNull(approach);
+    }
+
+    @Test
+    public void getApproachByDateTest(){
+        Pageable pageable = PageRequest.of(0, 10);
+        int year = 2022;
+        LocalDate localDateIni = LocalDate.ofYearDay(year, 1);
+        LocalDate localDateFin = LocalDate.ofYearDay(year, LocalDate.of(year, 12, 31).getDayOfYear());
+
+        Page<Approach> approach = approachService.getApproachByDate(localDateIni, localDateFin, pageable);
+//        assertNotNull(approach);
+    }
 }

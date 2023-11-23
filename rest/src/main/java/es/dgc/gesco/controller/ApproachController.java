@@ -2,7 +2,6 @@ package es.dgc.gesco.controller;
 
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
-import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.util.exception.Constante;
 import es.dgc.gesco.service.facade.ApproachFacade;
 import es.dgc.gesco.util.Url;
@@ -102,5 +101,33 @@ public class ApproachController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(approachDto);
+    }
+
+    @GetMapping(Url.APPROACH+"/{year}")
+    public ResponseEntity<Page<ApproachDto>> getProposalByYear(final @PathVariable int year, @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable) {
+
+        Page<ApproachDto> approachDtos;
+        try {
+            approachDtos = approachFacade.getApproachByDate(year, pageable);
+        } catch (Exception e) {
+            log.error(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(approachDtos);
+    }
+
+    @GetMapping(Url.AUTONOMOUS_COMMUNITY+"/{id}")
+    public ResponseEntity<Page<ApproachDto>> getProposalByAutonomousCommunityId(final @PathVariable Long id, @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable){
+        Page<ApproachDto> approachDtos;
+
+        try {
+            approachDtos = approachFacade.getApproachByAutonomousCommunityId(id, pageable);
+        } catch (Exception e) {
+            log.error(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(approachDtos);
     }
 }

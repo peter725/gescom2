@@ -45,11 +45,6 @@ public class TestFactory {
     };
 
     @Bean
-    public RoleService profileRoleService(RoleRepository RoleRepository){
-        return new RoleService(RoleRepository);
-    };
-
-    @Bean
     public ApproachService approachService(ApproachRepository approachRepository){
         return new ApproachService(approachRepository);
     };
@@ -58,4 +53,5 @@ public class TestFactory {
     public CampaignTypeService campaignTypeService(CampaignTypeRepository campaignTypeRepository){
         return new CampaignTypeService(campaignTypeRepository);
     };
+
 }

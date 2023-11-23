@@ -1,7 +1,4 @@
 import {Routes} from "@angular/router";
-import {
-    ApproachCampaignProposalModule
-} from "@base/pages/approach/approach-add-page/campaign-proposal/approach-campaign-proposal.module";
 
 const breadcrumb = 'pages.approach.title';
 
@@ -25,5 +22,12 @@ export const APPROACH_PAGE_ROUTES: Routes = [
             // requireAccess: 'WField'
         },
         loadChildren: () => import('./').then(m => m.ApproachCampaignProposalModule),
-    }
+    },
+    {
+        path: ':id',
+        data: {
+            breadcrumb,
+        },
+        loadChildren: () => import('./').then(m => m.ApproachSeePageModule),
+    },
   ]

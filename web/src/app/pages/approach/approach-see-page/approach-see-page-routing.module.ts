@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ApproachSeePageComponent } from './approach-see-page.component';
 
 const routes: Routes = [{
     path: '',
     component: ApproachSeePageComponent,
-    title: 'pages.user.list',
+    title: 'pages.approach.see',
     data: { breadcrumb: 'generic.actions.see' },
 }];
 

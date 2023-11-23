@@ -7,7 +7,6 @@ import {CustomValidators} from "@libs/validators";
 import {Component} from "@angular/core";
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'tsw-user-edit-page',
     templateUrl: './user-edit-page.component.html',
     styleUrls: ['./user-edit-page.component.scss'],

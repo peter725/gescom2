@@ -21,18 +21,8 @@ export class ApproachSeePageComponent extends EditPageBaseComponent<Approach, Cr
     readonly resourceName = "approach";
 
     protected override _createResourceTitle = "pages.approach.add";
-    protected override _editResourceTitle = "pages.approach.edit";
+    protected override _editResourceTitle = "pages.approach.see";
     public override redirectAfterSave = false;
-
-    protected override getRedirectAfterSaveRoute(): string[] {
-        return [`../${this.srcData?.id}/documents`];
-    }
-
-    protected override async afterSaveSuccess(result: Approach): Promise<void> {
-        await super.afterSaveSuccess(result);
-        await this.router.navigate(this.getRedirectAfterSaveRoute(), {relativeTo: this.route});
-    }
-
 
     protected buildForm(){
         return this.fb.group<ControlsOf<CreateApproach>>({

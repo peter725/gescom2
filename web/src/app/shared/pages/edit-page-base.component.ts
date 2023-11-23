@@ -24,6 +24,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    */
   abstract readonly resourceName: string;
 
+
   /**
    * Form group used as base of the editor.
    */
@@ -94,13 +95,13 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     @Inject(FORM_STATUS) public status: ComponentStatus,
   ) {
     this.form = this.buildForm();
-    console.log("al construirlo",this.form.value);
     this.redirectAfterSavePath = this.getRedirectAfterSaveRoute();
   }
 
   ngOnInit() {
     this.status.status = 'LOAD';
     this.loadResourceId().subscribe(() => this.loadData());
+    console.log('ResourceName',this.resourceName)
   }
 
   ngOnDestroy(): void {
@@ -117,7 +118,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
       //this.notification.show({ message: 'text.other.pleaseReview' });
       //return;
     //}
-    console.log("antes de enviarlo",this.form.value);
     this.save();
   }
 
@@ -145,6 +145,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
         startValue = await firstValueFrom(this.fetchCreateSrc());
       } else {
         this.srcData = await firstValueFrom(this.fetchExistingSrc());
+        console.log('srcData',this.srcData);
         startValue = await firstValueFrom(this.mapModelToForm(this.srcData));
       }
       this.afterLoadDataSuccess(startValue);
@@ -157,12 +158,14 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    * Fetches an existing resource from the API.
    */
   protected fetchExistingSrc(): Observable<T> {
+
     return this.crudService.findById(+this.resourceId, {
       resourceName: this.resourceName,
       pathParams: {
         id: this.resourceId,
       }
     });
+
   }
 
   /**

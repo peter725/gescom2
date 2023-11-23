@@ -103,7 +103,7 @@ public class ApproachController {
         return ResponseEntity.status(HttpStatus.OK).body(approachDto);
     }
 
-    @GetMapping(Url.APPROACH+"/{year}")
+    /*@GetMapping("/{year}")
     public ResponseEntity<Page<ApproachDto>> getProposalByYear(final @PathVariable int year, @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable) {
 
         Page<ApproachDto> approachDtos;
@@ -115,7 +115,7 @@ public class ApproachController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(approachDtos);
-    }
+    }*/
 
     @GetMapping(Url.AUTONOMOUS_COMMUNITY+"/{id}")
     public ResponseEntity<Page<ApproachDto>> getProposalByAutonomousCommunityId(final @PathVariable Long id, @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable){

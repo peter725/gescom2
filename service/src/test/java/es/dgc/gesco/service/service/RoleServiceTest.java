@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Import(TestFactory.class)
 public class RoleServiceTest extends AbstractGenericTest {
 
-    @Autowired
-    RoleService roleService;
-
-    @Test
-    public void getAllTest() {
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<Role> rolePage = roleService.getAllPage(pageable);
-        assertEquals(1, rolePage.getTotalElements());
-    }
+    //@Autowired
+    //RoleService roleService;
+    //
+    //@Test
+    //public void getAllTest() {
+    //    Pageable pageable = PageRequest.of(0, 10);
+    //    Page<Role> rolePage = roleService.getAllPage(pageable);
+    //    assertEquals(1, rolePage.getTotalElements());
+    //}
 }

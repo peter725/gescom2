@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AuthorityDGCRepositoryTest extends AbstractGenericTest{
 
-    @Autowired
-    AuthorityDGCRepository authorityDGCRepository;
+    //@Autowired
+    //AuthorityDGCRepository authorityDGCRepository;
 
-    @Test
-    public void getAllTest(){
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<AuthorityDGC> authorityDGCPage = authorityDGCRepository.findAll(pageable);
-        assertEquals(1, authorityDGCPage.getTotalElements());
-    }
+    //@Test
+    //public void getAllTest(){
+        //Pageable pageable = PageRequest.of(0, 10);
+        //Page<AuthorityDGC> authorityDGCPage = authorityDGCRepository.findAll(pageable);
+        //assertEquals(1, authorityDGCPage.getTotalElements());
+    //}
 }

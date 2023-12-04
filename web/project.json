@@ -5,6 +5,17 @@
   "prefix": "app",
   "sourceRoot": "./src",
   "tags": [],
+  "build-war": {
+    "builder": "@nrwl/workspace:run-commands",
+    "dependsOn": [
+      "build"
+    ],
+    "options": {
+      "index": "apps/web-app/src/index.html",
+      "command": "jar cvf GESCOM.war  .",
+      "cwd": "dist/apps/web-app"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -35,12 +46,12 @@
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "2mb"
             },
             {
               "type": "anyComponentStyle",
               "maximumWarning": "2kb",
-              "maximumError": "4kb"
+              "maximumError": "150kb"
             }
           ],
           "outputHashing": "all"

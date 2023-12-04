@@ -9,7 +9,7 @@
         >
 
             <div section-content>
-                <div class="grid grid-cols-4 gap-1.5">
+                <div class="grid grid-cols-3 gap-1.5">
                     <mat-form-field>
                         <mat-label>{{ 'fields.name' | translate }}</mat-label>
                         <input matInput formControlName="name">
@@ -28,14 +28,15 @@
                         <mat-error>{{ form.controls.secondSurname.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
 
+                </div>
+
+                <div class="grid grid-cols-4 gap-1.5">
                     <mat-form-field>
                         <mat-label>{{ 'fields.nif' | translate }}</mat-label>
                         <input matInput formControlName="nif">
                         <mat-error>{{ form.controls.nif.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
-                </div>
 
-                <div class="grid grid-cols-6 gap-1.5">
                     <mat-form-field>
                         <mat-label>{{ 'fields.email' | translate }}</mat-label>
                         <input matInput formControlName="email">
@@ -46,7 +47,15 @@
                         <input matInput formControlName="phone">
                     </mat-form-field>
 
-                    <mat-form-field class="col-span-2">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.ccaa' | translate }}</mat-label>
+                        <tsw-custom-select
+                                resourceName="autonomousCommunity"
+                                formControlName="autonomousCommunity"
+                        ></tsw-custom-select>
+                    </mat-form-field>
+
+                    <!--<mat-form-field class="col-span-2">
                         <mat-label>{{ 'fields.profile' | translate }}</mat-label>
                         <tsw-custom-select
                                 resourceName="profiles"
@@ -62,7 +71,7 @@
                                 formControlName="modules"
                                 multiple
                         ></tsw-custom-select>
-                    </mat-form-field>
+                    </mat-form-field>-->
                 </div>
             </div>
 

@@ -28,14 +28,15 @@
             <mat-error>{{ form.controls.secondSurname.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 
+        </div>
+
+        <div class="grid grid-cols-6 gap-1.5">
           <mat-form-field>
             <mat-label>{{ 'fields.nif' | translate }}</mat-label>
             <input matInput formControlName="nif">
             <mat-error>{{ form.controls.nif.errors | extractValidationError }}</mat-error>
           </mat-form-field>
-        </div>
 
-        <div class="grid grid-cols-6 gap-1.5">
           <mat-form-field>
             <mat-label>{{ 'fields.email' | translate }}</mat-label>
             <input matInput formControlName="email">

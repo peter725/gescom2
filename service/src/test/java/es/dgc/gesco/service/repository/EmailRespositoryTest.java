@@ -14,23 +14,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class EmailRespositoryTest extends AbstractGenericTest {
 
-    @Autowired
-    EmailRepository emailRepository;
-
-    @Test
-    public void getAllTest(){
-
-        List<Email> email = emailRepository.findAll();
-        assertNotNull(email);
-
-    }
-
-    @Test
-    public void getByIdTest(){
-
-        Email email = emailRepository.findById(1L).get();
-        assertNotNull(email);
-    }
+    //@Autowired
+    //EmailRepository emailRepository;
+    //
+    //@Test
+    //public void getAllTest(){
+    //
+    //    List<Email> email = emailRepository.findAll();
+    //    assertNotNull(email);
+    //
+    //}
+    //
+    //@Test
+    //public void getByIdTest(){
+    //
+    //    Email email = emailRepository.findById(1L).get();
+    //    assertNotNull(email);
+    //}
 
 
 

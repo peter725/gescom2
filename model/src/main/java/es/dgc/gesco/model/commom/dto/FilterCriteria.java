@@ -93,34 +93,8 @@ public class FilterCriteria {
         return LocaleContextHolder.getLocale().getLanguage();
     }
 
-    /**
-     * Returns user current scope, first configured scope or none
-     */
-    public String getScope() {
-        final String NO_SCOPE = "no_scope";
-        final String WILDCARD = "%";
-        try {
-            UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String code = null;
-            if (this.scope != null && principal.getScopes().contains(scope)) {
-                code = this.scope;
-            } else {
-                Optional<String> first = principal.getScopes().stream().sorted().findFirst();
-                if (first.isPresent()) {
-                    code = first.get();
-                }
-            }
 
-            if (code == null) {
-                return NO_SCOPE;
-            }
-            return code + WILDCARD;
-        } catch (Exception e) {
-            // In case of exception, hide values.
-            log.error("Failed to obtain user primary scope");
-            return NO_SCOPE;
-        }
-    }
+
 
 }
 

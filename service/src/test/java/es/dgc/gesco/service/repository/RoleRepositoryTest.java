@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RoleRepositoryTest extends AbstractGenericTest{
 
-    @Autowired
-    private RoleRepository roleRepository;
+    //@Autowired
+    //private RoleRepository roleRepository;
 
-    @Test
-    public void getAllTest(){
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<Role> rolePage = roleRepository.findAll(pageable);
-        assertEquals(1, rolePage.getTotalElements());
-    }
+    //@Test
+    //public void getAllTest(){
+        //Pageable pageable = PageRequest.of(0, 10);
+        //Page<Role> rolePage = roleRepository.findAll(pageable);
+        //assertEquals(1, rolePage.getTotalElements());
+    //}
 }

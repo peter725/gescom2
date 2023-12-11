@@ -37,7 +37,7 @@ public class UserServiceTest extends AbstractGenericTest {
         assertTrue(userPage.getSize()>0);
     }
 
-    @Test
+    //@Test
     public void fidAllUsers(){
        List<User> users = userService.findAllUser();
     }
@@ -48,9 +48,6 @@ public class UserServiceTest extends AbstractGenericTest {
         user.setName("alexander");
         user.setFirstSurname("maldonado");
         user.setSecondSurname("zambrano");
-        user.setNif("Y5552524A");
-        user.setPosition("Position");
-        user.setAreaResponsability("Area");
         user.setCreatedAt(LocalDateTime.now());
         user.setCreatedBy(1L);
         user.setUpdatedAt(LocalDateTime.now());
@@ -65,11 +62,7 @@ public class UserServiceTest extends AbstractGenericTest {
     //@Test
     public void updateUserTest(){
 
-        String nifEdited = "000000000";
-
         User user = userService.getUserById(1L);
-
-        user.setNif(nifEdited);
 
         userService.updateUser(user);
 

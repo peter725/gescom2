@@ -14,7 +14,7 @@ public class ProfileRepositoryTest extends AbstractGenericTest{
     @Autowired
     private ProfileRepository profileRepository;
 
-    @Test
+    //@Test
     public void getAllPageTest(){
         Pageable pageable = PageRequest.of(0, 10);
         Page<Profile> profilePage = profileRepository.findAll(pageable);

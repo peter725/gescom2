@@ -7,6 +7,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,45 +23,26 @@ import java.util.List;
 public class UserDto implements LongIdModel {
 
     private Long id;
+
     private Integer state = EntityState.ON.getValue();
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
     private String name;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String firstSurname;
-
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String secondSurname;
-
-    @NotNull
-    @NotBlank
-    @NIF
     private String nif;
 
-    @NotNull
-    @NotBlank
-    private String position;
+    private String password;
 
+    private String email;
 
+    private AutonomousCommunity autonomousCommunity;
 
-    @Email
-    private List<Email> emailList;
+    private Long profileId;
 
+    private String phone;
 
-    @NotBlank
-    private Long phoneId;
+    private String firstSurname;
 
-
-    @NotNull
-    @NotBlank
-    private Long roleId;
+    private String secondSurname;
 
     public String getFullName() {
         String fullName = getName() + " " + getFirstSurname() + " " + getSecondSurname();

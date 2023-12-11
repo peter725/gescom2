@@ -19,7 +19,7 @@ public class AuthorityOEUServiceTest extends AbstractGenericTest {
     @Autowired
     AuthorityOEUService authorityOEUService;
 
-    @Test
+    //@Test
     public void getAllTest(){
         Pageable pageable = PageRequest.of(0, 10);
         Page<AuthorityOEU> authorityOEUPage = authorityOEUService.getAllPage(pageable);

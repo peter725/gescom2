@@ -21,16 +21,9 @@ public class UserFacade {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private EmailFacade emailFacade;
 
     @Transactional
     public User saveUser(final User user){
-        List<Email> emailList = user.getEmails();
-        emailList.forEach(email -> {
-            email.setUser(user);
-        });
-        emailFacade.saveEmail(emailList);
         User newUser = userService.saveUser(user);
 
         return newUser;
@@ -51,11 +44,6 @@ public class UserFacade {
     public void updateUser(final UserDto userDto){
         User userActual = loadUser(userDto);
         userService.updateUser(userActual);
-    }
-
-    public UserDto getUserByNif(final String nif){
-        UserDto userDto = userService.getUserByNif(nif);
-        return userDto;
     }
 
     public void changeStateUser(final Long id){

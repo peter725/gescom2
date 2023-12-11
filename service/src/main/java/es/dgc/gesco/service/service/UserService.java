@@ -58,12 +58,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public UserDto getUserByNif(String nif){
-
-        UserDto userDto = loadUserDto(userRepository.findByNif(nif).get());
-        return userDto;
-    }
-
     public List<User> findAllUser(){
 
         List<User> users = userRepository.findAll();
@@ -72,7 +66,7 @@ public class UserService {
 
     public User loadUser(final UserDto userDto){
 
-        User user = userConverter.convertDtoToUsuer(userDto);
+        User user = userConverter.convertDtoToUser(userDto);
         return user;
     }
 

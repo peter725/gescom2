@@ -2,6 +2,7 @@ package es.dgc.gesco.model.util;
 
 public class ConstanteBD {
     public static final String TABLE_USER="users";
+    public static final String TABLE_USER_TYPE="user_type";
     public static final String TABLE_EMAIL="email";
     public static final String TABLE_PHONE="phone";
     public static final String TABLE_ROLE="role";
@@ -17,6 +18,7 @@ public class ConstanteBD {
 
 
     public static final String SEQ_USER="seq_users";
+    public static final String SEQ_USER_TYPE="seq_user_type";
     public static final String SEQ_EMAIL="seq_email";
     public static final String SEQ_PHONE="seq_phone";
     public static final String SEQ_ROLE="seq_role";

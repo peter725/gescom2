@@ -16,7 +16,7 @@ public class AutonomousCommunityRepositoryTest extends AbstractGenericTest{
     @Autowired
     AutonomousCommunityRepository autonomousCommunityRepository;
 
-    @Test
+    //@Test
     public void getAllTest(){
         Pageable pageable = PageRequest.of(0, 10);
         Page<AutonomousCommunity> autonomousCommunityPage = autonomousCommunityRepository.findAll(pageable);

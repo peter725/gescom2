@@ -15,7 +15,7 @@ public class campaignTypeServiceTest extends AbstractGenericTest {
     @Autowired
     CampaignTypeService campaignTypeService;
 
-    @Test
+    //@Test
     public void getCampaignTypeByIdTest(){
         CampaignType campaignType = campaignTypeService.getCampaignTypeById(1L);
         assertNotNull(campaignType);

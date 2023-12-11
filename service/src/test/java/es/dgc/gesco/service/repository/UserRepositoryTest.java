@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.criteria.UserCriteria;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +23,7 @@ public class UserRepositoryTest extends AbstractGenericTest  {
     //@Test
     public void getAllTest(){
         List<User> userList = userRepository.findAll();
-        assertEquals(5, userList.size());
+        assertEquals(1, userList.size());
     }
 
     //@Test

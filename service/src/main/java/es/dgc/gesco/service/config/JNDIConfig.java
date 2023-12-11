@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 import javax.sql.DataSource;
 
-@Profile("jndi")
+@PropertySource("file:/documentospro/properties/GESCO/jdbc.properties")
+@Profile("dev")
 @Configuration
 public class JNDIConfig {
 
@@ -27,6 +29,8 @@ public class JNDIConfig {
         BasicDataSource source = (BasicDataSource) lookup.getDataSource(env.getProperty("jdbc.jndiName"));
         String password = encrypterService.decrypt(env.getProperty("jdbc.password"));
         source.setUsername(env.getProperty("jdbc.username"));
+        System.out.println("username: " + env.getProperty("jdbc.username"));
+        System.out.println("password: " + password);
         source.setPassword(password);
         return source;
     }

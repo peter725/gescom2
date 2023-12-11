@@ -12,9 +12,9 @@ public interface UserConverter {
 
     final public UserConverter INSTANCE = Mappers.getMapper(UserConverter.class);
 
-    @Mapping(target = "nif", source = "nif")
-    User convertDtoToUsuer(UserDto userDto);
+    @Mapping(target = "ccaa", source = "autonomousCommunity")
+    User convertDtoToUser(UserDto userDto);
 
-    @Mapping(target = "nif", source = "nif")
+
     UserDto convertUserToDto(User user);
 }

@@ -85,22 +85,6 @@ public class UserController{
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
-    @GetMapping(Url.NIF+"/{nif}")
-    public ResponseEntity<UserDto> getUserByNif(final @PathVariable String nif) {
-
-        UserDto userDto;
-
-        try {
-
-            userDto = userFacade.getUserByNif(nif);
-
-        } catch (Exception e) {
-            log.error(e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(userDto);
-    }
 
     @GetMapping
     public ResponseEntity<Page<User>> getAllUser(@PageableDefault(page = 0, size = 25, sort ="id") final Pageable pageable){

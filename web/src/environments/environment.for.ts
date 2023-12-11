@@ -1,16 +1,17 @@
 import { EnvironmentData } from './models';
 
+
 export const environment: EnvironmentData = {
-  name: '',
+  name: 'for',
   production: true,
   baseHref: '/gescom',
   srv: {
     app: {
-      host: 'https://gescom-web-jee-r01a-id-vs-1.msc.es/rest',
+      host: 'https://gescom-for-jee-r01a-ip-vs-1.msc.es/rest',
       api: '/api/v1',
     },
     auth: {
-      host: 'https://gescom-web-jee-r01a-id-vs-1.msc.es/rest',
+      host: 'https://gescom-for-jee-r01a-ip-vs-1.msc.es/rest',
       api: '/api/v1',
     },
   },

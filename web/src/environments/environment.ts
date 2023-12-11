@@ -5,18 +5,16 @@ import { EnvironmentData } from './models';
 
 
 export const environment: EnvironmentData = {
-  name: 'local',
+  name: 'dev',
   production: false,
   baseHref: '',
   srv: {
     app: {
-      // host: 'https://tulsa-web-jee-r01a-id-vs-1.msc.es/rest',
-      host: 'http://localhost:8090/rest',
+      host: 'http://micapps01des.consumo.gob.es:8080/gescom-rest-app',
       api: '/api',
     },
     auth: {
-      // host: 'https://tulsa-web-jee-r01a-id-vs-1.msc.es/jwtrest',
-      host: 'http://localhost:9090/rest',
+      host: 'http://localhost:9090/jwtrest',
       api: '/api/v1',
     },
   },

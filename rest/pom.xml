@@ -115,7 +115,7 @@
 
 	<build>
 
-		<finalName>rest</finalName>
+		<finalName>gescom-rest-app</finalName>
 
 		<resources>
 			<resource>

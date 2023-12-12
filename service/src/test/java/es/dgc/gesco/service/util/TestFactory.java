@@ -38,7 +38,6 @@ public class TestFactory {
         return new AuthorityDGCService(authorityDGCRepository);
     };
 
-
     @Bean
     public ProfileService profileService(ProfileRepository profileRepository){
         return new ProfileService(profileRepository);
@@ -53,5 +52,11 @@ public class TestFactory {
     public CampaignTypeService campaignTypeService(CampaignTypeRepository campaignTypeRepository){
         return new CampaignTypeService(campaignTypeRepository);
     };
+
+    @Bean
+    public UserTypeService userTypeService(UserTypeRepository userTypeRepository){
+        return new UserTypeService(userTypeRepository);
+    };
+
 
 }

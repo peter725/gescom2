@@ -5,12 +5,13 @@ import { EnvironmentData } from './models';
 
 
 export const environment: EnvironmentData = {
-  name: 'dev',
+  name: 'local',
   production: false,
   baseHref: '',
   srv: {
     app: {
-      host: 'http://micapps01des.consumo.gob.es:8080/gescom-rest-app',
+      //host: 'http://micapps01des.consumo.gob.es:8080/gescom-rest-app',
+      host: 'http://localhost:8080/rest',
       api: '/api',
     },
     auth: {

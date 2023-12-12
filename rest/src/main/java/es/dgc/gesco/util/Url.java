@@ -22,5 +22,6 @@ public class Url {
     public static final String STATUS = "/status";
     public static final String UPDATE = "/update/1";
     public static final String USERS ="/users";
+    public static final String USER_TYPE = "/user_type";
 
 }

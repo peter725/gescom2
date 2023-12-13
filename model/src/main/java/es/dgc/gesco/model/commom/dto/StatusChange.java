@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 @Data
-public class EntityStatusChange {
+public class StatusChange {
     @NotNull
     @Min(1)
     private Integer status;

@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
+import es.dgc.gesco.model.modules.profile.db.entity.Profile;
+import es.dgc.gesco.model.modules.userType.db.entity.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +38,9 @@ public class UserDto implements LongIdModel {
 
     private AutonomousCommunity autonomousCommunity;
 
-    private Long profileId;
+    private Profile profile;
+
+    private UserType userType;
 
     private String phone;
 

@@ -1,8 +1,10 @@
 package es.dgc.gesco.controller;
 
+import es.dgc.gesco.model.commom.dto.StatusChange;
 import es.dgc.gesco.service.facade.UserFacade;
 import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.UserDto;
+import es.dgc.gesco.service.util.Accion;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -35,7 +37,7 @@ public class UserController{
 
         try {
 
-            user = userFacade.loadUser(userDto);
+            user = userFacade.loadUser(userDto,Accion.ADD);
 
             user = userFacade.saveUser(user);
 
@@ -100,35 +102,17 @@ public class UserController{
         return ResponseEntity.status(HttpStatus.OK).body(userPage);
     }
 
-    @PostMapping(Url.UPDATE)
-    public ResponseEntity<String> updateUser(final @RequestBody UserDto userDto) {
+    @PostMapping(Url.UPDATE+"/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable Long id, final @RequestBody UserDto userDto) {
 
-        try {
-
-            userFacade.updateUser(userDto);
-
-        } catch (DataIntegrityViolationException ex) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        } catch (Exception e) {
-            log.error(e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        userFacade.updateUser(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping(Url.CHANGE_STATE+"/{id}"+Url.STATUS)
-    public ResponseEntity<String> changeStateUser(final @PathVariable Long id) {
+    public ResponseEntity<UserDto> changeStateUser(final @PathVariable Long id, @RequestBody StatusChange payload) {
 
-        try {
-
-            userFacade.changeStateUser(id);
-        } catch (Exception e) {
-            log.error(e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+         return ResponseEntity.ok(userFacade.changeStateUser(id, payload));
     }
 
 

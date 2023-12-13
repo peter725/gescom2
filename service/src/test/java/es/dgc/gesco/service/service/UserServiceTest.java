@@ -69,13 +69,7 @@ public class UserServiceTest extends AbstractGenericTest {
         assertNotNull(user);
     }
 
-    //@Test
-    public void deleteUserTest(){
 
-        userService.changeStateUser(1L);
-        User user = userService.getUserById(1L);
-        assertEquals(user.getState(),2);
-    }
 
 }
 

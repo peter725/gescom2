@@ -54,7 +54,7 @@ public class User extends AuditedBaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "CCAA_ID")
-    private AutonomousCommunity ccaa;
+    private AutonomousCommunity autonomousCommunity;
 
     @ManyToOne
     @JoinColumn(name = "PROFILE_ID")
@@ -64,8 +64,8 @@ public class User extends AuditedBaseEntity{
     @JoinColumn(name = "USER_TYPE_ID")
     private UserType userType;
 
-    @Column(name = "PHONE", length = 10)
-    @Size(min = 1, max = 10, message = "El teléfono debe medir 10 caracteres")
+    @Column(name = "PHONE", length = 15)
+    @Size(min = 1, max = 15, message = "El teléfono debe medir 10 caracteres")
     private String phone;
 
     @Column(name = "FIRST_SURNAME")

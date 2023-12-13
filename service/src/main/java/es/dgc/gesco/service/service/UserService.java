@@ -48,14 +48,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void changeStateUser(final Long id){
+    public User changeStateUser(final Long id, final Integer state){
 
-        User user = this.getUserById(id);
-        if (user.getState() == 2)
-            user.setState(1);
-        else
-            user.setState(2);
-        userRepository.save(user);
+        User user = getUserById(id);
+        user.setState(state);
+        return userRepository.save(user);
     }
 
     public List<User> findAllUser(){
@@ -77,6 +74,11 @@ public class UserService {
 
     public Page<User> getAllByCriteria(UserCriteria userCriteria) {
         return null;
+    }
+
+    public Optional<User> getByNif(String nif){
+
+        return userRepository.findByNif(nif);
     }
 
 }

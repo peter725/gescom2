@@ -18,5 +18,6 @@ public interface UserRepository
         QueryByCriteria<User, UserCriteria> {
 
 
+    Optional<User> findByNif (String nif);
 
 }

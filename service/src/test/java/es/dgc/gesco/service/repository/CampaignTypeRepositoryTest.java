@@ -1,7 +1,6 @@
 package es.dgc.gesco.service.repository;
 
 import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

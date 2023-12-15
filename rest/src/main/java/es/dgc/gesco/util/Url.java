@@ -5,6 +5,8 @@ public class Url {
     public static final String ALL ="/all";
     public static final String API ="/api";
     public static final String APPROACH = "/approach";
+    public static final String APPROACH_BY_YEAR = "/year";
+    public static final String APPROACH_BY_ACID = "/autonomous_community";
     public static final String AUTHORITY_DGC ="/authority_dgc";
     public static final String AUTONOMOUS_COMMUNITY ="/autonomous_communitys";
     public static final String AUTHORITY_OEU ="/authority_oeu";

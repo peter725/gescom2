@@ -12,8 +12,8 @@ import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 import javax.sql.DataSource;
 
-@PropertySource("file:/documentospro/properties/GESCO/jdbc.properties")
-@Profile("dev")
+//@PropertySource("file:/documentospro/properties/GESCO/jdbc.properties")
+@Profile("jndi")
 @Configuration
 public class JNDIConfig {
 

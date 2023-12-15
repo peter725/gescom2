@@ -22,7 +22,7 @@ public class ConstanteBD {
     public static final String SEQ_EMAIL="seq_email";
     public static final String SEQ_PHONE="seq_phone";
     public static final String SEQ_ROLE="seq_role";
-    public static final String SEQ_APPROACH="seq_approach";
+    public static final String SEQ_CAMPAIGN_PROPOSAL="seq_campaign_proposal";
     public static final String SEQ_CAMPAIGN_TYPE="seq_campaign_type";
     public static final String SEQ_PROFILE="seq_profile";
     public static final String SEQ_AUTHORITY_OEU="seq_authority_oeu";

@@ -235,7 +235,6 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
         : [];
     const pageReq = PageReqBuilder.fromEvent({ pageSize, pageIndex, length }, sort);
     const queryParams = this.filter.query ? this.filter.query.toObject() : {};
-    console.log('queryParams line 238', queryParams);
     return Promise.resolve({
       resourceName: this.resourceName,
       queryParams,

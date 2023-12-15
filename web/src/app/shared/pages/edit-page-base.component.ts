@@ -9,11 +9,8 @@ import { CrudImplService, RequestConfig } from '@libs/crud-api';
 import { NamedRoutes } from '@libs/named-routes';
 import { filter, firstValueFrom, Observable, of, ReplaySubject, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {MatChipEditedEvent, MatChipInputEvent} from "@angular/material/chips";
-import {Email} from "@libs/sdk/email";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
-import {Phone} from "@libs/sdk/phone";
 
 
 @Directive()
@@ -44,6 +41,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    * Whether to redirect the user after saving the data
    */
   redirectAfterSave = true;
+
 
   /**
    * Path where to redirect after saving data.
@@ -101,11 +99,9 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   ngOnInit() {
     this.status.status = 'LOAD';
     this.loadResourceId().subscribe(() => this.loadData());
-    console.log('ResourceName',this.resourceName)
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy',this.form.value)
     this.destroyed$.next(true);
   }
 
@@ -114,6 +110,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   }
 
   submitForm() {
+    console.log('this.redirectAfterSave en submit',this.redirectAfterSave);
     //if (this.form.invalid) {
       //this.notification.show({ message: 'text.other.pleaseReview' });
       //return;
@@ -145,7 +142,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
         startValue = await firstValueFrom(this.fetchCreateSrc());
       } else {
         this.srcData = await firstValueFrom(this.fetchExistingSrc());
-        console.log('srcData',this.srcData);
         startValue = await firstValueFrom(this.mapModelToForm(this.srcData));
       }
       this.afterLoadDataSuccess(startValue);
@@ -181,9 +177,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   protected resetDataBeforeLoad() {
     this.srcData = undefined;
     this.startValue = undefined;
-    console.log("antes de RESET",this.form.value);
     this.form.reset(); // Force reset to null
-    console.log("Despues de RESET",this.form.value);
   }
 
   /**
@@ -214,7 +208,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
 
       this.status.status = 'PROCESS';
       const result = await firstValueFrom(this.activeOperation);
-
       await this.afterSaveSuccess(result);
     } catch (e: any) {
       await this.afterSaveError(e);

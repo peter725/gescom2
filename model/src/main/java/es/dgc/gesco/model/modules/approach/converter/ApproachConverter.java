@@ -18,5 +18,6 @@ public interface ApproachConverter {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "date", source = "date")
     @Mapping(target = "autonomousCommunityId", source = "autonomousCommunityId")
+    @Mapping(target = "state", source = "state")
     ApproachDto convertApproachToDto(Approach approach);
 }

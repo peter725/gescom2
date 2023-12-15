@@ -30,6 +30,14 @@ public class ApproachService {
         return newApproach;
     }
 
+    public Approach changeStateApproach(final Long id, final Integer state){
+
+        Approach approach = getApproachById(id);
+        approach.setState(state);
+        approach.setSent(true);
+        return approachRepository.save(approach);
+    }
+
     public List<Approach> findAllApproach(){
 
         List<Approach> approaches = approachRepository.findAll();

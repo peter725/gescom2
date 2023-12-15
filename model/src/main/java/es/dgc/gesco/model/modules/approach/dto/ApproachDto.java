@@ -42,4 +42,6 @@ public class ApproachDto implements LongIdModel {
     String objective;
 
     String viability;
+
+    Integer state = 1;
 }

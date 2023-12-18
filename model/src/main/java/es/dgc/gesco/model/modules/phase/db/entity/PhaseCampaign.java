@@ -4,8 +4,6 @@ import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import static es.dgc.gesco.model.util.ConstanteBD.SEC_PHASE_CAMPAIGN;
 import static es.dgc.gesco.model.util.ConstanteBD.TABLE_PHASE_CAMPAIGN;

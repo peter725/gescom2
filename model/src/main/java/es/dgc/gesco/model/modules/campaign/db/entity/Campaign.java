@@ -3,7 +3,7 @@ package es.dgc.gesco.model.modules.campaign.db.entity;
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
-import es.dgc.gesco.model.modules.field.db.entity.Field;
+import es.dgc.gesco.model.modules.ambit.db.entity.Ambit;
 import es.dgc.gesco.model.modules.phase.db.entity.PhaseCampaign;
 import lombok.*;
 
@@ -58,7 +58,7 @@ public class Campaign extends AuditedBaseEntity {
     @ManyToOne
     @JoinColumn(name = "ID_FIELD")
     @NotNull(message = "Debes seleccionar el ámbito")
-    private Field id_field;
+    private Ambit id_ambit;
 
     @ManyToOne
     @JoinColumn(name = "ID_AUTONOMOUS_COMMUNITY_RESPONSIBLE")

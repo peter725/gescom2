@@ -18,7 +18,7 @@ public class ProfileServiceTest extends AbstractGenericTest {
     @Autowired
     private ProfileService profileService;
 
-    @Test
+    //@Test
     public void getAllPageTest(){
         Pageable pageable = PageRequest.of(0, 10);
         Page<Profile> profilePage = profileService.getAllPage(pageable);

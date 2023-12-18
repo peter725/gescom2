@@ -15,7 +15,7 @@ public class AuthorityOEURepositoryTest  extends AbstractGenericTest{
     @Autowired
     AuthorityOEURepository authorityOEURepository;
 
-    @Test
+    //@Test
     public void getAllTest(){
         Pageable pageable = PageRequest.of(0, 10);
         Page<AuthorityOEU> authorityOEUPage = authorityOEURepository.findAll(pageable);

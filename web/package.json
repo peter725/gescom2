@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
+    "build-dev": "nx run gesco:build-war:dev",
     "test": "nx test"
   },
   "private": true,

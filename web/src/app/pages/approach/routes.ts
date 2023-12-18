@@ -5,8 +5,8 @@ const breadcrumb = 'pages.approach.title';
 export const APPROACH_PAGE_ROUTES: Routes = [
     {
         path: '',
-        data: {breadcrumb},
-        loadChildren: () => import('./').then(m => m.ApproachCampaignProposalModule),
+        redirectTo: 'consulta',
+        pathMatch: 'full',
     },
     {
         path: 'consulta',

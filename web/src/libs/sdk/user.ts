@@ -7,6 +7,7 @@ import {Phone} from "@libs/sdk/phone";
 import {AutonomousCommunity} from "@libs/sdk/autonomousCommunity";
 import {Role} from "@libs/sdk/role";
 import {Authority} from "@libs/sdk/authority";
+import { UserType } from "@libs/sdk/userType";
 
 /**
  * Default user structure.
@@ -57,7 +58,9 @@ export interface CreateUser {
   nif: string | null;
   email: string | null;
   phone: string | null;
+  password: string | null;
 
+  userType: UserType[] | null;
   profile: Profile[] | null;
   modules: Module[] | null;
   autonomousCommunity: AutonomousCommunity | null;

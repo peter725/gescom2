@@ -2,19 +2,15 @@ package es.dgc.gesco.model.modules.user.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 
-import es.dgc.gesco.model.commom.validation.constraints.NIF;
-import es.dgc.gesco.model.modules.email.db.entity.Email;
-import es.dgc.gesco.model.modules.authorityOEU.db.entity.AuthorityOEU;
-import es.dgc.gesco.model.modules.phone.db.entity.Phone;
-import es.dgc.gesco.model.modules.role.db.entity.Role;
+import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
+import es.dgc.gesco.model.modules.profile.db.entity.Profile;
 import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import es.dgc.gesco.model.modules.userType.db.entity.UserType;
 import lombok.*;
-
-
-import java.util.List;
 
 import static es.dgc.gesco.model.util.ConstanteBD.SEQ_USER;
 import static es.dgc.gesco.model.util.ConstanteBD.TABLE_USER;
@@ -46,6 +42,32 @@ public class User extends AuditedBaseEntity{
     @Size(min = 1, max = 100)
     private String name;
 
+    @Column(name = "PASSWORD")
+    @NotNull(message = "Debes especificar la contraseña")
+    @Size(min = 1, max = 10)
+    private String password;
+
+    @Column(name = "EMAIL", unique = true)
+    @NotNull(message = "Debes especificar el email")
+    @Size(min = 1, max = 100)
+    private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "CCAA_ID")
+    private AutonomousCommunity autonomousCommunity;
+
+    @ManyToOne
+    @JoinColumn(name = "PROFILE_ID")
+    private Profile profile;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_TYPE_ID")
+    private UserType userType;
+
+    @Column(name = "PHONE", length = 15)
+    @Size(min = 1, max = 15, message = "El teléfono debe medir 10 caracteres")
+    private String phone;
+
     @Column(name = "FIRST_SURNAME")
     @NotNull(message = "Debes especificar el primer apellido")
     @Size(min = 1, max = 100, message = "El primer apellido debe medir entre 1 y 100")
@@ -55,33 +77,10 @@ public class User extends AuditedBaseEntity{
     @Size(min = 1, max = 100, message = "El segundo apellido debe medir entre 1 y 100")
     private String secondSurname;
 
-    @Column(name = "NIF", unique = true, length = 10)
-    @NIF
+    @Column(name = "NIF", unique = true)
+    @NotNull(message = "Debes especificar el NIF")
+    @Size(min = 1, max = 9, message = "El NIF debe medir 9 caracteres")
     private String nif;
-
-    @Column(name = "POSITION", length = 100)
-    private String position;
-
-    @ManyToOne
-    @JoinColumn(name = "AUTHORITY_ID")
-    private AuthorityOEU authorityOEU;
-
-    //declara campo area_responsability de tipo string notnull maximo 100
-    @Column(name = "AREA_RESPONSABILITY" )
-    @Size(min = 1, max = 100)
-    private String areaResponsability;
-
-    @ManyToOne
-    @JoinColumn(name = "ROLE_ID")
-    private Role role;
-
-    @Transient
-    @ToString.Exclude
-    private List<Email> emails;
-
-    @Transient
-    @ToString.Exclude
-    private List<Phone> phones;
 
 
 

@@ -15,7 +15,6 @@ const BTN_OFF_ICON = 'toggle_off';
 const BTN_OFF_COLOR: ThemePalette = 'warn';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-state-toggle',
   template: `
     <tsw-button
@@ -85,7 +84,6 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
     };
     this.activeOperation = this.crudService.changeState(id, payload, config).subscribe({
       next: result => {
-        console.log("entra aqui");
         this._data = result;
         this.btnStatus.status = 'IDLE';
         this.updateResourceState();
@@ -109,10 +107,8 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
 
     let stateId = 0;
     if ('state' in this._data) {
-      console.log("entra aqui if 1");
       stateId = this._data.state;
     } else if ('stateId' in this._data) {
-      console.log("entra aqui if 2");
       stateId = this._data.stateId;
     }
     this.resourceStatus = {
@@ -126,7 +122,6 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
 
     // El texto mostrado indica el valor futuro que tendrá el recurso.
     if (this.resourceStatus.stateId === ModelStates.ON) {
-      console.log("entra aqui 4");
       this.btnText = '' + BTN_OFF_TEXT;
       this.btnIcon = '' + BTN_ON_ICON;
       this.btnColor = BTN_ON_COLOR;

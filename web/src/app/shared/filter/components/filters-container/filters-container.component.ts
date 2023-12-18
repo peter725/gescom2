@@ -85,7 +85,6 @@ export class FiltersContainerComponent<T> implements AfterViewInit {
   }
 
   private setAsReady() {
-    console.log('setAsReady');
     this.componentIsReady = true;
     this.detectionRef.detectChanges();
   }

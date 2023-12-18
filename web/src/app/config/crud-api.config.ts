@@ -19,6 +19,7 @@ export const crudOperationsStorageFactory = () => {
     entityTypes: { type: HttpOperationType.CRUD, path: '/entity_types' },
     elementFormats: { type: HttpOperationType.READ, path: `/element-formats` },
     users: { type: HttpOperationType.CRUD, path: '/users', },
+    userType: { type: HttpOperationType.CRUD, path: '/user_type', },
     usersView: { type: HttpOperationType.READ, path: `/users/simple` },
     profiles: { type: HttpOperationType.CRUD, path: '/profiles' },
     roles: { type: HttpOperationType.CRUD, path: '/roles' },

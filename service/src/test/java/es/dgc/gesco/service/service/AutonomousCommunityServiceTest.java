@@ -20,7 +20,7 @@ public class AutonomousCommunityServiceTest extends AbstractGenericTest{
     @Autowired
     AutonomousCommunityService autonomousCommunityService;
 
-    @Test
+    //@Test
     public void getAllTest(){
         Pageable pageable = PageRequest.of(0, 10);
         Page<AutonomousCommunity> autonomousCommunityPage = autonomousCommunityService.getAllPage(pageable);

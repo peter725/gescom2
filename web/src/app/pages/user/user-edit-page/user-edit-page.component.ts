@@ -33,6 +33,8 @@ export class UserEditPageComponent extends EditPageBaseComponent<User, CreateUse
             profile: this.fb.control(null, [Validators.required]),
             modules: this.fb.control([], [Validators.required, Validators.min(1)]),
             autonomousCommunity: this.fb.control(null, [Validators.required]),
+            userType: this.fb.control(null, [Validators.required]),
+            password: this.fb.control(null, [Validators.required]),
         });
     }
 

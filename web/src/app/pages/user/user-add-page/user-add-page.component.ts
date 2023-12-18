@@ -21,18 +21,20 @@ export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser
   readonly resourceName = 'users';
   protected override _createResourceTitle = 'pages.user.add';
 
-  protected buildForm(){
+  protected buildForm() {
     return this.fb.group<ControlsOf<CreateUser>>({
       id: this.fb.control(null),
-      name: this.fb.control(null, [Validators.required]),
-      firstSurname: this.fb.control(null, [Validators.required]),
-      secondSurname: this.fb.control(null, []),
+      name: this.fb.control(null, [Validators.required, CustomValidators.allowedName]),
+      firstSurname: this.fb.control(null, [Validators.required, CustomValidators.allowedName]),
+      secondSurname: this.fb.control(null, [CustomValidators.allowedName]),
       nif: this.fb.control(null, [Validators.required, CustomValidators.nif]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
       phone: this.fb.control(null, [Validators.required]),
       profile: this.fb.control(null, [Validators.required]),
       modules: this.fb.control([], [Validators.required, Validators.min(1)]),
       autonomousCommunity: this.fb.control(null, [Validators.required]),
+      userType: this.fb.control(null, [Validators.required]),
+      password: this.fb.control(null, [Validators.required]),
     });
   }
 

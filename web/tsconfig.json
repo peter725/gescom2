@@ -14,15 +14,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@base/*": [
-        "src/app/*"
-      ],
-      "@env": [
-        "src/environments/environment"
-      ],
-      "@libs/*": [
-        "src/libs/*"
-      ]
+      "@base/*": ["src/app/*"],
+      "@env": ["src/environments/environment"],
+      "@libs/*": ["src/libs/*"]
     },
     "useDefineForClassFields": false,
     "forceConsistentCasingInFileNames": true,

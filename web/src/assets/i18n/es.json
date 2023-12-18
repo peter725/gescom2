@@ -262,7 +262,11 @@
     "visible": "Visible",
     "webPage": "Página web",
     "year": "Año",
-    "yearV0": "Año V0"
+    "yearV0": "Año V0",
+    "code_cpa": "Código/s CPA",
+    "campaign": "Campaña",
+    "responsable_entity": "Organismo/C.A. responsable",
+    "ccaa_participants":"CCAA participantes"
   },
   "text": {
     "approach": {

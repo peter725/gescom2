@@ -119,7 +119,25 @@ input[type=number]::-webkit-outer-spin-button {
   top: 50%;
 }
 
+// Lista de opciones 
+.listOptions{
+  display: grid;
+}
 
+.listOptions select{
+  border: 1px solid black;
+  height: 200px;
+  width: 200px;
+}
 
+.dual-list{
+  display: flex;
+}
+
+.list-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente los elementos */
+}
 
 

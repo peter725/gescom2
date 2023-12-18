@@ -142,6 +142,7 @@ export class SearchInputComponent
   }
 
   get placeholder() {
+    console.log('get placeholder',this._placeholder);
     return this._placeholder;
   }
 
@@ -200,7 +201,7 @@ export class SearchInputComponent
   setDisabledState(isDisabled: boolean): void {
     console.log('setDisabledState', isDisabled);
     this.disabled = isDisabled;
-    this.form.disable();
+    //this.form.disable();
     this.stateChanges.next();
   }
 

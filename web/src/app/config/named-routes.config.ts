@@ -6,8 +6,16 @@ const routes: NamedRouteSource[] = [
   { key: 'login', value: '/auth/login' },
   { key: 'logout', value: '/auth/logout' },
 
-  { key: 'arbitrationManagementCreate', value: '/app/arbitration/0' },
+  { key: 'userManagementCreate', value: '/app/usuarios/0' },
+  { key: 'userManagementList', value: '/app/usuarios/consulta' },
+  { key: 'userManagementEdit', value: '/app/usuarios/:id' },
 
+  { key: 'sampleSeasonCreate', value: '/app/campanas/0' },
+  { key: 'sampleSeasonList', value: '/app/campanas/consulta' },
+
+  { key: 'approachManagementCreate', value: '/app/propuestas/0' },
+  { key: 'approachManagementList', value: '/app/propuestas/consulta' },
+  { key: 'approachManagementSee', value: '/app/propuestas/:id' },
 ];
 
 

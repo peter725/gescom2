@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ControlsOf } from '@libs/commons';
 import { SearchMode, SimpleSearchForm } from '../../models';
 import { FilterComponent } from '../filter.component';

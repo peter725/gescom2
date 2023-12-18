@@ -1,0 +1,52 @@
+<h1
+  *ngIf="data.title"
+  matDialogTitle
+  class="uppercase"
+>{{ data.title }}</h1>
+
+<mat-dialog-content class="slim__scrollbar">
+  <div
+    *ngIf="data.descriptions?.length"
+    class="pb-6 font-light italic"
+  >
+    <p *ngFor="let item of data.descriptions">{{ item }}</p>
+  </div>
+
+  <tsw-cat-code-viewer
+    class="block pb-3 mb-3"
+    [showActions]="false"
+  ></tsw-cat-code-viewer>
+
+  <tsw-cat-code-generator
+    *ngIf="ready"
+    class="block pb-3"
+  ></tsw-cat-code-generator>
+
+  <div *ngIf="!ready" class="flex justify-center items-center pb-3">
+    <mat-spinner></mat-spinner>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div class="w-full flex justify-between align-middle">
+    <tsw-button
+      text="generic.actions.cancel"
+      (click)="cancel()"
+    ></tsw-button>
+
+    <div class="text-right">
+      <tsw-button
+        text="generic.actions.reset"
+        class="ml-2"
+        (click)="reset()"
+      ></tsw-button>
+
+      <tsw-raised-button
+        text="generic.actions.apply"
+        color="primary"
+        class="ml-2"
+        (click)="apply()"
+      ></tsw-raised-button>
+    </div>
+  </div>
+</mat-dialog-actions>

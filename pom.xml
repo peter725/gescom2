@@ -8,8 +8,8 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.17-SNAPSHOT</version>
-    <relativePath/>
+    <version>2.7.18-SNAPSHOT</version>
+    <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
   <groupId>es.dgc</groupId>
@@ -35,6 +35,7 @@
 
 
   <properties>
+    <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <ver.lombok>1.18.20</ver.lombok>
     <ver.junit>1.18.20</ver.junit>
@@ -43,6 +44,7 @@
 
   <profiles>
     <profile>
+
       <id>desarrollo</id>
       <properties>
         <!-- Inicio Propiedades para automatizacion con Jenkins para DES.
@@ -133,6 +135,13 @@
       <version>1.8.2</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- Security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <!-- /Security -->
 
     <dependency>
       <groupId>org.junit.platform</groupId>

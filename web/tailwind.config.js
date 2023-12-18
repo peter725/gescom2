@@ -2,7 +2,6 @@ const { createGlobPatternsForDependencies } = require('@nrwl/angular/tailwind');
 const { join } = require('path');
 const defaultTheme = require('tailwindcss/defaultTheme');
 
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   // prefix:'tw',
   content: [
@@ -11,9 +10,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'Lato':['Lato']
-      }
+      colors: {
+        'text-primary-color': 'var(----text-primary-color)',
+        'text-primary-lighter-color': 'var(--text-primary-lighter-color)',
+        'text-primary-darker-color': 'var(--text-primary-darker-color)',
+        'text-accent-color': 'var(--text-accent-color)',
+        'text-accent-lighter-color': 'var(--text-accent-lighter-color)',
+        'text-accent-darker-color': 'var(--text-accent-darker-color)',
+      },
     },
     screens: {
       'xs': '320px', // Bellow sm

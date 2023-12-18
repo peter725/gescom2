@@ -1,8 +1,9 @@
+import { BehaviorSubject, isObservable, Observable, of } from 'rxjs';
+
+
 /**
  * Data structure that holds all the necessary data to display a column.
  */
-import { BehaviorSubject, isObservable, Observable, of } from 'rxjs';
-
 export interface ColumnDef {
   /**
    * Column name that should be used to reference this column.
@@ -13,6 +14,18 @@ export interface ColumnDef {
    * property is not set, the value will default to the name property.
    */
   property: string;
+  /**
+   * Definición de las propiedades que componen esta columna. Si esta tiene
+   * valores implica que es una columna compuesta y que no se puede exportar,
+   * salvo que se configure explícitamente lo contrario.
+   * Por defecto una lista vacía.
+   */
+  compositionProps: string[];
+  /**
+   * Define si la columna se puede exportar o no en el informe.
+   * Por defecto true, salvo que 'compositionProps' esté definido.
+   */
+  isReportable: boolean;
   /**
    * Text label that should be used for the column header. If this property
    * is not set, the header text will default to the column name.
@@ -64,17 +77,23 @@ export interface ColumnDef {
 export type ColumnSrc = Partial<ColumnDef> | string;
 
 /**
+ * Columns that have a special use case or meaning and required
+ * a different type of handling.
+ */
+export const RESERVED_COLUMN_NAMES = ['select', 'actions'];
+
+/**
  * Builds columns definitions based on the provided source.
  * Optional config allows to configure defaults
  */
 export const buildColumnDefs = (
-  src: ColumnSrc[],
-  config: Partial<{
-    align: 'start' | 'center' | 'end',
-    sorteable: boolean,
-    visible: boolean,
-    dataAccessor: <T = any>(data: T, property: string) => string,
-  }> = {},
+    src: ColumnSrc[],
+    config: Partial<{
+      align: 'start' | 'center' | 'end',
+      sorteable: boolean,
+      visible: boolean,
+      dataAccessor: <T = any>(data: T, property: string) => string,
+    }> = {},
 ): ColumnDef[] => {
   const columns: ColumnDef[] = [];
 
@@ -94,11 +113,15 @@ export const buildColumnDefs = (
     const order = i;
     let column: ColumnDef;
     if (typeof col === 'string') {
+      const label = `fields.${ name }`;
+      const isReportable = !RESERVED_COLUMN_NAMES.includes(name);
       column = {
         name,
         property: name,
-        label: name,
-        extLabel: name,
+        compositionProps: [],
+        isReportable,
+        label,
+        extLabel: label,
         align: align,
         sorteable: sorteable,
         sortProperty: name,
@@ -107,16 +130,22 @@ export const buildColumnDefs = (
         dataAccessor,
       };
     } else {
+      const label = col.label || `fields.${ name }`;
+      const compositionProps = col.compositionProps ?? [];
+      const isReportable = col.isReportable
+          ?? (compositionProps.length === 0 && !RESERVED_COLUMN_NAMES.includes(name));
       column = {
         name,
         property: col.property || name,
-        label: col.label || name,
-        extLabel: col.extLabel || name,
+        compositionProps,
+        isReportable,
+        label,
+        extLabel: col.extLabel || label,
         align: col.align || align,
         sorteable: col.sorteable || sorteable,
         sortProperty: col.sortProperty || name,
-        visible: col.visible != null ? col.visible : visible,
-        order: col.order != null ? col.order : order,
+        visible: col.visible ?? visible,
+        order: col.order ?? order,
         dataAccessor: col.dataAccessor || dataAccessor,
       };
     }
@@ -145,7 +174,7 @@ export const extractProperty = (data: any, path: string): any => {
   const property = paths[0];
   paths.shift();
   path = paths.join('.');
-  if (data.hasOwnProperty(property)) {
+  if (Object.keys(data).includes(property)) {
     return extractProperty(data[property], path);
   }
   return '';
@@ -205,6 +234,32 @@ export class ColumnSource {
   }
 
   /**
+   * Devuelve las columnas que se pueden exportar. Para ello la columna debe:
+   * - ser visible
+   * - ser reportable
+   * - tener las columnas compuestas compositionProps
+   */
+  getReportableColumns() {
+    const reportColumns = this.columnsInstant.reduce<ColumnDef[]>((acc, columnName) => {
+      const column = this.findColumn(columnName);
+      if (!column) return acc;
+
+      if (column.isReportable) {
+        acc.push(column);
+      } else if (column.compositionProps.length) {
+        column.compositionProps.forEach(subCol => {
+          const composeCol = this.findColumn(subCol);
+          if (composeCol && composeCol.isReportable) acc.push(composeCol);
+        });
+      }
+
+      return acc;
+    }, []);
+
+    return Array.from(new Set(reportColumns));
+  }
+
+  /**
    * Shows a column
    */
   show(col: number | string) {
@@ -251,7 +306,6 @@ export class ColumnSource {
   }
 
   reset() {
-    console.info('resetting');
     this.generateColumnDefs();
   }
 
@@ -269,8 +323,8 @@ export class ColumnSource {
    */
   private updateColumnList() {
     const update = this.defs
-      .filter(v => v.visible)
-      .sort((a, b) => a.order > b.order ? 1 : -1);
+        .filter(v => v.visible)
+        .sort((a, b) => a.order > b.order ? 1 : -1);
     this.columnNames.next(update.map(v => v.name));
     this.activeColumns.next(update);
   }
@@ -286,8 +340,8 @@ export class ColumnSource {
       // Provided col is an index.
       const length = this.defs.length;
       return col > -1 && col < length
-        ? this.defs[col]
-        : undefined;
+          ? this.defs[col]
+          : undefined;
     }
   }
 

@@ -2,8 +2,13 @@
   "generic": {
     "actions": {
       "add": "Añadir",
+      "addCondition": "Añadir expresión",
+      "addField": "Añadir campo",
       "addScope": "Añadir ámbito",
+      "addValidation": "Añadir validaciones",
+      "all": "Todos",
       "apply": "Aplicar",
+      "approach": "Propuesta",
       "cancel": "Cancelar",
       "clear": "Limpiar",
       "close": "Cerrar",
@@ -13,9 +18,17 @@
       "copyDescription": "Copiar descripción",
       "delete": "Eliminar",
       "deleteSelection": "Eliminar selección",
-      "downloadTemplate": "Descargar plantilla",
+      "downloadTemplate": "Descargar Excel Tool",
       "edit": "Editar",
+      "entry": "Entrada",
       "expand": "Expandir",
+      "exportAs": "Exportar como:",
+      "exportAsFormat": "Exportar a {{ format }}",
+      "exportSamples": "Exportar muestras",
+      "exportToCSV": "Exportar a CSV",
+      "exportToExcel": "Exportar a Excel",
+      "exportToPDF": "Exportar a PDF",
+      "hideAvailable": "Ocultar disponibles",
       "lessDetails": "Menos detalles",
       "list": "Consultar",
       "loading": "Cargando",
@@ -24,19 +37,30 @@
       "login": "Conectarse",
       "logout": "Desconectarse",
       "moreDetails": "Más detalles",
+      "moreOptions": "Más opciones",
       "next": "Siguiente",
       "no": "No",
       "none": "Ninguno",
+      "ownTemplate": "Mi plantilla",
       "previous": "Anterior",
+      "reload": "Recargar",
+      "resend": "Reenviar",
       "reset": "Resetear",
       "restrictHierarchy": "Restringir la jerarquía",
       "save": "Guardar",
       "search": "Buscar",
+      "see": "Ver",
+      "selectAll": "Seleccionar todos",
+      "selectOne": "Selecciona un valor",
+      "selectSome": "Selecciona uno o varios valores",
+      "selectNone": "Anular selección",
       "send": "Enviar",
-      "showAll": "Mostrar todos",
-      "showShared": "Mostrar compartidos",
+      "setDefaultValue": "Asignar valor por defecto",
       "sharedAccess": "Acceso compartido",
-      "ownTemplate": "Mi plantilla",
+      "showAll": "Mostrar todos",
+      "showAvailable": "Mostrar disponibles",
+      "showSelected": "Mostrar seleccionados",
+      "showShared": "Mostrar compartidos",
       "shrink": "Contraer",
       "submit": "Entregar",
       "template": "Plantilla",
@@ -50,81 +74,224 @@
     }
   },
   "fields": {
-    "arbitration": {
-      "step1": {
-        "arbitrationType": "Junta Arbitral",
-        "claimantType": {
-          "key1": "En nombre propio",
-          "key2": "En representacion de terceros"
-        },
-        "name": "Nombre",
-        "nif": "NIF",
-        "surnames": "Apellidos",
-        "phone": "Teléfono",
-        "email": "Email",
-        "roadType": "Tipo de vía",
-        "address": "Dirección",
-        "number": "Numero",
-        "block": "Bloque",
-        "portal": "Portal",
-        "ladder": "Escalera",
-        "floor": "Planta",
-        "door": "Puerta",
-        "town": "Municipio",
-        "province": "Provincia",
-        "postalCode": "Código Postal",
-        "sendType": "Tipos de envio",
-        "socialReason": "Razón Social",
-        "notificationType": "Tipos de notificación",
-        "claimContent": "Hechos que motivan la reclamación",
-        "presentation": "Pretensión",
-        "observation": "Observaciones"
+    "aann": "Autoridad nacional",
+    "actions": "Acciones",
+    "address": "Dirección",
+    "affectedProgrammesCode": "Programas afectados",
+    "amendmentInterval": "Intervalo de revisión EFSA",
+    "approach": {
+      "approach": "Propuesta",
+      "type": "Tipo de propuesta",
+      "year": "Año",
+      "campaign-proposal": {
+        "title": "Propuesta de campaña",
+        "campaign-type": {
+          "key1": "Alimenticios",
+          "key2": "No alimenticios",
+          "key3": "Servicios"
+        }
       },
-      "step2": {
-        "doc1": "Documento obligatorio 1",
-        "opc1": "Documento opcional 1",
-        "optionalDocTypes": "Tipos de documentos opcionales"
-      }
-    }
+      "justification": "Justificación",
+      "objectives": "Objetivos",
+      "technical-legal-viability": "Viabilidad técnica y legal"
+    },
+    "areaResposability": "Área de responsabilidad",
+    "attribute": "Atributo",
+    "attributeCode": "Código del atributo",
+    "attributeName": "Nombre del atributo",
+    "authorityOEU": "Autoridad de la ficina de enlace unico",
+    "authorityDGC": "autoridad de la dirección general de consumo",
+    "baseTerm": "Término base",
+    "behaviour": "Comportamiento",
+    "body": "Cuerpo",
+    "catalogue": "Catálogo",
+    "ccaa": "Comunidad autónoma",
+    "code": "Código",
+    "contactDetails": "Datos de contacto",
+    "contactPerson": "Contacto",
+    "creationDate": "Fecha de creación",
+    "createdAt": "Fecha de creación",
+    "createdAtGTE": "Hasta fecha de creación",
+    "createdAtLTE": "Desde fecha de creación",
+    "currentYear": "Año en curso",
+    "dataAccessType": "Tipo de acceso a los datos",
+    "dataElement": "Elemento",
+    "dateFrom": "Fecha desde",
+    "dateTo": "Fecha hasta",
+    "defaultValue": "Valor por defecto",
+    "deliveryAttempts": "Intentos de envios",
+    "deliveryInterval": "Intervalo de entrega EFSA",
+    "deliveryStatus": "Estado de Envío",
+    "description": "Descripción",
+    "document": "Documento",
+    "documentNumber": "Número de documento",
+    "documentTypeCode": "Tipo de documento",
+    "efsaAmendmentEnd": "Fecha límite de envío de revisiones",
+    "efsaDeliveryEnd": "Fin del Período de envío a Efsa",
+    "efsaDeliveryStart": "Inicio del Período de envío a Efsa",
+    "efsaForceSendText": "Enviar la descripción en vez del código",
+    "efsaIncludeField": "Enviar el campo a la EFSA",
+    "element": "Elemento",
+    "elementCode": "Código del campo",
+    "elementFormat": "Formato del campo",
+    "elementLabel": "Etiqueta del campo",
+    "elementMaxLength": "Longitud del campo",
+    "elementName": "Nombre del campo",
+    "elementNameWeb": "Nombre web del campo",
+    "elementTerminology": "Terminología del campo",
+    "email": "Email",
+    "endDate": "Fecha de Fin",
+    "entity": "Ámbito",
+    "entityType": "Tipo de Ámbito",
+    "expressionConnectors":"Conector",
+    "facet": "Faceta",
+    "failureReason": "Motivo del fallo",
+    "field": "Campo",
+    "fieldType": "Tipo de campo",
+    "firstSurname": "Primer apellido",
+    "firstVersionYear": "Año primera versión",
+    "forEachElements": "Campos a agrupar",
+    "fullCode": "Código completo",
+    "fullName": "Nombre Completo",
+    "generalDirection": "Direccion general",
+    "helpIndicator": "Mostrar ayuda",
+    "hierarchy": "Jerarquía",
+    "isMaster": "Jerarquía maestra",
+    "ignoreNull": "Ignorar Nulos",
+    "implYear": "Año de implantación",
+    "infoMessage": "Mensaje informativo",
+    "infoType": "Tipo de mensaje",
+    "insertionDate": "Fecha de inserción",
+    "label": "Etiqueta",
+    "lastUpdate": "Ultima actualización",
+    "latestVersionYear": "Año última versión",
+    "legalBase": "Base legal",
+    "managementTypeCode": "Tipo de gestión",
+    "members": "Integrantes",
+    "module": "Módulo",
+    "modules": "Módulos",
+    "multiLanguage": "Multi-idioma",
+    "multiple": "Múltiple",
+    "name": "Nombre",
+    "number": "Número",
+    "nif": "NIF",
+    "numberOfResults": "Nº de resultados",
+    "oeu": "Oficina de enlace unico",
+    "dgc": "Dirección General de Consumo",
+    "objectName": "Objeto",
+    "operand1": "1º Operando",
+    "operand2": "2º Operando",
+    "operandType":"Tipo de operando",
+    "operatorType":"Tipo de operador",
+    "options": "Opciones",
+    "order": "Orden",
+    "origin": "Origen",
+    "parent": "Padre del ámbito",
+    "password": "Contraseña",
+    "permissions": "Permisos",
+    "phone": "Teléfono",
+    "plan": "Plan",
+    "planType":"Tipo de plan",
+    "position": "Cargo",
+    "positionColumn": "Columna",
+    "positionRow": "Fila",
+    "postalCode": "Código Postal",
+    "profile": "Perfil",
+    "profiles": "Perfiles",
+    "properties": "Propiedades",
+    "providerEntity": "Autoridad competente",
+    "province": "Provincia",
+    "pubCode": "Código de identificación",
+    "recipients": "Destinatarios",
+    "recordCount": "Número de registros",
+    "sampMatText": "Matríz de la muestra",
+    "reference": "Referencia",
+    "role": "Rol",
+    "registerInterval": "Intervalo de registro",
+    "required": "Requerido",
+    "sampleRegisterEnd": "Fin del período de registros",
+    "sampleRegisterStart": "Inicio del período de registros",
+    "sampleState": "Estado de la muestra",
+    "scope": "Ámbito",
+    "scopeName": "Autoridad competente",
+    "scopeNote": "Anotación",
+    "scopeCode": "Codigo autoridad competente",
+    "season": "Campaña",
+    "seasonName": "Muestra",
+    "seasonYear": "Año de la campaña",
+    "secondSurname": "Segundo apellido",
+    "section": "Sección",
+    "sectionCode": "Código de la sección",
+    "select": "Selección",
+    "separator": "Separador",
+    "sequence": "Secuencia",
+    "settings": "Configuración",
+    "sharedAccess": "Acceso compartido",
+    "showHidden": "Mostrar ocultos",
+    "sortOrder": "Orden",
+    "startDate": "Fecha de Inicio",
+    "state": "Estado",
+    "storedValue": "Valor almacenado",
+    "subject": "Asunto",
+    "surnames": "Apellidos",
+    "templateName": "Nombre de la plantilla",
+    "term": "Término",
+    "termCode": "Código del término",
+    "termCodeMask": "Máscara del término",
+    "termCodeLength": "Longitud máxima del término",
+    "termDescription": "Configuración del código",
+    "termExtendedName": "Nombre del término ",
+    "termName": "Nombre del término",
+    "termMinCode": "Longitud mínima del término",
+    "title": "Título",
+    "type": "Tipo",
+    "typeName": "Tipo",
+    "updateDate": "Fecha de actualización",
+    "updatedAt": "Fecha de actualización",
+    "updatedAtGTE": "Hasta fecha de actualización",
+    "updatedAtLTE": "Desde fecha de actualización",
+    "userType": " Tipo de usuario",
+    "validationSegment": "Tramo de validación",
+    "validationSegment1": "Tramo 1",
+    "validationSegment2": "Tramo 2",
+    "validationSegment3": "Tramo 3",
+    "value": "Valor",
+    "values": "Valores",
+    "valueSources": "Origen de los valores",
+    "version": "Versión",
+    "visibility": "Visibilidad",
+    "visibilityWeb": "Visibilidad web",
+    "visible": "Visible",
+    "webPage": "Página web",
+    "year": "Año",
+    "yearV0": "Año V0",
+    "code_cpa": "Código/s CPA",
+    "campaign": "Campaña",
+    "responsable_entity": "Organismo/C.A. responsable",
+    "ccaa_participants":"CCAA participantes"
   },
   "text": {
-    "arbitration": {
-      "step1": {
-        "title": "1. Datos de solicitud",
-        "claimantDetails": "Datos del reclamante",
-        "claimedDetails": "Datos del reclamado",
-        "requestDetails": "Datos del solicitud",
-        "sendType": "Tipos de envio"
-      },
-      "step2": {
-        "title": "2. Documentación incorporada",
-        "requiredDocument": "Documentación obligatoria",
-        "attachDocument": "Documentación opcional",
-        "deleteAttach": "Borrar documento"
-      },
-      "step3": {
-        "title": "3. Firma y registro",
-        "dataProtect": "Proteción de datos",
-        "sign": "Firmar solicitud",
-        "requestDetails": "Datos del solicitud"
-      },
-      "step4": {
-        "title": "4. Completado",
-        "claimantDetails": "Datos del reclamante",
-        "claimedDetails": "Datos del reclamado",
-        "requestDetails": "Datos del solicitud"
-      }
+    "approach": {
+      "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},
+      "justification": {"title": "2. JUSTIFICACIÓN"},
+      "objectives": {"title": "3. OBJETIVOS"},
+      "technical-legal-viability": {"title": "4. VIABILIDAD TÉCNICA Y LEGAL"}
     },
     "err": {
       "dataSave": "Ha ocurrido un error al intentar guardar los datos",
       "loginFailed": "Ha ocurrido un error en el proceso de conexión",
       "logoutFailed": "Ha ocurrido un error en el proceso de desconexión",
+      "noSeasonForModule": "No hay campañas disponibles para el modulo configurado",
+      "sampleFormLoadError": "Ha ocurrido un error durante la carga del formulario",
       "requiredCatalogueAndHierarchy": "Es obligatorio seleccionar el catálogo y la jerarquía"
     },
     "other": {
       "addResult": "Añadir resultado",
       "addNumOfResults": "Añadir {{ num }} resultados",
+      "authWillExpIn": "La sesión caducará en menos {{ remainingMin }} minutos",
+      "authHasExpired": "La sesión ha caducado",
       "businessRule": {
+        "editDetails": "Detalles de la regla de validación",
         "evaluationSummary": "Resumen de las validaciones",
         "filter": {
           "all": "Mostrar todas",
@@ -133,25 +300,45 @@
           "fail": "Incorrectas"
         }
       },
+      "catalogueAvailableTerms": "Términos disponibles",
       "catalogueFilter": "Filtro del catálogo",
+      "catalogueList": "Lista de valores",
+      "catalogueSearch": "Consulta del catálogo",
+      "catalogueSelectedTerms": "Términos seleccionados",
+      "catalogueSelectTermsForList": "Selecciona los términos a incluir en la lista",
       "columns": "Columnas",
       "contactDetails": "Datos de contacto",
       "copied": "Copiado",
       "dataSaved": "¡Datos guardados con éxito!",
+      "defaultValue": "Valor por defecto",
       "dragAndDropFile": "Arrastra y suelta el archivo o seleccionalo",
+      "email": {
+        "details": "Detalles del email",
+        "resendPendings": "Reenviar Pendientes",
+        "cancelPendings": "Cancelar Pendientes"
+      },
       "emptyList": "Lista sin datos",
-      "entidad": "Entidad",
+      "emptyList2": "Lista sin entradas",
+      "entidad": "Ámbito",
       "error": "¡Error!",
+      "fieldReviewRequired": "Requiere revisión",
+      "fieldVisible": "Campo visible",
+      "fieldHidden":  "Campo oculto",
+      "fieldRequired": "Campo obligatorio",
+      "fieldDependency":  "Campo dependiente",
       "filter": {
         "advanced": "Buscador avanzado",
         "simple": "Buscador simple"
       },
+      "includeInList": "Incluir en la lista",
       "info": "Info",
+      "loadingModuleConfiguration": "Cargando {{ module }}",
       "logout": {
         "ongoing": "Desconectando...",
         "done": "Desconectado"
       },
       "myProfile": "Mi perfil",
+      "openTextField": "Campo abierto de texto",
       "pagination": {
         "firstPageLabel": "Primera página",
         "itemsPerPageLabel": "Elm. por página",
@@ -159,19 +346,41 @@
         "nextPageLabel": "Siguiente página",
         "previousPageLabel": "Página anterior"
       },
+      "plan": {
+        "authority": "Consulta Plan Authority",
+        "computer": "Consulta Computer System",
+        "organ": "Consulta Coordination Organ",
+        "procedure": "Consulta Document Procedure",
+        "legal": "Consulta Legal Regulation"
+      },
       "pleaseReview": "Por favor revisa los datos introducidos",
+      "pleaseWait": "Por favor espera",
+      "redirectToClave": "Redireccionando al servicio de cl@ve",
       "sample": {
         "add": "Añadir una nueva muestra",
+        "addAtLeastOne": "Añade al menos una entrada para completar el boletín analítico",
         "amendmentInterval": "Fecha límite de envió de revisiones a EFSA",
+        "configProgramming": "Configuración de la programación",
+        "configSample": "Configuración de la muestra",
+        "configTemplate": "Configuración de la plantilla",
         "deliveryInterval": "Intervalo de entregas de la muestras a EFSA",
+        "dataset": "Conjunto de datos",
         "details": "Detalles de la muestra",
         "edit": "Modificar los datos de la muestra",
         "registerInterval": "Intervalo de registro de la muestras",
-        "upload": "Cargar muestra",
+        "upload": "Cargar XML de muestras",
         "uploadTitle": "Carga manual de muestras",
         "uploadDone": "La muestra ha sido cargada con éxito",
         "uploadFileFormat": "Selecciona un archivo en formato XML",
-        "uploading": "Cargando la muestra"
+        "uploading": "Cargando la muestra",
+        "download": "XML para EFSA-DCF",
+        "downloadSuccess": "Las muestras se han descargado con éxito"
+      },
+      "sampleForm": {
+        "updatedSuccessfully": "¡Formulario actualizado con éxito!"
+      },
+      "sampleTemplate": {
+        "ownedTemplate": "Plantilla personal"
       },
       "setupColumns": "Configurar columnas",
       "setupTable": "Configurar tabla",
@@ -210,12 +419,142 @@
     }
   },
   "pages": {
+    "approach": {
+      "title": "Propuestas",
+      "add": "Alta de propuesta",
+      "list": "Mis propuestas",
+      "see": "Ver propuesta"
+    },
+    "businessRule": {
+      "title": "Reglas de validación",
+      "add": "Alta de regla de validación",
+      "edit": "Modificar regla de validación",
+      "list": "Consulta de reglas de validación"
+    },
+    "catalogueBrowser": {
+      "title": "Catalogue browser"
+    },
+    "dataQuery": {
+      "title": "Consulta de datos",
+      "list": "Consulta",
+      "fields": "Campos",
+      "preparation": "Preparación",
+      "config": "Operadores e indicadores",
+      "summary": "Resumen"
+    },
+    "email": {
+      "title": "Email",
+      "add": "Gestión de plantillas de email",
+      "edit": "Modificar email",
+      "list": "Consulta de email"
+    },
+    "entity": {
+      "title": "Ámbitos",
+      "add": "Alta de ámbito",
+      "edit": "Modificar ámbito",
+      "list": "Consulta de ámbitos"
+    },
+    "entityType": {
+      "title": "Tipos de ámbitos",
+      "add": "Alta tipo de ámbito",
+      "edit": "Modificar tipo de ámbito",
+      "list": "Consulta tipos de ámbitos"
+    },
+    "field": {
+      "title": "Campos",
+      "add": "Alta de campo",
+      "edit": "Modificar campo",
+      "list": "Consulta de campos"
+    },
+    "fieldModule": {
+      "title": "Campos y módulos",
+      "add": "Alta de campos y de módulos",
+      "edit": "Modificar campo y módulo",
+      "list": "Consulta de campos y de módulos"
+    },
+    "fieldType": {
+      "title": "Tipos de campos",
+      "add": "Alta tipo de campo",
+      "edit": "Modificar tipo de campo",
+      "list": "Consulta tipos de campos"
+    },
     "home": "Inicio",
-    "arbitration": {
-      "title": "Consulta de solicitudes",
-      "add": "Alta de solicitud",
-      "edit": "Modificar solicitud",
-      "list": "Consulta de solicitudes"
+    "login": {
+      "title": "Conectarse"
+    },
+    "logout": {
+      "title": "Desconectarse"
+    },
+    "module": {
+      "title": "Módulos",
+      "add": "Alta de módulo",
+      "edit": "Modificar módulo",
+      "list": "Consulta de módulos"
+    },
+    "moduleType": {
+      "title": "Tipos de módulos",
+      "add": "Alta tipo de módulo",
+      "edit": "Modificar tipo de módulo",
+      "list": "Consulta tipos de módulos"
+    },
+    "notFound": "Error 404 - Página no encontrada",
+    "plan": {
+      "title": "Actualización de Plan",
+      "add": "Alta de plan",
+      "edit": "Modificar plan",
+      "list": "Consulta de plan",
+      "addAuthority": "Alta de plan autoridad competente",
+      "addComputer": "Alta de plan sistema informático",
+      "addLegal": "Alta de plan disposicion legal",
+      "addOrgan": "Alta de plan organo de coordinación",
+      "addProcedure": "Alta de plan procedimiento documentado"
+    },
+    "profile": {
+      "title": "Perfiles",
+      "add": "Alta de perfil",
+      "edit": "Modificar perfil",
+      "list": "Consulta de perfiles"
+    },
+    "sample": {
+      "title": "Muestras",
+      "add": "Añadir muestra",
+      "edit": "Modificar muestra",
+      "list": "Consulta de muestras"
+    },
+    "sampleForm": {
+      "title": "Generador de formularios"
+    },
+    "sampleSeason": {
+      "title": "Campañas",
+      "add": "Alta de Campaña",
+      "list": "Consulta de Campañas",
+      "edit": "Modificar Campaña"
+    },
+    "sampleProgramming": {
+      "title": "Programación de muestras",
+      "add": "Alta de programación de muestras",
+      "list": "Consulta de programación de muestras",
+      "edit": "Modificar programación de muestra"
+    },
+    "scope": {
+      "add": "Añadir un ámbito",
+      "edit": "Modificar el ámbito"
+    },
+    "templateManagement": {
+      "title": "Gestión de plantillas",
+      "add": "Añadir una plantilla",
+      "list": "Consulta de plantillas",
+      "edit": "Modificar la plantilla"
+    },
+    "user": {
+      "title": "Usuarios",
+      "add": "Alta de usuario",
+      "edit": "Modificar usuario",
+      "list": "Consulta de usuarios"
+    },
+    "helpModule": {
+      "title": "Ayuda",
+      "list": "Listado de ficheros"
     }
   }
 }

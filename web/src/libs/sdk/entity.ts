@@ -16,7 +16,7 @@ export interface Entity extends SimpleModel, TranslatedModel, StatefulModel {
   entityType: EntityType;
 }
 
-export interface TulsaEntityForm {
+export interface EntityForm {
   id: number | null;
   languageId: number | string | null;
   name: string;

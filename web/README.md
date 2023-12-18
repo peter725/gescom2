@@ -1,4 +1,4 @@
-# JuntaArbitral
+# Gesco
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
@@ -7,7 +7,7 @@
 
 ## Start the app
 
-To start the development server run `nx serve junta_arbitral`. Open your browser and navigate to http://localhost:4200/. Happy coding!
+To start the development server run `nx serve gesco`. Open your browser and navigate to http://localhost:4200/. Happy coding!
 
 
 ## Generate code
@@ -42,7 +42,7 @@ Targets can be defined in the `package.json` or `projects.json`. Learn more [in 
 
 ## Want better Editor Integration?
 
-Have a look at the [Nx Console extensions](https://nx.dev/nx-console). It provides autocomplete support, a UI for exploring and running tasks & generators, and more! Available for VSCode, IntelliJ and comes with a LSP for Vim users.
+Have a look at the [Nx Console extensions](https://nx.dev/nx-console). It provides autocomplete support, a UI for exploring and running tasks & generators, and more! Available for VSCode, IntelliJ and comes with a LSP for Vim user.
 
 ## Ready to deploy?
 

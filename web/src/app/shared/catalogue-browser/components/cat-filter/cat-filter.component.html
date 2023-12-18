@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+  <mat-card>
+    <tsw-section-title
+      icon="tune"
+      label="text.other.catalogueFilter"
+    ></tsw-section-title>
+
+    <div class="grid grid-cols-2 gap-1.5">
+      <mat-form-field>
+        <mat-label>{{ 'fields.catalogue' | translate }}</mat-label>
+        <tsw-custom-autocomplete
+          resourceName="catalogues"
+          formControlName="catalogue"
+          sort="id;asc"
+          [showNoneValue]="false"
+          (valueSelected)="catalogueSelected($event)"
+        ></tsw-custom-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'fields.hierarchy' | translate }}</mat-label>
+        <tsw-custom-autocomplete
+          #hierarchySel
+          resourceName="catHierarchy"
+          formControlName="hierarchy"
+          sort="id;asc"
+          [showNoneValue]="false"
+          (valueSelected)="hierarchySelected($event)"
+        ></tsw-custom-autocomplete>
+      </mat-form-field>
+    </div>
+  </mat-card>
+</form>

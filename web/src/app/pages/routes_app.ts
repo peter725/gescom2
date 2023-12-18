@@ -1,5 +1,7 @@
 import {Routes} from '@angular/router';
-import {ARBITRATION_PAGE_ROUTES} from "@base/pages/arbitration/routes";
+import { USER_PAGE_ROUTES } from './user/routes';
+import {APPROACH_PAGE_ROUTES} from "@base/pages/approach/routes";
+import { CAMPAIGN_PAGE_ROUTES } from './campaign/routes';
 
 
 export const dashboardRoutes: Routes = [
@@ -8,10 +10,24 @@ export const dashboardRoutes: Routes = [
     loadChildren: () => import('./home-page/home-page.module').then(m => m.HomePageModule),
   },
   {
-    path: 'arbitration',
+    path: 'usuarios',
     data: {
-      // requireAccess: 'RFieldMod'
+      //requireAccess: 'RUser'
     },
-    children: ARBITRATION_PAGE_ROUTES,
+    children: USER_PAGE_ROUTES,
   },
+  {
+    path: 'campanas',
+    data: {
+      //requireAccess: 'RUser'
+    },
+    children: CAMPAIGN_PAGE_ROUTES,
+  },
+  {
+    path: 'propuestas',
+    data: {
+      //requireAccess: 'RUser'
+    },
+    children: APPROACH_PAGE_ROUTES,
+  }
 ];

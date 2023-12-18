@@ -1,0 +1,132 @@
+<form class="my-4" [formGroup]="configForm">
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-1.5">
+    <mat-form-field>
+      <mat-label>{{ 'fields.module' | translate }}</mat-label>
+      <mat-select
+        formControlName="module"
+        [compareWith]="compareObjects"
+        (selectionChange)="useModule($event.value)"
+      >
+        <mat-option
+          *ngFor="let item of (configData.modules$ | async)"
+          [value]="item"
+        >{{ item.name }}</mat-option>
+      </mat-select>
+      <mat-error>{{ configForm.controls.module.errors | extractValidationError }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'fields.season' | translate }}</mat-label>
+      <mat-select formControlName="season" [compareWith]="compareObjects">
+        <mat-option
+          *ngFor="let item of (configData.seasons$ | async)"
+          [value]="item"
+        >{{ item.name }}</mat-option>
+      </mat-select>
+      <mat-hint *ngIf="!(configData.seasons$ | async)?.length">
+        <span class="mat-text-warn">{{ 'text.err.noSeasonForModule' | translate }}</span>
+      </mat-hint>
+      <mat-error>{{ configForm.controls.season.errors | extractValidationError }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'fields.scope' | translate }}</mat-label>
+      <mat-select formControlName="scope" [compareWith]="compareScopes">
+        <mat-option
+          *ngFor="let item of (configData.scopes$ | async)"
+          [value]="item"
+        >{{ item.entityName }}</mat-option>
+      </mat-select>
+      <mat-error>{{ configForm.controls.scope.errors | extractValidationError }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div
+    *ngIf="configForm.disabled && configForm.value.template"
+    class="flex items-center px-1.5 mat-text-disabled"
+  >
+    <mat-icon
+      *ngIf="configForm.value.template.sharedAccess"
+      [matTooltip]="'generic.actions.sharedAccess' | translate"
+      matTooltipPosition="above"
+      class="mr-2"
+      inline
+    >share</mat-icon>
+    <p>{{ configForm.value.template.name }}</p>
+  </div>
+
+  <ng-container *ngIf="configForm.enabled">
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-1.5">
+      <div>
+        <mat-slide-toggle
+          formControlName="useTemplate"
+          (change)="toggleTemplate($event.checked)"
+        >
+          {{ 'generic.actions.useTemplate' | translate }}
+        </mat-slide-toggle>
+        <mat-error *ngIf="configForm.controls.useTemplate.dirty">
+          {{ configForm.controls.template.errors | extractValidationError }}
+        </mat-error>
+      </div>
+    </div>
+
+    <div
+      *ngIf="configForm.value.useTemplate && !(configData.templates$ | async)?.length"
+      class="py-2 5"
+    >
+      <p class="mat-text-hint">{{ 'text.other.emptyList' | translate }}</p>
+    </div>
+
+    <mat-radio-group
+      *ngIf="configForm.value.useTemplate"
+      formControlName="template"
+      class="grid grid-cols-1 xl:grid-cols-4 gap-x-1.5 py-2.5"
+    >
+      <mat-radio-button
+        *ngFor="let item of configData.templates$ | async"
+        class="px-1 py-0.5 overflow-hidden"
+        style="display: flex; align-content: center;"
+        [value]="item"
+      >
+        <div>
+          <span>{{ item.name }}</span>
+        </div>
+
+        <div class="flex items-center">
+          <ng-container *ngIf="!item.sharedAccess">
+            <mat-icon class="mr-2">description</mat-icon>
+            <small class="mat-text-hint">{{ 'text.other.sampleTemplate.ownedTemplate' | translate }}</small>
+          </ng-container>
+
+          <ng-container *ngIf="item.sharedAccess">
+            <mat-icon
+              class="mr-2"
+              [matTooltip]="'generic.actions.sharedAccess' | translate"
+              matTooltipPosition="above"
+            >share</mat-icon>
+
+            <small class="mat-text-hint">{{ item.providerEntity }}</small>
+          </ng-container>
+        </div>
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <ng-container>
+      <div left-actions-end class="inline-block ml-2">
+        <button mat-stroked-button (click)="downloadTemplate()">
+          {{ 'generic.actions.downloadTemplate' | translate }}
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container>
+      <div left-actions-end class="inline-block ml-2">
+        <button mat-stroked-button (click)="uploadSample()">
+          <mat-icon>cloud_upload</mat-icon>
+          {{ 'text.other.sample.upload' | translate }}
+        </button>
+      </div>
+    </ng-container>
+
+  </ng-container>
+</form>

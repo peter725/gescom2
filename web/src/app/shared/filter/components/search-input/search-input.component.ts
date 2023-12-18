@@ -23,6 +23,7 @@ import { take } from 'rxjs/operators';
 const AVAILABLE_OPERATIONS: {
   text: { code: OperationMode, text: string }[],
   number: { code: OperationMode, text: string }[],
+
 } = {
   text: [
     { code: OperationMode.CONTAINS, text: 'text.searchModes.contains' },
@@ -35,8 +36,8 @@ const AVAILABLE_OPERATIONS: {
     { code: OperationMode.LESSER_OR_EQUAL, text: 'text.searchModes.lesserOrEqual' },
     { code: OperationMode.GREATER_OR_EQUAL, text: 'text.searchModes.greaterOrEqual' },
   ]
-};
 
+};
 export interface FormFieldValue {
   query: string;
   operation: OperationMode;
@@ -74,6 +75,7 @@ export class SearchInputComponent
   static nextId = 0;
 
   @ViewChild(MatInput, { read: ElementRef, static: true }) input: ElementRef | undefined;
+
 
   @HostBinding() id = `custom-form-field-id-${ SearchInputComponent.nextId++ }`;
   @HostBinding('attr.aria-describedby') describedBy = '';
@@ -131,6 +133,7 @@ export class SearchInputComponent
   }
 
   get placeholder() {
+    console.log('get placeholder',this._placeholder);
     return this._placeholder;
   }
 
@@ -169,6 +172,7 @@ export class SearchInputComponent
       };
     } else {
       next = obj;
+      console.log('writeValue 3', next);
     }
     // write external value
     this.value = next;
@@ -184,7 +188,7 @@ export class SearchInputComponent
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    this.form.disable();
+    //this.form.disable();
     this.stateChanges.next();
   }
 

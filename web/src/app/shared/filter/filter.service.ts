@@ -4,7 +4,7 @@ import { AppQuery, AppQuerySource } from '@libs/commons';
 import { BehaviorSubject, filter } from 'rxjs';
 import { DEFAULT_FILTER_KEY } from './constants';
 import { AppliedFilter, FilterOptions, FilterParamsOptions, SearchMode } from './models';
-import { TulsaQuery } from './tulsa-query';
+import { Query } from './query';
 
 
 @Injectable({ providedIn: 'root' })
@@ -24,7 +24,7 @@ export class FilterService {
     const filter: AppliedFilter = {
       name: options.name || DEFAULT_FILTER_KEY,
       mode: options.mode || SearchMode.FILTER,
-      query: new TulsaQuery(options.source),
+      query: new Query(options.source),
     };
     this.source.next(filter);
     if (options.useParams) {

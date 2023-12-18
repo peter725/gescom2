@@ -3,6 +3,7 @@ import { dgc, appName, version } from '@base/config/app';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-footer, footer[tsw-footer]',
   template: `
     <div>&nbsp;</div>

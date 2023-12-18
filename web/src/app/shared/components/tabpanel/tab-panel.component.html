@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="breadcrumb">
+
+        <a [routerLink]="item.path | namedRoute:{id: pathId }"
+           [routerLinkActiveOptions]="{ exact: true }"
+           routerLinkActive="active" [class.active]="pathId==0 && i==0"
+           *ngFor="let item of items; index as i" >
+                  <span class="breadcrumb__inner">
+                    <span class="breadcrumb__title">{{item.text | translate}}</span>
+                  </span>
+        </a>
+    </div>
+
+
+</div>

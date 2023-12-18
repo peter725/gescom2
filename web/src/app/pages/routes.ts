@@ -11,8 +11,7 @@ export const routes: Routes = [
   {
     path: 'app',
     loadChildren: () => import('./dashboard-wrapper-page').then(m => m.DashboardWrapperPageModule),
-    // canActivate: [IsAuthenticatedGuard, CanAccessGuard],
-    // canActivateChild: [IsAuthenticatedGuard, CanAccessGuard],
-    // canLoad: [IsAuthenticatedGuard, CanAccessGuard],
+
   },
+
 ];

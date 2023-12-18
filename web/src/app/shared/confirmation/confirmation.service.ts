@@ -28,8 +28,8 @@ export class ConfirmationService {
   private buildModalConfig(data: ConfirmationPrompt): MatDialogConfig<ConfirmationPrompt> {
     return {
       data,
-      minWidth: '15%',
-      maxWidth: '35%',
+      minWidth: '400px',
+      maxWidth: '600px',
     };
   }
 

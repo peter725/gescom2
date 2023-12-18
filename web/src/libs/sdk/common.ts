@@ -20,6 +20,7 @@ export interface SimpleModel<ID = number> extends BaseModel {
 export interface TranslatedModel {
   languageId: number;
   languageCode?: string;
+  languageIsoCode?: string;
   languageName?: string;
 }
 

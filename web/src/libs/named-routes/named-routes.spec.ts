@@ -5,7 +5,7 @@ import { APP_ROUTES } from './tokens';
 
 
 const routes = createStorage([
-  { key: 'home', value: 'home' },
+  { key: 'phone', value: 'phone' },
   { key: 'params', value: 'route/:param' }
 ]);
 
@@ -27,8 +27,8 @@ describe('NamedRoutes', () => {
   });
 
   it('Should return a route', () => {
-    const result = service.getRoute('home');
-    const expected = ['/', 'home'];
+    const result = service.getRoute('phone');
+    const expected = ['/', 'phone'];
     expect(expected).toStrictEqual(result);
   });
 

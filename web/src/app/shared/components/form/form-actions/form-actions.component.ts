@@ -6,6 +6,7 @@ import { FORM_STATUS } from '../tokens';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-form-actions',
   templateUrl: './form-actions.component.html',
 })
@@ -42,7 +43,7 @@ export class FormActionsComponent implements OnInit {
   ) {
   }
 
-  @Input('class')
+  @Input()
   set setHostClass(hostClass: string) {
     const tmp = hostClass?.trim();
     if (tmp) this.hostClass = tmp;

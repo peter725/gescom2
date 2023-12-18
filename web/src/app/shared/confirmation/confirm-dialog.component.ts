@@ -4,6 +4,7 @@ import { ConfirmationPrompt } from '@base/shared/confirmation/models';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-confirm-dialog',
   template: `
     <mat-dialog-content>

@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
-import { filesToB64 } from '@libs/file';
+import { filesToB64 } from '../file-converter';
 import { B64EncodedFile } from '../model';
-import { BaseFileInputAccessorDirective } from '@libs/file';
+import { BaseFileInputAccessorDirective } from './base-file-input-accessor.directive';
 
 /**
  * Links a file input b64 converted value with its respective NgControl value
@@ -18,7 +18,7 @@ export class B64FileAccessorDirective extends BaseFileInputAccessorDirective<B64
     }
 
     const files = await filesToB64(list);
-    if (!this._multiple) {
+    if (!this.multiple) {
       const [first] = files;
       this._onChangeFn(first);
       return;

@@ -5,6 +5,7 @@ import { BreadcrumbsService } from './breadcrumbs.service';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],

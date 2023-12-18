@@ -1,0 +1,109 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<tsw-form-container>
+  <tsw-section-wrapper headerLabel="text.other.sample.configSample">
+    <tsw-sample-edit-page-config-form
+      section-content
+      [configForm]="configForm"
+    ></tsw-sample-edit-page-config-form>
+  </tsw-section-wrapper>
+
+  <tsw-section-wrapper *ngIf="datasetForm" headerLabel="text.other.sample.dataset">
+    <div section-content class="my-4 flex justify-between items-center">
+      <mat-slide-toggle
+        [checked]="(helpIndicator$ | async) === 'on'"
+        (change)="toggleHelpIndicator()"
+      >
+        {{ 'fields.helpIndicator' | translate }}
+      </mat-slide-toggle>
+
+      <!--<button mat-raised-button (click)="reloadSample()">Recargar datos</button>-->
+    </div>
+
+    <div section-content>
+      <mat-stepper orientation="horizontal">
+        <mat-step *ngFor="let item of ((datasetContainer.common | async) ); trackBy: trackByFn;">
+          <ng-template matStepLabel>{{ item.label }}</ng-template>
+          <ng-template matStepContent>
+            <tsw-sample-dataset-group
+              [container]="$any(item)"
+              class="block w-full"
+            ></tsw-sample-dataset-group>
+          </ng-template>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>
+            <ng-container *ngFor="let item of ((datasetContainer.result | async) | slice: 0:1)">
+              {{ item.label }}
+            </ng-container>
+          </ng-template>
+
+          <ng-template matStepContent>
+            <tsw-sample-dataset-collection
+              [containers]="$any(datasetContainer.result | async)"
+              class="block w-full"
+            ></tsw-sample-dataset-collection>
+          </ng-template>
+        </mat-step>
+      </mat-stepper>
+    </div>
+
+    <div class="py-4" section-content>
+      <button mat-button (click)="summarizeErrors()">Resumen errores</button>
+    </div>
+  </tsw-section-wrapper>
+
+  <tsw-form-actions
+    *ngIf="!preConfigComplete"
+    [control]="configForm"
+    saveBtnLabel="generic.actions.continue"
+    [saveBtnSkipConfirmation]="true"
+    (save)="confirmConfiguration()"
+  ></tsw-form-actions>
+
+  <tsw-form-actions
+    *ngIf="preConfigComplete"
+    [control]="datasetForm"
+    (save)="save()"
+  ></tsw-form-actions>
+
+</tsw-form-container>
+
+<!--<div *ngIf="datasetForm" class="mt-10 px-2">
+  <div class="py-1 border rounded bg-gray-50">
+    <p>Global form:</p>
+    <pre>{{ datasetForm.errors | json }}</pre>
+  </div>
+
+  <div class="py-1 border rounded bg-gray-50">
+    <p>Common form:</p>
+    <pre>{{ datasetForm.controls.common.errors | json }}</pre>
+  </div>
+  <div
+    *ngFor="let item of valuesOf(datasetForm.controls.common.controls)"
+    class="py-1 border rounded bg-gray-50"
+  >
+    <div>
+      <span>{{ item[0] }}:</span>
+      <pre>{{ item[1].value | json }}</pre>
+    </div>
+    <pre>{{ item[1].errors | json }}</pre>
+  </div>
+
+  <div class="py-1 border rounded bg-gray-50">
+    <p>Result form:</p>
+    <pre>{{ datasetForm.controls.result.errors | json }}</pre>
+  </div>
+
+  <div
+    *ngFor="let item of valuesOf(datasetForm.controls.result.controls)"
+    class="py-1 border rounded bg-gray-50"
+  >
+    <div>
+      <span>{{ item[0] }}:</span>
+      <pre>{{ item[1].value | json }}</pre>
+    </div>
+    <pre>{{ item[1].errors | json }}</pre>
+  </div>
+</div>-->

@@ -3,24 +3,31 @@
     <div class="flex justify-between align-middle">
       <div>
         <ng-content select="[left-actions-start]"></ng-content>
-        <ng-container *ngIf="exportActions.length">
+        <ng-container *ngIf="exportActions.length === 1">
+          <button mat-stroked-button (click)="exportActions[0].handler()">
+            <mat-icon>cloud_download</mat-icon>
+            {{ exportButtonText | translate: exportButtonParams }}
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="exportActions.length > 1">
           <button
-            mat-stroked-button
-            [matMenuTriggerFor]="exportActionsTemplate"
+                  mat-stroked-button
+                  [matMenuTriggerFor]="exportActionsTemplate"
           >
             <mat-icon>cloud_download</mat-icon>
-            Exportar
+            {{ exportButtonText | translate: exportButtonParams }}
           </button>
           <mat-menu #exportActionsTemplate>
             <button
-              *ngFor="let action of exportActions"
-              mat-menu-item
-              [matTooltip]="action.title"
-              [matTooltipDisabled]="!action.compact"
-              (click)="action.action()"
+                    *ngFor="let action of exportActions"
+                    mat-menu-item
+                    [matTooltip]="action.text | translate: action.textParams"
+                    [matTooltipDisabled]="!action.compact"
+                    (click)="action.handler()"
             >
               <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
-              {{ action.title }}
+              {{ action.text | translate: action.textParams }}
             </button>
           </mat-menu>
         </ng-container>
@@ -30,39 +37,44 @@
       <div>
         <ng-content select="[right-actions-start]"></ng-content>
 
+        <tsw-full-screen-toggle
+                *ngIf="showFullScreen"
+                [elementSelector]="tagName"
+        ></tsw-full-screen-toggle>
+
         <button
-          *ngIf="showRefresh"
-          mat-button
-          matTooltip="Recargar"
-          (click)="reload.emit()"
+                *ngIf="showRefresh"
+                mat-button
+                [matTooltip]="'generic.actions.reload' | translate"
+                (click)="reload.emit()"
         >
           <mat-icon>refresh</mat-icon>
         </button>
 
         <button
-          *ngIf="showSettings"
-          mat-button
-          [matTooltip]="'fields.settings' | translate"
-          (click)="openSettings()"
+                *ngIf="showSettings"
+                mat-button
+                [matTooltip]="'fields.settings' | translate"
+                (click)="openSettings()"
         >
           <mat-icon>settings</mat-icon>
         </button>
 
         <ng-container *ngIf="tableActions.length">
           <button
-            mat-button
-            [matMenuTriggerFor]="tableActionsTemplate"
-            matTooltip="Opciones"
+                  mat-button
+                  [matMenuTriggerFor]="tableActionsTemplate"
+                  [matTooltip]="'fields.options' | translate"
           >
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #tableActionsTemplate>
             <button
-              *ngFor="let action of tableActions"
-              mat-menu-item
-              [matTooltip]="action.title"
-              [matTooltipDisabled]="!action.compact"
-              (click)="action.action()"
+                    *ngFor="let action of tableActions"
+                    mat-menu-item
+                    [matTooltip]="action.text | translate: action.textParams"
+                    [matTooltipDisabled]="!action.compact"
+                    (click)="action.handler()"
             >
               <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
             </button>
@@ -86,11 +98,11 @@
     </div>
 
     <mat-paginator
-      *ngIf="paginator"
-      [length]="paginator.length"
-      [pageSize]="paginator.pageSize"
-      [pageIndex]="paginator.pageIndex"
-      (page)="page.emit($event)"
+            *ngIf="paginator"
+            [length]="paginator.length"
+            [pageSize]="paginator.pageSize"
+            [pageIndex]="paginator.pageIndex"
+            (page)="page.emit($event)"
     ></mat-paginator>
   </mat-card-content>
 </mat-card>

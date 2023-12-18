@@ -10,7 +10,7 @@ export const PAGINATOR_OPTS: MatPaginatorDefaultOptions = {
   pageSize: 25,
   pageSizeOptions: [10, 25, 50, 100],
   showFirstLastButtons: true,
-  formFieldAppearance: 'standard',
+  formFieldAppearance: 'fill' ,
 };
 
 export const PaginatorIntlProviderFactory = (translate: TranslateService): MatPaginatorIntl => {

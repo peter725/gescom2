@@ -1,5 +1,5 @@
 {
-  "name": "junta-arbitral",
+  "name": "gesco",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
@@ -12,7 +12,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/junta-arbitral",
+        "outputPath": "dist/gesco",
         "index": "./src/index.html",
         "main": "./src/main.ts",
         "polyfills": [
@@ -30,12 +30,33 @@
         "scripts": []
       },
       "configurations": {
-        "production": {
+        "prod": {
           "budgets": [
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "2mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "150kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "gesco/web/src/environments/environment.ts",
+              "with": "gesco/web/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "pre": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "8mb",
+              "maximumError": "8mb"
             },
             {
               "type": "anyComponentStyle",
@@ -43,9 +64,44 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "fileReplacements": [
+            {
+              "replace": "gesco/web/src/environments/environment.ts",
+              "with": "gesco/web/src/environments/environment.pre.ts"
+            }
+          ],
+          "baseHref": "/GESCOM/",
+          "outputHashing": "all",
+          "buildOptimizer": true,
+          "optimization": true,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
         },
-        "development": {
+        "dev": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "8mb",
+              "maximumError": "8mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "200kb"
+            }
+          ],
+          "baseHref": "/GESCOM/",
+          "outputHashing": "all",
+          "buildOptimizer": true,
+          "optimization": true,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        },
+        "local": {
           "buildOptimizer": false,
           "optimization": false,
           "vendorChunk": true,
@@ -60,18 +116,18 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "junta-arbitral:build:production"
+          "browserTarget": "gesco:build:production"
         },
-        "development": {
-          "browserTarget": "junta-arbitral:build:development"
+        "local": {
+          "browserTarget": "gesco:build:local"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "local"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "junta-arbitral:build"
+        "browserTarget": "gesco:build"
       }
     },
     "lint": {
@@ -105,7 +161,18 @@
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "junta-arbitral:build"
+        "buildTarget": "gesco:build"
+      }
+    },
+    "build-war": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "index": "gesco/web/src/index.html",
+        "command": "jar cvf GESCOM.war  .",
+        "cwd": "dist/gesco"
       }
     }
   }

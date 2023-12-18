@@ -1,4 +1,4 @@
-import { Directive, Inject, OnDestroy, OnInit } from '@angular/core';
+import {Directive, inject, Inject, OnDestroy, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FORM_STATUS } from '@base/shared/components/form';
@@ -9,6 +9,8 @@ import { CrudImplService, RequestConfig } from '@libs/crud-api';
 import { NamedRoutes } from '@libs/named-routes';
 import { filter, firstValueFrom, Observable, of, ReplaySubject, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {LiveAnnouncer} from "@angular/cdk/a11y";
 
 
 @Directive()
@@ -18,6 +20,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    * Specifies what API resource should the page use.
    */
   abstract readonly resourceName: string;
+
 
   /**
    * Form group used as base of the editor.
@@ -32,12 +35,13 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   /**
    * Whether to require a confirmation before saving or not.
    */
-  skipSaveConfirmation = true;
+  skipSaveConfirmation = false;
 
   /**
    * Whether to redirect the user after saving the data
    */
   redirectAfterSave = true;
+
 
   /**
    * Path where to redirect after saving data.
@@ -72,6 +76,12 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
 
   protected readonly destroyed$ = new ReplaySubject<boolean>(1);
 
+
+  announcer = inject(LiveAnnouncer);
+
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+
   constructor(
     protected crudService: CrudImplService<T>,
     protected fb: FormBuilder,
@@ -92,7 +102,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy')
     this.destroyed$.next(true);
   }
 
@@ -101,6 +110,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   }
 
   submitForm() {
+    console.log('this.redirectAfterSave en submit',this.redirectAfterSave);
     //if (this.form.invalid) {
       //this.notification.show({ message: 'text.other.pleaseReview' });
       //return;
@@ -144,12 +154,14 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    * Fetches an existing resource from the API.
    */
   protected fetchExistingSrc(): Observable<T> {
+
     return this.crudService.findById(+this.resourceId, {
       resourceName: this.resourceName,
       pathParams: {
         id: this.resourceId,
       }
     });
+
   }
 
   /**
@@ -196,7 +208,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
 
       this.status.status = 'PROCESS';
       const result = await firstValueFrom(this.activeOperation);
-
       await this.afterSaveSuccess(result);
     } catch (e: any) {
       await this.afterSaveError(e);

@@ -1,0 +1,63 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<form [formGroup]="form">
+    <tsw-form-container>
+        <tsw-tab-panel></tsw-tab-panel>
+        <tsw-section-wrapper
+                class="mb-2"
+                headerLabel="{{'text.approach.campaign-proposal.title' | translate}}"
+                icon="edit_note">
+            <div section-content>
+                <fieldset>
+                    <tsw-section-label class="w-full"
+                                       label="{{ 'text.approach.campaign-proposal.title' | translate}}"></tsw-section-label>
+                    <div class="grid grid-cols-1">
+                        <mat-radio-group aria-label="Select an option" formControlName="campaignTypeId">
+                            <mat-radio-button
+                                    value=1>{{ 'fields.approach.campaign-proposal.campaign-type.key1' | translate }}</mat-radio-button>
+                            <mat-radio-button
+                                    value=2>{{ 'fields.approach.campaign-proposal.campaign-type.key2' | translate }}</mat-radio-button>
+                            <mat-radio-button
+                                    value=3>{{ 'fields.approach.campaign-proposal.campaign-type.key3' | translate }}</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-1.5">
+
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approach.campaign-proposal.title' | translate }}</mat-label>
+                            <textarea matInput formControlName="approach" rows="3"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-1.5">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approach.justification' | translate }}</mat-label>
+                            <textarea matInput formControlName="justification" rows="3"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-1.5">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approach.objectives' | translate }}</mat-label>
+                            <textarea matInput formControlName="objective" rows="3"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-1.5">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approach.technical-legal-viability' | translate }}</mat-label>
+                            <textarea matInput formControlName="viability" rows="3"></textarea>
+                        </mat-form-field>
+                    </div>
+                </fieldset>
+            </div>
+
+        </tsw-section-wrapper>
+        <tsw-form-actions
+                [saveBtnSkipConfirmation]="skipSaveConfirmation"
+                (reset)="resetForm()"
+                (save)="submitForm()"
+        ></tsw-form-actions>
+    </tsw-form-container>
+</form>

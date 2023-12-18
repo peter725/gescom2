@@ -3,14 +3,20 @@ package es.dgc.gesco.model.modules.user.dto;
 import es.dgc.gesco.model.commom.constants.EntityState;
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import es.dgc.gesco.model.commom.validation.constraints.NIF;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
+import es.dgc.gesco.model.modules.profile.db.entity.Profile;
+import es.dgc.gesco.model.modules.userType.db.entity.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,36 +25,28 @@ import lombok.Setter;
 public class UserDto implements LongIdModel {
 
     private Long id;
+
     private Integer state = EntityState.ON.getValue();
 
-    @NotNull
-    @NotBlank
-    @NIF
-    private String nif;
-
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
     private String name;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String firstSurname;
+    private String nif;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String secondSurname;
+    private String password;
 
-    @NotNull
-    @NotBlank
-    @Email
     private String email;
 
-    @NotNull
-    @NotBlank
-    private String password;
+    private AutonomousCommunity autonomousCommunity;
+
+    private Profile profile;
+
+    private UserType userType;
+
+    private String phone;
+
+    private String firstSurname;
+
+    private String secondSurname;
 
     public String getFullName() {
         String fullName = getName() + " " + getFirstSurname() + " " + getSecondSurname();

@@ -16,24 +16,21 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().anyRequest();
     }
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration configCors = new CorsConfiguration();
         configCors.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
         configCors.addAllowedOriginPattern("*");
         configCors.addAllowedHeader("*");
         configCors.addAllowedMethod("*");;
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configCors);
         return source;
     }
+
+
 }

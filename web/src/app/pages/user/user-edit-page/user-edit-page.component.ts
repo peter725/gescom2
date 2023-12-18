@@ -7,7 +7,6 @@ import {CustomValidators} from "@libs/validators";
 import {Component} from "@angular/core";
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'tsw-user-edit-page',
     templateUrl: './user-edit-page.component.html',
     styleUrls: ['./user-edit-page.component.scss'],
@@ -21,6 +20,7 @@ export class UserEditPageComponent extends EditPageBaseComponent<User, CreateUse
     protected override _createResourceTitle = 'pages.user.add';
     protected override _editResourceTitle = 'pages.user.edit';
 
+
     protected buildForm() {
         return this.fb.group<ControlsOf<CreateUser>>({
             id: this.fb.control(null),
@@ -32,7 +32,11 @@ export class UserEditPageComponent extends EditPageBaseComponent<User, CreateUse
             phone: this.fb.control(null, [Validators.required]),
             profile: this.fb.control(null, [Validators.required]),
             modules: this.fb.control([], [Validators.required, Validators.min(1)]),
+            autonomousCommunity: this.fb.control(null, [Validators.required]),
+            userType: this.fb.control(null, [Validators.required]),
+            password: this.fb.control(null, [Validators.required]),
         });
     }
+
 
 }

@@ -3,6 +3,8 @@ package es.dgc.gesco.model.util.exception;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Excepción personalizada para la aplicación.
  * <br/>
@@ -39,4 +41,17 @@ public class AppException extends RuntimeException {
         this.timestamp = System.currentTimeMillis();
     }
 
+    public AppException(String code, NoSuchAlgorithmException e) {
+        super();
+        this.code = code;
+        this.error = code;
+        this.timestamp = System.currentTimeMillis();
+    }
+
+    public AppException(String encryptionErrorLiteral, Exception e) {
+        super();
+        this.code = encryptionErrorLiteral;
+        this.error = code;
+        this.timestamp = System.currentTimeMillis();
+    }
 }

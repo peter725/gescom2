@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "es.dgc.gesco.service.repository")
-@EntityScan(basePackages = "es.dgc.gesco.model.modules.user.db.entity")
+@EntityScan(basePackages = "es.dgc.gesco.model.modules")
 @ComponentScan(basePackages = {
         "es.dgc.gesco.model.modules"
 })

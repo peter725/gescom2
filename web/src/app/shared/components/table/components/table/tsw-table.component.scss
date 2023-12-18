@@ -9,36 +9,37 @@ $cell-min-width: 100%;
 $row-odd-bg-color: #fafafa;
 $row-hover-bg-color: #f3f3f3;
 
-.mat-table {
+.mat-mdc-table {
   width: 100%;
 
   // MDC Table applies `table-layout: fixed`, but this is a backwards incompatible
   // change since the table did not previously apply it.
   // TODO: Add a mixin to MDC to set the layout instead of including this override,
   // see this issue: https://github.com/material-components/material-components-web/issues/6412
-  table-layout: auto;
+  table-layout: fixed;
 
   // The MDC table does not allow text to wrap within the cell. This allows for text to
   // wrap when the cell reaches its maximum width.
-  white-space: normal;
+  white-space: nowrap;
 }
 
-.mat-table-sticky {
+.mat-mdc-table-sticky {
   // Note that the table can either set this class or an inline style to make something sticky.
   // We set the style as `!important` so that we get an identical specificity in both cases
   // and to avoid cases where user styles have a higher specificity.
   position: sticky !important;
 }
 
-.mat-cell,
-.mat-header-cell,
-.mat-footer-cell {
+.mat-mdc-cell,
+.mat-mdc-header-cell,
+.mat-mdc-footer-cell {
   word-wrap: initial;
   padding: $cell-padding;
   line-break: unset;
   min-width: 30px;
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
   vertical-align: middle;
   box-sizing: border-box;
   height: 32px;
@@ -69,51 +70,51 @@ $row-hover-bg-color: #f3f3f3;
 // MDC table rows are styled with a top border, whereas our legacy flex table styles rows with
 // a bottom border. Remove the bottom border style from the rows and let MDC display its top
 // border.
-.mat-row,
-.mat-header-row,
-.mat-footer-row {
-  border-bottom: none;
+.mat-mdc-row,
+.mat-mdc-header-row,
+.mat-mdc-footer-row {
+  border-bottom: 10px;
 }
 
 // Cells need to inherit their background in order to overlap each other when sticky.
 // The background needs to be inherited from the table, tbody/tfoot, row, and cell.
-.mat-table tbody, .mat-table tfoot, .mat-table thead,
-.mat-cell, .mat-footer-cell,
-.mat-header-row, .mat-row, .mat-footer-row,
-.mat-table .mat-header-cell {
+.mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead,
+.mat-mdc-cell, .mat-mdc-footer-cell,
+.mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row,
+.mat-mdc-table .mat-mdc-header-cell {
   background-color: inherit;
 }
 
-.mat-table .mat-row:nth-child(odd) {
+.mat-mdc-table .mat-mdc-row:nth-child(odd) {
   background-color: var(--bg-color-darker-5);
 }
 
 // Disable hover styling while MDC uses an opacity for its color.
 // When the hover style is used with sticky cells, the opacity shows the cells overlapping.
-.mat-table .mat-row:hover,
-.mat-table .mat-footer-row:hover {
+.mat-mdc-table .mat-mdc-row:hover,
+.mat-mdc-table .mat-mdc-footer-row:hover {
   background-color: var(--bg-color-darker-10);
 }
 
 // Flex rows should not set a definite height, but instead stretch to the height of their
 // children. Otherwise, the cells grow larger than the row and the layout breaks.
-.mat-table .mat-header-row,
-.mat-table .mat-row,
-.mat-table .mat-footer-row {
+.mat-mdc-table .mat-mdc-header-row,
+.mat-mdc-table .mat-mdc-row,
+.mat-mdc-table .mat-mdc-footer-row {
   height: unset;
 }
 
 // Height hack to override defaults until a better solution is found
-.mat-header-cell {
+.mat-mdc-header-cell {
   height: $header-row-height;
   text-align: left;
 }
 
-.mat-footer-cell {
+.mat-mdc-footer-cell {
   height: $row-height;
 }
 
-.mat-row {
+.mat-mdc-row {
   .additional-actions {
     display: inline-block;
   }

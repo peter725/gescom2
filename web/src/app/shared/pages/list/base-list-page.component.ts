@@ -152,15 +152,15 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
     return {
       length: 0,
       pageIndex: 0,
-      pageSize: 25,
+      pageSize: 50,
     };
   }
 
   protected createSortSource(): Sort {
-    return {
-      active: 'id',
-      direction: 'asc',
-    };
+      return {
+        active: 'id',
+        direction: 'desc',
+      };
   }
 
   protected registerFiltersListener() {

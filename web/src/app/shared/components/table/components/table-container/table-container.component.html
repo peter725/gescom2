@@ -45,7 +45,7 @@
         <button
                 *ngIf="showRefresh"
                 mat-button
-                matTooltip="generic.actions.reload"
+                [matTooltip]="'generic.actions.reload' | translate"
                 (click)="reload.emit()"
         >
           <mat-icon>refresh</mat-icon>

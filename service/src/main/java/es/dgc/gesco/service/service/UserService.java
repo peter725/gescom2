@@ -1,7 +1,5 @@
 package es.dgc.gesco.service.service;
 
-
-import es.dgc.gesco.model.commom.constants.EntityState;
 import es.dgc.gesco.model.modules.user.converter.UserConverter;
 import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.UserDto;
@@ -13,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -33,11 +31,10 @@ public class UserService {
         return newUser;
     }
 
-    public UserDto getUserById(Long id){
+    public User getUserById(Long id){
 
         Optional<User> user = userRepository.findById(id);
-        UserDto userDto = loadUserDto(user.get());
-        return userDto;
+        return user.get();
     }
 
     public Page<User> getAllByPage(Pageable pageable){
@@ -46,34 +43,42 @@ public class UserService {
         return userPage;
     }
 
-    public User updateUser(final UserDto userDto) {
+    public User updateUser(final User user) {
 
-        User userActual = loadUser(userDto);
-        return userRepository.save(userActual);
+        return userRepository.save(user);
     }
 
-    public void deleteUser(final Long id){
+    public User changeStateUser(final Long id, final Integer state){
 
-        User user = loadUser(this.getUserById(id));
-        user.setState(2);
-        userRepository.save(user);
+        User user = getUserById(id);
+        user.setState(state);
+        return userRepository.save(user);
     }
 
-    public UserDto getUserByNif(String nif){
+    public List<User> findAllUser(){
 
-        UserDto userDto = loadUserDto(userRepository.findByNif(nif).get());
-        return userDto;
+        List<User> users = userRepository.findAll();
+        return users;
     }
 
     public User loadUser(final UserDto userDto){
 
-        User user = userConverter.convertDtoToUsuer(userDto);
+        User user = userConverter.convertDtoToUser(userDto);
         return user;
     }
 
     public UserDto loadUserDto(User user){
         UserDto userDto = userConverter.convertUserToDto(user);
         return userDto;
+    }
+
+    public Page<User> getAllByCriteria(UserCriteria userCriteria) {
+        return null;
+    }
+
+    public Optional<User> getByNif(String nif){
+
+        return userRepository.findByNif(nif);
     }
 
 }

@@ -1,9 +1,9 @@
 package es.dgc.gesco.model.commom.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,12 +32,12 @@ public abstract class AuditedBaseEntity extends StandardEntity {
 
     @JsonIgnore
     @CreatedDate
-    @Column(name = "CREATED_AT", nullable = false, updatable = false)
+    @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
 
     @JsonIgnore
     @LastModifiedDate
-    @Column(name = "UPDATE_AT", nullable = false)
+    @Column(name = "UPDATED_AT", nullable = false)
     private LocalDateTime updatedAt;
 
     @JsonIgnore
@@ -47,7 +47,7 @@ public abstract class AuditedBaseEntity extends StandardEntity {
 
     @JsonIgnore
     @LastModifiedBy
-    @Column(name = "UPDATE_BY", nullable = true)
+    @Column(name = "UPDATED_BY", nullable = true)
     private Long updatedBy;
 
 }

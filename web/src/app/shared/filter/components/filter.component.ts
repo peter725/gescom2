@@ -39,6 +39,7 @@ export abstract class FilterComponent<T extends AppQuerySource = AppQuerySource>
       source: this.getQuerySource(),
       useParams: { handling: '' }
     });
+
   }
 
   clear() {

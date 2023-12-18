@@ -29,7 +29,6 @@ export class FormActionsComponent implements OnInit {
   @Input() cancelRedirectPath: string | string[] = ['../'];
 
   @Output() save = new EventEmitter<void>();
-  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() reset = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 

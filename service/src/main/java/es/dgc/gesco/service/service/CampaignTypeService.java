@@ -1,0 +1,21 @@
+package es.dgc.gesco.service.service;
+
+import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
+import es.dgc.gesco.service.repository.CampaignTypeRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class CampaignTypeService {
+
+    @Autowired
+    private final CampaignTypeRepository campaignTypeRepository;
+
+
+    public CampaignType getCampaignTypeById(final Long id){
+        CampaignType campaignType = campaignTypeRepository.findById(id).get();
+        return campaignType;
+    }
+}

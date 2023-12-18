@@ -32,7 +32,7 @@ import { skip, takeUntil } from 'rxjs/operators';
 export class SampleListPageComponent extends BaseListPageComponent<VSample> implements OnInit {
   readonly resourceName = 'samples';
   fileUpload = new FormControl<B64EncodedFile | null>(null);
-  subject$: Observable<GAuthSubject>;
+  //subject$: Observable<GAuthSubject>;
 
   override exportFormats: (string | BtnSrc)[] = [
     { text: 'text.other.sample.download', handler: () => this.downloadSamplesFile() },
@@ -51,7 +51,7 @@ export class SampleListPageComponent extends BaseListPageComponent<VSample> impl
     //private fileDownloader: FileDownloaderImplService,
   ) {
     super(crudService, filterService);
-    this.subject$ = this.authContext.get();
+    //this.subject$ = this.authContext.get();
   }
 
   override async ngOnInit() {

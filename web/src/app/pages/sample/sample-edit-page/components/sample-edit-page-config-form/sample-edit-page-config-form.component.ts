@@ -1,19 +1,20 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { AppContextService } from '@tulsa/app/shared/app-context';
-import { FORM_STATUS } from '@tulsa/app/shared/components/form';
-import { compareObjects } from '@tulsa/app/shared/select';
-import { ComponentStatus } from '@tulsa/libs/commons';
-import { TulsaModule } from '@tulsa/libs/sdk/module';
-import { compareScopeView } from '@tulsa/libs/sdk/scope';
+import { AppContextService } from '@base/shared/app-context';
+import { FORM_STATUS } from '@base/shared/components/form';
+import { compareObjects } from '@base/shared/select';
+import { ComponentStatus } from '@libs/commons';
+import { Module } from '@libs/sdk/module';
+//import { compareScopeView } from '@libs/sdk/scope';
 import { distinctUntilChanged, filter, firstValueFrom, ReplaySubject, takeUntil } from 'rxjs';
 import { ConfigData, ConfigForm } from '../../sample-edit-page.model';
-import { downloadLocalFile } from '@tulsa/libs/file/file-downloader';
+import { downloadLocalFile } from '@libs/file/file-downloader';
 import { MatDialog } from '@angular/material/dialog';
 import { SampleUploaderComponent } from '../../../sample-list-page/components';
 
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-sample-edit-page-config-form',
   templateUrl: './sample-edit-page-config-form.component.html',
 })
@@ -26,7 +27,7 @@ export class SampleEditPageConfigFormComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new ReplaySubject<boolean>(1);
 
   readonly compareObjects = compareObjects;
-  readonly compareScopes = compareScopeView;
+  //readonly compareScopes = compareScopeView;
 
   constructor(
     private ctx: AppContextService,
@@ -58,9 +59,9 @@ export class SampleEditPageConfigFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  useModule(module: TulsaModule) {
-    this.ctx.useModule(module);
-  }
+  //useModule(module: TulsaModule) {
+    //this.ctx.useModule(module);
+  //s}
 
   private async loadConfiguration() {
     const module = await firstValueFrom(this.ctx.module$);

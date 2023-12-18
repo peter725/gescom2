@@ -6,12 +6,11 @@ import { BaseListPageComponent } from '@base/shared/pages/list';
 import { AppContextService } from '@base/shared/app-context';
 import { CrudImplService, RequestConfig, RequestParams } from '@libs/crud-api';
 import { User } from '@libs/sdk/user';
-//import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { takeUntil, skip } from 'rxjs/operators';
 
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-user-list-page',
   templateUrl: './user-list-page.component.html',
   styleUrls: ['./user-list-page.component.scss'],
@@ -26,14 +25,14 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
   constructor(
       crudService: CrudImplService<User>,
       filterService: FilterService,
-      private sampleCtx: AppContextService,
+      //private sampleCtx: AppContextService,
   ) {
     super(crudService, filterService);
   }
 
   override async ngOnInit() {
     await super.ngOnInit();
-    // this.monitorCtxChanges();
+    //this.monitorCtxChanges();
   }
 
   protected override async getRequestConfig(): Promise<RequestConfig> {
@@ -41,7 +40,7 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
     //const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
 
     config.queryParams = {
-      ...config.queryParams,
+      ...config.queryParams
       //scope,
     };
     return config;
@@ -59,13 +58,13 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
       { name: 'secondSurname', visible: false },
       'phone',
       'email',
-      //{ name: 'profile', isReportable: false },
+      { name: 'profile', isReportable: false },
       'actions'
     ];
   }
 
-  private monitorCtxChanges() {
-    this.sampleCtx.scope$.pipe(takeUntil(this.destroyed$), skip(1)).subscribe(() => this.reloadData());
-  }
+  //private monitorCtxChanges() {
+   // this.sampleCtx.scope$.pipe(takeUntil(this.destroyed$), skip(1)).subscribe(() => this.reloadData());
+  //}
 
 }

@@ -15,7 +15,6 @@ const BTN_OFF_ICON = 'toggle_off';
 const BTN_OFF_COLOR: ThemePalette = 'warn';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-state-toggle',
   template: `
     <tsw-button
@@ -25,7 +24,7 @@ const BTN_OFF_COLOR: ThemePalette = 'warn';
       matTooltipShowDelay="500"
       [startIcon]="btnIcon"
       [color]="btnColor"
-      [disabled]="btnStatus.is$('PROCESS', 'LOAD') | async"
+      [disabled]="(btnStatus.is$('PROCESS', 'LOAD') | async)"
       (click)="toggleStatus()"
     ></tsw-button>
   `,
@@ -126,7 +125,8 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
       this.btnText = '' + BTN_OFF_TEXT;
       this.btnIcon = '' + BTN_ON_ICON;
       this.btnColor = BTN_ON_COLOR;
-    } else {
+    } else{
+      console.log("entra aqui 5");
       this.btnText = '' + BTN_ON_TEXT;
       this.btnIcon = '' + BTN_OFF_ICON;
       this.btnColor = BTN_OFF_COLOR;

@@ -36,7 +36,7 @@ public class Campaign extends AuditedBaseEntity {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "YEAR" )
+    @Column(name = "YEAR_CAMPAIGN" )
     @NotNull(message = "Debes especificar el año")
     @Size(min = 1, max = 100)
     private Long year;
@@ -48,25 +48,25 @@ public class Campaign extends AuditedBaseEntity {
     @Column(name = "NAME_CAMPAIGN")
     @NotNull(message = "Debes especificar el nombre de la campaña")
     @Size(min = 1, max = 10)
-    private String name_campaign;
+    private String nameCampaign;
 
     @ManyToOne
-    @JoinColumn(name = "TYPE_CAMPAIGN")
+    @JoinColumn(name = "TYPE_CAMPAIGN_ID")
     @NotNull(message = "Debes seleccionar el tipo de campaña")
-    private CampaignType id_type_campaign;
+    private CampaignType typeCampaignId;
 
     @ManyToOne
-    @JoinColumn(name = "ID_FIELD")
+    @JoinColumn(name = "AMBIT_ID")
     @NotNull(message = "Debes seleccionar el ámbito")
-    private Ambit id_ambit;
+    private Ambit ambitId;
 
     @ManyToOne
-    @JoinColumn(name = "ID_AUTONOMOUS_COMMUNITY_RESPONSIBLE")
+    @JoinColumn(name = "AUTONOMOUS_COMMUNITY_RESPONSIBLE_ID")
     @NotNull(message = "Debes seleccionar la CCAA responsable")
-    private AutonomousCommunity id_autonomous_community_responsible;
+    private AutonomousCommunity autonomousCommunityResponsibleId;
 
     @ManyToOne
-    @JoinColumn(name = "ID_PHASE")
-    private PhaseCampaign id_phase;
+    @JoinColumn(name = "PHASE_ID")
+    private PhaseCampaign phaseId;
 
 }

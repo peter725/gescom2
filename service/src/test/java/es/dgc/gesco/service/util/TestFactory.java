@@ -58,5 +58,10 @@ public class TestFactory {
         return new UserTypeService(userTypeRepository);
     };
 
+    @Bean
+    public CampaignService campaignService(CampaignRepository campaignRepository){
+        return new CampaignService(campaignRepository);
+    };
+
 
 }

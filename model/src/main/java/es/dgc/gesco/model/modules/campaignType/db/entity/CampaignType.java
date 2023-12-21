@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.CampaignType.db.entity;
+package es.dgc.gesco.model.modules.campaignType.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import lombok.*;

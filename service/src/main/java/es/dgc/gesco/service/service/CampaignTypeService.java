@@ -1,6 +1,6 @@
 package es.dgc.gesco.service.service;
 
-import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
+import es.dgc.gesco.model.modules.campaignType.db.entity.CampaignType;
 import es.dgc.gesco.service.repository.CampaignTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

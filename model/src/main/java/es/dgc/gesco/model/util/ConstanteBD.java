@@ -39,8 +39,8 @@ public class ConstanteBD {
     public static final String SEQ_LEGISLATION="seq_legislation";
     public static final String SEQ_AUTHORITY_DGC="seq_authority_dgc";
     public static final String SEQ_CCAA ="seq_autonomous_community";
-    public static final String SEC_CCAA_PARTTICIPANTS ="seq_autonomous_community_participants";
-    public static final String SEC_CCAA_PROPONENT ="seq_autonomous_community_proponent";
-    public static final String SEC_CCAA_SPECIALIST ="seq_autonomous_community_specialist";
-    public static final String SEC_PHASE_CAMPAIGN ="seq_phase_campaign";
+    public static final String SEQ_CCAA_PARTTICIPANTS ="seq_autonomous_community_participants";
+    public static final String SEQ_CCAA_PROPONENT ="seq_autonomous_community_proponent";
+    public static final String SEQ_CCAA_SPECIALIST ="seq_autonomous_community_specialist";
+    public static final String SEQ_PHASE_CAMPAIGN ="seq_phase_campaign";
 }

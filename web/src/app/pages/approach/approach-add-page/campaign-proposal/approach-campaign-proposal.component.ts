@@ -4,13 +4,15 @@ import {ComponentStatus, ControlsOf} from "@libs/commons";
 import {FormGroup, Validators} from "@angular/forms";
 import {EditPageBaseComponent} from "@base/shared/pages/edit-page-base.component";
 import {FORM_STATUS} from "@base/shared/components/form";
+import { MAT_RADIO_DEFAULT_OPTIONS } from "@angular/material/radio";
 
 @Component({
     selector: "tsw-approach-campaign-proposal",
     templateUrl: "./approach-campaign-proposal.component.html",
     styleUrls: ["./approach-campaign-proposal.component.scss"],
     providers: [
-        {provide: FORM_STATUS, useValue: new ComponentStatus("IDLE")}
+        {provide: FORM_STATUS, useValue: new ComponentStatus("IDLE")},
+        { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' }},
     ]
 })
 

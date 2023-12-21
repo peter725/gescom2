@@ -41,3 +41,4 @@ ALTER SEQUENCE seq_campaign_type RESTART WITH 2;
 
 
 
+

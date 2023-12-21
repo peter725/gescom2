@@ -1,7 +1,7 @@
 package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.commom.dto.StatusChange;
-import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
+import es.dgc.gesco.model.modules.campaignType.db.entity.CampaignType;
 import es.dgc.gesco.model.modules.approach.converter.ApproachConverter;
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
 import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
 
 @Component
 public class ApproachFacade {
@@ -39,6 +38,8 @@ public class ApproachFacade {
         Approach approach = approachService.loadApproach(approachDto);
         approach.setDate(LocalDate.now());
         approach.setSent(true);
+        approach.setUserId(209L);
+        approach.setAutonomousCommunityId(20L);
         approachService.saveApproach(approach);
 
     }

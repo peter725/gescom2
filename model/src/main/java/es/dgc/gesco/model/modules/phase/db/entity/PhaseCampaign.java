@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import static es.dgc.gesco.model.util.ConstanteBD.SEC_PHASE_CAMPAIGN;
+import static es.dgc.gesco.model.util.ConstanteBD.SEQ_PHASE_CAMPAIGN;
 import static es.dgc.gesco.model.util.ConstanteBD.TABLE_PHASE_CAMPAIGN;
 
 @Entity
@@ -18,10 +18,10 @@ import static es.dgc.gesco.model.util.ConstanteBD.TABLE_PHASE_CAMPAIGN;
 public class PhaseCampaign extends AuditedBaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEC_PHASE_CAMPAIGN)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_PHASE_CAMPAIGN)
     @SequenceGenerator(
-            name = SEC_PHASE_CAMPAIGN,
-            sequenceName = SEC_PHASE_CAMPAIGN,
+            name = SEQ_PHASE_CAMPAIGN,
+            sequenceName = SEQ_PHASE_CAMPAIGN,
             allocationSize = 1
     )
     @Column(name = "ID")

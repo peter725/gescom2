@@ -10,6 +10,7 @@ export const environment: EnvironmentData = {
   baseHref: '',
   srv: {
     app: {
+      //host: 'http://micapps01des.consumo.gob.es:8080/gescom-rest-app',
       host: 'http://localhost:8080/rest',
       api: '/api',
     },

@@ -6,7 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import static es.dgc.gesco.model.util.ConstanteBD.SEC_CCAA_PARTTICIPANTS;
+import static es.dgc.gesco.model.util.ConstanteBD.SEQ_CCAA_PARTTICIPANTS;
 import static es.dgc.gesco.model.util.ConstanteBD.TABLE_CCAA_PARTTICIPANTS;
 
 @Entity
@@ -19,10 +19,10 @@ import static es.dgc.gesco.model.util.ConstanteBD.TABLE_CCAA_PARTTICIPANTS;
 public class AutonomousCommunityParticipants extends AuditedBaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEC_CCAA_PARTTICIPANTS)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_CCAA_PARTTICIPANTS)
     @SequenceGenerator(
-            name = SEC_CCAA_PARTTICIPANTS,
-            sequenceName = SEC_CCAA_PARTTICIPANTS,
+            name = SEQ_CCAA_PARTTICIPANTS,
+            sequenceName = SEQ_CCAA_PARTTICIPANTS,
             allocationSize = 1
     )
     @Column(name = "ID")

@@ -1,7 +1,7 @@
 package es.dgc.gesco.model.modules.campaign.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
-import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
+import es.dgc.gesco.model.modules.campaignType.db.entity.CampaignType;
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
 import es.dgc.gesco.model.modules.ambit.db.entity.Ambit;
 import es.dgc.gesco.model.modules.phase.db.entity.PhaseCampaign;
@@ -36,7 +36,7 @@ public class Campaign extends AuditedBaseEntity {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "YEAR" )
+    @Column(name = "YEAR_CAMPAIGN" )
     @NotNull(message = "Debes especificar el año")
     @Size(min = 1, max = 100)
     private Long year;

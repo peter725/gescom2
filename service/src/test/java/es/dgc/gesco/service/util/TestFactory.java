@@ -63,5 +63,19 @@ public class TestFactory {
         return new CampaignService(campaignRepository);
     };
 
+    @Bean
+    public AmbitService ambitService(AmbitRepository ambitRepository){
+        return new AmbitService(ambitRepository);
+    };
+
+    @Bean
+    public ProponentService proponentService(ProponentRepository proponentRepository){
+        return new ProponentService(proponentRepository);
+    };
+
+    @Bean
+    public SpecialistService specialistService(SpecialistRepository specialistRepository){
+        return new SpecialistService(specialistRepository);
+    };
 
 }

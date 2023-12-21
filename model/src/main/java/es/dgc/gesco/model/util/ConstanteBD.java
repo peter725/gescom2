@@ -7,6 +7,8 @@ public class ConstanteBD {
     public static final String TABLE_PHONE="phone";
     public static final String TABLE_ROLE="role";
     public static final String TABLE_APPROACH="campaign_proposal";
+    public static final String TABLE_PROPONENT="proponent";
+    public static final String TABLE_SPECIALIST="specialist";
     public static final String TABLE_CAMPAIGN="campaign";
     public static final String TABLE_AMBIT="ambit";
     public static final String TABLE_CAMPAIGN_TYPE="campaign_type";
@@ -30,6 +32,8 @@ public class ConstanteBD {
     public static final String SEQ_PHONE="seq_phone";
     public static final String SEQ_ROLE="seq_role";
     public static final String SEQ_APPROACH="seq_approach";
+    public static final String SEQ_PROPONENT="seq_proponent";
+    public static final String SEQ_SPECIALIST="seq_specialist";
     public static final String SEQ_CAMPAIGN="seq_campaign";
     public static final String SEQ_AMBIT="seq_ambit";
     public static final String SEQ_CAMPAIGN_TYPE="seq_campaign_type";

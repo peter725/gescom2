@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.specialist.dto;
+package es.dgc.gesco.model.modules.CampaignType.dto;
 
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SpecialistDto implements LongIdModel {
+public class CampaignTypeDto implements LongIdModel {
 
     Long id;
-    String specialist;
+
+    String type;
+
+
 }

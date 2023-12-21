@@ -5,7 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import static es.dgc.gesco.model.util.ConstanteBD.*;
+import static es.dgc.gesco.model.util.ConstanteBD.SEQ_SPECIALIST;
+import static es.dgc.gesco.model.util.ConstanteBD.TABLE_SPECIALIST;
 
 
 @Entity
@@ -29,5 +30,4 @@ public class Specialist extends AuditedBaseEntity {
 
     @Column(name = "SPECIALIST")
     private String specialist;
-
 }

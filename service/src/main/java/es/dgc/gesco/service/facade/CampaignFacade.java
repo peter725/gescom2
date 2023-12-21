@@ -1,8 +1,6 @@
 package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
-import es.dgc.gesco.model.modules.approach.converter.ApproachConverter;
-import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
 import es.dgc.gesco.model.modules.campaign.converter.CampaingnConverter;
 import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
@@ -44,8 +42,6 @@ public class CampaignFacade {
             AutonomousCommunity autonomousCommunity = autonomousCommunityService.getAutonomousCommunityById(campaingDto.getAutonomousCommunityResponsibleId().getId());
             campaingDto.setAutonomousCommunityResponsibleId(autonomousCommunity);
             campaingDto.setNameCampaign(campaingDto.getNameCampaign());
-
-            // OJOOO!! VERIFICAR EL NOMBRE DE LA CAMPAÑA
         });
         return campaingDtoPage;
     }

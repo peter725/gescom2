@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.specialist.db.entity;
+package es.dgc.gesco.model.modules.specialist.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import lombok.*;

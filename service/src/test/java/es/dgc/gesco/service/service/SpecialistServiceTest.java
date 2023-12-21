@@ -1,6 +1,6 @@
 package es.dgc.gesco.service.service;
 
-import es.dgc.gesco.model.specialist.db.entity.Specialist;
+import es.dgc.gesco.model.modules.specialist.db.entity.Specialist;
 import es.dgc.gesco.service.repository.AbstractGenericTest;
 import es.dgc.gesco.service.util.TestFactory;
 import org.junit.jupiter.api.Test;

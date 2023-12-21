@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.specialist.dto;
+package es.dgc.gesco.model.modules.specialist.dto;
 
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import lombok.AllArgsConstructor;

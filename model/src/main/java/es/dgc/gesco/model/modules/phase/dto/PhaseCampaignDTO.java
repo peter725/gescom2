@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.CampaignType.dto;
+package es.dgc.gesco.model.modules.phase.dto;
 
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import lombok.AllArgsConstructor;
@@ -10,11 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CampaignTypeDTO implements LongIdModel {
+public class PhaseCampaignDTO implements LongIdModel {
 
     Long id;
 
-    String type;
+    String phase;
 
-
+    String description;
 }

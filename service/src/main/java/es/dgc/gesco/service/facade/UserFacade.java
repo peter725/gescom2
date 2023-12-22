@@ -3,7 +3,7 @@ package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.commom.dto.StatusChange;
 import es.dgc.gesco.model.modules.user.db.entity.User;
-import es.dgc.gesco.model.modules.user.dto.UserDto;
+import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.service.service.UserService;
 import javax.transaction.Transactional;
 
@@ -17,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import org.apache.commons.lang3.ObjectUtils;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -42,28 +41,28 @@ public class UserFacade {
         return userPage;
     }
 
-    public UserDto getUserById(final Long id){
+    public UserDTO getUserById(final Long id){
         User user = userService.getUserById(id);
-        UserDto userDto = userService.loadUserDto(user);
+        UserDTO userDto = userService.loadUserDto(user);
         return userDto;
     }
 
     @Transactional
-    public void updateUser(final UserDto userDto){
+    public void updateUser(final UserDTO userDto){
 
         valid(userDto, Accion.UPDATE);
         User user = loadUser(userDto, Accion.UPDATE);
         userService.updateUser(user);
     }
 
-    public UserDto changeStateUser(final Long id, final StatusChange statusChange){
+    public UserDTO changeStateUser(final Long id, final StatusChange statusChange){
         User user = userService.changeStateUser(id, statusChange.getStatus());
-        UserDto userDto = userService.loadUserDto(user);
+        UserDTO userDto = userService.loadUserDto(user);
 
         return userDto;
     }
 
-    public User loadUser(final UserDto userDto, Accion accion){
+    public User loadUser(final UserDTO userDto, Accion accion){
         User user = userService.loadUser(userDto);
         if (accion.equals(Accion.UPDATE)) {
             User userActual = userService.getUserById(userDto.getId());
@@ -79,7 +78,7 @@ public class UserFacade {
         return  user;
     }
 
-    private void valid(final UserDto userDto, final Accion accion){
+    private void valid(final UserDTO userDto, final Accion accion){
 
         if (accion.equals(Accion.ADD)) {
 

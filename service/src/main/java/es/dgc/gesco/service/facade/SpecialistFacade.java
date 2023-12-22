@@ -2,7 +2,7 @@ package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.modules.specialist.converter.SpecialistConverter;
 import es.dgc.gesco.model.modules.specialist.db.entity.Specialist;
-import es.dgc.gesco.model.modules.specialist.dto.SpecialistDto;
+import es.dgc.gesco.model.modules.specialist.dto.SpecialistDTO;
 import es.dgc.gesco.service.service.SpecialistService;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
+
 @Component
 public class SpecialistFacade {
     @Autowired
@@ -19,13 +19,13 @@ public class SpecialistFacade {
     @Autowired
     private SpecialistConverter specialistConverter;
 
-    public Page<SpecialistDto> getAllSpecialist(Pageable pageable) {
+    public Page<SpecialistDTO> getAllSpecialist(Pageable pageable) {
         Page<Specialist> specialistPage = specialistService.getAllByPage(pageable);
         return  loadSpecialistPageDto(specialistPage);
     }
 
-    private Page<SpecialistDto> loadSpecialistPageDto(Page<Specialist> specialistPage) {
-        Page<SpecialistDto> specialistDtoPage = specialistPage.map(proponent -> specialistConverter.convertSpecialistToDto(proponent));
+    private Page<SpecialistDTO> loadSpecialistPageDto(Page<Specialist> specialistPage) {
+        Page<SpecialistDTO> specialistDtoPage = specialistPage.map(proponent -> specialistConverter.convertSpecialistToDto(proponent));
         specialistDtoPage.forEach(ambitDto -> {
             ambitDto.setId(ambitDto.getId());
             ambitDto.setSpecialist(ambitDto.getSpecialist());

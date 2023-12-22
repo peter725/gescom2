@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CampaignService {
 
-    @Autowired
+
     private final CampaignRepository campaignRepository;
 
     public Page<Campaign> getAllByPage(Pageable pageable) {
@@ -21,6 +21,9 @@ public class CampaignService {
         return campaignPage;
     }
 
-
+    public Campaign saveCampaign(Campaign campaign) {
+        Campaign newCampaign = campaignRepository.save(campaign);
+        return newCampaign;
+    }
 
 }

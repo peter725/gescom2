@@ -2,7 +2,7 @@ package es.dgc.gesco.service.service;
 
 import es.dgc.gesco.model.modules.approach.converter.ApproachConverter;
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
-import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
+import es.dgc.gesco.model.modules.approach.dto.ApproachDTO;
 import es.dgc.gesco.service.repository.ApproachRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +50,12 @@ public class ApproachService {
         return approach.get();
     }
 
-    public ApproachDto loadApproachDto(Approach approach) {
-        ApproachDto approachDto = approachConverter.convertApproachToDto(approach);
+    public ApproachDTO loadApproachDto(Approach approach) {
+        ApproachDTO approachDto = approachConverter.convertApproachToDto(approach);
         return approachDto;
     }
 
-    public Approach loadApproach(ApproachDto approachDto) {
+    public Approach loadApproach(ApproachDTO approachDto) {
         Approach approach = approachConverter.convertDtoToUsuer(approachDto);
         return approach;
     }

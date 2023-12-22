@@ -53,20 +53,20 @@ public class Campaign extends AuditedBaseEntity {
     @ManyToOne
     @JoinColumn(name = "TYPE_CAMPAIGN_ID")
     @NotNull(message = "Debes seleccionar el tipo de campaña")
-    private CampaignType typeCampaignId;
+    private CampaignType typeCampaign;
 
     @ManyToOne
     @JoinColumn(name = "AMBIT_ID")
     @NotNull(message = "Debes seleccionar el ámbito")
-    private Ambit ambitId;
+    private Ambit ambit;
 
     @ManyToOne
     @JoinColumn(name = "AUTONOMOUS_COMMUNITY_RESPONSIBLE_ID")
     @NotNull(message = "Debes seleccionar la CCAA responsable")
-    private AutonomousCommunity autonomousCommunityResponsibleId;
+    private AutonomousCommunity autonomousCommunityResponsible;
 
     @ManyToOne
     @JoinColumn(name = "PHASE_ID")
-    private PhaseCampaign phaseId;
+    private PhaseCampaign phase;
 
 }

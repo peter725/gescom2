@@ -1,8 +1,8 @@
 package es.dgc.gesco.service.facade;
 
-import es.dgc.gesco.model.modules.CampaignType.converter.CampaingnTypeConverter;
-import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
-import es.dgc.gesco.model.modules.CampaignType.dto.CampaignTypeDto;
+import es.dgc.gesco.model.modules.campaignType.converter.CampaingnTypeConverter;
+import es.dgc.gesco.model.modules.CampaignType.dto.CampaignTypeDTO;
+import es.dgc.gesco.model.modules.campaignType.db.entity.CampaignType;
 import es.dgc.gesco.service.service.CampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,14 +18,14 @@ public class CampaignTypeFacade {
     @Autowired
     private CampaingnTypeConverter campaingnTypeConverter;
 
-    public Page<CampaignTypeDto> getAllCampaignType(Pageable pageable) {
+    public Page<CampaignTypeDTO> getAllCampaignType(Pageable pageable) {
         Page<CampaignType> campaignPage = campaignTypeService.getAllByPage(pageable);
 
         return  loadCampaignTypePageDto(campaignPage);
     }
 
-    private Page<CampaignTypeDto> loadCampaignTypePageDto(Page<CampaignType> campaignPage) {
-        Page<CampaignTypeDto> campaingTypeDtoPage = campaignPage.map(campaignType -> campaingnTypeConverter.convertCampaingnTypeToDto(campaignType));
+    private Page<CampaignTypeDTO> loadCampaignTypePageDto(Page<CampaignType> campaignPage) {
+        Page<es.dgc.gesco.model.modules.CampaignType.dto.CampaignTypeDTO> campaingTypeDtoPage = campaignPage.map(campaignType -> campaingnTypeConverter.convertCampaingnTypeToDto(campaignType));
         campaingTypeDtoPage.forEach(campaingTypeDto -> {
             CampaignType campaignType = campaignTypeService.getCampaignTypeById(campaingTypeDto.getId());
             campaingTypeDto.setId(campaingTypeDto.getId());

@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.ambit.dto;
+package es.dgc.gesco.model.modules.specialist.dto;
 
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import lombok.AllArgsConstructor;
@@ -10,9 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AmbitDto implements LongIdModel {
+public class SpecialistDTO implements LongIdModel {
 
     Long id;
-
-    String ambit;
+    String specialist;
 }

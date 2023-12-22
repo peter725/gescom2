@@ -1,15 +1,12 @@
 package es.dgc.gesco.controller;
 
 import es.dgc.gesco.model.commom.dto.StatusChange;
-import es.dgc.gesco.model.modules.approach.db.entity.Approach;
-import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
-import es.dgc.gesco.model.util.exception.Constante;
+import es.dgc.gesco.model.modules.approach.dto.ApproachDTO;
 import es.dgc.gesco.service.facade.ApproachFacade;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,9 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Log4j2
 @RestController
@@ -33,7 +27,7 @@ public class ApproachController {
     private ApproachFacade approachFacade;
 
     @PostMapping(Url.CREATE)
-    public ResponseEntity<Void> saveApproach(final @RequestBody ApproachDto approachDto) {
+    public ResponseEntity<Void> saveApproach(final @RequestBody ApproachDTO approachDto) {
 
          approachFacade.saveApproach(approachDto);
 
@@ -43,8 +37,8 @@ public class ApproachController {
 
 
     @GetMapping
-    public ResponseEntity<Page<ApproachDto>> getAllApproach(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
-        Page<ApproachDto> approachDtoPage;
+    public ResponseEntity<Page<ApproachDTO>> getAllApproach(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
+        Page<ApproachDTO> approachDtoPage;
 
         try {
             approachDtoPage = approachFacade.getAllApproach(pageable);
@@ -57,9 +51,9 @@ public class ApproachController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApproachDto> getProposalById(final @PathVariable Long id) {
+    public ResponseEntity<ApproachDTO> getProposalById(final @PathVariable Long id) {
 
-        ApproachDto approachDto;
+        ApproachDTO approachDto;
 
         try {
 
@@ -74,9 +68,9 @@ public class ApproachController {
     }
 
     @GetMapping(Url.APPROACH_BY_YEAR+"/{year}")
-    public ResponseEntity<Page<ApproachDto>> getProposalByYear(final @PathVariable int year, @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable) {
+    public ResponseEntity<Page<ApproachDTO>> getProposalByYear(final @PathVariable int year, @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable) {
 
-        Page<ApproachDto> approachDtos;
+        Page<ApproachDTO> approachDtos;
         try {
             approachDtos = approachFacade.getApproachByDate(year, pageable);
         } catch (Exception e) {
@@ -88,8 +82,8 @@ public class ApproachController {
     }
 
     @GetMapping(Url.APPROACH_BY_ACID+"/{id}")
-    public ResponseEntity<Page<ApproachDto>> getProposalByAutonomousCommunityId(final @PathVariable Long id, @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable){
-        Page<ApproachDto> approachDtos;
+    public ResponseEntity<Page<ApproachDTO>> getProposalByAutonomousCommunityId(final @PathVariable Long id, @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable){
+        Page<ApproachDTO> approachDtos;
 
         try {
             approachDtos = approachFacade.getApproachByAutonomousCommunityId(id, pageable);
@@ -102,7 +96,7 @@ public class ApproachController {
     }
 
     @PostMapping(Url.CHANGE_STATE+"/{id}"+Url.STATUS)
-    public ResponseEntity<ApproachDto> changeState(@PathVariable Long id, final @RequestBody StatusChange payload) {
+    public ResponseEntity<ApproachDTO> changeState(@PathVariable Long id, final @RequestBody StatusChange payload) {
 
         return ResponseEntity.ok(approachFacade.changeStateApproach(id, payload));
     }

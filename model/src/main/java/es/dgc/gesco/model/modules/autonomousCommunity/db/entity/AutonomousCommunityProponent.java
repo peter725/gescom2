@@ -2,6 +2,7 @@ package es.dgc.gesco.model.modules.autonomousCommunity.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
 import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
+import es.dgc.gesco.model.modules.proponent.db.entity.Proponent;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,10 +32,10 @@ public class AutonomousCommunityProponent extends AuditedBaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "ID_AUTONOMOUS_COMMUNITY")
-    private AutonomousCommunity id_autonomous_community;
+    private Proponent proponent;
 
     @ManyToOne
     @JoinColumn(name = "ID_CAMPAIGN")
-    private Campaign id_campaign;
+    private Campaign campaign;
 
 }

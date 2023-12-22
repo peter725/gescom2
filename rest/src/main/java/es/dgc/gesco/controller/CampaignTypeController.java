@@ -1,6 +1,5 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.model.modules.CampaignType.dto.CampaignTypeDto;
 import es.dgc.gesco.service.facade.CampaignTypeFacade;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +28,8 @@ public class CampaignTypeController {
     private CampaignTypeFacade campaignTypeFacade;
 
     @GetMapping(Url.ALL)
-    public ResponseEntity<Page<CampaignTypeDto>> getAllCampaign(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
-        Page<CampaignTypeDto> campaignTypeDtoPage;
+    public ResponseEntity<Page<es.dgc.gesco.model.modules.CampaignType.dto.CampaignTypeDTO>> getAllCampaign(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
+        Page<es.dgc.gesco.model.modules.CampaignType.dto.CampaignTypeDTO> campaignTypeDtoPage;
 
         try {
             campaignTypeDtoPage = campaignTypeFacade.getAllCampaignType(pageable);

@@ -1,7 +1,7 @@
 package es.dgc.gesco.controller;
 
 
-import es.dgc.gesco.model.modules.specialist.dto.SpecialistDto;
+import es.dgc.gesco.model.modules.specialist.dto.SpecialistDTO;
 import es.dgc.gesco.service.facade.SpecialistFacade;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public class SpecialistController {
     private SpecialistFacade specialistFacade;
 
     @GetMapping(Url.ALL)
-    public ResponseEntity<Page<SpecialistDto>> getAllAmbit(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
-        Page<SpecialistDto> specialistDtos;
+    public ResponseEntity<Page<SpecialistDTO>> getAllAmbit(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
+        Page<SpecialistDTO> specialistDtos;
 
         try {
             specialistDtos = specialistFacade.getAllSpecialist(pageable);

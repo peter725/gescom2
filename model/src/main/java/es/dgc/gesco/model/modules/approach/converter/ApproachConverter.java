@@ -1,7 +1,7 @@
 package es.dgc.gesco.model.modules.approach.converter;
 
 import es.dgc.gesco.model.modules.approach.db.entity.Approach;
-import es.dgc.gesco.model.modules.approach.dto.ApproachDto;
+import es.dgc.gesco.model.modules.approach.dto.ApproachDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -13,11 +13,11 @@ public interface ApproachConverter {
 
     final public ApproachConverter INSTANCE = Mappers.getMapper(ApproachConverter.class);
 
-    Approach convertDtoToUsuer(ApproachDto approachDto);
+    Approach convertDtoToUsuer(ApproachDTO approachDto);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "date", source = "date")
     @Mapping(target = "autonomousCommunityId", source = "autonomousCommunityId")
     @Mapping(target = "state", source = "state")
-    ApproachDto convertApproachToDto(Approach approach);
+    ApproachDTO convertApproachToDto(Approach approach);
 }

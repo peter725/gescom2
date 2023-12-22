@@ -37,3 +37,5 @@ build/
 ### Mac OS ###
 .DS_Store
 service/src/main/resources/application-dev.properties
+service/src/main/resources/application-local.properties
+service/src/main/resources/application-local.properties

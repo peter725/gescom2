@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.specialist.dto;
+package es.dgc.gesco.model.modules.autonomousCommunity.dto;
 
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SpecialistDto implements LongIdModel {
+public class AutonomousComunityDTO implements LongIdModel {
 
-    Long id;
-    String specialist;
+    private Long id;
+    private String name;
+
 }

@@ -1,9 +1,9 @@
 package es.dgc.gesco.controller;
 
 import es.dgc.gesco.model.commom.dto.StatusChange;
+import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.service.facade.UserFacade;
 import es.dgc.gesco.model.modules.user.db.entity.User;
-import es.dgc.gesco.model.modules.user.dto.UserDto;
 import es.dgc.gesco.service.util.Accion;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class UserController{
     private UserFacade userFacade;
 
     @PostMapping(Url.CREATE)
-    public ResponseEntity<Void> saveUser(final @RequestBody UserDto userDto) {
+    public ResponseEntity<Void> saveUser(final @RequestBody UserDTO userDto) {
 
         User user;
 
@@ -71,9 +71,9 @@ public class UserController{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(final @PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUserById(final @PathVariable Long id) {
 
-        UserDto userDto;
+        UserDTO userDto;
 
         try {
 
@@ -103,14 +103,14 @@ public class UserController{
     }
 
     @PostMapping(Url.UPDATE+"/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, final @RequestBody UserDto userDto) {
+    public ResponseEntity<String> updateUser(@PathVariable Long id, final @RequestBody UserDTO userDto) {
 
         userFacade.updateUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping(Url.CHANGE_STATE+"/{id}"+Url.STATUS)
-    public ResponseEntity<UserDto> changeStateUser(final @PathVariable Long id, @RequestBody StatusChange payload) {
+    public ResponseEntity<UserDTO> changeStateUser(final @PathVariable Long id, @RequestBody StatusChange payload) {
 
          return ResponseEntity.ok(userFacade.changeStateUser(id, payload));
     }

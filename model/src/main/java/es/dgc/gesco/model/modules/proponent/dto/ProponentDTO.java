@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProponentDto implements LongIdModel {
+public class ProponentDTO implements LongIdModel {
 
     Long id;
 

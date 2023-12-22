@@ -18,6 +18,11 @@ public class ProponentService {
     @Autowired
     private final ProponentRepository proponentRepository;
 
+
+    public Proponent save(Proponent proponent) {
+        return proponentRepository.save(proponent);
+    }
+
     public Page<Proponent> getAllByPage(Pageable pageable) {
         Page<Proponent> proponentPage = proponentRepository.findAll(pageable);
         return proponentPage;

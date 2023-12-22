@@ -1,6 +1,7 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.model.modules.campaign.dto.CampaignDto;
+import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
+import es.dgc.gesco.model.modules.campaign.dto.CampaignDTO;
 import es.dgc.gesco.service.facade.CampaignFacade;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @Log4j2
@@ -29,8 +27,8 @@ public class CampaignController {
     private CampaignFacade campaignFacade;
 
     @GetMapping(Url.ALL)
-    public ResponseEntity<Page<CampaignDto>> getAllCampaign(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
-        Page<CampaignDto> approachDtoPage;
+    public ResponseEntity<Page<CampaignDTO>> getAllCampaign(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
+        Page<CampaignDTO> approachDtoPage;
 
         try {
             approachDtoPage = campaignFacade.getAllCampaign(pageable);
@@ -40,5 +38,20 @@ public class CampaignController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(approachDtoPage);
+    }
+
+    @PostMapping(Url.CREATE)
+    public ResponseEntity<Void> saveCampaign(final @RequestBody CampaignDTO campaignDto) {
+
+
+        try {
+            campaignFacade.saveCampaign(campaignDto);
+
+        } catch (Exception e) {
+            log.error(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

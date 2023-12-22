@@ -1,6 +1,6 @@
 package es.dgc.gesco.controller;
 
-import es.dgc.gesco.model.modules.ambit.dto.AmbitDto;
+import es.dgc.gesco.model.modules.ambit.dto.AmbitDTO;
 import es.dgc.gesco.service.facade.AmbitFacade;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class AmbitController {
     private AmbitFacade ambitFacade;
 
     @GetMapping(Url.ALL)
-    public ResponseEntity<Page<AmbitDto>> getAllAmbit(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
-        Page<AmbitDto> ambitDtoPage;
+    public ResponseEntity<Page<AmbitDTO>> getAllAmbit(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
+        Page<AmbitDTO> ambitDtoPage;
 
         try {
             ambitDtoPage = ambitFacade.getAllAmbit(pageable);

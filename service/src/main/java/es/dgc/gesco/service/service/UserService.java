@@ -2,7 +2,7 @@ package es.dgc.gesco.service.service;
 
 import es.dgc.gesco.model.modules.user.converter.UserConverter;
 import es.dgc.gesco.model.modules.user.db.entity.User;
-import es.dgc.gesco.model.modules.user.dto.UserDto;
+import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.model.modules.user.dto.criteria.UserCriteria;
 import es.dgc.gesco.service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,14 +61,14 @@ public class UserService {
         return users;
     }
 
-    public User loadUser(final UserDto userDto){
+    public User loadUser(final UserDTO userDto){
 
         User user = userConverter.convertDtoToUser(userDto);
         return user;
     }
 
-    public UserDto loadUserDto(User user){
-        UserDto userDto = userConverter.convertUserToDto(user);
+    public UserDTO loadUserDto(User user){
+        UserDTO userDto = userConverter.convertUserToDto(user);
         return userDto;
     }
 

@@ -13,5 +13,5 @@ import lombok.Setter;
 public class SpecialistDTO implements LongIdModel {
 
     Long id;
-    String specialist;
+    String name;
 }

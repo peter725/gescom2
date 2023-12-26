@@ -15,5 +15,5 @@ public class ProponentDTO implements LongIdModel {
 
     Long id;
 
-    String proponent;
+    String name;
 }

@@ -38,16 +38,15 @@ public class Campaign extends AuditedBaseEntity {
 
     @Column(name = "YEAR_CAMPAIGN" )
     @NotNull(message = "Debes especificar el año")
-    @Size(min = 1, max = 100)
     private Long year;
 
     @Column(name = "CPA")
-    @Size(min = 1, max = 10)
-    private String cpa;
+    @Size(min = 1, max = 30)
+    private String codeCpa;
 
     @Column(name = "NAME_CAMPAIGN")
     @NotNull(message = "Debes especificar el nombre de la campaña")
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 100)
     private String nameCampaign;
 
     @ManyToOne

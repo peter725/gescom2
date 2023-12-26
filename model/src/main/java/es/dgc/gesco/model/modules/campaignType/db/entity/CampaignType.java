@@ -27,6 +27,6 @@ public class CampaignType extends AuditedBaseEntity {
     private Long id;
 
     @Column(name = "TYPE")
-    private String type;
+    private String name;
 
 }

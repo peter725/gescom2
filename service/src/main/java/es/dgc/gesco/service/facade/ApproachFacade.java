@@ -49,7 +49,7 @@ public class ApproachFacade {
         ApproachDTO approachDto = approachService.loadApproachDto(approach);
 
         CampaignType campaignType = campaignTypeService.getCampaignTypeById(approach.getCampaignTypeId());
-        approachDto.setCampaignTypeName(campaignType.getType());
+        approachDto.setCampaignTypeName(campaignType.getName());
 
         return approachDto;
     }
@@ -60,7 +60,7 @@ public class ApproachFacade {
         ApproachDTO approachDto = approachService.loadApproachDto(approach);
 
         CampaignType campaignType = campaignTypeService.getCampaignTypeById(approach.getCampaignTypeId());
-        approachDto.setCampaignTypeName(campaignType.getType());
+        approachDto.setCampaignTypeName(campaignType.getName());
 
         return approachDto;
     }
@@ -97,7 +97,7 @@ public class ApproachFacade {
             CampaignType campaignType = campaignTypeService.getCampaignTypeById(approachDto.getCampaignTypeId());
             AutonomousCommunity autonomousCommunity = autonomousCommunityService.getAutonomousCommunityById(approachDto.getAutonomousCommunityId());
             approachDto.setAutonomousCommunityName(autonomousCommunity.getName());
-            approachDto.setCampaignTypeName(campaignType.getType());
+            approachDto.setCampaignTypeName(campaignType.getName());
         });
         return approachDtoPage;
     }

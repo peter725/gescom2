@@ -28,8 +28,8 @@ public class ProponentController {
     @Autowired
     private ProponentFacade proponentFacade;
 
-    @GetMapping(Url.ALL)
-    public ResponseEntity<Page<ProponentDTO>> getAllAmbit(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
+    @GetMapping
+    public ResponseEntity<Page<ProponentDTO>> getAllProponent(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
         Page<ProponentDTO> proponentDtoPage;
 
         try {

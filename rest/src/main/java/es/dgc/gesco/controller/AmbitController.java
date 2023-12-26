@@ -28,7 +28,7 @@ public class AmbitController {
     @Autowired
     private AmbitFacade ambitFacade;
 
-    @GetMapping(Url.ALL)
+    @GetMapping
     public ResponseEntity<Page<AmbitDTO>> getAllAmbit(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
         Page<AmbitDTO> ambitDtoPage;
 

@@ -8,7 +8,7 @@ import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommun
 import es.dgc.gesco.model.modules.campaignType.converter.CampaingnTypeConverter;
 import es.dgc.gesco.model.modules.campaignType.db.entity.CampaignType;
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
-import es.dgc.gesco.model.modules.CampaignType.dto.CampaignTypeDTO;
+import es.dgc.gesco.model.modules.campaignType.dto.CampaignTypeDTO;
 import es.dgc.gesco.model.modules.campaign.converter.CampaingnConverter;
 import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
 import es.dgc.gesco.model.modules.campaign.dto.CampaignDTO;
@@ -78,24 +78,24 @@ public class CampaignFacade {
     @Transactional
     public void saveCampaign(CampaignDTO campaignDto) {
         Campaign campaign = campaingnConverter.convertDtoToCampaign(campaignDto);
-        campaign.setAutonomousCommunityResponsible(autonomousComunityConverter.convertDtoToAutonomousCommunity(campaignDto.getAutonomousCommunityResponsibleDto()));
+        campaign.setAutonomousCommunityResponsible(autonomousComunityConverter.convertDtoToAutonomousCommunity(campaignDto.getResponsibleEntity()));
         campaign.setPhase(phaseConverter.convertDtoToPhase(campaignDto.getPhaseCampaignDto()));
-        campaign.setTypeCampaign(campaingnTypeConverter.convertDtoToCampaingnType(campaignDto.getCampaignTypeDto()));
-        campaign.setAmbit(ambitConverter.convertDtoToAmbit(campaignDto.getAmbitDto()));
+        campaign.setTypeCampaign(campaingnTypeConverter.convertDtoToCampaingnType(campaignDto.getCampaignType()));
+        campaign.setAmbit(ambitConverter.convertDtoToAmbit(campaignDto.getAmbit()));
 
         Campaign campaignSave = campaignService.saveCampaign(campaign);
 
-        List<AutonomousCommunity> participantsList = campaignDto.getParticipantsDtoList().stream().map(autonomousComunityDto -> {
+        List<AutonomousCommunity> participantsList = campaignDto.getParticipants().stream().map(autonomousComunityDto -> {
             AutonomousCommunity autonomousCommunity = autonomousComunityConverter.convertDtoToAutonomousCommunity(autonomousComunityDto);
             return autonomousCommunity;
         }).toList();
 
-        List<Proponent> proponentsList = campaignDto.getProponentDTOList().stream().map(proponentDto -> {
+        List<Proponent> proponentsList = campaignDto.getProponents().stream().map(proponentDto -> {
             Proponent proponent = proponentConverter.convertProponentDtoToEntity(proponentDto);
             return proponent;
         }).toList();
 
-        List<Specialist> specialistsList = campaignDto.getSpecialistDTOList().stream().map(specialistDto -> {
+        List<Specialist> specialistsList = campaignDto.getSpecialists().stream().map(specialistDto -> {
             Specialist specialist = specialistConverter.convertSpecialistDtoToEntity(specialistDto);
             return specialist;
         }).toList();

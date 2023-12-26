@@ -26,9 +26,9 @@ public class SpecialistFacade {
 
     private Page<SpecialistDTO> loadSpecialistPageDto(Page<Specialist> specialistPage) {
         Page<SpecialistDTO> specialistDtoPage = specialistPage.map(proponent -> specialistConverter.convertSpecialistToDto(proponent));
-        specialistDtoPage.forEach(ambitDto -> {
-            ambitDto.setId(ambitDto.getId());
-            ambitDto.setSpecialist(ambitDto.getSpecialist());
+        specialistDtoPage.forEach(specialistDTO -> {
+            specialistDTO.setId(specialistDTO.getId());
+            specialistDTO.setName(specialistDTO.getName());
         });
         return specialistDtoPage;
     }

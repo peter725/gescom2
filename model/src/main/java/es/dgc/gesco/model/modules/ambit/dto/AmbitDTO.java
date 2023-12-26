@@ -14,5 +14,5 @@ public class AmbitDTO implements LongIdModel {
 
     Long id;
 
-    String ambit;
+    String name;
 }

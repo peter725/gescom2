@@ -32,6 +32,6 @@ public class Ambit extends AuditedBaseEntity {
 
     @Column(name = "AMBIT")
     @Size(min = 1, max = 10)
-    private String ambit;
+    private String name;
 
 }

@@ -32,7 +32,7 @@ public class ProponentFacade {
         Page<ProponentDTO> proponentDtoPage = proponentPage.map(proponent -> proponentConverter.convertProponentToDto(proponent));
         proponentDtoPage.forEach(ambitDto -> {
             ambitDto.setId(ambitDto.getId());
-            ambitDto.setProponent(ambitDto.getProponent());
+            ambitDto.setName(ambitDto.getName());
         });
         return proponentDtoPage;
     }

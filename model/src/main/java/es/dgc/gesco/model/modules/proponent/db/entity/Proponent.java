@@ -27,5 +27,5 @@ public class Proponent extends AuditedBaseEntity {
     private Long id;
 
     @Column(name = "PROPONENT")
-    private String proponent;
+    private String name;
 }

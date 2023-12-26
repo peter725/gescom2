@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.CampaignType.dto;
+package es.dgc.gesco.model.modules.campaignType.dto;
 
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ public class CampaignTypeDTO implements LongIdModel {
 
     Long id;
 
-    String type;
+    String name;
 
 
 }

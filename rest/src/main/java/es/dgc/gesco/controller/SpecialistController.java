@@ -29,8 +29,8 @@ public class SpecialistController {
     @Autowired
     private SpecialistFacade specialistFacade;
 
-    @GetMapping(Url.ALL)
-    public ResponseEntity<Page<SpecialistDTO>> getAllAmbit(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
+    @GetMapping()
+    public ResponseEntity<Page<SpecialistDTO>> getAllSpecialist(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
         Page<SpecialistDTO> specialistDtos;
 
         try {

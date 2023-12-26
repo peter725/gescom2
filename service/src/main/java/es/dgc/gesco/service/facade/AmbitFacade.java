@@ -28,7 +28,7 @@ public class AmbitFacade {
         Page<AmbitDTO> ambitDtoPage = ambitPage.map(ambit -> ambitConverter.convertAmbitToDto(ambit));
         ambitDtoPage.forEach(ambitDto -> {
             ambitDto.setId(ambitDto.getId());
-            ambitDto.setAmbit(ambitDto.getAmbit());
+            ambitDto.setName(ambitDto.getName());
         });
         return ambitDtoPage;
     }

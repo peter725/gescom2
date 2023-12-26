@@ -29,10 +29,10 @@ public class AutonomousCommunityParticipants extends AuditedBaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "ID_AUTONOMOUS_COMMUNITY")
+    @JoinColumn(name = "AUTONOMOUS_COMMUNITY_ID")
     private AutonomousCommunity autonomousCommunity;
 
     @ManyToOne
-    @JoinColumn(name = "ID_CAMPAIGN")
+    @JoinColumn(name = "CAMPAIGN_ID")
     private Campaign campaign;
 }

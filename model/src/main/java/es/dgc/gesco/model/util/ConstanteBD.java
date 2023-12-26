@@ -18,7 +18,7 @@ public class ConstanteBD {
     public static final String TABLE_LEGISLATION="legislation";
     public static final String TABLE_AUTHORITY_DGC="authority_dgc";
     public static final String TABLE_CCAA ="autonomous_community";
-    public static final String TABLE_CCAA_PARTTICIPANTS ="autonomous_community_participants";
+    public static final String TABLE_CCAA_PARTTICIPANTS ="autonomous_community_participant";
     public static final String TABLE_CCAA_PROPONENTS ="autonomous_community_proponent";
     public static final String TABLE_CCAA_SPECIALIST ="autonomous_community_specialist";
 

@@ -29,5 +29,5 @@ public class Specialist extends AuditedBaseEntity {
     private Long id;
 
     @Column(name = "SPECIALIST")
-    private String specialist;
+    private String name;
 }

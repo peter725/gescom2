@@ -6,7 +6,7 @@ import es.dgc.gesco.model.modules.autonomousCommunity.dto.AutonomousComunityDTO;
 import es.dgc.gesco.model.modules.phase.dto.PhaseCampaignDTO;
 import es.dgc.gesco.model.modules.proponent.dto.ProponentDTO;
 import es.dgc.gesco.model.modules.specialist.dto.SpecialistDTO;
-import es.dgc.gesco.model.modules.CampaignType.dto.CampaignTypeDTO;
+import es.dgc.gesco.model.modules.campaignType.dto.CampaignTypeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,22 +24,22 @@ public class CampaignDTO implements LongIdModel {
 
     Long year;
 
-    String cpa;
+    String codeCpa;
 
     String nameCampaign;
 
-    CampaignTypeDTO campaignTypeDto;
+    CampaignTypeDTO campaignType;
 
-    AmbitDTO ambitDto;
+    AmbitDTO ambit;
 
-    AutonomousComunityDTO autonomousCommunityResponsibleDto;
+    AutonomousComunityDTO responsibleEntity;
 
     PhaseCampaignDTO phaseCampaignDto;
 
-    List<AutonomousComunityDTO> participantsDtoList;
+    List<AutonomousComunityDTO> participants;
 
-    List<ProponentDTO> proponentDTOList;
+    List<ProponentDTO> proponents;
 
-    List<SpecialistDTO> specialistDTOList;
+    List<SpecialistDTO> specialists;
 
 }

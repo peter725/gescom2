@@ -78,6 +78,7 @@
     "actions": "Acciones",
     "address": "Dirección",
     "affectedProgrammesCode": "Programas afectados",
+    "ambit": "Ámbito",
     "amendmentInterval": "Intervalo de revisión EFSA",
     "approach": {
       "approach": "Propuesta",
@@ -106,6 +107,9 @@
     "body": "Cuerpo",
     "catalogue": "Catálogo",
     "ccaa": "Comunidad autónoma",
+    "ccaaParticipants":"CCAA Participantes",
+    "ccaaProponents":"CCAA Proponentes",
+    "ccaaSpecialist":"CCAA Especialista",
     "code": "Código",
     "contactDetails": "Datos de contacto",
     "contactPerson": "Contacto",
@@ -185,6 +189,7 @@
     "operatorType":"Tipo de operador",
     "options": "Opciones",
     "order": "Orden",
+    "organism": "Organismo",
     "origin": "Origen",
     "parent": "Padre del ámbito",
     "password": "Contraseña",
@@ -209,6 +214,7 @@
     "role": "Rol",
     "registerInterval": "Intervalo de registro",
     "required": "Requerido",
+    "responsibleEntity": "C.A. Responsable",
     "sampleRegisterEnd": "Fin del período de registros",
     "sampleRegisterStart": "Inicio del período de registros",
     "sampleState": "Estado de la muestra",
@@ -266,9 +272,7 @@
     "year": "Año",
     "yearV0": "Año V0",
     "code_cpa": "Código/s CPA",
-    "campaign": "Campaña",
-    "responsable_entity": "Organismo/C.A. responsable",
-    "ccaa_participants":"CCAA participantes"
+    "campaign": "Campaña"
   },
   "text": {
     "approach": {

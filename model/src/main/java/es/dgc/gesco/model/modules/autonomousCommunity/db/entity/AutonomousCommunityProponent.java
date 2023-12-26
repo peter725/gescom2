@@ -31,11 +31,11 @@ public class AutonomousCommunityProponent extends AuditedBaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "ID_AUTONOMOUS_COMMUNITY")
+    @JoinColumn(name = "AUTONOMOUS_COMMUNITY_ID")
     private Proponent proponent;
 
     @ManyToOne
-    @JoinColumn(name = "ID_CAMPAIGN")
+    @JoinColumn(name = "CAMPAIGN_ID")
     private Campaign campaign;
 
 }

@@ -1,6 +1,6 @@
 import {SimpleModel, StatefulAltModel} from "@libs/sdk/common";
 
-export interface ScopeCampaign extends SimpleModel,StatefulAltModel{
+export interface Ambit extends SimpleModel,StatefulAltModel{
 
     name: string;
 

@@ -1,6 +1,6 @@
 package es.dgc.gesco.service.service;
 
-import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunityProponent;
+import es.dgc.gesco.model.modules.autonomousCommunityProponent.db.entity.AutonomousCommunityProponent;
 import es.dgc.gesco.service.repository.AutonomousCommunityProponentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

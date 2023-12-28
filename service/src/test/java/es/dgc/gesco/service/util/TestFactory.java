@@ -78,4 +78,9 @@ public class TestFactory {
         return new SpecialistService(specialistRepository);
     };
 
+    @Bean
+    public PhaseCampaignService phaseCampaignService(PhaseCampaignRepository phaseCampaignRepository){
+        return new PhaseCampaignService(phaseCampaignRepository);
+    };
+
 }

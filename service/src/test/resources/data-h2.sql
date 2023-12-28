@@ -38,6 +38,10 @@ VALUES(3,'Servicios',1,LOCALTIMESTAMP,LOCALTIMESTAMP,1,1);
 
 ALTER SEQUENCE seq_campaign_type RESTART WITH 2;
 
+INSERT INTO phase_campaign (id, phase, description, created_at, created_by, updated_at, updated_by, id_state)
+VALUES(1, 'DATOS_INICIALES', 'Datos iniciales', '2023-12-18 08:21:52.038', NULL, '2023-12-18 08:21:52.038', NULL, 1);
+
+ALTER SEQUENCE seq_phase_campaign RESTART WITH 1;
 
 
 

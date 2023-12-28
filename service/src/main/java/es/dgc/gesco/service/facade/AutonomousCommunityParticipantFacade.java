@@ -1,6 +1,6 @@
 package es.dgc.gesco.service.facade;
 
-import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunityParticipants;
+import es.dgc.gesco.model.modules.autonomousCommunityParticipants.db.entity.AutonomousCommunityParticipants;
 import es.dgc.gesco.service.service.AutonomousCommunityParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

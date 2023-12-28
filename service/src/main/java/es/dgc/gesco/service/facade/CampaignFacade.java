@@ -2,9 +2,9 @@ package es.dgc.gesco.service.facade;
 
 import es.dgc.gesco.model.modules.ambit.converter.AmbitConverter;
 import es.dgc.gesco.model.modules.autonomousCommunity.converter.AutonomousComunityConverter;
-import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunityParticipants;
-import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunityProponent;
-import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunitySpecialist;
+import es.dgc.gesco.model.modules.autonomousCommunityParticipants.db.entity.AutonomousCommunityParticipants;
+import es.dgc.gesco.model.modules.autonomousCommunityProponent.db.entity.AutonomousCommunityProponent;
+import es.dgc.gesco.model.modules.autonomousCommunitySpecialist.db.entity.AutonomousCommunitySpecialist;
 import es.dgc.gesco.model.modules.campaignType.converter.CampaingnTypeConverter;
 import es.dgc.gesco.model.modules.campaignType.db.entity.CampaignType;
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
@@ -27,7 +27,6 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class CampaignFacade {

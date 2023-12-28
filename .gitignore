@@ -148,3 +148,7 @@ out/artifacts/rest_war_exploded2/WEB-INF/weblogic.xml
 .idea/httpRequests/http-requests-log.http
 .idea/inspectionProfiles/Project_Default.xml
 hs_err_pid23528.log
+.idea/workspace.xml
+.idea/uiDesigner.xml
+.idea/workspace.xml
+service/src/main/resources/application-local.properties

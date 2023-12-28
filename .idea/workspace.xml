@@ -5,37 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93e5e187-4a56-4eea-ba1b-559965e72f39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/campaign-list-page-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/campaign-list-page.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/campaign-list-page.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/campaign-list-page.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/campaign-list-page.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/campaign-list-page.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/components/campaign-list-page-filter/campaign-list-page-filter.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/components/campaign-list-page-filter/campaign-list-page-filter.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/components/campaign-list-page-filter/campaign-list-page-filter.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/components/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-edit-page/campaign-edit-page.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-edit-page/campaign-edit-page.component.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-edit-page/campaign-edit-page.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-edit-page/campaign-edit-page.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-edit-page/campaign-edit-page.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/CampaignType/dto/criteria/CampaignTypeCriteria.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/CampaignType/dto/criteria/CampaignTypeCriteria.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/approach/dto/ApproachDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/approach/dto/ApproachDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/converter/CampaingnConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/converter/CampaingnConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/db/entity/Campaign.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/db/entity/Campaign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/dto/CampaignDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/dto/CampaignDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rest/src/main/java/es/dgc/gesco/controller/CampaignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rest/src/main/java/es/dgc/gesco/controller/CampaignController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/CampaignFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/CampaignFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/CampaignTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/CampaignTypeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunityParticipantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunityParticipantService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/CampaignService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/CampaignService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/app/config/named-routes.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/config/named-routes.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-add-page/campaign-add-page-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-add-page/campaign-add-page-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/campaign-list-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-list-page/campaign-list-page.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/app/pages/campaign/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/pages/campaign/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/shared/components/sidebar/items.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/shared/components/sidebar/items.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/shared/filter/components/filter.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/shared/filter/components/filter.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/shared/filter/components/search-input/search-input.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/shared/filter/components/search-input/search-input.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/pages/m.ApproachCampaignProposalModule)" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-edit-page/campaign-edit-page-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/pages/user/user-edit-page/user-edit-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/pages/user/user-edit-page/user-edit-page.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/assets/i18n/es.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/assets/i18n/es.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/libs/named-routes/named-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/libs/named-routes/named-routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/libs/sdk/campaign.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/libs/sdk/campaign.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/libs/sdk/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/libs/sdk/user.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,22 +92,11 @@
       <workItem from="1703439354001" duration="329000" />
       <workItem from="1703576122884" duration="14940000" />
       <workItem from="1703662645221" duration="9569000" />
-      <workItem from="1703748213257" duration="720000" />
+      <workItem from="1703748213257" duration="8355000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/rest/src/main/java/es/dgc/gesco/controller/CampaignController.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

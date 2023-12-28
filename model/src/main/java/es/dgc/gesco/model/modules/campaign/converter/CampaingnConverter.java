@@ -9,6 +9,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CampaingnConverter {
 
+    @Mapping(target = "responsibleEntity", source = "autonomousCommunityResponsible")
     CampaignDTO convertCampaingnToDto(Campaign campaing);
 
     @Mapping(target = "codeCpa", source = "codeCpa")

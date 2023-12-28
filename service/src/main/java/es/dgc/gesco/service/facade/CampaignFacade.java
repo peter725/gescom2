@@ -1,5 +1,6 @@
 package es.dgc.gesco.service.facade;
 
+import es.dgc.gesco.model.commom.dto.StatusChange;
 import es.dgc.gesco.model.modules.ambit.converter.AmbitConverter;
 import es.dgc.gesco.model.modules.autonomousCommunity.converter.AutonomousComunityConverter;
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunityParticipants;
@@ -18,6 +19,8 @@ import es.dgc.gesco.model.modules.proponent.converter.ProponentConverter;
 import es.dgc.gesco.model.modules.proponent.db.entity.Proponent;
 import es.dgc.gesco.model.modules.specialist.converter.SpecialistConverter;
 import es.dgc.gesco.model.modules.specialist.db.entity.Specialist;
+import es.dgc.gesco.model.modules.user.db.entity.User;
+import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.service.service.CampaignService;
 import es.dgc.gesco.service.service.CampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,15 +127,24 @@ public class CampaignFacade {
 
     }
 
+    public CampaignDTO getCampaignById(final Long id){
+        Campaign campaign = campaignService.getCampaignById(id);
+        CampaignDTO campaignDTO = campaingnConverter.convertCampaingnToDto(campaign);
+        return campaignDTO;
+    }
+
+    public CampaignDTO changeStateCampaign(final Long id, final StatusChange statusChange){
+        Campaign campaign = campaignService.changeStateCampaign(id, statusChange.getStatus());
+        CampaignDTO campaignDTO = campaingnConverter.convertCampaingnToDto(campaign);
+        return campaignDTO;
+    }
+
     private Page<CampaignDTO> loadCampaignPageDto(Page<Campaign> campaignPage) {
         Page<CampaignDTO> campaingDtoPage = campaignPage.map(campaing -> campaingnConverter.convertCampaingnToDto(campaing));
 
         return campaingDtoPage;
     }
 
-    private CampaignTypeDTO loadCampaignTypeDto(CampaignType campaignType) {
-        CampaignTypeDTO campaignTypeDto = campaingnTypeConverter.convertCampaingnTypeToDto(campaignType);
-        return campaignTypeDto;
-    }
+
 
 }

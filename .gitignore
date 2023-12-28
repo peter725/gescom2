@@ -40,3 +40,4 @@ service/src/main/resources/application-dev.properties
 service/src/main/resources/application-local.properties
 service/src/main/resources/application-local.properties
 .idea/workspace.xml
+.idea/workspace.xml

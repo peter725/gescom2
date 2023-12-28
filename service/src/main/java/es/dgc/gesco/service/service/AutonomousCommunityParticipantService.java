@@ -18,4 +18,6 @@ public class AutonomousCommunityParticipantService {
         AutonomousCommunityParticipants newAutonomousCommunityParticipant = autonomousCommunityParticipantRepository.save(autonomousCommunityParticipant);
         return newAutonomousCommunityParticipant;
     }
+
+
 }

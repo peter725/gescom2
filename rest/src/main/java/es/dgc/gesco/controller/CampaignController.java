@@ -1,7 +1,9 @@
 package es.dgc.gesco.controller;
 
+import es.dgc.gesco.model.commom.dto.StatusChange;
 import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
 import es.dgc.gesco.model.modules.campaign.dto.CampaignDTO;
+import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.service.facade.CampaignFacade;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
@@ -53,5 +55,28 @@ public class CampaignController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CampaignDTO> getCampaignById(final @PathVariable Long id) {
+
+        CampaignDTO campaignDTO;
+
+        try {
+
+            campaignDTO = campaignFacade.getCampaignById(id);
+
+        } catch (Exception e) {
+            log.error(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(campaignDTO);
+    }
+
+    @PostMapping(Url.CHANGE_STATE+"/{id}"+Url.STATUS)
+    public ResponseEntity<CampaignDTO> changeStateUser(final @PathVariable Long id, @RequestBody StatusChange payload) {
+
+        return ResponseEntity.ok(campaignFacade.changeStateCampaign(id, payload));
     }
 }

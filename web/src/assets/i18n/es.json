@@ -1,7 +1,7 @@
 {
   "generic": {
     "actions": {
-      "add": "Añadir",
+      "add": "Alta",
       "addCondition": "Añadir expresión",
       "addField": "Añadir campo",
       "addScope": "Añadir ámbito",

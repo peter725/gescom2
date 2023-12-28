@@ -12,6 +12,7 @@ const routes: NamedRouteSource[] = [
 
   { key: 'campaignManagementCreate', value: '/app/campanas/0' },
   { key: 'campaignManagementList', value: '/app/campanas/consulta' },
+  { key: 'campaignManagementEdit', value: '/app/campanas/:id' },
 
   { key: 'approachManagementCreate', value: '/app/propuestas/0' },
   { key: 'approachManagementList', value: '/app/propuestas/consulta' },

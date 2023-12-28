@@ -1,14 +1,12 @@
 package es.dgc.gesco.service.repository;
 
-import es.dgc.gesco.model.modules.CampaignType.db.entity.CampaignType;
-import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
+import es.dgc.gesco.model.modules.campaignType.db.entity.CampaignType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CampaignTypeRepositoryTest extends AbstractGenericTest{

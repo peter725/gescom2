@@ -13,7 +13,25 @@
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/converter/CampaingnConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/converter/CampaingnConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rest/src/main/java/es/dgc/gesco/controller/PhaseCampaignController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/PhaseCampaignFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/PhaseCampaignRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/PhaseCampaignService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/repository/PhaseCampaignRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/service/PhaseCampaignServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/CampaignType/dto/CampaignTypeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/CampaignType/dto/CampaignTypeDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/autonomousCommunity/db/entity/AutonomousCommunityParticipants.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/autonomousCommunityParticipants/db/entity/AutonomousCommunityParticipants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/autonomousCommunity/db/entity/AutonomousCommunityProponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/autonomousCommunityProponent/db/entity/AutonomousCommunityProponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/autonomousCommunity/db/entity/AutonomousCommunitySpecialist.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/autonomousCommunitySpecialist/db/entity/AutonomousCommunitySpecialist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/dto/CampaignDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/es/dgc/gesco/model/modules/campaign/dto/CampaignDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rest/src/main/java/es/dgc/gesco/controller/CampaignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rest/src/main/java/es/dgc/gesco/controller/CampaignController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rest/src/main/java/es/dgc/gesco/util/Url.java" beforeDir="false" afterPath="$PROJECT_DIR$/rest/src/main/java/es/dgc/gesco/util/Url.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/AutonomousCommunityParticipantFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/AutonomousCommunityParticipantFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/AutonomousCommunityProponentFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/AutonomousCommunityProponentFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/AutonomousCommunitySpecialistFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/AutonomousCommunitySpecialistFacade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/CampaignFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/facade/CampaignFacade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunityParticipantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunityParticipantService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/CampaignService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/CampaignService.java" afterDir="false" />
@@ -23,11 +41,31 @@
       <change beforePath="$PROJECT_DIR$/web/src/app/pages/m.ApproachCampaignProposalModule)" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/pages/campaign/campaign-edit-page/campaign-edit-page-routing.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/app/pages/user/user-edit-page/user-edit-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/pages/user/user-edit-page/user-edit-page.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/assets/i18n/es.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/assets/i18n/es.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/AutonomousCommunityParticipantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/AutonomousCommunityParticipantRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/AutonomousCommunityProponentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/AutonomousCommunityProponentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/AutonomousCommunitySpecialistRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/repository/AutonomousCommunitySpecialistRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunityParticipantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunityParticipantService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunityProponentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunityProponentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunitySpecialistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/AutonomousCommunitySpecialistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/resources/application-local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/repository/AmbitRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/repository/AmbitRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/repository/ApproachRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/repository/ApproachRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/repository/CampaignTypeRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/repository/CampaignTypeRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/service/CampaignTypeServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/service/CampaignTypeServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/util/TestFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/util/TestFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/resources/data-h2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/resources/data-h2.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,28 +82,69 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.gesco [clean].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Application.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/campaing&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.gesco [clean].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Application.executor": "Debug",
+    "git-widget-placeholder": "feature/campaign-back",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/wramos/Documents/GitHub/gesco/service/src/main/java/es/dgc/gesco/service/repository",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="es.dgc.gesco.model.modules.autonomousCommunitySpecialist.db.entity" />
+      <recent name="es.dgc.gesco.model.modules.autonomousCommunityProponent.db.entity" />
+      <recent name="es.dgc.gesco.model.modules.autonomousCommunityParticipants.db.entity" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.PhaseCampaignServiceTest.getPhaseCampaignByIdTest">
+    <configuration name="PhaseCampaignRepositoryTest.findApproachById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="es.dgc.gesco.service.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="es.dgc.gesco.service.repository" />
+      <option name="MAIN_CLASS_NAME" value="es.dgc.gesco.service.repository.PhaseCampaignRepositoryTest" />
+      <option name="METHOD_NAME" value="findApproachById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PhaseCampaignServiceTest.getPhaseCampaignByIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="es.dgc.gesco.service.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="es.dgc.gesco.service.service" />
+      <option name="MAIN_CLASS_NAME" value="es.dgc.gesco.service.service.PhaseCampaignServiceTest" />
+      <option name="METHOD_NAME" value="getPhaseCampaignByIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="rest" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="es.dgc.gesco.Application" />
@@ -73,6 +152,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.PhaseCampaignServiceTest.getPhaseCampaignByIdTest" />
+        <item itemvalue="JUnit.PhaseCampaignRepositoryTest.findApproachById" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -98,5 +183,26 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/service/src/test/java/es/dgc/gesco/service/service/PhaseCampaignServiceTest.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/service/src/main/java/es/dgc/gesco/service/service/PhaseCampaignService.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.util.Optional" memberName="value" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

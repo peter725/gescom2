@@ -1,6 +1,7 @@
-package es.dgc.gesco.model.modules.autonomousCommunity.db.entity;
+package es.dgc.gesco.model.modules.autonomousCommunityParticipants.db.entity;
 
 import es.dgc.gesco.model.commom.db.entity.AuditedBaseEntity;
+import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
 import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
 import lombok.*;
 

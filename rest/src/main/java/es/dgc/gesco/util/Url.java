@@ -12,6 +12,7 @@ public class Url {
     public static final String AUTHORITY_OEU ="/authority_oeu";
     public static final String CREATE = "/create";
     public static final String CAMPAIGN = "/campaign";
+    public static final String PHASE_CAMPAIGN = "/phase_campaign";
     public static final String AMBIT = "/ambit";
     public static final String PROPONENT = "/proponent";
     public static final String SPECIALIST = "/specialist";

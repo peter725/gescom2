@@ -30,16 +30,16 @@ public class CampaignController {
 
     @GetMapping()
     public ResponseEntity<Page<CampaignDTO>> getAllCampaign(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
-        Page<CampaignDTO> approachDtoPage;
+        Page<CampaignDTO> campaignDTOPage;
 
         try {
-            approachDtoPage = campaignFacade.getAllCampaign(pageable);
+            campaignDTOPage = campaignFacade.getAllCampaign(pageable);
         } catch (Exception e) {
             log.error(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(approachDtoPage);
+        return ResponseEntity.status(HttpStatus.OK).body(campaignDTOPage);
     }
 
     @PostMapping(Url.CREATE)

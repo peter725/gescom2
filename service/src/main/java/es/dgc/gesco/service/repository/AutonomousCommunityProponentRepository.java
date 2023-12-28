@@ -1,6 +1,6 @@
 package es.dgc.gesco.service.repository;
 
-import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunityProponent;
+import es.dgc.gesco.model.modules.autonomousCommunityProponent.db.entity.AutonomousCommunityProponent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;

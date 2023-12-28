@@ -120,6 +120,7 @@ export class SearchInputComponent
   set value(value: FormFieldValue) {
     this.form.patchValue(value);
     this.stateChanges.next();
+    console.log('set value', value);
   }
 
   get value(): FormFieldValue {
@@ -130,6 +131,7 @@ export class SearchInputComponent
   set placeholder(value: string) {
     this._placeholder = value;
     this.stateChanges.next();
+    console.log('set placeholder', value);
   }
 
   get placeholder() {
@@ -142,6 +144,7 @@ export class SearchInputComponent
     this._type = type;
     if (type === this._type) return;
     this.updateOperations();
+    console.log('set type', type);
   }
 
   get type() {

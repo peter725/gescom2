@@ -32,6 +32,8 @@ public class CampaignDTO implements LongIdModel {
 
     AmbitDTO ambit;
 
+    PhaseCampaignDTO phaseCampaign;
+
     AutonomousComunityDTO responsibleEntity;
 
     PhaseCampaignDTO phaseCampaignDto;
@@ -42,4 +44,5 @@ public class CampaignDTO implements LongIdModel {
 
     List<SpecialistDTO> specialists;
 
+    Integer state;
 }

@@ -70,10 +70,6 @@ export interface CreateUser {
 /**
  * Update user request structure.
  */
-// export interface ReqUpdateUser extends SimpleModel, TulsaCreateUser {
-// modules: TulsaModule[];
-// profile: TulsaProfile;
-// }
 
 export interface UserFilterForm extends AppQuerySource {
   name?: string;

@@ -79,8 +79,8 @@ public class CampaignFacade {
     public void saveCampaign(CampaignDTO campaignDto) {
         Campaign campaign = campaingnConverter.convertDtoToCampaign(campaignDto);
         campaign.setAutonomousCommunityResponsible(autonomousComunityConverter.convertDtoToAutonomousCommunity(campaignDto.getResponsibleEntity()));
-        campaign.setPhase(phaseConverter.convertDtoToPhase(campaignDto.getPhaseCampaignDto()));
-        campaign.setTypeCampaign(campaingnTypeConverter.convertDtoToCampaingnType(campaignDto.getCampaignType()));
+        campaign.setPhaseCampaign(phaseConverter.convertDtoToPhase(campaignDto.getPhaseCampaignDto()));
+        campaign.setCampaignType(campaingnTypeConverter.convertDtoToCampaingnType(campaignDto.getCampaignType()));
         campaign.setAmbit(ambitConverter.convertDtoToAmbit(campaignDto.getAmbit()));
 
         Campaign campaignSave = campaignService.saveCampaign(campaign);

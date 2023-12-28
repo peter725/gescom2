@@ -39,5 +39,5 @@ public class ApproachDTO implements LongIdModel {
 
     String viability;
 
-    Integer state = 1;
+    Integer state;
 }

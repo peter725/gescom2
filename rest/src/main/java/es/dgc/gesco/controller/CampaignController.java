@@ -26,7 +26,7 @@ public class CampaignController {
     @Autowired
     private CampaignFacade campaignFacade;
 
-    @GetMapping(Url.ALL)
+    @GetMapping()
     public ResponseEntity<Page<CampaignDTO>> getAllCampaign(@PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.DESC) final Pageable pageable){
         Page<CampaignDTO> approachDtoPage;
 

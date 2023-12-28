@@ -105,6 +105,7 @@
     "baseTerm": "Término base",
     "behaviour": "Comportamiento",
     "body": "Cuerpo",
+    "campaignType": "Tipo de campaña",
     "catalogue": "Catálogo",
     "ccaa": "Comunidad autónoma",
     "ccaaParticipants":"CCAA Participantes",
@@ -194,6 +195,7 @@
     "parent": "Padre del ámbito",
     "password": "Contraseña",
     "permissions": "Permisos",
+    "phaseCampaign": "Fase/Estado",
     "phone": "Teléfono",
     "plan": "Plan",
     "planType":"Tipo de plan",
@@ -528,7 +530,7 @@
     "sampleForm": {
       "title": "Generador de formularios"
     },
-    "sampleSeason": {
+    "campaign": {
       "title": "Campañas",
       "add": "Alta de Campaña",
       "list": "Consulta de Campañas",

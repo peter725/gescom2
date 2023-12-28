@@ -8,7 +8,7 @@ const routes: Routes = [
     {
         path: '',
         component: CampaignAddPageComponent,
-        title: 'pages.approach.add',
+        title: 'pages.campaign.add',
         data: {breadcrumb: 'generic.actions.add'}
     }
 ];

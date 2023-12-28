@@ -23,14 +23,14 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
   },
   // Campañas
   {
-    text: 'pages.sampleSeason.title',
+    text: 'pages.campaign.title',
     icon: 'campaign',
     expanded: false,
     children: [{
-      text: 'pages.sampleSeason.add', path:'sampleSeasonCreate'
+      text: 'pages.campaign.add', path:'campaignManagementCreate'
     },
     {
-      text: 'pages.sampleSeason.list', path:'sampleSeasonList'
+      text: 'pages.campaign.list', path:'campaignManagementList'
     }
     ]
   },

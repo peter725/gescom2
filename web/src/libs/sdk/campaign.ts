@@ -4,6 +4,7 @@ import { Ambit } from './ambit';
 import { AutonomousCommunity } from "@libs/sdk/autonomousCommunity";
 import { Proponent } from "@libs/sdk/proponent";
 import { Specialist } from "@libs/sdk/specialist";
+import { AppQuerySource } from '@libs/commons';
 
 /**
  * Default Campaign structure.
@@ -35,6 +36,29 @@ export interface CreateCampaign {
   participants: AutonomousCommunity[] | null;
   proponents: Proponent[] | null;
   specialists: Specialist[] | null;
+
+}
+
+export interface CampaignForm {
+  id: number | null;
+  year: number | null;
+  campaignType: string | null;
+  ambit: string | null;
+  nameCampaign: string | null;
+  responsibleEntity: string | null;
+
+}
+
+
+export interface CampaignFilterForm extends AppQuerySource {
+  nameCampaign?: string;
+  year?: string;
+  campaignType?: string;
+  ambit?: string;
+  createdAtGTE?: string;
+  createdAtLTE?: string;
+  updatedAtGTE?: string;
+  updatedAtLTE?: string;
 
 }
 

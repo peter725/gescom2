@@ -1,0 +1,1 @@
+export * from '@base/pages/campaign/campaign-list-page/components/campaign-list-page-filter/campaign-list-page-filter.component';

@@ -52,7 +52,7 @@ public class Campaign extends AuditedBaseEntity {
     @ManyToOne
     @JoinColumn(name = "TYPE_CAMPAIGN_ID")
     @NotNull(message = "Debes seleccionar el tipo de campaña")
-    private CampaignType typeCampaign;
+    private CampaignType campaignType;
 
     @ManyToOne
     @JoinColumn(name = "AMBIT_ID")
@@ -66,6 +66,6 @@ public class Campaign extends AuditedBaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "PHASE_ID")
-    private PhaseCampaign phase;
+    private PhaseCampaign phaseCampaign;
 
 }

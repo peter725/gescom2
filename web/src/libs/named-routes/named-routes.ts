@@ -16,6 +16,7 @@ export class NamedRoutes {
    * @throws Key not found
    */
   getRoute(key: string, params?: Params): string[] {
+    console.log('getRoute', key, params);
     // Get the route from storage
     if (!this.routes.has(key)) {
       return [key];
@@ -26,6 +27,7 @@ export class NamedRoutes {
     }
     const val = baseRoute.split('/');
     val.unshift('/');
+    console.log('getRoute', val);
     return val;
   }
 }

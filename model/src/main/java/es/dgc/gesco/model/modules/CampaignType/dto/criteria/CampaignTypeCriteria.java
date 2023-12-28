@@ -1,4 +1,4 @@
-package es.dgc.gesco.model.modules.CampaignType.dto.criteria;
+package es.dgc.gesco.model.modules.campaignType.dto.criteria;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import es.dgc.gesco.model.commom.dto.FilterCriteria;

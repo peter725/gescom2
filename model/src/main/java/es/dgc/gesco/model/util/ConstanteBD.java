@@ -8,6 +8,9 @@ public class ConstanteBD {
     public static final String TABLE_ROLE="role";
     public static final String TABLE_APPROACH="campaign_proposal";
     public static final String TABLE_PROPONENT="proponent";
+    public static final String TABLE_PROTOCOL="protocol";
+    public static final String TABLE_INFRINGEMENT="infringement";
+    public static final String TABLE_QUESTIONS="questions";
     public static final String TABLE_SPECIALIST="specialist";
     public static final String TABLE_CAMPAIGN="campaign";
     public static final String TABLE_AMBIT="ambit";
@@ -33,6 +36,9 @@ public class ConstanteBD {
     public static final String SEQ_ROLE="seq_role";
     public static final String SEQ_APPROACH="seq_approach";
     public static final String SEQ_PROPONENT="seq_proponent";
+    public static final String SEQ_PROTOCOL="seq_protocol";
+    public static final String SEQ_INFRINGEMENT="seq_infringement";
+    public static final String SEQ_QUESTIONS="seq_questions";
     public static final String SEQ_SPECIALIST="seq_specialist";
     public static final String SEQ_CAMPAIGN="seq_campaign";
     public static final String SEQ_AMBIT="seq_ambit";

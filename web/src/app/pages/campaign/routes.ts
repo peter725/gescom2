@@ -16,12 +16,6 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         loadChildren: () => import('./').then(m => m.CampaignListPageModule),
     },
     {
-        path: '',
-        data: {breadcrumb},
-        loadChildren: () => import('./').then(m => m.CampaignAddPageModule),
-    },
-    //
-    {
         path: '0',
         data: {
             breadcrumb,
@@ -34,6 +28,6 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         data: {
         breadcrumb,
     },
-        loadChildren: () => import('./').then(m => m.CampaignAddPageModule),
+        loadChildren: () => import('./').then(m => m.CampaignEditPageModule),
     },
   ]

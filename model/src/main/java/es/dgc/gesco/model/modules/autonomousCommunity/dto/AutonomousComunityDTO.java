@@ -1,18 +1,18 @@
 package es.dgc.gesco.model.modules.autonomousCommunity.dto;
 
 import es.dgc.gesco.model.commom.dto.LongIdModel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class AutonomousComunityDTO implements LongIdModel {
 
+    @EqualsAndHashCode.Include
     private Long id;
+
     private String name;
 
 }

@@ -5,6 +5,8 @@ import es.dgc.gesco.service.repository.AutonomousCommunityParticipantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AutonomousCommunityParticipantService {
@@ -14,7 +16,12 @@ public class AutonomousCommunityParticipantService {
 
 
     public AutonomousCommunityParticipants save(final AutonomousCommunityParticipants autonomousCommunityParticipant){
-        AutonomousCommunityParticipants newAutonomousCommunityParticipant = autonomousCommunityParticipantRepository.save(autonomousCommunityParticipant);
-        return newAutonomousCommunityParticipant;
+        return autonomousCommunityParticipantRepository.save(autonomousCommunityParticipant);
     }
+
+    public List<AutonomousCommunityParticipants> findByCampaignId(final Long campaignId){
+        return autonomousCommunityParticipantRepository.findByCampaignId(campaignId);
+    }
+
+
 }

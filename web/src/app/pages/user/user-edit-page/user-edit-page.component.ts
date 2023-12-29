@@ -37,6 +37,4 @@ export class UserEditPageComponent extends EditPageBaseComponent<User, CreateUse
             password: this.fb.control(null, [Validators.required]),
         });
     }
-
-
 }

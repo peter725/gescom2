@@ -1,5 +1,6 @@
 package es.dgc.gesco.model.modules.campaign.dto;
 
+import es.dgc.gesco.model.commom.constants.EntityState;
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import es.dgc.gesco.model.modules.ambit.dto.AmbitDTO;
 import es.dgc.gesco.model.modules.autonomousCommunity.dto.AutonomousComunityDTO;
@@ -36,13 +37,11 @@ public class CampaignDTO implements LongIdModel {
 
     AutonomousComunityDTO responsibleEntity;
 
-    PhaseCampaignDTO phaseCampaignDto;
-
     List<AutonomousComunityDTO> participants;
 
     List<ProponentDTO> proponents;
 
     List<SpecialistDTO> specialists;
 
-    Integer state;
+    Integer state = EntityState.ON.getValue();
 }

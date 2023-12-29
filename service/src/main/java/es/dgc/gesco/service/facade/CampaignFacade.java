@@ -15,6 +15,8 @@ import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
 import es.dgc.gesco.model.modules.campaign.dto.CampaignDTO;
 
 import es.dgc.gesco.model.modules.phase.converter.PhaseConverter;
+import es.dgc.gesco.model.modules.phase.db.entity.PhaseCampaign;
+import es.dgc.gesco.model.modules.phase.dto.PhaseCampaignDTO;
 import es.dgc.gesco.model.modules.proponent.converter.ProponentConverter;
 import es.dgc.gesco.model.modules.proponent.db.entity.Proponent;
 import es.dgc.gesco.model.modules.specialist.converter.SpecialistConverter;
@@ -23,13 +25,18 @@ import es.dgc.gesco.model.modules.user.db.entity.User;
 import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.service.service.CampaignService;
 import es.dgc.gesco.service.service.CampaignTypeService;
+import es.dgc.gesco.service.util.Accion;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CampaignFacade {
@@ -44,7 +51,7 @@ public class CampaignFacade {
     private CampaingnTypeConverter campaingnTypeConverter;
 
     @Autowired
-    private CampaignTypeService campaignTypeService;
+    private PhaseCampaignFacade phaseCampaignFacade;
 
     @Autowired
     private AutonomousComunityConverter autonomousComunityConverter;
@@ -78,12 +85,20 @@ public class CampaignFacade {
     }
 
     @Transactional
-    public void saveCampaign(CampaignDTO campaignDto) {
+    public void saveCampaign(CampaignDTO campaignDto, Accion accion) {
         Campaign campaign = campaingnConverter.convertDtoToCampaign(campaignDto);
         campaign.setAutonomousCommunityResponsible(autonomousComunityConverter.convertDtoToAutonomousCommunity(campaignDto.getResponsibleEntity()));
-        campaign.setPhaseCampaign(phaseConverter.convertDtoToPhase(campaignDto.getPhaseCampaignDto()));
         campaign.setCampaignType(campaingnTypeConverter.convertDtoToCampaingnType(campaignDto.getCampaignType()));
         campaign.setAmbit(ambitConverter.convertDtoToAmbit(campaignDto.getAmbit()));
+
+        if (accion.equals(Accion.ADD)) {
+            campaign.setPhaseCampaign(phaseCampaignFacade.getPhaseCampaignById(1L));
+        }else if (accion.equals(Accion.UPDATE)){
+            Campaign campaignActual = campaignService.getCampaignById(campaignDto.getId());
+            campaign.setCreatedAt(campaignActual.getCreatedAt());
+            campaign.setUpdatedAt(campaignActual.getUpdatedAt());
+            campaign.setPhaseCampaign(campaignActual.getPhaseCampaign());
+        }
 
         Campaign campaignSave = campaignService.saveCampaign(campaign);
 
@@ -126,10 +141,23 @@ public class CampaignFacade {
 
     }
 
+    public void updateCampaign(final CampaignDTO campaignDto){
+
+        valid(campaignDto, Accion.UPDATE);
+        saveCampaign(campaignDto, Accion.UPDATE);
+    }
+
     public CampaignDTO getCampaignById(final Long id){
         Campaign campaign = campaignService.getCampaignById(id);
-        CampaignDTO campaignDTO = campaingnConverter.convertCampaingnToDto(campaign);
-        return campaignDTO;
+        if(campaign != null) {
+            CampaignDTO campaignDTO = campaingnConverter.convertCampaingnToDto(campaign);
+            campaignDTO.setParticipants(autonomousCommunityParticipantFacade.findByCampaignId(id));
+            campaignDTO.setProponents(autonomousCommunityProponentFacade.findByCampaignId(id));
+            campaignDTO.setSpecialists(autonomousCommunitySpecialistFacade.findByCampaignId(id));
+            return campaignDTO;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaign not found");
+        }
     }
 
     public CampaignDTO changeStateCampaign(final Long id, final StatusChange statusChange){
@@ -144,6 +172,14 @@ public class CampaignFacade {
         return campaingDtoPage;
     }
 
+    private void valid(final CampaignDTO campaignDTO, final Accion accion){
 
+        if (accion.equals(Accion.UPDATE)) {
 
+            if (ObjectUtils.isEmpty(campaignDTO.getId()))
+                throw new ResponseStatusException(HttpStatus.CONFLICT);
+
+        }
+
+    }
 }

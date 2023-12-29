@@ -1,5 +1,6 @@
 package es.dgc.gesco.model.modules.approach.dto;
 
+import es.dgc.gesco.model.commom.constants.EntityState;
 import es.dgc.gesco.model.commom.dto.LongIdModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,5 +40,5 @@ public class ApproachDTO implements LongIdModel {
 
     String viability;
 
-    Integer state;
+    Integer state = EntityState.ON.getValue();
 }

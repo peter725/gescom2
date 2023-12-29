@@ -5,6 +5,7 @@ import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
 import es.dgc.gesco.model.modules.campaign.dto.CampaignDTO;
 import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.service.facade.CampaignFacade;
+import es.dgc.gesco.service.util.Accion;
 import es.dgc.gesco.util.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -47,7 +48,7 @@ public class CampaignController {
 
 
         try {
-            campaignFacade.saveCampaign(campaignDto);
+            campaignFacade.saveCampaign(campaignDto, Accion.ADD);
 
         } catch (Exception e) {
             log.error(e);
@@ -78,5 +79,12 @@ public class CampaignController {
     public ResponseEntity<CampaignDTO> changeStateUser(final @PathVariable Long id, @RequestBody StatusChange payload) {
 
         return ResponseEntity.ok(campaignFacade.changeStateCampaign(id, payload));
+    }
+
+    @PostMapping(Url.UPDATE+"/{id}")
+    public ResponseEntity<String> updateCampaign(@PathVariable Long id, final @RequestBody CampaignDTO campaignDto) {
+
+        campaignFacade.updateCampaign(campaignDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

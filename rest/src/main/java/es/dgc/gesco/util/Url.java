@@ -12,6 +12,8 @@ public class Url {
     public static final String AUTHORITY_OEU ="/authority_oeu";
     public static final String CREATE = "/create";
     public static final String CAMPAIGN = "/campaign";
+    public static final String PROTOCOL = "/protocol";
+    public static final String QUESTION = "/question";
     public static final String PHASE_CAMPAIGN = "/phase_campaign";
     public static final String AMBIT = "/ambit";
     public static final String PROPONENT = "/proponent";
@@ -30,6 +32,8 @@ public class Url {
     public static final String SEE = "/ver";
     public static final String STATUS = "/status";
     public static final String UPDATE = "/update";
+    public static final String UPDATE_PHASE = "/update_phase";
+    public static final String SEARCH = "/search";
     public static final String USERS ="/users";
     public static final String USER_TYPE = "/user_type";
 

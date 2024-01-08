@@ -1,0 +1,6 @@
+{
+  "timestamp": "2024-01-07T23:22:03.148+00:00",
+  "status": 500,
+  "error": "Internal Server Error",
+  "path": "/rest/api/campaign/update"
+}

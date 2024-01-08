@@ -32,7 +32,7 @@ public class Protocol extends AuditedBaseEntity {
     @Column(name = "PROTOCOL")
     private String protocol;
 
-    @Column(name = "BK_TPCPTMO")
+    @Column(name = "BK_TPCOTMO")
     private String bkTpcotmo;
 
     @Column(name = "CAMPAING_ID")

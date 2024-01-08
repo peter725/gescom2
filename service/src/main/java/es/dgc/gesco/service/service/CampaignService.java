@@ -41,4 +41,14 @@ public class CampaignService {
         campaign.setState(state);
         return campaignRepository.save(campaign);
     }
+
+    public Page<Campaign> getCampaignByNameOrYearOrCode(String nameCampaign, String codeCampaign, Long yearCampaign, Pageable pageable) {
+        Page<Campaign> campaignPage = campaignRepository.getCampaignByNameOrYearOrCode(nameCampaign, codeCampaign,yearCampaign, pageable);
+        return campaignPage;
+    }
+
+    public Page<Campaign> getCampaignByNameAndYear(String nameCampaign, Long yearCampaign,  Pageable pageable) {
+        Page<Campaign> campaignPage = campaignRepository.getCampaignByNameAndYear(nameCampaign, yearCampaign, pageable);
+        return campaignPage;
+    }
 }

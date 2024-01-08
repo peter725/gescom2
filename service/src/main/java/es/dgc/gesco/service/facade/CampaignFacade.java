@@ -7,9 +7,7 @@ import es.dgc.gesco.model.modules.autonomousCommunityParticipants.db.entity.Auto
 import es.dgc.gesco.model.modules.autonomousCommunityProponent.db.entity.AutonomousCommunityProponent;
 import es.dgc.gesco.model.modules.autonomousCommunitySpecialist.db.entity.AutonomousCommunitySpecialist;
 import es.dgc.gesco.model.modules.campaignType.converter.CampaingnTypeConverter;
-import es.dgc.gesco.model.modules.campaignType.db.entity.CampaignType;
 import es.dgc.gesco.model.modules.autonomousCommunity.db.entity.AutonomousCommunity;
-import es.dgc.gesco.model.modules.campaignType.dto.CampaignTypeDTO;
 import es.dgc.gesco.model.modules.campaign.converter.CampaingnConverter;
 import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
 import es.dgc.gesco.model.modules.campaign.dto.CampaignDTO;
@@ -21,10 +19,7 @@ import es.dgc.gesco.model.modules.proponent.converter.ProponentConverter;
 import es.dgc.gesco.model.modules.proponent.db.entity.Proponent;
 import es.dgc.gesco.model.modules.specialist.converter.SpecialistConverter;
 import es.dgc.gesco.model.modules.specialist.db.entity.Specialist;
-import es.dgc.gesco.model.modules.user.db.entity.User;
-import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.service.service.CampaignService;
-import es.dgc.gesco.service.service.CampaignTypeService;
 import es.dgc.gesco.service.util.Accion;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +31,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class CampaignFacade {
@@ -181,5 +176,40 @@ public class CampaignFacade {
 
         }
 
+    }
+
+    public Page<CampaignDTO> getCampaignByNameOrYearOrCode(String nameCampaign, String codeCampaign, Long yearCampaign, Pageable pageable) {
+
+            Page<Campaign> campaignPage;
+            Page<CampaignDTO> campaignDTOPage;
+
+        if( nameCampaign != null && yearCampaign != null && codeCampaign != null){
+
+            campaignPage = campaignService.getCampaignByNameOrYearOrCode(nameCampaign, codeCampaign, yearCampaign, pageable);
+            campaignDTOPage = campaignPage.map(campaign -> campaingnConverter.convertCampaingnToDto(campaign));
+            return campaignDTOPage;
+
+        }else if (nameCampaign != null && yearCampaign != null){
+            campaignPage = campaignService.getCampaignByNameAndYear(nameCampaign, yearCampaign, pageable);
+            campaignDTOPage = campaignPage.map(campaign -> campaingnConverter.convertCampaingnToDto(campaign));
+            return campaignDTOPage;
+
+        }else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Por favor, digite valores válidos para Nombre y Año de la Campaña.");
+        }
+    }
+
+    public void updatePhaseCampaign(Long idCampaign) {
+        Campaign campaign = campaignService.getCampaignById(idCampaign);
+        if(campaign != null && campaign.getPhaseCampaign() != null) {
+           Long limit = 14L;
+           Long idPhaseOld = campaign.getPhaseCampaign().getId();
+           if (idPhaseOld < limit){
+               idPhaseOld++;
+               PhaseCampaign phaseCampaign = phaseCampaignFacade.getPhaseCampaignById(idPhaseOld);
+               campaign.setPhaseCampaign(phaseCampaign);
+               campaignService.saveCampaign(campaign);
+           }
+        }
     }
 }

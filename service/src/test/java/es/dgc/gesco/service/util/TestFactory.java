@@ -83,4 +83,9 @@ public class TestFactory {
         return new PhaseCampaignService(phaseCampaignRepository);
     };
 
+    @Bean
+    public ProtocolService protocolService(ProtocolRepository protocolRepository){
+        return new ProtocolService(protocolRepository);
+    };
+
 }

@@ -1,9 +1,7 @@
 package es.dgc.gesco.controller;
 
 import es.dgc.gesco.model.commom.dto.StatusChange;
-import es.dgc.gesco.model.modules.campaign.db.entity.Campaign;
 import es.dgc.gesco.model.modules.campaign.dto.CampaignDTO;
-import es.dgc.gesco.model.modules.user.dto.UserDTO;
 import es.dgc.gesco.service.facade.CampaignFacade;
 import es.dgc.gesco.service.util.Accion;
 import es.dgc.gesco.util.Url;
@@ -86,5 +84,32 @@ public class CampaignController {
 
         campaignFacade.updateCampaign(campaignDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping(Url.SEARCH)
+    @ResponseBody
+    public ResponseEntity<Page<CampaignDTO>> getCampaignByNameOrYearOrCode(
+            @RequestParam(name = "nameCampaign", required = false) String nameCampaign,
+            @RequestParam(name = "codeCampaign", required = false) String codeCampaign,
+            @RequestParam(name = "yearCampaign", required = false) Long yearCampaign,
+            @PageableDefault(page = 0, size = 50, sort ="id", direction = Sort.Direction.ASC) final Pageable pageable) {
+
+        Page<CampaignDTO> campaignDTO;
+
+        try {
+              campaignDTO = campaignFacade.getCampaignByNameOrYearOrCode(nameCampaign, codeCampaign, yearCampaign, pageable);
+        } catch (Exception e) {
+            log.error(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(campaignDTO);
+    }
+
+    @GetMapping(Url.UPDATE_PHASE+"/{id}")
+    public ResponseEntity<String> updatePhaseCampaign(final @PathVariable Long id) {
+
+        campaignFacade.updatePhaseCampaign(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

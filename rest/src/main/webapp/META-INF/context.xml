@@ -1,5 +1,0 @@
-<Context reloadable="true">
-    <!--...-->
-    <ResourceLink name="jdbc/GESCO" global="jdbc/GESCO" type="javax.sql.DataSource"/>
-    <!--...-->
-</Context>

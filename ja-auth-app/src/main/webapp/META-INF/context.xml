@@ -1,0 +1,6 @@
+<Context reloadable="true">
+    <Parameter name="PATH_REPO" value="C:/Users/angel/consumo/"/>
+    <!--...-->
+    <ResourceLink name="jdbc/JJAA" global="jdbc/JJAA" type="javax.sql.DataSource"/>
+    <!--...-->
+</Context>

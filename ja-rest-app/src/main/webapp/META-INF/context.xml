@@ -1,0 +1,5 @@
+<Context reloadable="true">
+    <!--...-->
+    <ResourceLink name="jdbc/JJAA" global="jdbc/JJAA" type="javax.sql.DataSource"/>
+    <!--...-->
+</Context>

@@ -1,7 +1,6 @@
 package es.consumo.junta_arbitral.modules.users.model.entity;
 
 import es.consumo.junta_arbitral.commons.db.entity.SimpleEntity;
-import es.consumo.junta_arbitral.modules.arbitrationBoard.model.entity.ArbitrationBoardEntity;
 import es.consumo.junta_arbitral.modules.role.model.entity.RoleEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Collection;

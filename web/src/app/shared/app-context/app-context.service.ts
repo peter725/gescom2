@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { PreferencesService } from '@base/shared/preferences';
 import { UserPreferences } from '@base/shared/preferences/model';
-import { GAuthSubject } from '@base/shared/security';
+import { AppAuthSubject } from '@base/shared/security';
 import { CrudImplService, RequestConfig, SortBuilder, SortDirection } from '@libs/crud-api';
 import { ModelStates } from '@libs/sdk/common';
 import { Language } from '@libs/sdk/language';
@@ -47,7 +47,7 @@ export class AppContextService {
     private loadingAnimationTimeout: ReturnType<typeof setTimeout> | undefined;
 
     constructor(
-        private authContext: AuthContextService<GAuthSubject>,
+        private authContext: AuthContextService<AppAuthSubject>,
         private crudService: CrudImplService,
         private translateService: TranslateService,
         private preferences: PreferencesService,

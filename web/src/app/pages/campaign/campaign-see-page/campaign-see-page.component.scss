@@ -1,0 +1,17 @@
+dl > div:nth-child(even) {
+  background-color: #f5f5f5; /* Gris tenue para los divs pares */
+}
+
+dl > div:nth-child(odd) {
+  background-color: white; /* Blanco para los divs impares */
+}
+
+ .material-symbols-outlined {
+   font-variation-settings:
+   'background' 0,
+           'FILL' 0,
+           'wght' 400,
+           'GRAD' 0,
+           'opsz' 24
+ }
+

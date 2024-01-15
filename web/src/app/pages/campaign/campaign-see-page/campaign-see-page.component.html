@@ -1,0 +1,88 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<form [formGroup]="form">
+  <tsw-form-container>
+    <tsw-tab-panel></tsw-tab-panel>
+    <tsw-section-wrapper
+      class="mb-2"
+      headerLabel="{{'text.campaign.title' | translate }}"
+      icon="visibility">
+      <div section-content>
+        <div class="px-10 sm:px-5">
+          <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.title' | translate}}</p>
+          <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('nameCampaign')?.value }}</h3>
+        </div>
+
+        <div class="mt-6 border-t border-gray-100">
+          <dl class="divide-y divide-gray-100">
+            <div class="px-4 py-6 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-5">
+              <div class="px-10 sm:px-5">
+                <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.year' | translate}}</p>
+                <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('year')?.value }}</h3>
+              </div>
+              <div class="px-10 sm:px-5">
+                <p class="text-sm leading-6 text-gray-450">{{'fields.code' | translate}}</p>
+                <h3 class="mt-1 text-sm font-semibold leading-6 text-gray-350 sm:col-span-1 sm:mt-0">{{ form.get('codeCpa')?.value }}</h3>
+              </div>
+              <div class="px-10 sm:px-5">
+                <p class="text-sm leading-6 text-gray-450">{{'fields.campaign.campaignType' | translate}}</p>
+                <h3 class="mt-1 text-sm font-semibold leading-6 text-gray-350 sm:col-span-2 sm:mt-0">{{ form.get('campaignType')?.value?.name }}</h3>
+              </div>
+              <div class="px-10 sm:px-5">
+                <p class="text-sm leading-6 text-gray-450">{{'fields.ambit' | translate}}</p>
+                <h3 class="mt-1 text-sm font-semibold leading-6 text-gray-350 sm:col-span-1 sm:mt-0">{{ form.get('ambit')?.value?.name }}</h3>
+              </div>
+            </div>
+
+            <div class="px-10 sm:px-5 py-5">
+              <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.responsible' | translate}}</p>
+              <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('responsibleEntity')?.value?.name }}</h3>
+            </div>
+
+            <div class="px-10 sm:px-5 py-5" >
+              <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.participants' | translate}}</p>
+              <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ participantsDispaly }}</h3>
+            </div>
+
+            <div class="px-10 sm:px-5 py-5" >
+              <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.proponents' | translate}}</p>
+              <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ proponentsDisplay }}</h3>
+            </div>
+
+            <div class="px-10 sm:px-5" >
+              <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.specialist' | translate}}</p>
+              <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ specialistsDisplay }}</h3>
+            </div>
+
+
+              <tsw-file-upload [form]="form" (upload)="onUpload($event)" class="px-10 sm:px-5"></tsw-file-upload>
+
+
+
+            <div class="px-10 sm:px-5 sm:grid sm:grid-cols-3">
+              <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.inspection' | translate}}</h1>
+              <h3 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900" >{{ form.get('phaseCampaign')?.value?.phase }}</h3>
+              <button  mat-mini-fab color="primary" class="upload-btn ml-2 "
+                       >
+                <mat-icon>arrow_forward</mat-icon>
+              </button>
+
+
+
+
+            </div>
+
+
+
+          </dl>
+
+        </div>
+
+
+        </div>
+
+    </tsw-section-wrapper>
+
+
+  </tsw-form-container>
+</form>

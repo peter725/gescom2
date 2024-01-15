@@ -34,6 +34,51 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     }
     ]
   },
+  //infracciones
+  {
+    text: 'pages.infraction.title',
+    icon: 'report_problem',
+    expanded: false,
+    children: [
+    {
+      text: 'pages.infraction.list', path:'infractionManagementList'
+    }
+    ]
+  },
+  // Perfiles
+  {
+    text: 'Gestion de Perfiles',
+    icon: 'library_books',
+    expanded:false,
+    children: [
+      {
+        text: 'Alta de Perfil',
+        expanded:false,
+        path:'profileManagementCreate'
+      },{
+        text: 'Lista de Perfiles',
+        expanded:false,
+        path:'profileManagementList'
+      }
+    ]
+  },
+  // Entidades
+  {
+    text: 'Gestion de Entidades',
+    icon: 'library_books',
+    expanded:false,
+    children: [
+      {
+        text: 'Alta de Entidades',
+        expanded:false,
+        path:'entityManagementCreate'
+      },{
+        text: 'Lista de Entidades',
+        expanded:false,
+        path:'entityManagementList'
+      }
+    ]
+  },
   // Usuarios
   {
     text: 'pages.user.title',

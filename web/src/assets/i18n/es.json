@@ -274,9 +274,32 @@
     "year": "Año",
     "yearV0": "Año V0",
     "code_cpa": "Código/s CPA",
-    "campaign": "Campaña"
+    "campaign": {
+      "title": "Campaña",
+      "name": "Nombre",
+      "year": "Año",
+      "code": "Código/s CPA",
+      "campaignType": "Tipo de campaña",
+      "ambit": "Ámbito",
+      "phase": "Fase/Estado",
+      "responsible": "C.A. Responsable",
+      "participants": "CCAA Participantes",
+      "proponents": "CCAA Proponentes",
+      "specialist": "CCAA Especialista",
+      "requiredDoc": "Cargar los documentos"
+    }
   },
   "text": {
+    "campaign": {
+        "library": "Biblioteca",
+        "title": "Campaña",
+        "add": "Alta de Campaña",
+        "list": "Consulta de Campañas",
+        "edit": "Modificar Campaña",
+        "name": "Nombre",
+        "year": "Año",
+        "inspection": "INSPECCIÓN: FASE ACTUAL"
+    },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},
       "justification": {"title": "2. JUSTIFICACIÓN"},
@@ -485,6 +508,12 @@
       "list": "Consulta tipos de campos"
     },
     "home": "Inicio",
+    "infraction": {
+      "title": "Infracciones",
+      "add": "Alta de infracción",
+      "edit": "Modificar infracción",
+      "list": "Consulta de infracciones"
+    },
     "login": {
       "title": "Conectarse"
     },

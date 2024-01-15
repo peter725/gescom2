@@ -1,4 +1,3 @@
-import {CreateUser, User} from "@libs/sdk/user";
 import {FORM_STATUS} from "@base/shared/components/form";
 import {ComponentStatus, ControlsOf} from "@libs/commons";
 import {EditPageBaseComponent} from "@base/shared/pages/edit-page-base.component";

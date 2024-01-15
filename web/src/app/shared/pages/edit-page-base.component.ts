@@ -2,7 +2,6 @@ import {Directive, inject, Inject, OnDestroy, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FORM_STATUS } from '@base/shared/components/form';
-//import { NotificationService } from '@base/shared/notification';
 import { AppError, ComponentStatus } from '@libs/commons';
 import { ControlsOf, FormMapper } from '@libs/commons/form';
 import { CrudImplService, RequestConfig } from '@libs/crud-api';
@@ -11,6 +10,7 @@ import { filter, firstValueFrom, Observable, of, ReplaySubject, tap } from 'rxjs
 import { map } from 'rxjs/operators';
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
+import { NotificationService } from '@base/shared/notification';
 
 
 @Directive()
@@ -88,7 +88,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     protected route: ActivatedRoute,
     protected router: Router,
     protected namedRoutes: NamedRoutes,
-    //protected notification: NotificationService,
+    protected notification: NotificationService,
     protected mapper: FormMapper<T, F>,
     @Inject(FORM_STATUS) public status: ComponentStatus,
   ) {
@@ -110,7 +110,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   }
 
   submitForm() {
-    console.log('this.redirectAfterSave en submit',this.redirectAfterSave);
     //if (this.form.invalid) {
       //this.notification.show({ message: 'text.other.pleaseReview' });
       //return;
@@ -239,6 +238,29 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     return this.crudService.update(id, payload, config);
   }
 
+  protected async delete(id: any) {
+    try {
+      this.status.status = 'IDLE';
+      const operation = this.createDeleteOperation(id);
+
+      this.status.status = 'PROCESS';
+      await firstValueFrom(operation);
+
+      await this.afterDeleteSuccess();
+    } catch (e: any) {
+      await this.afterDeleteError(e);
+    }
+  }
+
+  protected createDeleteOperation(id: any): Observable<void> {
+    const config: RequestConfig = {
+      resourceName: this.resourceName,
+    };
+    config.pathParams = {id};
+
+    return this.crudService.delete(id, config);
+  }
+
   /**
    * Transforms data model to form value.
    */
@@ -272,6 +294,15 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     }
   }
 
+  protected async afterDeleteSuccess() {
+
+    this.form.markAsPristine();
+    this.form.markAsPristine();
+
+    this.status.status = 'IDLE';
+    this.notification.show({message: 'text.other.dataDelete'});
+  }
+
   /**
    * Runs after the save process fails.
    */
@@ -282,6 +313,15 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
       message: err.error,
     });*/
     this.activeOperation = undefined;
+    this.status.status = 'ERROR';
+  }
+
+  protected async afterDeleteError(e: any) {
+    const err = AppError.parse(e);
+    this.notification.show({
+      title: 'text.err.dataDelete',
+      message: err.error,
+    });
     this.status.status = 'ERROR';
   }
 

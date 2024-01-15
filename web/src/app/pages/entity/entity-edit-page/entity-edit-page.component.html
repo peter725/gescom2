@@ -1,0 +1,85 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<form [formGroup]="form">
+    <tsw-form-container>
+        <tsw-section-wrapper class="mb-5" [headerLabel]="headerTitle" icon="edit_note">
+            <div section-content>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.name' | translate }}</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.entityType' | translate }}</mat-label>
+                        <tsw-custom-select
+                            formControlName="entityType"
+                            resourceName="entityTypes"
+                            [showNoneValue]="false">
+                        </tsw-custom-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.code' | translate }}</mat-label>
+                        <input matInput formControlName="code">
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-2 gap-1.5">
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.description' | translate }}</mat-label>
+                        <input matInput formControlName="description">
+                    </mat-form-field>
+
+                    <ng-container *ngIf="!srcData?.rootEntity">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.parent' | translate }}</mat-label>
+                            <tsw-custom-select
+                                formControlName="parent"
+                                resourceName="entities"
+                                [showNoneValue]="false">
+                            </tsw-custom-select>
+                        </mat-form-field>
+                    </ng-container>
+
+                </div>
+
+                <tsw-section-label label="text.other.contactDetails"></tsw-section-label>
+
+                <div class="grid grid-cols-3 gap-1.5">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.contactPerson' | translate }}</mat-label>
+                        <input matInput formControlName="contactPerson">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.phone' | translate }}</mat-label>
+                        <input matInput formControlName="phone">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.email' | translate }}</mat-label>
+                        <input matInput formControlName="email">
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-4 gap-1.5">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.postalCode' | translate }}</mat-label>
+                        <input matInput formControlName="postalCode">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.address' | translate }}</mat-label>
+                        <input matInput formControlName="address">
+                    </mat-form-field>
+
+                </div>
+            </div>
+        </tsw-section-wrapper>
+
+        <tsw-form-actions [saveBtnSkipConfirmation]="skipSaveConfirmation" (reset)="resetForm()"
+                          (save)="submitForm()"></tsw-form-actions>
+    </tsw-form-container>
+</form>

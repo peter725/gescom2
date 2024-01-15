@@ -57,14 +57,14 @@
     </ng-container>
 
     <ng-container matColumnDef="year">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 10%">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 7%">
         {{ "fields.year" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.year }}</td>
     </ng-container>
 
     <ng-container matColumnDef="ambit">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 10%">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 8%">
         {{ "fields.ambit" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.ambit.name }}</td>
@@ -95,10 +95,15 @@
       matColumnDef="actions"
       [stickyEnd]="true"
     >
-      <th *matHeaderCellDef mat-header-cell style="width: 15%"></th>
+      <th *matHeaderCellDef mat-header-cell style="width: 20%"></th>
       <td *matCellDef="let element" mat-cell class="text-right">
         <ng-container >
           <div class="additional-actions">
+            <a
+              mat-button
+              [routerLink]="'campaignManagementSee' | namedRoute: { id: element.id }">
+              <mat-icon>visibility</mat-icon>
+            </a>
             <a
               mat-button
               [routerLink]="'campaignManagementEdit' | namedRoute: { id: element.id }">

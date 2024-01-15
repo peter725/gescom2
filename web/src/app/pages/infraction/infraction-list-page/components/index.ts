@@ -1,0 +1,1 @@
+export * from '@base/pages/infraction/infraction-list-page/components/infraction-list-page-filter/infraction-list-page-filter.component'

@@ -110,7 +110,17 @@ public class CampaignEntity extends SimpleEntity {
         public interface SimpleProjection {
 
             Long getId();
-            String getName();
+            Long getYear();
+            String getCodeCpa();
+            String getNameCampaign();
+            CampaignTypeEntity getCampaignType();
+            AmbitEntity getAmbit();
+            AutonomousCommunityEntity getAutonomousCommunityResponsible();
+            PhaseEntity getPhaseCampaign();
+            LocalDateTime getCreatedAt();
+            LocalDateTime getUpdatedAt();
+            Long getCreatedBy();
+            Long getUpdatedBy();
 
         }
 }

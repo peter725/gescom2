@@ -13,7 +13,6 @@ import es.consumo.gescom.commons.db.repository.JJAARepository;
 @Repository
 public interface CampaignRepository extends JJAARepository<CampaignEntity, Long>  {
 
-    @Query(value = "SELECT h FROM CampaignEntity h "
-        + " where h.id = :id ")
+    @Query(value = "SELECT h FROM CampaignEntity h where h.id = :id ")
     Page<CampaignEntity.SimpleProjection> findAllCampaignById(Pageable pageable, @Param("id")  Long id);
 }

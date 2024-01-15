@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <name>JJAA</name>
     <groupId>es.consumo.junta_arbitral</groupId>
-    <artifactId>jjaa-rest-app</artifactId>
+    <artifactId>gescom-rest-app</artifactId>
     <version>0.0.2</version>
     <packaging>war</packaging>
 

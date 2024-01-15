@@ -44,7 +44,6 @@ export class CampaignListPageComponent  extends BaseListPageComponent<Campaign> 
 
     protected getColumns(): ColumnSrc[] {
       return [
-        'select',
         'year',
         'ambit',
         'campaignType',

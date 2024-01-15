@@ -39,11 +39,9 @@ export class DataQueryConfigFieldsComponent implements OnInit {
         fieldsArray.removeAt(index);
       }
     }
-    console.log(fieldsArray);
   }
 
   ngOnInit() {
-    console.log('Entra al init de campos');
 
     if (this.form.value.module != undefined) {
       this.service.loadFieldsModules();

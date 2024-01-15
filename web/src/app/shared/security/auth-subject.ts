@@ -2,7 +2,7 @@ import { AuthUserDetails } from '@libs/sdk/auth';
 import { AuthSubject } from '@libs/security';
 
 
-export class GAuthSubject extends AuthSubject<AuthUserDetails> {
+export class AppAuthSubject extends AuthSubject<AuthUserDetails> {
   /**
    * Time when the authentication will expire at in milliseconds
    */

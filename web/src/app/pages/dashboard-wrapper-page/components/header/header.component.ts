@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {dgc, government, ministry} from '@base/config/app';
-// import { SampleContextService } from '@tulsa/app/shared/sample/sample-context.service';
+// import { SampleContextService } from '@tulsa/app/shared/sample/sample-context.services';
 // import { TulsaAuthSubject } from '@tulsa/app/shared/security';
 import { CrudImplService, RequestConfig, SortBuilder, SortDirection } from '@libs/crud-api';
 import { ModelStates } from '@libs/sdk/common';

@@ -6,7 +6,6 @@ import { FORM_STATUS } from '../tokens';
 
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-form-actions',
   templateUrl: './form-actions.component.html',
 })

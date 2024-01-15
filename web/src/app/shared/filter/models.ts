@@ -12,7 +12,7 @@ export interface AppliedFilter {
 }
 
 /**
- * Filters service configuration
+ * Filters services configuration
  */
 export interface FilterOptions {
   source: AppQuerySource;

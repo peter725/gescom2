@@ -5,6 +5,7 @@ import { AutonomousCommunity } from "@libs/sdk/autonomousCommunity";
 import { Proponent } from "@libs/sdk/proponent";
 import { Specialist } from "@libs/sdk/specialist";
 import { AppQuerySource } from '@libs/commons';
+import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
 
 /**
  * Default Campaign structure.
@@ -30,7 +31,7 @@ export interface CreateCampaign {
   year: number | null;
   codeCpa: string | null;
   nameCampaign: string | null;
-  campaignType: TypeCampaign[] | null;
+  campaignType: TypeCampaign | null;
   ambit: Ambit | null;
   responsibleEntity: AutonomousCommunity | null;
   participants: AutonomousCommunity[] | null;
@@ -40,12 +41,19 @@ export interface CreateCampaign {
 }
 
 export interface CampaignForm {
+
   id: number | null;
+
   year: number | null;
-  campaignType: string | null;
-  ambit: string | null;
+  codeCpa: string | null;
   nameCampaign: string | null;
-  responsibleEntity: string | null;
+  campaignType: TypeCampaign | null;
+  ambit: Ambit | null;
+  responsibleEntity: AutonomousCommunity | null;
+  participants: AutonomousCommunity[] | null;
+  proponents: Proponent[] | null;
+  specialists: Specialist[] | null;
+  phaseCampaign: PhaseCampaign | null;
 
 }
 

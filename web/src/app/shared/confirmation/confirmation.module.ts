@@ -31,7 +31,7 @@ export class ConfirmationModule {
       ngModule: ConfirmationModule,
       providers: [
         // Enable this if manual instance control is required and
-        // remove existing provide in root from the service.
+        // remove existing provide in root from the services.
         // { provide: ConfirmationService, deps: [MatDialog] },
       ],
     };

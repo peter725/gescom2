@@ -18,7 +18,7 @@ import { AuthContextService } from '@libs/security';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthStorage } from './auth-storage';
-import { GAuthSubject } from './auth-subject';
+import { AppAuthSubject } from './auth-subject';
 import { AuthProcessResultParam, AuthProcessState } from './models';
 
 
@@ -29,7 +29,7 @@ export class AuthManagerService {
   public readonly processStatus = new ComponentStatus<AuthProcessState>('PROCESS');
 
   constructor(
-    private authContext: AuthContextService<GAuthSubject>,
+    private authContext: AuthContextService<AppAuthSubject>,
     private namedRoutes: NamedRoutes,
     private router: Router,
     private route: ActivatedRoute,
@@ -62,7 +62,7 @@ export class AuthManagerService {
       AuthStorage.saveUserAuth(authentication);
 
       // Autorizamos al usuario autenticado
-      this.authContext.authorize(new GAuthSubject(authDetails, authentication.exp));
+      this.authContext.authorize(new AppAuthSubject(authDetails, authentication.exp));
 
       // Registrar un timeout para eliminar el token caducado automáticamente
       this.updateProcess('DONE', 'Autenticación realizada con éxito, redirigiendo');
@@ -85,7 +85,7 @@ export class AuthManagerService {
         const operation = this.operations.get('authDetails').base({}).path;
         const headers = new HttpHeaders({ Authorization: userAuth.token });
         const details = await firstValueFrom(this.http.get<AuthUserDetails>(operation, { headers }));
-        this.authContext.authorize(new GAuthSubject(details, userAuth.exp));
+        this.authContext.authorize(new AppAuthSubject(details, userAuth.exp));
         return Promise.resolve();
       } catch (e) {
         console.error(e);
@@ -215,7 +215,7 @@ export class AuthManagerService {
       AuthStorage.saveUserAuth(authentication);
 
       // Autorizamos al usuario autenticado
-      this.authContext.authorize(new GAuthSubject(authDetails, authentication.exp));
+      this.authContext.authorize(new AppAuthSubject(authDetails, authentication.exp));
 
       // Registrar un timeout para eliminar el token caducado automáticamente
       this.updateProcess('DONE', 'Autenticación realizada con éxito, redirigiendo');

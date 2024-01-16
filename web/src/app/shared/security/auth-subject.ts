@@ -1,53 +1,38 @@
 import { AuthUserDetails } from '@libs/sdk/auth';
 import { AuthSubject } from '@libs/security';
+import {GEModule} from "@libs/sdk/module";
 
 
 export class AppAuthSubject extends AuthSubject<AuthUserDetails> {
-  /**
-   * Time when the authentication will expire at in milliseconds
-   */
-  private readonly expiresAt: number;
 
-  constructor(
-    /**
-     * Current user details
-     */
-    details: AuthUserDetails,
-    /**
-     * Time when the authentication will expire at in seconds
-     */
-    expiresAt: number,
-  ) {
+  constructor(details: AuthUserDetails) {
     super(details);
-    this.expiresAt = expiresAt;
-    // this.expiresAt = expiresAt * 1000;
   }
 
-  equals(value: AuthUserDetails | number | null | undefined): boolean {
+  equals(value: AuthUserDetails | string | number | null | undefined): boolean {
     if (value == null) return false;
 
-    const { userId } = this.getDetails();
+    const { userId, docNum } = this.getDetails();
 
     if (typeof value === 'number') {
       return userId === value;
+    } else if (typeof value === 'string') {
+      return [docNum].includes(value);
     }
 
-    return value.userId === userId;
+    return value.userId === userId
+      || value.docNum === docNum;
   }
 
-  getRoles(): string[] {
-    return this.getDetails().roles || [];
+  getModules(): GEModule[] {
+    return this.getDetails().modules || [];
   }
 
   getProfile(): string {
-    return this.getDetails().profile || '';
+    return this.getDetails().profile || "";
   }
 
   isAuthenticated(): boolean {
     return !!this.getDetails();
-  }
-
-  getExpiresAt(): number {
-    return this.expiresAt;
   }
 }

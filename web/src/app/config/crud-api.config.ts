@@ -61,12 +61,20 @@ export const crudOperationsStorageFactory = () => {
     templateManagement: { type: HttpOperationType.CRUD, path: `/sample_templates` },
   };
 
+  const userOperations: OperationsDefSrc = {
+    authRequest: {type: HttpOperationType.SIMPLE, path: `/auth/user/request`},
+    authLogIn: {type: HttpOperationType.SIMPLE, path: `/auth/user/sign_in`},
+    authLogOut: {type: HttpOperationType.SIMPLE, path: `/auth/user/sign_out`},
+    authDetails: {type: HttpOperationType.SIMPLE, path: `/auth/user/me`},
+  };
+
   const authOperations: OperationsDefSrc = {
     authRequest: { type: HttpOperationType.SIMPLE, path: `/auth/user/request` },
     authLogIn: { type: HttpOperationType.SIMPLE, path: `/auth/user/sign_in` },
     authLogOut: { type: HttpOperationType.SIMPLE, path: `/auth/user/sign_out` },
     authDetails: { type: HttpOperationType.SIMPLE, path: `/auth/user/me` },
     fakeLogIn: { type: HttpOperationType.SIMPLE, path: `/auth/user/fake-sign-in` },
+    manualLogIn: {type: HttpOperationType.SIMPLE, path: `/oauth/token`},
   };
 
   return CrudOperationStorage.from([

@@ -15,6 +15,7 @@ import { ConfirmationModule } from '@base/shared/confirmation';
 import { NotificationModule } from '@base/shared/notification';
 import { FormConfig } from '@base/config/form.config';
 import { LocaleConfig } from '@base/config/locale.config';
+import { AuthorizationConfig } from '@base/config/authorization.config';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { LocaleConfig } from '@base/config/locale.config';
     NotificationModule.forRoot(),
     FormConfig,
     LocaleConfig,
+    AuthorizationConfig
   ],
   declarations: [
     AppComponent,

@@ -110,8 +110,8 @@ export class NotificationService {
     return {
       data,
       minWidth: '30%',
-      maxWidth: '30%',
-      minHeight: '5%',
+      maxWidth: '80%',
+      minHeight: '10%',
       hasBackdrop: false,
       position: { top: '0.5rem', right: '.75rem' },
     } as MatDialogConfig<Notification>;

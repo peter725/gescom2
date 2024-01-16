@@ -1,4 +1,4 @@
-import { ACLCheckMode } from './models';
+import {GEModule} from "@libs/sdk/module";
 
 export abstract class AuthSubject<T> {
   protected constructor(private readonly details: T) {
@@ -8,46 +8,30 @@ export abstract class AuthSubject<T> {
     return this.details;
   }
 
-  /**
-   * Checks if the current subject has the required role or roles.
-   * Depending on the check mode, the current subject must have all requested
-   * roles or have one of the required roles.
-   */
-  hasRole(roles: string[] | string, check: ACLCheckMode = 'ALL'): boolean {
-    const checkList = Array.isArray(roles) ? roles : [roles];
-    switch (check) {
-      case 'ALL':
-        return checkList.every(r => this.getRoles().includes(r));
-      default:
-        return checkList.some(r => this.getRoles().includes(r));
-    }
+  hasModule(moduleCode: string): boolean {
+    return this.getModules().filter((e) => e.code === moduleCode).length > 0;
   }
 
-  /**
-   * Returns if the current subject is authenticated
-   */
+  hasScope(moduleCode: string, scopeCode: string | undefined): boolean {
+    return this.getModules()
+      .filter((e) => e.code === moduleCode)
+      .flatMap((e) => e.scopes)
+      .filter((e) => e === scopeCode).length > 0;
+
+  }
+
+  canRead(moduleCode: string) {
+    return this.hasScope(moduleCode,"rr");
+  }
+
   abstract isAuthenticated(): boolean;
 
-  /**
-   * Returns the time of expiry of the current subject
-   * expressed in milliseconds
-   */
-  abstract getExpiresAt(): number;
+  abstract getModules(): GEModule[];
 
-  /**
-   * Returns a list of authorities of the current subject
-   */
-  abstract getRoles(): string[];
-
-  /**
-   * Returns a profile code of the current subject
-   */
   abstract getProfile(): string;
 
-  /**
-   * Checks if a given value is the same as the current subject
-   */
   abstract equals(value: unknown): boolean;
+
 }
 
 export class UnauthenticatedSubject extends AuthSubject<Record<string, unknown>> {
@@ -59,7 +43,7 @@ export class UnauthenticatedSubject extends AuthSubject<Record<string, unknown>>
     return false;
   }
 
-  getRoles(): string[] {
+  getModules(): GEModule[] {
     return [];
   }
 
@@ -69,10 +53,6 @@ export class UnauthenticatedSubject extends AuthSubject<Record<string, unknown>>
 
   getSurnames(): string {
     return "";
-  }
-
-  getExpiresAt(): number {
-    return 0;
   }
 
   equals(): boolean {

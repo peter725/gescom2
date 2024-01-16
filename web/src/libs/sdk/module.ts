@@ -16,3 +16,8 @@ export interface ModuleForm {
   code: string | null;
   type: ModuleType | null;
 }
+
+export interface GEModule {
+  code?: string ;
+  scopes?: string[] ;
+}

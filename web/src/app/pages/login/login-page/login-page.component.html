@@ -1,0 +1,41 @@
+<div class="h-screen w-full flex flex-col justify-between">
+
+  <div class="">
+    <div class="grid grid-cols-3 sm:grid-cols-4">
+      <!-- <div class="col-start-2 col-span-2 text-center py-6 border-b border-b-slate-200"> -->
+      <div class="text-center py-6 border-b border-b-slate-200 col-span-2 sm:col-start-2">
+        <tsw-logo
+          *ngFor="let org of organizations"
+          class="inline-block h-12 xs:h-16 xl:h-20 2xl:h-24"
+          [text]="org.fullName"
+          [imgSrc]="org.iconColor"
+          [targetLink]="org.webUrl"
+        ></tsw-logo>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col">
+    <div class="py-8 text-center">
+      <h1 class="text-xl md:text-2xl xl:text-3xl">Bienvenido a {{ appName }}</h1>
+    </div>
+
+<!--    <tsw-login-request-->
+<!--      class="py-3.5 flex-1 flex flex-col items-center"-->
+<!--      [class.justify-center]="status.is$('INIT') | async"-->
+<!--    ></tsw-login-request> -->
+    <tsw-login-request
+      class="py-3.5 flex-1 flex flex-col items-center"
+    ></tsw-login-request>
+
+  </div>
+
+  <div class="footer flex justify-center pt-12 pb-6">
+    <div class="self-end">
+      {{ appName }} ({{ version }}) &copy; {{ currentYear }}
+      <a [href]="ministry.fullName" target="_blank" class="font-bold">{{ ministry.shortName }}</a>
+    </div>
+  </div>
+</div>

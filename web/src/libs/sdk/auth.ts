@@ -1,3 +1,5 @@
+import { GEModule } from '@libs/sdk/module';
+
 export interface UserSignInRequest {
   docNum?: string; // Opcional
   processReturnUrl: string;
@@ -17,20 +19,19 @@ export interface ClaveRequestFormData {
 }
 
 export interface AuthDataResponse {
-  token: string;
-  exp: number;
+  access_token: string;
+  expires_in: number;
+  refresh_token:string;
+  token_type:string;
 }
 
 export interface AuthUserDetails {
-  petitionId: string;
-  relayId: string;
-
   userId: number;
+  docNum: string;
   firstName: string;
   firstSurname: string;
   secondSurname?: string;
 
   profile: string;
-  roles: string[];
-  scopes: string[];
+  modules: GEModule[];
 }

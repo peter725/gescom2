@@ -29,3 +29,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+ja-auth-app/src/main/resources/config/application-jdbc.properties
+ja-rest-app/src/main/resources/config/application-jdbc.properties

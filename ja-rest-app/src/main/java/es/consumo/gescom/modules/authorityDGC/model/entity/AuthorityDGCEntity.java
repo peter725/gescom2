@@ -22,19 +22,6 @@ import java.util.Objects;
 @Setter
 public class AuthorityDGCEntity extends SimpleEntity {
 
-    public static final String SEQ_AUTHORITY_DGC="seq_authority_dgc";
-
-    //genera el campo id
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_AUTHORITY_DGC)
-    @SequenceGenerator(
-            name = SEQ_AUTHORITY_DGC,
-            sequenceName = SEQ_AUTHORITY_DGC,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     //genera el campo name string de 50 caracteres
     @Column(name = "NAME" )
     @Size(min = 1, max = 50)
@@ -87,7 +74,7 @@ public class AuthorityDGCEntity extends SimpleEntity {
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
             AuthorityDGCEntity that = (AuthorityDGCEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+            return Objects.equals(getId(), that.getId()) && Objects.equals(name, that.name);
         }
 
     @Override

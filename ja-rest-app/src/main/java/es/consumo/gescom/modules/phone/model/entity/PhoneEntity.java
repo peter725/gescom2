@@ -24,18 +24,6 @@ import java.util.Objects;
 @Setter
 public class PhoneEntity extends SimpleEntity {
 
-    public static final String SEQ_PHONE="seq_phone";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_PHONE)
-    @SequenceGenerator(
-            name = SEQ_PHONE,
-            sequenceName = SEQ_PHONE,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     @Column(name = "PHONE" )
     @NotNull(message = "Debes especificar el Teléfono")
     @Size(min = 1, max = 100)
@@ -72,7 +60,7 @@ public class PhoneEntity extends SimpleEntity {
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
             PhoneEntity that = (PhoneEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+            return Objects.equals(getId(), that.getId()) && Objects.equals(phone, that.phone);
         }
 
     @Override

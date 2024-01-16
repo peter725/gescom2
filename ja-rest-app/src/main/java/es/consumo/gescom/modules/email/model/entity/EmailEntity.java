@@ -24,19 +24,6 @@ import java.util.Objects;
 @Setter
 public class EmailEntity extends SimpleEntity {
 
-    public static final String SEQ_EMAIL="seq_email";
-
-    //genera el campo id
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_EMAIL)
-    @SequenceGenerator(
-            name = SEQ_EMAIL,
-            sequenceName = SEQ_EMAIL,
-            allocationSize = 1
-    )
-    @Column(name = "id")
-    private Long id;
-
     @Column(name = "email" )
     @NotNull(message = "Debes especificar el email")
     @Size(min = 1, max = 100)
@@ -72,7 +59,7 @@ public class EmailEntity extends SimpleEntity {
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
             EmailEntity that = (EmailEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+            return Objects.equals(getId(), that.getId());
         }
 
     @Override

@@ -22,17 +22,6 @@ import java.util.Objects;
 @Table(name = "ambit")
 public class AmbitEntity extends SimpleEntity {
 
-    public static final String SEQ_AMBIT="seq_ambit";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_AMBIT)
-    @SequenceGenerator(
-            name = SEQ_AMBIT,
-            sequenceName = SEQ_AMBIT,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
 
     @Column(name = "AMBIT")
     @Size(min = 1, max = 10)
@@ -65,7 +54,7 @@ public class AmbitEntity extends SimpleEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         AmbitEntity that = (AmbitEntity) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+        return Objects.equals(getId(), that.getId()) && Objects.equals(name, that.name);
     }
 
     @Override

@@ -24,19 +24,6 @@ import java.util.Objects;
 @Setter
 public class AutonomousCommunityEntity extends SimpleEntity {
 
-    public static final String SEQ_CCAA ="seq_autonomous_community";
-
-    //genera el campo id
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_CCAA)
-    @SequenceGenerator(
-            name = SEQ_CCAA,
-            sequenceName = SEQ_CCAA,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     //genera el campo name
     @Column(name = "NAME" )
     @NotNull(message = "Debes especificar el nombre")

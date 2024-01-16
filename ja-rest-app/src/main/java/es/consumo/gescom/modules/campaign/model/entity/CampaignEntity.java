@@ -28,18 +28,6 @@ import java.util.Objects;
 @Setter
 public class CampaignEntity extends SimpleEntity {
 
-    public static final String SEQ_CAMPAIGN="seq_campaign";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_CAMPAIGN)
-    @SequenceGenerator(
-            name = SEQ_CAMPAIGN,
-            sequenceName = SEQ_CAMPAIGN,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     @Column(name = "YEAR_CAMPAIGN" )
     @NotNull(message = "Debes especificar el año")
     private Long year;

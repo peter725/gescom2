@@ -29,19 +29,6 @@ import java.util.Objects;
 @Setter
 public class AuthorityOEUEntity extends SimpleEntity {
 
-    public static final String SEQ_AUTHORITY_OEU="seq_authority_oeu";
-
-    //genera el campo id
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_AUTHORITY_OEU)
-    @SequenceGenerator(
-            name = SEQ_AUTHORITY_OEU,
-            sequenceName = SEQ_AUTHORITY_OEU,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     //genera el campo name
     @Column(name = "NAME" )
     @NotNull(message = "Debes especificar el nombre")
@@ -167,7 +154,7 @@ public class AuthorityOEUEntity extends SimpleEntity {
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
             AuthorityOEUEntity that = (AuthorityOEUEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+            return Objects.equals(getId(), that.getId()) && Objects.equals(name, that.name);
         }
 
     @Override

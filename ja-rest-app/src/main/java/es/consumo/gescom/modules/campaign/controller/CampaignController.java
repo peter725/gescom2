@@ -28,7 +28,7 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
         super(service, dataConverter);
     }
 
-    @GetMapping("/data/{name}")
+    @GetMapping("/data/{id}")
     public ResponseEntity<Page<CampaignEntity.SimpleProjection>> findListByCriteria(CampaignCriteria campaignCriteria, @PathVariable  Long id) {
         Page<CampaignEntity.SimpleProjection> result =
                 ((CampaignService) service).findAllCampaignById(new CriteriaWrapper<>(campaignCriteria), id);

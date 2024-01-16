@@ -22,18 +22,6 @@ import java.util.Objects;
 @Setter
 public class PhaseEntity extends SimpleEntity {
 
-    public static final String SEQ_PHASE_CAMPAIGN ="seq_phase_campaign";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_PHASE_CAMPAIGN)
-    @SequenceGenerator(
-            name = SEQ_PHASE_CAMPAIGN,
-            sequenceName = SEQ_PHASE_CAMPAIGN,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     @Column(name = "PHASE")
     private String phase;
 
@@ -67,7 +55,7 @@ public class PhaseEntity extends SimpleEntity {
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
             PhaseEntity that = (PhaseEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+            return Objects.equals(getId(), that.getId()) && Objects.equals(phase, that.phase);
         }
 
     @Override

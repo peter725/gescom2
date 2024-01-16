@@ -23,18 +23,6 @@ import java.util.Objects;
 @Setter
 public class CampaignProposalEntity extends SimpleEntity {
 
-    public static final String SEQ_APPROACH="seq_campaign_proposal";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_APPROACH)
-    @SequenceGenerator(
-            name = SEQ_APPROACH,
-            sequenceName = SEQ_APPROACH,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     @Column(name = "SENT")
     private Boolean sent;
 
@@ -89,7 +77,7 @@ public class CampaignProposalEntity extends SimpleEntity {
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
             CampaignProposalEntity that = (CampaignProposalEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+            return Objects.equals(getId(), that.getId()) && Objects.equals(approach, that.approach);
         }
 
     @Override

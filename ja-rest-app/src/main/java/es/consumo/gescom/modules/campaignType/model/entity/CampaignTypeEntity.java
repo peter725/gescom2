@@ -20,18 +20,6 @@ import java.util.Objects;
 @Setter
 public class CampaignTypeEntity extends SimpleEntity {
 
-    public static final String SEQ_CAMPAIGN_TYPE = "seq_campaign_type";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_CAMPAIGN_TYPE)
-    @SequenceGenerator(
-            name = SEQ_CAMPAIGN_TYPE,
-            sequenceName = SEQ_CAMPAIGN_TYPE,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     @Column(name = "TYPE")
     private String name;
 
@@ -62,7 +50,7 @@ public class CampaignTypeEntity extends SimpleEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CampaignTypeEntity that = (CampaignTypeEntity) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+        return Objects.equals(getId(), that.getId()) && Objects.equals(that.getId(), that.getId());
     }
 
     @Override

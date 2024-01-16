@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @ComponentScan("es.consumo.gescom.jwt.rest")
 @EnableJpaRepositories("es.consumo.gescom.jwt.rest.user.db.repository")
-@EntityScan(basePackages = "es.consumo.junta_arbitral.jwt.rest.user.db.entity")
+@EntityScan(basePackages = "es.consumo.gescom.jwt.rest.user.db.entity")
 public class ConfigurationReference {
 }

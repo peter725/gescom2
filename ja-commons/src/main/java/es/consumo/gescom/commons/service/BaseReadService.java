@@ -1,7 +1,7 @@
 package es.consumo.gescom.commons.service;
 
 import es.consumo.gescom.commons.db.repository.QueryByCriteria;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.converter.DataConverter;
@@ -18,12 +18,12 @@ import java.util.Optional;
  */
 public abstract class BaseReadService<E, M, I> implements ReadService<M, I> {
 
-    protected final JJAARepository<E, I> repository;
+    protected final GESCOMRepository<E, I> repository;
     protected final DataConverter<E, M> converter;
     protected final Logger logger;
 
     protected BaseReadService(
-            JJAARepository<E, I> repository,
+            GESCOMRepository<E, I> repository,
             DataConverter<E, M> converter) {
         this.repository = repository;
         this.converter = converter;

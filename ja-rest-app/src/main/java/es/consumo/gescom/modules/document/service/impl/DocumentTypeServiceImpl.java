@@ -4,7 +4,7 @@ import es.consumo.gescom.modules.arbitration.model.constants.ClaimantType;
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
 import es.consumo.gescom.modules.document.model.criteria.DocumentTypeCriteria;
 import es.consumo.gescom.modules.document.model.entity.DocumentTypeEntity;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.service.EntityReadService;
 import es.consumo.gescom.commons.service.ReadService;
@@ -24,7 +24,7 @@ public class DocumentTypeServiceImpl extends EntityReadService<DocumentTypeEntit
     private final ReadService<ArbitrationEntity, Long> arbitrationService;
 
     @Autowired
-    public DocumentTypeServiceImpl(JJAARepository<DocumentTypeEntity, Long> repository,
+    public DocumentTypeServiceImpl(GESCOMRepository<DocumentTypeEntity, Long> repository,
                                    ReadService<ArbitrationEntity, Long> arbitrationService) {
         super(repository);
         this.arbitrationService = arbitrationService;

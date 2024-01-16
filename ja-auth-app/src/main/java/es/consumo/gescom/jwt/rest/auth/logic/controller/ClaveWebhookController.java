@@ -35,7 +35,7 @@ public class ClaveWebhookController {
             path = "/auth/login_response"
     )
     public String processLoginResponse(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        String returnUrl = env.getProperty("jjaa.front.app.url");
+        String returnUrl = env.getProperty("gescom.front.app.url");
         try {
 
             // Descodificación y validación de la respuesta de clave y emisión del JWT
@@ -64,7 +64,7 @@ public class ClaveWebhookController {
     )
     public String processLogoutResponse(HttpServletRequest request, RedirectAttributes redirectAttributes, Environment env) {
         // Ignoramos cualquier respuesta de clave y redirigimos a la web para completar el proceso
-        String returnUrl = env.getProperty("jjaa.front.app.url");
+        String returnUrl = env.getProperty("gescom.front.app.url");
         try {
             redirectAttributes.addAttribute(AuthResultParams.AUTH_ACTION_PARAM, AuthResultParams.ACTION_SIGN_OUT);
             return "redirect:" + returnUrl;

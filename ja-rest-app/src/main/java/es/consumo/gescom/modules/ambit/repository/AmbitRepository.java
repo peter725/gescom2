@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 
 @Repository
-public interface AmbitRepository extends JJAARepository<AmbitEntity, Long>  {
+public interface AmbitRepository extends GESCOMRepository<AmbitEntity, Long> {
 
     @Query(value = "SELECT h FROM AmbitEntity h where h.id = :id ")
     Page<AmbitEntity.SimpleProjection> findAllAmbitById(Pageable pageable, @Param("id") Long id);

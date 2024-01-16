@@ -1,6 +1,6 @@
 package es.consumo.gescom.modules.document.repository;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.db.repository.QueryByCriteria;
 import es.consumo.gescom.modules.document.model.criteria.DocumentCriteria;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DocumentRepository extends JJAARepository<DocumentEntity, Long>,
+public interface DocumentRepository extends GESCOMRepository<DocumentEntity, Long>,
         QueryByCriteria<DocumentEntity, DocumentCriteria> {
     @Override
     @Query(value = "SELECT t FROM DocumentEntity t "

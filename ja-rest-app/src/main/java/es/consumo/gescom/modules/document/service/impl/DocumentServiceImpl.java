@@ -3,7 +3,7 @@ package es.consumo.gescom.modules.document.service.impl;
 
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.commons.service.ReadService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -29,7 +29,7 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     private final ReadService<ArbitrationEntity, Long> arbitrationService;
 
     @Autowired
-    public DocumentServiceImpl(JJAARepository<DocumentEntity, Long> repository,
+    public DocumentServiceImpl(GESCOMRepository<DocumentEntity, Long> repository,
                                ReadService<ArbitrationEntity, Long> arbitrationService) {
         super(repository);
         this.arbitrationService = arbitrationService;

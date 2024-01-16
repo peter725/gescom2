@@ -2,7 +2,7 @@ package es.consumo.gescom.modules.arbitration.service.impl;
 
 import es.consumo.gescom.modules.arbitration.model.entity.LocationEntity;
 import es.consumo.gescom.modules.arbitration.model.entity.RepresentedEntity;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.CrudService;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class RepresentedServiceImpl extends EntityCrudService<RepresentedEntity,
     private final CrudService<LocationEntity, Long> locationService;
 
     @Autowired
-    public RepresentedServiceImpl(JJAARepository<RepresentedEntity, Long> repository,
+    public RepresentedServiceImpl(GESCOMRepository<RepresentedEntity, Long> repository,
                                   CrudService<LocationEntity, Long> locationService) {
         super(repository);
         this.locationService = locationService;

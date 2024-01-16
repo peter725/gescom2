@@ -5,12 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.modules.users.model.entity.UserEntity;
 import es.consumo.gescom.modules.users.model.criteria.UserCriteria;
 
 @Repository
-public interface UserRepository extends JJAARepository<UserEntity, Long> {
+public interface UserRepository extends GESCOMRepository<UserEntity, Long> {
     
         @Query(value = "SELECT a FROM UserEntity a "
         + "WHERE "

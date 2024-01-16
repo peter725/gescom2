@@ -3,14 +3,14 @@ package es.consumo.gescom.modules.general.repository;
 import es.consumo.gescom.modules.general.model.criteria.TownCriteria;
 import es.consumo.gescom.modules.general.model.entity.TownEntity;
 import es.consumo.gescom.commons.db.repository.QueryByCriteria;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TownRepository extends JJAARepository<TownEntity, Long>, QueryByCriteria<TownEntity, TownCriteria> {
+public interface TownRepository extends GESCOMRepository<TownEntity, Long>, QueryByCriteria<TownEntity, TownCriteria> {
 
     @Override
     @Query(value = "SELECT t FROM TownEntity t "

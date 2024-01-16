@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface LanguageRepository
-        extends JJAARepository<Language, Long>,
+        extends GESCOMRepository<Language, Long>,
         QueryByCriteria<Language, GeneralCriteria> {
 
     Optional<Language> findByIsoCode(String code);

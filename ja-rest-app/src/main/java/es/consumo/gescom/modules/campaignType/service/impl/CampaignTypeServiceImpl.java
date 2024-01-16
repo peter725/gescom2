@@ -1,6 +1,6 @@
 package es.consumo.gescom.modules.campaignType.service.impl;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.modules.campaignType.model.criteria.CampaignTypeCriteria;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CampaignTypeServiceImpl extends EntityCrudService<CampaignTypeEntity, Long> implements CampaignTypeService {
-    protected CampaignTypeServiceImpl(JJAARepository<CampaignTypeEntity, Long> repository) {
+    protected CampaignTypeServiceImpl(GESCOMRepository<CampaignTypeEntity, Long> repository) {
         super(repository);
     }
 

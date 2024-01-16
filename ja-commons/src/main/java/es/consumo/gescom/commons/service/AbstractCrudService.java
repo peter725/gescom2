@@ -1,6 +1,6 @@
 package es.consumo.gescom.commons.service;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.IdModel;
 import es.consumo.gescom.commons.converter.DataConverter;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,7 +16,7 @@ public abstract class AbstractCrudService<E extends IdModel<I>, M, I>
         extends BaseCrudService<E, M, I> {
 
     protected AbstractCrudService(
-            JJAARepository<E, I> repository,
+            GESCOMRepository<E, I> repository,
             DataConverter<E, M> converter) {
         super(repository, converter);
     }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 
@@ -17,7 +17,7 @@ import java.time.LocalDate;
 
 @Service
 public class CampaignProposalServiceImpl extends EntityCrudService<CampaignProposalEntity, Long> implements CampaignProposalService {
-    protected CampaignProposalServiceImpl(JJAARepository<CampaignProposalEntity, Long> repository) {
+    protected CampaignProposalServiceImpl(GESCOMRepository<CampaignProposalEntity, Long> repository) {
         super(repository);
     }
 

@@ -6,12 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.modules.module.model.criteria.ModuleCriteria;
 import es.consumo.gescom.modules.module.model.entity.ModuleEntity;
 
 @Repository
-public interface ModuleRepository extends JJAARepository<ModuleEntity, Long> ,
+public interface ModuleRepository extends GESCOMRepository<ModuleEntity, Long>,
         QueryByCriteria<ModuleEntity.SimpleProjection, ModuleCriteria> {
 
     @Query(value = "SELECT a FROM ModuleEntity a "

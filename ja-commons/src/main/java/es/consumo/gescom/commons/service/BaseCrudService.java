@@ -1,7 +1,7 @@
 package es.consumo.gescom.commons.service;
 
 import es.consumo.gescom.commons.db.entity.StatefulEntity;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.EntityStatusChange;
 import es.consumo.gescom.commons.constants.EntityState;
 import es.consumo.gescom.commons.converter.DataConverter;
@@ -18,7 +18,7 @@ public abstract class BaseCrudService<E, M, I>
         implements CrudService<M, I> {
 
     protected BaseCrudService(
-            JJAARepository<E, I> repository,
+            GESCOMRepository<E, I> repository,
             DataConverter<E, M> converter) {
         super(repository, converter);
     }

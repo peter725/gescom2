@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 
 
 @Service
 public class AuthorityOEUServiceImpl extends EntityCrudService<AuthorityOEUEntity, Long> implements AuthorityOEUService {
-    protected AuthorityOEUServiceImpl(JJAARepository<AuthorityOEUEntity, Long> repository) {
+    protected AuthorityOEUServiceImpl(GESCOMRepository<AuthorityOEUEntity, Long> repository) {
         super(repository);
     }
 

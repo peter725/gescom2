@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 
 @Repository
-public interface SpecialistRepository extends JJAARepository<SpecialistEntity, Long>  {
+public interface SpecialistRepository extends GESCOMRepository<SpecialistEntity, Long> {
 
     @Query(value = "SELECT h FROM SpecialistEntity h where h.id = :id ")
     Page<SpecialistEntity.SimpleProjection> findAllSpecialistById(Pageable pageable, @Param("id") Long id);

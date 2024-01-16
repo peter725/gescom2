@@ -1,6 +1,6 @@
 package es.consumo.gescom.modules.arbitration.service.impl;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.CrudService;
 import es.consumo.gescom.commons.service.EntityCrudService;
@@ -61,7 +61,7 @@ public class ArbitrationServiceImpl extends EntityCrudService<ArbitrationEntity,
 
 
     @Autowired
-    public ArbitrationServiceImpl(JJAARepository<ArbitrationEntity, Long> repository,
+    public ArbitrationServiceImpl(GESCOMRepository<ArbitrationEntity, Long> repository,
                                   CrudService<ClaimantEntity, Long> claimantService,
                                   CrudService<ClaimedEntity, Long> claimedService,
                                   ArbitrationRepository arbitrationRepository,

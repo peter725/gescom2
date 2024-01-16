@@ -1,6 +1,6 @@
 package es.consumo.gescom.modules.phase.service.impl;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.modules.phase.model.criteria.PhaseCriteria;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PhaseServiceImpl extends EntityCrudService<PhaseEntity, Long> implements PhaseService {
-    protected PhaseServiceImpl(JJAARepository<PhaseEntity, Long> repository) {
+    protected PhaseServiceImpl(GESCOMRepository<PhaseEntity, Long> repository) {
         super(repository);
     }
 

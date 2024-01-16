@@ -25,10 +25,10 @@ public class RestTemplateConfig {
 
     @Bean("authClient")
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        final String context = isLocal() ? "" : "/jjaa-auth-app";
+        final String context = isLocal() ? "" : "/gescom-auth-app";
         log.info("restTemplate - authClient context:[{}]", context);
         return builder
-                .basicAuthentication("JJAA", "JJAA")
+                .basicAuthentication("GESCOM", "GESCOM")
                 .additionalInterceptors((HttpRequest request, byte[] body, ClientHttpRequestExecution execution) -> {
                     final HttpHeaders headers = request.getHeaders();
                     if (request.getURI().toString().contains("/oauth/")) {

@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationStatusEntity;
@@ -32,7 +32,7 @@ public class TimerServiceImpl extends EntityCrudService<TimerEntity, Long> imple
     private final NotificationRepository notificacionRepository;
 
     @Autowired
-    public TimerServiceImpl(JJAARepository<TimerEntity, Long> repository,
+    public TimerServiceImpl(GESCOMRepository<TimerEntity, Long> repository,
                             ArbitrationRepository arbitrationRepository,
                             ArbitrationStatusRepository arbitrationStatusRepository,
                             NotificationRepository notificacionRepository) {

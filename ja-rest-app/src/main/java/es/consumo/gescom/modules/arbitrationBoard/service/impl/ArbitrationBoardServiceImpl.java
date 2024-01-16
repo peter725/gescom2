@@ -4,7 +4,7 @@ import es.consumo.gescom.modules.arbitrationBoard.model.criteria.ArbitrationBoar
 import es.consumo.gescom.modules.arbitrationBoard.model.entity.ArbitrationBoardEntity;
 import es.consumo.gescom.modules.arbitrationBoard.repository.ArbitrationBoardRepository;
 import es.consumo.gescom.modules.arbitrationBoard.service.ArbitrationBoardService;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class ArbitrationBoardServiceImpl extends EntityCrudService<ArbitrationBo
     private ArbitrationBoardRepository arbitrationBoardRepository;
 
     @Autowired
-    public ArbitrationBoardServiceImpl(JJAARepository<ArbitrationBoardEntity, Long> repository) {
+    public ArbitrationBoardServiceImpl(GESCOMRepository<ArbitrationBoardEntity, Long> repository) {
         super(repository);
     }
 

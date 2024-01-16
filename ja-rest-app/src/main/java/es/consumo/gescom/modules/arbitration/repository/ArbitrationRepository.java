@@ -1,6 +1,6 @@
 package es.consumo.gescom.modules.arbitration.repository;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.db.repository.QueryByCriteria;
 import es.consumo.gescom.modules.arbitration.model.criteria.ArbitrationCriteria;
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ArbitrationRepository extends JJAARepository<ArbitrationEntity, Long>,
+public interface ArbitrationRepository extends GESCOMRepository<ArbitrationEntity, Long>,
         QueryByCriteria<ArbitrationEntity.SimpleProjection, ArbitrationCriteria> {
 
 

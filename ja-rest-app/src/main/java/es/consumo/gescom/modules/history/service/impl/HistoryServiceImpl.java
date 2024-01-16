@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
@@ -16,7 +16,7 @@ import es.consumo.gescom.modules.history.service.HistoryService;
 
 @Service
 public class HistoryServiceImpl extends EntityCrudService<HistoryEntity, Long> implements HistoryService {
-    protected HistoryServiceImpl(JJAARepository<HistoryEntity, Long> repository) {
+    protected HistoryServiceImpl(GESCOMRepository<HistoryEntity, Long> repository) {
         super(repository);
     }
 

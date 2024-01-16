@@ -1,6 +1,6 @@
 package es.consumo.gescom.modules.role.service.impl;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.modules.module.model.entity.ModuleEntity;
 import es.consumo.gescom.modules.module.repository.ModuleRepository;
@@ -34,7 +34,7 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
     private final ModuleRepository moduleRepository;
     private final ModelMapper modelMapper;
 
-    public RoleServiceImpl(JJAARepository<RoleEntity, Long> repository, RoleHasModuleRepository roleHasModuleRepository,
+    public RoleServiceImpl(GESCOMRepository<RoleEntity, Long> repository, RoleHasModuleRepository roleHasModuleRepository,
                            PermissionRepository permissionRepository, ModuleRepository moduleRepository,
                            ModelMapper modelMapper) {
         super(repository);

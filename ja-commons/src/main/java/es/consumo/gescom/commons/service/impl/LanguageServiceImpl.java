@@ -3,7 +3,7 @@ package es.consumo.gescom.commons.service.impl;
 import es.consumo.gescom.commons.config.LocaleConfig;
 import es.consumo.gescom.commons.db.entity.Language;
 import es.consumo.gescom.commons.db.repository.LanguageRepository;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.commons.service.LanguageService;
 import es.consumo.gescom.commons.exception.NotFoundException;
@@ -21,7 +21,7 @@ public class LanguageServiceImpl
         extends EntityCrudService<Language, Long>
         implements LanguageService {
 
-    public LanguageServiceImpl(JJAARepository<Language, Long> repository) {
+    public LanguageServiceImpl(GESCOMRepository<Language, Long> repository) {
         super(repository);
     }
 

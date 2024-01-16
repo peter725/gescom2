@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <name>JJAA-AUTH</name>
-    <groupId>es.consumo.jjaa</groupId>
-    <artifactId>jjaa-auth-app</artifactId>
+    <name>GESCOM-AUTH</name>
+    <groupId>es.consumo.gescom</groupId>
+    <artifactId>gescom-auth-app</artifactId>
     <version>0.0.1</version>
     <packaging>war</packaging>
 
@@ -27,8 +27,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>es.consumo.junta_arbitral</groupId>
-            <artifactId>jjaa-commons-app</artifactId>
+            <groupId>es.consumo.gescom</groupId>
+            <artifactId>gescom-commons-app</artifactId>
             <version>0.0.2</version>
         </dependency>
         <dependency>
@@ -257,7 +257,7 @@
 				<activatedProperties>local,jdbc</activatedProperties>
 				<env.domain>local</env.domain>
 				<baseURL>http://localhost:8085</baseURL>
-				<pathLogs>C:/Users/Juan Pablo Zabala/SoftwareWork/SERIKAT/log/JJAA.log</pathLogs>
+				<pathLogs>C:/Users/Juan Pablo Zabala/SoftwareWork/SERIKAT/log/GESCOM.log</pathLogs>
 				<config.files>C:/Users/Juan Pablo Zabala/SoftwareWork/SERIKAT</config.files>
 			</properties>
 		</profile>
@@ -267,8 +267,8 @@
 				<activatedProperties>dev,jndi</activatedProperties>
 				<env.domain>pre</env.domain>
 				<baseURL>http://micapps01dev.consumo.gob.es:8080</baseURL>
-				<pathLogs>/documentospro/logs/JJAA.log</pathLogs>
-				<config.files>/documentospro/properties/JJAA</config.files>
+				<pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
+				<config.files>/documentospro/properties/GESCOM</config.files>
 			</properties>
 		</profile>
 		<profile>
@@ -277,8 +277,8 @@
 				<activatedProperties>pre,jndi</activatedProperties>
 				<env.domain>pre</env.domain>
 				<baseURL>http://micapps01pre.consumo.gob.es:8080</baseURL>
-				<pathLogs>/documentospro/logs/JJAA.log</pathLogs>
-				<config.files>/documentospro/properties/JJAA</config.files>
+				<pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
+				<config.files>/documentospro/properties/GESCOM</config.files>
 			</properties>
 		</profile>
 	</profiles>

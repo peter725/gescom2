@@ -6,12 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.modules.permission.model.criteria.PermissionCriteria;
 import es.consumo.gescom.modules.permission.model.entity.PermissionEntity;
 
 @Repository
-public interface PermissionRepository extends JJAARepository<PermissionEntity, Long>,
+public interface PermissionRepository extends GESCOMRepository<PermissionEntity, Long>,
         QueryByCriteria<PermissionEntity.SimpleProjection, PermissionCriteria> {
 
     @Query(value = "SELECT a FROM PermissionEntity a "

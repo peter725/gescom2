@@ -4,7 +4,7 @@ import es.consumo.gescom.modules.arbitration.model.constants.ClaimantType;
 import es.consumo.gescom.modules.arbitration.model.entity.ClaimantEntity;
 import es.consumo.gescom.modules.arbitration.model.entity.LocationEntity;
 import es.consumo.gescom.modules.arbitration.model.entity.RepresentedEntity;
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.CrudService;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ClaimantServiceImpl extends EntityCrudService<ClaimantEntity, Long>
     private final CrudService<RepresentedEntity, Long> representedService;
 
     @Autowired
-    public ClaimantServiceImpl(JJAARepository<ClaimantEntity, Long> repository,
+    public ClaimantServiceImpl(GESCOMRepository<ClaimantEntity, Long> repository,
                                CrudService<LocationEntity, Long> locationService,
                                CrudService<RepresentedEntity, Long> representedService) {
         super(repository);

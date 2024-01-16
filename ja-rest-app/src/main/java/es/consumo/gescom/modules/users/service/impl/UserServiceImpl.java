@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.modules.role.model.entity.RoleEntity;
@@ -38,8 +38,8 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UserServiceImpl(JJAARepository<UserEntity, Long> repository,
-                            ModelMapper modelMapper) {
+    public UserServiceImpl(GESCOMRepository<UserEntity, Long> repository,
+                           ModelMapper modelMapper) {
         super(repository);
         this.modelMapper = modelMapper;
     }

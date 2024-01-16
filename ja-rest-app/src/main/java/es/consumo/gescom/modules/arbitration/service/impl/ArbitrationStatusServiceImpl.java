@@ -1,6 +1,6 @@
 package es.consumo.gescom.modules.arbitration.service.impl;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityReadService;
 import es.consumo.gescom.modules.arbitration.model.constants.RequestStatus;
 import es.consumo.gescom.modules.arbitration.model.dto.StatusChangeDTO;
@@ -25,7 +25,7 @@ public class ArbitrationStatusServiceImpl extends EntityReadService<ArbitrationS
     private final StateMachineService stateMachineService;
 
     @Autowired
-    public ArbitrationStatusServiceImpl(JJAARepository<ArbitrationStatusEntity, Long> repository,
+    public ArbitrationStatusServiceImpl(GESCOMRepository<ArbitrationStatusEntity, Long> repository,
                                         StateMachineService stateMachineService) {
         super(repository);
         this.stateMachineService = stateMachineService;

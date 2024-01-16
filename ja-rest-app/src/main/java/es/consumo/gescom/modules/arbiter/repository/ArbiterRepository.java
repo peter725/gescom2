@@ -1,6 +1,6 @@
 package es.consumo.gescom.modules.arbiter.repository;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.db.repository.QueryByCriteria;
 import es.consumo.gescom.modules.arbiter.model.criteria.ArbiterCriteria;
 import es.consumo.gescom.modules.arbiter.model.entity.ArbiterEntity;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ArbiterRepository extends JJAARepository<ArbiterEntity, Long>,
+public interface ArbiterRepository extends GESCOMRepository<ArbiterEntity, Long>,
         QueryByCriteria<ArbiterEntity.SimpleProjection, ArbiterCriteria> {
     @Query(value = "SELECT a FROM ArbiterEntity a "
             + "WHERE "

@@ -1,6 +1,6 @@
 package es.consumo.gescom.commons.service;
 
-import es.consumo.gescom.commons.db.repository.JJAARepository;
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.IdModel;
 import es.consumo.gescom.commons.converter.SameDataConverter;
 
@@ -12,7 +12,7 @@ import es.consumo.gescom.commons.converter.SameDataConverter;
 public abstract class EntityCrudService<E extends IdModel<I>, I>
         extends AbstractCrudService<E, E, I> {
 
-    protected EntityCrudService(JJAARepository<E, I> repository) {
+    protected EntityCrudService(GESCOMRepository<E, I> repository) {
         super(repository, SameDataConverter.getInstance());
     }
 }

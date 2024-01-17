@@ -11,11 +11,11 @@ export const environment: EnvironmentData = {
   baseHref: '',
   srv: {
     app: {
-      host: 'http://localhost:8083/ge-rest-app',
+      host: 'http://localhost:8083',
       api: '/api/v1',
     },
     auth: {
-      host: 'http://localhost:8085/ge-auth-app',
+      host: 'http://localhost:8085',
       api: '/api/v1',
       username:'GE',
       password:'GE'

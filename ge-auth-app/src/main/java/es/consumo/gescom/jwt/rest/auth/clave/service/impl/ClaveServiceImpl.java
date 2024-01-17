@@ -11,7 +11,7 @@ import eu.eidas.auth.commons.attribute.impl.LiteralStringAttributeValue;
 import eu.eidas.auth.commons.attribute.impl.StringAttributeValue;
 import eu.eidas.auth.engine.xml.opensaml.SecureRandomXmlIdGenerator;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;

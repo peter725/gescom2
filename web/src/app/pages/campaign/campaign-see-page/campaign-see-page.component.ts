@@ -5,7 +5,7 @@ import { ComponentStatus, ControlsOf } from '@libs/commons';
 import { Campaign, CampaignForm, CreateCampaign } from '@libs/sdk/campaign';
 import { Validators } from '@angular/forms';
 import { DocumentForm, SignFile } from '@libs/sdk/document';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -15,12 +15,15 @@ import { firstValueFrom, Observable } from 'rxjs';
     { provide: FORM_STATUS, useValue: new ComponentStatus('IDLE') },
   ]
 })
-export class CampaignSeePageComponent extends EditPageBaseComponent<any, CampaignForm> {
+export class CampaignSeePageComponent extends EditPageBaseComponent<any , CampaignForm>  {
 
   readonly resourceName = 'campaign';
   readonly protocolFileUpload = 'protocolFileUpload';
   protected override _createResourceTitle = 'pages.campaign.add';
   protected override _editResourceTitle = 'pages.campaign.see';
+
+
+
 
 
   protected buildForm(){
@@ -34,7 +37,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any, Campaig
       ambit: this.fb.control(null, [Validators.required]),
       specialists: this.fb.control([], [Validators.required]),
       proponents: this.fb.control([], [Validators.required]),
-      responsibleEntity: this.fb.control(null, [Validators.required]),
+      autonomousCommunityResponsible: this.fb.control(null, [Validators.required]),
       phaseCampaign: this.fb.control(null, [Validators.required]),
     });
 
@@ -71,6 +74,12 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any, Campaig
       extension: signFile.file.type,
       base64: signFile.b64
     }, {resourceName: this.protocolFileUpload});
+  }
+
+  changePhaseCampaign(){
+    return this.crudService.update(this.form.get('id')?.value?), this.form.get('proponents')?.value?, this.form.get('proponents')?.value?);
+    console.log('changePhaseCampaign', this.resourceId);
+    console.log('changePhaseCampaign', this.resourceName);
   }
 
 }

@@ -1,6 +1,6 @@
 
 
-<div  [formGroup]="form" class="grid grid-cols-2 gap-1.5 px-10 sm:px-10 w-3/4 sm:w-auto h-32 p-4 border border-gray-300 bg-white rounded-md">
+<div  [formGroup]="form" class="grid grid-cols-2 gap-1.5 px-10 sm:px-10 w-3/4 sm:w-auto p-4 border border-gray-300 bg-white rounded-md">
   <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900 justify-items-start" >{{'text.campaign.library' | translate}}</h3>
   <input type="file" class="file-input justify-items-end"  [accept]="requiredFileType" #fileUpload>
     <div class="file-upload text-right">
@@ -8,24 +8,26 @@
                (click)="fileUpload.click()">
         <mat-icon>attach_file</mat-icon>
       </button>
-      <tsw-table-container
-        [columns]="columns">
-        <table
-          tsw-table
-          [dataSource]="source"
-        >
-          <tr mat-header-row *matHeaderRowDef="(columns?.columns | async) ?? []"></tr>
-          <tr mat-row *matRowDef="let row; columns: (columns?.columns | async) ?? []"></tr>
+    </div>
 
-          <ng-container matColumnDef="year">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 7%">
-              {{ "fields.year" | translate }}
-            </th>
-            <td *matCellDef="let element" mat-cell>{{ element.year }}</td>
-          </ng-container>
-        </table>
-      </tsw-table-container>
-  </div>
+  <tsw-table-container
+    class="pt-3 sm:col-span-2"
+    [columns]="columns">
+    <table
+      tsw-table
+      [dataSource]="source"
+    >
+      <tr mat-header-row *matHeaderRowDef="(columns?.columns | async) ?? []"></tr>
+      <tr mat-row *matRowDef="let row; columns: (columns?.columns | async) ?? []"></tr>
+
+      <ng-container matColumnDef="year">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 7%">
+          {{ "fields.year" | translate }}
+        </th>
+        <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
+      </ng-container>
+    </table>
+  </tsw-table-container>
 
 </div>
 

@@ -74,7 +74,8 @@ public class AutonomousCommunityProponentEntity extends SimpleEntity {
         public interface SimpleProjection {
 
             Long getId();
-            String getName();
+            ProponentEntity getProponent();
+            CampaignEntity getCampaign();
 
         }
 }

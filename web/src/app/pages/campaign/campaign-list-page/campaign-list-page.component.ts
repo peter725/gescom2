@@ -18,6 +18,8 @@ export class CampaignListPageComponent  extends BaseListPageComponent<Campaign> 
     override exportFormats = [ExportFileType.CSV];
     override downloadFileName = 'pages.campaign.title';
 
+
+
     constructor(
       crudService: CrudImplService<Campaign>,
       filterService: FilterService,

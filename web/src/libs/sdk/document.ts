@@ -16,6 +16,14 @@ export interface DocumentsForm {
   requiredSelect: Array<Record<string, any>> | null
 }
 
+export interface DocumentView {
+  name: string;
+  type: string;
+  fileSize: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface SignFile {
   form?: FormGroup;
   file: File;

@@ -7,7 +7,7 @@ export const crudOperationsStorageFactory = () => {
   const apiOperations: OperationsDefSrc = {
     health: { type: HttpOperationType.SIMPLE, path: `/health` },
     provinces: { type: HttpOperationType.READ, path: `/provinces` },
-    approach: { type: HttpOperationType.CRUD, path: `/approach` },
+    campaign_proposal: { type: HttpOperationType.CRUD, path: `/campaign_proposal` },
     campaign: { type: HttpOperationType.CRUD, path: `/campaign` },
     protocolFileUpload: { type: HttpOperationType.SIMPLE, path: `/protocols/create_from_file` },
     ambit: { type: HttpOperationType.CRUD, path: `/ambit` },

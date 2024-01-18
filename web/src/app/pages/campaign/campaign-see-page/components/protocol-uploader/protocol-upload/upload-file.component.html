@@ -8,6 +8,23 @@
                (click)="fileUpload.click()">
         <mat-icon>attach_file</mat-icon>
       </button>
+      <tsw-table-container
+        [columns]="columns">
+        <table
+          tsw-table
+          [dataSource]="source"
+        >
+          <tr mat-header-row *matHeaderRowDef="(columns?.columns | async) ?? []"></tr>
+          <tr mat-row *matRowDef="let row; columns: (columns?.columns | async) ?? []"></tr>
+
+          <ng-container matColumnDef="year">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 7%">
+              {{ "fields.year" | translate }}
+            </th>
+            <td *matCellDef="let element" mat-cell>{{ element.year }}</td>
+          </ng-container>
+        </table>
+      </tsw-table-container>
   </div>
 
 </div>

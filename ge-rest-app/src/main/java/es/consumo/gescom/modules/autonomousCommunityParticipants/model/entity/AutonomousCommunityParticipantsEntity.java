@@ -1,10 +1,11 @@
-package es.consumo.gescom.modules.campaignProposal.model.entity;
+package es.consumo.gescom.modules.autonomousCommunityParticipants.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
+import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
+import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import lombok.Getter;
 import lombok.Setter;
-
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -12,43 +13,25 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "campaign_proposal")
+@Table(name = "autonomous_community_participant")
 @Getter
 @Setter
-public class CampaignProposalEntity extends SimpleEntity {
+public class AutonomousCommunityParticipantsEntity extends SimpleEntity {
 
-    @Column(name = "SENT")
-    private Boolean sent;
+    @ManyToOne
+    @JoinColumn(name = "AUTONOMOUS_COMMUNITY_ID")
+    private AutonomousCommunityEntity autonomousCommunityEntity;
 
-    @Column(name = "AUTONOMOUS_COMMUNITY_ID")
-    private Long autonomousCommunityId;
-
-    @Column(name = "USER_ID")
-    private Long userId;
-
-    @Column(name = "CAMPAIGN_TYPE_ID")
-    private Long campaignTypeId;
-
-    @Column(name = "DATE")
-    private LocalDate date;
-
-    @Column(name = "APPROACH")
-    private String approach;
-
-    @Column(name = "JUSTIFICATION")
-    private String justification;
-
-    @Column(name = "OBJECTIVE")
-    private String objective;
-
-    @Column(name = "VIABILITY")
-    private String viability;
+    @ManyToOne
+    @JoinColumn(name = "CAMPAIGN_ID")
+    private CampaignEntity campaign;
 
     @JsonIgnore
     @CreatedDate
@@ -74,13 +57,14 @@ public class CampaignProposalEntity extends SimpleEntity {
     @Setter
     private Integer state = 1;
 
+
     @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
-            CampaignProposalEntity that = (CampaignProposalEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(approach, that.approach);
+            AutonomousCommunityParticipantsEntity that = (AutonomousCommunityParticipantsEntity) o;
+            return Objects.equals(getId(), that.getId());
         }
 
     @Override
@@ -91,15 +75,7 @@ public class CampaignProposalEntity extends SimpleEntity {
         public interface SimpleProjection {
 
             Long getId();
-            Boolean getSent();
-            Long getAutonomousCommunityId();
-            Long getUserId();
-            Long getCampaignTypeId();
-            LocalDate getDate();
-            String getApproach();
-            String getJustification();
-            String getObjective();
-            String getViability();
+            String getName();
 
         }
 }

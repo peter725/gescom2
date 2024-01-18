@@ -1,54 +1,36 @@
-package es.consumo.gescom.modules.campaignProposal.model.entity;
+package es.consumo.gescom.modules.autonomousCommunitySpecialist.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
 import lombok.Getter;
 import lombok.Setter;
-
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "campaign_proposal")
+@Table(name = "autonomous_community")
 @Getter
 @Setter
-public class CampaignProposalEntity extends SimpleEntity {
+public class AutonomousCommunitySpecialistEntity extends SimpleEntity {
 
-    @Column(name = "SENT")
-    private Boolean sent;
-
-    @Column(name = "AUTONOMOUS_COMMUNITY_ID")
-    private Long autonomousCommunityId;
-
-    @Column(name = "USER_ID")
-    private Long userId;
-
-    @Column(name = "CAMPAIGN_TYPE_ID")
-    private Long campaignTypeId;
-
-    @Column(name = "DATE")
-    private LocalDate date;
-
-    @Column(name = "APPROACH")
-    private String approach;
-
-    @Column(name = "JUSTIFICATION")
-    private String justification;
-
-    @Column(name = "OBJECTIVE")
-    private String objective;
-
-    @Column(name = "VIABILITY")
-    private String viability;
+    //genera el campo name
+    @Column(name = "NAME" )
+    @NotNull(message = "Debes especificar el nombre")
+    @Size(min = 1, max = 50)
+    private String name;
 
     @JsonIgnore
     @CreatedDate
@@ -74,32 +56,25 @@ public class CampaignProposalEntity extends SimpleEntity {
     @Setter
     private Integer state = 1;
 
+
     @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
-            CampaignProposalEntity that = (CampaignProposalEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(approach, that.approach);
+            AutonomousCommunitySpecialistEntity that = (AutonomousCommunitySpecialistEntity) o;
+            return Objects.equals(getName(), that.getName()) && Objects.equals(name, that.name);
         }
 
     @Override
         public int hashCode() {
-            return Objects.hash(super.hashCode(), getId());
+            return Objects.hash(super.hashCode(), getName());
         }
 
         public interface SimpleProjection {
 
             Long getId();
-            Boolean getSent();
-            Long getAutonomousCommunityId();
-            Long getUserId();
-            Long getCampaignTypeId();
-            LocalDate getDate();
-            String getApproach();
-            String getJustification();
-            String getObjective();
-            String getViability();
+            String getName();
 
         }
 }

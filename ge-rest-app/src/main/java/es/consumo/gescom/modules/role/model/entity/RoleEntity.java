@@ -40,6 +40,9 @@ public class RoleEntity extends SimpleEntity {
     @Column(name = "enable")
     private Boolean enable;
 
+    @Column(name = "ID_STATE", nullable = false)
+    @Setter
+    private Integer state = 1;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

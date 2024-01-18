@@ -21,6 +21,8 @@ import { MatInputModule } from '@angular/material/input';
 import { TswSelectModule } from '@base/shared/select';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
+import { MatSortModule } from '@angular/material/sort';
+import { TableModule } from '@base/shared/components/table';
 
 @NgModule({
   imports: [
@@ -44,7 +46,9 @@ import { UploadFileComponent } from '@base/pages/campaign/campaign-see-page/comp
     MatDialogModule,
     MatProgressSpinnerModule,
     StateToggleModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule,
+    TableModule
   ],
     declarations: [
         CampaignSeePageComponent,

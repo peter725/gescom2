@@ -10,17 +10,20 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import {SignFile} from "@libs/sdk/document";
+import { ColumnSource, ColumnSrc } from '@base/shared/collections';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'tsw-file-upload',
   templateUrl: "./upload-file.component.html",
   styleUrls: ["./upload-file.component.scss"]
 })
-export class UploadFileComponent {
+export class UploadFileComponent<T=any> {
 
 
   @ViewChild("fileUpload", {read: ElementRef})
   fileUpload!: ElementRef;
+  readonly source = this.createDataSource();
 
   @Input() requiredFileType = '';
   @Input() form: FormGroup|any;
@@ -42,10 +45,21 @@ export class UploadFileComponent {
           name: ""
         });
     }
-    console.log('this.form', this.form)
   }
 
-
+  columns: ColumnSource | undefined;
+  protected createDataSource() {
+    return new MatTableDataSource<T>([]);
+  }
+  protected getColumns(): ColumnSrc[] {
+    return [
+      'name',
+      'type',
+      'size',
+      'createdAt',
+      'updatedAt',
+    ];
+  }
 
 
 }

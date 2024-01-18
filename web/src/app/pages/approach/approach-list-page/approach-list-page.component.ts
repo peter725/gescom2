@@ -18,7 +18,7 @@ import { ColumnSrc } from "@base/shared/collections";
 })
 export class ApproachListPageComponent extends BaseListPageComponent<Approach> implements OnInit {
 
-  readonly resourceName = 'approach';
+  readonly resourceName = 'campaign_proposal';
   // subject$: Observable<AuthSubject>;
 
   override exportFormats = [ExportFileType.CSV];

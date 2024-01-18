@@ -2,6 +2,8 @@ package es.consumo.gescom.modules.autonomousCommunitySpecialist.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
+import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
+import es.consumo.gescom.modules.specialist.model.entity.SpecialistEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -10,10 +12,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -21,16 +20,18 @@ import java.util.Objects;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "autonomous_community")
+@Table(name = "autonomous_community_specialist")
 @Getter
 @Setter
 public class AutonomousCommunitySpecialistEntity extends SimpleEntity {
 
-    //genera el campo name
-    @Column(name = "NAME" )
-    @NotNull(message = "Debes especificar el nombre")
-    @Size(min = 1, max = 50)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "AUTONOMOUS_COMMUNITY_ID")
+    private SpecialistEntity specialist;
+
+    @ManyToOne
+    @JoinColumn(name = "CAMPAIGN_ID")
+    private CampaignEntity campaign;
 
     @JsonIgnore
     @CreatedDate
@@ -63,18 +64,19 @@ public class AutonomousCommunitySpecialistEntity extends SimpleEntity {
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
             AutonomousCommunitySpecialistEntity that = (AutonomousCommunitySpecialistEntity) o;
-            return Objects.equals(getName(), that.getName()) && Objects.equals(name, that.name);
+            return Objects.equals(getId(), that.getId());
         }
 
     @Override
         public int hashCode() {
-            return Objects.hash(super.hashCode(), getName());
+            return Objects.hash(super.hashCode(), getId());
         }
 
         public interface SimpleProjection {
 
             Long getId();
-            String getName();
+            SpecialistEntity getSpecialist();
+            CampaignEntity getCampaign();
 
         }
 }

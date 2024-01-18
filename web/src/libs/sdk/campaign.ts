@@ -49,7 +49,7 @@ export interface CampaignForm {
   nameCampaign: string | null;
   campaignType: TypeCampaign | null;
   ambit: Ambit | null;
-  responsibleEntity: AutonomousCommunity | null;
+  autonomousCommunityResponsible: AutonomousCommunity | null;
   participants: AutonomousCommunity[] | null;
   proponents: Proponent[] | null;
   specialists: Specialist[] | null;

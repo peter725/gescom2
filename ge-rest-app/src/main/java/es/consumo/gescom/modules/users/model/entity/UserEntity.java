@@ -57,6 +57,10 @@ public class UserEntity extends SimpleEntity{
     @JoinColumn(name = "login_id", insertable = true)
     private LoginEntity login;
 
+    @Column(name = "ID_STATE", nullable = false)
+    @Setter
+    private Integer state = 1;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

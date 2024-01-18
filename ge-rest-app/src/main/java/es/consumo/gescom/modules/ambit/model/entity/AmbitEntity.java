@@ -22,7 +22,6 @@ import java.util.Objects;
 @Table(name = "ambit")
 public class AmbitEntity extends SimpleEntity {
 
-
     @Column(name = "AMBIT")
     @Size(min = 1, max = 10)
     private String name;
@@ -47,6 +46,9 @@ public class AmbitEntity extends SimpleEntity {
     @Column(name = "UPDATED_BY", nullable = true)
     private Long updatedBy;
 
+    @Column(name = "ID_STATE", nullable = false)
+    @Setter
+    private Integer state = 1;
 
     @Override
     public boolean equals(Object o) {

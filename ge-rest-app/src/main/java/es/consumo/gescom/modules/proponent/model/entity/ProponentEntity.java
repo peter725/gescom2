@@ -22,18 +22,6 @@ import java.util.Objects;
 @Setter
 public class ProponentEntity extends SimpleEntity {
 
-    public static final String SEQ_PROPONENT="seq_proponent";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_PROPONENT)
-    @SequenceGenerator(
-            name = SEQ_PROPONENT,
-            sequenceName = SEQ_PROPONENT,
-            allocationSize = 1
-    )
-    @Column(name = "ID")
-    private Long id;
-
     @Column(name = "PROPONENT")
     private String name;
 
@@ -57,6 +45,9 @@ public class ProponentEntity extends SimpleEntity {
     @Column(name = "UPDATED_BY", nullable = true)
     private Long updatedBy;
 
+    @Column(name = "ID_STATE", nullable = false)
+    @Setter
+    private Integer state = 1;
 
     @Override
         public boolean equals(Object o) {
@@ -64,7 +55,7 @@ public class ProponentEntity extends SimpleEntity {
             if (o == null || getClass() != o.getClass()) return false;
             if (!super.equals(o)) return false;
             ProponentEntity that = (ProponentEntity) o;
-            return Objects.equals(getId(), that.getId()) && Objects.equals(id, that.id);
+            return Objects.equals(getId(), that.getId());
         }
 
     @Override

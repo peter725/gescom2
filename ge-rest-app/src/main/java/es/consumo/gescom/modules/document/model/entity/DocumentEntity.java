@@ -54,6 +54,10 @@ public class DocumentEntity extends SimpleEntity {
     @JsonIgnore
     private String sign;
 
+    @Column(name = "ID_STATE", nullable = false)
+    @Setter
+    private Integer state = 1;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

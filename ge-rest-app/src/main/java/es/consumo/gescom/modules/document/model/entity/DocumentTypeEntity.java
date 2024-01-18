@@ -32,6 +32,10 @@ public class DocumentTypeEntity extends SimpleEntity {
     @Column(name = "required", nullable = false)
     private Boolean required;
 
+    @Column(name = "ID_STATE", nullable = false)
+    @Setter
+    private Integer state = 1;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

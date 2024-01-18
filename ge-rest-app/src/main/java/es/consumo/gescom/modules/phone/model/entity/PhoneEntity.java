@@ -53,6 +53,9 @@ public class PhoneEntity extends SimpleEntity {
     @Column(name = "UPDATED_BY", nullable = true)
     private Long updatedBy;
 
+    @Column(name = "ID_STATE", nullable = false)
+    @Setter
+    private Integer state = 1;
 
     @Override
         public boolean equals(Object o) {

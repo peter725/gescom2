@@ -41,5 +41,5 @@ public class CampaignDTO implements Serializable {
     private LocalDateTime updatedAt;
     private Long createdBy;
     private Long updatedBy;
-
+    private Integer state;
 }

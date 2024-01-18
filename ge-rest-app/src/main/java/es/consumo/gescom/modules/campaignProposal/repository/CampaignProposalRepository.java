@@ -16,7 +16,7 @@ import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import java.time.LocalDate;
 
 @Repository
-public interface CampaignProposalRepository extends GESCOMRepository<CampaignProposalEntity, Long> , QueryByCriteria<CampaignProposalEntity.SimpleProjection, CampaignProposalCriteria> {
+public interface CampaignProposalRepository extends GESCOMRepository<CampaignProposalEntity, Long> {
 
     @Query(value = "SELECT h FROM CampaignProposalEntity h where h.id = :id ")
     Page<CampaignProposalEntity.SimpleProjection> findAllCampaignProposalById(Pageable pageable, @Param("id") Long id);

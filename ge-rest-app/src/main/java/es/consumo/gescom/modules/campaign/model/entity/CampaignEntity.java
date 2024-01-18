@@ -61,6 +61,7 @@ public class CampaignEntity extends SimpleEntity {
     private PhaseEntity phaseCampaign;
 
     @JsonIgnore
+
     @CreatedDate
     @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
@@ -82,7 +83,7 @@ public class CampaignEntity extends SimpleEntity {
 
     @Column(name = "ID_STATE", nullable = false)
     @Setter
-    private Integer state = 1;
+    private Integer state;
 
 //    state
 //    order by id or year
@@ -121,6 +122,7 @@ public class CampaignEntity extends SimpleEntity {
             LocalDateTime getUpdatedAt();
             Long getCreatedBy();
             Long getUpdatedBy();
+            Integer getState();
 
         }
 }

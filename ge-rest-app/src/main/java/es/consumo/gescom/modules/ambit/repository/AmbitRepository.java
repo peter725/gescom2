@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 
 @Repository
-public interface AmbitRepository extends GESCOMRepository<AmbitEntity, Long> , QueryByCriteria<AmbitEntity.SimpleProjection, AmbitCriteria> {
+public interface AmbitRepository extends GESCOMRepository<AmbitEntity, Long> {
 
     @Query(value = "SELECT h FROM AmbitEntity h where h.id = :id ")
     Page<AmbitEntity.SimpleProjection> findAllAmbitById(Pageable pageable, @Param("id") Long id);

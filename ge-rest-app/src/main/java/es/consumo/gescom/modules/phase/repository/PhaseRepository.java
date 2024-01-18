@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 
 @Repository
-public interface PhaseRepository extends GESCOMRepository<PhaseEntity, Long> , QueryByCriteria<PhaseEntity.SimpleProjection, PhaseCriteria> {
+public interface PhaseRepository extends GESCOMRepository<PhaseEntity, Long> {
 
     @Query(value = "SELECT h FROM PhaseEntity h where h.id = :id ")
     Page<PhaseEntity.SimpleProjection> findAllPhaseById(Pageable pageable, @Param("id") Long id);

@@ -5,10 +5,10 @@ import { InfractionFilterForm } from '@libs/sdk/infraction';
 
 
 @Component({
-  selector: 'tsw-infraction-list-page-filter',
-  templateUrl: './infraction-list-page-filter.component.html',
+  selector: 'tsw-infringement-list-page-filter',
+  templateUrl: './infringement-list-page-filter.component.html',
 })
-export class InfractionListPageFilterComponent extends FilterComponent<InfractionFilterForm> {
+export class InfringementListPageFilterComponent extends FilterComponent<InfractionFilterForm> {
 
   readonly resourceName = 'infraction';
 

@@ -7,11 +7,11 @@ import { ColumnSrc } from '@base/shared/collections';
 import { Infraction } from '@libs/sdk/infraction';
 
 @Component({
-  selector: 'tsw-infraction-list-page',
-  templateUrl: './infraction-list-page.component.html',
-  styleUrls: ['./infraction-list-page.component.scss'],
+  selector: 'tsw-infringement-list-page',
+  templateUrl: './infringement-list-page.component.html',
+  styleUrls: ['./infringement-list-page.component.scss'],
 })
-export class InfractionListPageComponent extends BaseListPageComponent<Infraction> implements OnInit {
+export class InfringementListPageComponent extends BaseListPageComponent<Infraction> implements OnInit {
   readonly resourceName = 'infraction';
 
   override exportFormats = [ExportFileType.CSV];

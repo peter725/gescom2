@@ -1,0 +1,1 @@
+export * from '@base/pages/campaign/campaign-see-page/components/infringement/infringement-list-page/components/infringement-list-page-filter/infringement-list-page-filter.component'

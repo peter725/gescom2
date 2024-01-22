@@ -23,16 +23,29 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   readonly protocolFileUpload = 'protocolFileUpload';
   protected override _createResourceTitle = 'pages.campaign.add';
   protected override _editResourceTitle = 'pages.campaign.see';
+  phases: any[] = [];
+  campaign: any;
 
   override ngOnInit(): void {
-    let phases = this.crudService.findAll({ resourceName: 'phaseCampaign' });
-
-    console.log('phases', phases.forEach((item: any) => console.log(item)));
+    super.ngOnInit();
+    this.loadPhases();
+    console.log('ngOnInit 1', this.loadPhases());
   }
 
-
-
-
+  private loadPhases(): void {
+    this.crudService.findAll({ resourceName: 'phaseCampaign' })
+      .subscribe({
+        next: (page: Page<PhaseCampaign>) => {
+          console.log('loadPhases 2', page.content);
+          this.phases = page.content;
+          console.log('loadPhases 3', this.phases);
+        },
+        error: (err) => {
+          console.error('Error al cargar las fases de la campaña:', err);
+          // Manejar el error (mostrar mensaje al usuario, por ejemplo)
+        }
+      });
+  }
 
   protected buildForm(){
     return this.fb.group<ControlsOf<CampaignForm>>({
@@ -47,6 +60,9 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       proponents: this.fb.control([], [Validators.required]),
       autonomousCommunityResponsible: this.fb.control(null, [Validators.required]),
       phaseCampaign: this.fb.control(null, [Validators.required]),
+      createdAt: this.fb.control(null),
+      updatedAt: this.fb.control(null),
+      state: this.fb.control(null),
     });
 
   }
@@ -84,9 +100,18 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     }, {resourceName: this.protocolFileUpload});
   }
 
-  changePhaseCampaign(){
-    console.log('changePhaseCampaign', this.resourceId);
-    console.log('changePhaseCampaign', this.resourceName);
+  protected changePhaseCampaign(){
+    let actualId = this.form.get('phaseCampaign')?.value?.id;
+    let newPhase;
+    if (actualId! <= 14){
+      actualId = actualId! + 1;
+      newPhase = this.phases.find((item: any) => item.id === actualId);
+    }
+    this.campaign = this.form.value;
+    this.campaign.phaseCampaign = newPhase;
+    this.form.patchValue(this.campaign);
+    this.save().then(r => console.log('changePhaseCampaign 1', this.campaign));
+    console.log('changePhaseCampaign 1', this.campaign);
   }
 
 }

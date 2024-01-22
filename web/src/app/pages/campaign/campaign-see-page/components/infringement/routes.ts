@@ -13,6 +13,6 @@ export const INFRACTION_PAGE_ROUTES: Routes = [
     data: {
       breadcrumb,
     },
-    loadChildren: () => import('./').then(m => m.InfractionListPageModule),
+    loadChildren: () => import('./index').then(m => m.InfringementListPageModule),
   },
 ];

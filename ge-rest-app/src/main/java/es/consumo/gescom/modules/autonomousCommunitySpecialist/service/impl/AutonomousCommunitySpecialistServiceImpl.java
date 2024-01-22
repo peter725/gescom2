@@ -1,0 +1,28 @@
+package es.consumo.gescom.modules.autonomousCommunitySpecialist.service.impl;
+
+import es.consumo.gescom.commons.db.repository.GESCOMRepository;
+import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.commons.service.EntityCrudService;
+import es.consumo.gescom.modules.autonomousCommunity.model.criteria.AutonomousCommunityCriteria;
+import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
+import es.consumo.gescom.modules.autonomousCommunity.repository.AutonomousCommunityRepository;
+import es.consumo.gescom.modules.autonomousCommunitySpecialist.model.criteria.AutonomousCommunitySpecialistCriteria;
+import es.consumo.gescom.modules.autonomousCommunitySpecialist.model.entity.AutonomousCommunitySpecialistEntity;
+import es.consumo.gescom.modules.autonomousCommunitySpecialist.repository.AutonomousCommunitySpecialistRepository;
+import es.consumo.gescom.modules.autonomousCommunitySpecialist.service.AutonomousCommunitySpecialistService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class AutonomousCommunitySpecialistServiceImpl extends EntityCrudService<AutonomousCommunitySpecialistEntity, Long> implements AutonomousCommunitySpecialistService {
+    protected AutonomousCommunitySpecialistServiceImpl(GESCOMRepository<AutonomousCommunitySpecialistEntity, Long> repository) {
+        super(repository);
+    }
+
+    @Autowired
+    private AutonomousCommunitySpecialistRepository autonomousCommunitySpecialistRepository;
+
+
+}

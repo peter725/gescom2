@@ -162,6 +162,11 @@ public class ArbitrationServiceImpl extends EntityCrudService<ArbitrationEntity,
     }
 
     @Override
+    public ArbitrationEntity update(Long id, ArbitrationEntity payload) {
+        return super.update(id, payload);
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public ArbitrationEntity verify(ArbitrationDTO arbitrationDTO) {
         LocalDateTime today = LocalDateTime.now();

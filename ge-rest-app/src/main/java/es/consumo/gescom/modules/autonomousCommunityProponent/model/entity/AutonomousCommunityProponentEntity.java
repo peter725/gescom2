@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "autonomous_community")
+@Table(name = "autonomous_community_proponent")
 @Getter
 @Setter
 public class AutonomousCommunityProponentEntity extends SimpleEntity {

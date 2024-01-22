@@ -11,4 +11,5 @@ public class AutonomousCommunityConverter extends SimpleDataConverter<Autonomous
     public AutonomousCommunityConverter(ModelMapper modelMapper) {
         super(modelMapper);
     }
+
 }

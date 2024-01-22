@@ -9,7 +9,7 @@ public interface CampaignService extends CrudService<CampaignEntity, Long>{
 
     CampaignEntity createCampaign(CampaignDTO campaignDTO);
 
-    CampaignEntity updateCampaign(CampaignDTO campaignDTO);
+    CampaignEntity updateCampaign(Long id, CampaignDTO campaignDTO);
 
-//    CampaignDTO findCampaignById(Long idCampaignDTO);
+    CampaignDTO findCampaignById(Long idCampaignDTO);
 }

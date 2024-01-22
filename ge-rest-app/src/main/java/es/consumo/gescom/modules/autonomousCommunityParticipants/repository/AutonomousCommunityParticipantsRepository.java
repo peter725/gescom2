@@ -4,6 +4,7 @@ import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.db.repository.QueryByCriteria;
 import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.model.criteria.AutonomousCommunityParticipantsCriteria;
+import es.consumo.gescom.modules.autonomousCommunityParticipants.model.dto.AutonomousCommunityParticipantsDTO;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.model.entity.AutonomousCommunityParticipantsEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +16,5 @@ import java.util.List;
 public interface AutonomousCommunityParticipantsRepository extends GESCOMRepository<AutonomousCommunityParticipantsEntity, Long>, QueryByCriteria<AutonomousCommunityParticipantsEntity.SimpleProjection, AutonomousCommunityParticipantsCriteria> {
 
     @Query("SELECT p FROM AutonomousCommunityParticipantsEntity p WHERE p.campaign.id=:campaignId AND p.state=1")
-    List<AutonomousCommunityDTO> findByIdCampaign(@Param("campaignId") Long idCampaign);
+    List<AutonomousCommunityParticipantsEntity> findByIdCampaign(@Param("campaignId") Long idCampaign);
 }

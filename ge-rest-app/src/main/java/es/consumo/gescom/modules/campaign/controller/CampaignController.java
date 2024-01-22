@@ -29,15 +29,15 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
     }
 
     @PostMapping("/updateCampaign/{id}")
-    public ResponseEntity<CampaignEntity> updateCampaign(@RequestBody CampaignDTO campaignDTO) {
-        CampaignEntity result = ((CampaignService) service).updateCampaign(campaignDTO);
+    public ResponseEntity<CampaignEntity> updateCampaign(@PathVariable Long id, @RequestBody CampaignDTO campaignDTO) {
+        CampaignEntity result = ((CampaignService) service).updateCampaign(id, campaignDTO);
         return ResponseEntity.ok(result);
     }
 
-//    @GetMapping ("/findCampaign/{id}")
-//    public ResponseEntity<CampaignDTO> findCampaignById(@RequestBody Long idCampaignDTO) {
-//        CampaignDTO result = ((CampaignService) service).findCampaignById(idCampaignDTO);
-//        return ResponseEntity.ok(result);
-//    }
+    @GetMapping ("/findCampaign/{id}")
+    public ResponseEntity<CampaignDTO> findCampaignById(@PathVariable Long id) {
+        CampaignDTO result = ((CampaignService) service).findCampaignById(id);
+        return ResponseEntity.ok(result);
+    }
 
 }

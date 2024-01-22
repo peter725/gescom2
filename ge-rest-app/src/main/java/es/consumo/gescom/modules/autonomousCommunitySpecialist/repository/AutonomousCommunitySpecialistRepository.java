@@ -15,5 +15,5 @@ import java.util.List;
 public interface AutonomousCommunitySpecialistRepository extends GESCOMRepository<AutonomousCommunitySpecialistEntity, Long>, QueryByCriteria<AutonomousCommunitySpecialistEntity.SimpleProjection, AutonomousCommunitySpecialistCriteria> {
 
     @Query("SELECT p FROM AutonomousCommunitySpecialistEntity p WHERE p.campaign.id=:campaignId AND p.state=1")
-    List<SpecialistDTO> finByIdCampaign(@Param("campaignId")Long idCampaign);
+    List<AutonomousCommunitySpecialistEntity> finByIdCampaign(@Param("campaignId")Long idCampaign);
 }

@@ -7,9 +7,9 @@ import es.consumo.gescom.commons.service.CrudService;
 
 public interface CampaignService extends CrudService<CampaignEntity, Long>{
 
-    CampaignEntity createCampaign(CampaignDTO campaignDTO);
+    CampaignDTO createCampaign(CampaignDTO campaignDTO);
 
-    CampaignEntity updateCampaign(Long id, CampaignDTO campaignDTO);
+    CampaignDTO updateCampaign(Long id, CampaignDTO campaignDTO);
 
     CampaignDTO findCampaignById(Long idCampaignDTO);
 }

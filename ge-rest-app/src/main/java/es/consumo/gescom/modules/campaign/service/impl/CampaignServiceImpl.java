@@ -39,6 +39,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -112,7 +113,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     }
 
     @Override
-    public CampaignEntity createCampaign(CampaignDTO campaignDTO) {
+    public CampaignDTO createCampaign(CampaignDTO campaignDTO) {
         CampaignEntity campaign = campaingnConverter.convertToEntity(campaignDTO);
         campaign.setAutonomousCommunityResponsible(campaignDTO.getAutonomousCommunityResponsible());
         campaign.setCampaignType(campaignDTO.getCampaignType());
@@ -161,18 +162,22 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             autonomousCommunitySpecialistRepository.save(autonomousCommunitySpecialistEntity);
         });
 
-        return campaignSave;
+        return campaingnConverter.convertToModel(campaignSave);
     }
 
     @Override
-    public CampaignEntity updateCampaign(Long idCampaing, CampaignDTO campaignDTO) {
-//        CampaignEntity campaign = campaignRepository.findById(idCampaing).get();
+    public CampaignDTO updateCampaign(Long idCampaing, CampaignDTO campaignDTO) {
+        CampaignDTO campaign = this.findCampaignById(idCampaing);
 
         if (ObjectUtils.isEmpty(campaignDTO.getId())){
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
+        if(campaign.getId() == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
 
-        return createCampaign(campaignDTO);
+        return createCampaign(campaign);
+
     }
 
 

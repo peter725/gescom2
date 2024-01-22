@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/campaign")
 @Tag(name = "Campaign controller")
@@ -22,22 +27,25 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
         super(service, dataConverter);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<CampaignEntity> createCampaign(@RequestBody CampaignDTO campaignDTO) {
-        CampaignEntity result = ((CampaignService) service).createCampaign(campaignDTO);
-        return ResponseEntity.ok(result);
+    @Override
+    protected CampaignDTO performCreate(CampaignDTO payload) {
+        return ((CampaignService) service).createCampaign(payload);
     }
 
-    @PostMapping("/updateCampaign/{id}")
-    public ResponseEntity<CampaignEntity> updateCampaign(@PathVariable Long id, @RequestBody CampaignDTO campaignDTO) {
-        CampaignEntity result = ((CampaignService) service).updateCampaign(id, campaignDTO);
-        return ResponseEntity.ok(result);
+    @Override
+    protected CampaignDTO performUpdate(Long id, CampaignDTO payload) {
+        return  ((CampaignService) service).updateCampaign(id, payload);
     }
 
-    @GetMapping ("/findCampaign/{id}")
-    public ResponseEntity<CampaignDTO> findCampaignById(@PathVariable Long id) {
-        CampaignDTO result = ((CampaignService) service).findCampaignById(id);
-        return ResponseEntity.ok(result);
+    @Override
+    protected Optional<?> performFindById(Long id) {
+
+        return Optional.of(
+                ((CampaignService) service).findCampaignById(id)
+        );
     }
+
+
+
 
 }

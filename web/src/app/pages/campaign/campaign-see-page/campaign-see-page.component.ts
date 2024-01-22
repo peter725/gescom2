@@ -6,6 +6,8 @@ import { Campaign, CampaignForm, CreateCampaign } from '@libs/sdk/campaign';
 import { Validators } from '@angular/forms';
 import { DocumentForm, SignFile } from '@libs/sdk/document';
 import { firstValueFrom, Observable, Subscription } from 'rxjs';
+import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
+import { Page } from '@libs/crud-api';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -21,6 +23,12 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   readonly protocolFileUpload = 'protocolFileUpload';
   protected override _createResourceTitle = 'pages.campaign.add';
   protected override _editResourceTitle = 'pages.campaign.see';
+
+  override ngOnInit(): void {
+    let phases = this.crudService.findAll({ resourceName: 'phaseCampaign' });
+
+    console.log('phases', phases.forEach((item: any) => console.log(item)));
+  }
 
 
 
@@ -77,7 +85,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   changePhaseCampaign(){
-    return this.crudService.update(this.form.get('id')?.value?), this.form.get('proponents')?.value?, this.form.get('proponents')?.value?);
     console.log('changePhaseCampaign', this.resourceId);
     console.log('changePhaseCampaign', this.resourceName);
   }

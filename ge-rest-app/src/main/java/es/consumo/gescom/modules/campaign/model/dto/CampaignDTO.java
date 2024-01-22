@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.constants.EntityState;
+import es.consumo.gescom.commons.dto.LongIdModel;
 import es.consumo.gescom.modules.ambit.model.entity.AmbitEntity;
 import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
@@ -32,7 +33,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CampaignDTO implements Serializable {
+public class CampaignDTO implements Serializable, LongIdModel {
 
     private Long id;
     private Long year;

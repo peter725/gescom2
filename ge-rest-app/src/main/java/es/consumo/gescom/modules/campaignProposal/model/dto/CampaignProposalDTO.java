@@ -3,6 +3,7 @@ package es.consumo.gescom.modules.campaignProposal.model.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import es.consumo.gescom.commons.dto.LongIdModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CampaignProposalDTO implements Serializable {
+public class CampaignProposalDTO implements Serializable, LongIdModel {
 
     private Long id;
 

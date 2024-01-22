@@ -1,5 +1,6 @@
 package es.consumo.gescom.modules.campaignType.model.dto;
 
+import es.consumo.gescom.commons.dto.LongIdModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CampaignTypeDTO implements Serializable {
+public class CampaignTypeDTO implements Serializable, LongIdModel {
 
     private Long id;
     private String name;

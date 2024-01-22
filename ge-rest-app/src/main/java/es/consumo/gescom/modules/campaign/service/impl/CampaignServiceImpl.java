@@ -176,7 +176,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        return createCampaign(campaign);
+        return createCampaign(campaignDTO);
 
     }
 

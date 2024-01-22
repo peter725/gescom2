@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CampaignTypeDTO implements Serializable, LongIdModel {
+public class CampaignTypeDTO implements Serializable {
 
     private Long id;
     private String name;

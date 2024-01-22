@@ -9,23 +9,23 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { StateToggleModule } from '@base/shared/components/state-toggle';
 import {
-  InfractionListPageRoutingModule
-} from '@base/pages/infraction/infraction-list-page/infraction-list-page-routing.module';
+  InfringementListPageRoutingModule
+} from '@base/pages/campaign/campaign-see-page/components/infringement/infringement-list-page/infringement-list-page-routing.module';
 import {
-  InfractionListPageComponent
-} from '@base/pages/infraction/infraction-list-page/infraction-list-page.component';
+  InfringementListPageComponent
+} from '@base/pages/campaign/campaign-see-page/components/infringement/infringement-list-page/infringement-list-page.component';
 import { BreadcrumbsModule } from '@base/shared/components/breadcrumbs';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NamedRoutesModule } from '@libs/named-routes';
 import {
-  InfractionListPageFilterComponent
-} from '@base/pages/infraction/infraction-list-page/components/infraction-list-page-filter/infraction-list-page-filter.component';
+  InfringementListPageFilterComponent
+} from '@base/pages/campaign/campaign-see-page/components/infringement/infringement-list-page/components/infringement-list-page-filter/infringement-list-page-filter.component';
 
 @NgModule({
   imports: [
-    InfractionListPageRoutingModule,
+    InfringementListPageRoutingModule,
     CommonModule,
     ListPageModule,
     CommonModule,
@@ -43,10 +43,10 @@ import {
     NamedRoutesModule
   ],
   declarations: [
-    InfractionListPageComponent,
-    InfractionListPageFilterComponent
+    InfringementListPageComponent,
+    InfringementListPageFilterComponent
   ],
 })
-export class InfractionListPageModule {
+export class InfringementListPageModule {
 
 }

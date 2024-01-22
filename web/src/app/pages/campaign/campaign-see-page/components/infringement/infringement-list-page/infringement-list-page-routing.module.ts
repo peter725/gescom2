@@ -1,12 +1,12 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import {
-  InfractionListPageComponent
-} from '@base/pages/infraction/infraction-list-page/infraction-list-page.component';
+  InfringementListPageComponent
+} from '@base/pages/campaign/campaign-see-page/components/infringement/infringement-list-page/infringement-list-page.component';
 
 const routes: Routes = [{
   path: '',
-  component: InfractionListPageComponent,
+  component: InfringementListPageComponent,
   title: 'pages.infraction.list',
   data: { breadcrumb: 'generic.actions.list' },
 }];
@@ -15,5 +15,5 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class InfractionListPageRoutingModule {
+export class InfringementListPageRoutingModule {
 }

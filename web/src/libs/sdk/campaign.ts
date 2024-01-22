@@ -54,6 +54,9 @@ export interface CampaignForm {
   proponents: Proponent[] | null;
   specialists: Specialist[] | null;
   phaseCampaign: PhaseCampaign | null;
+  createdAt?: string;
+  updatedAt?: string;
+  state?: number | null;
 
 }
 

@@ -76,6 +76,10 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
 
   protected readonly destroyed$ = new ReplaySubject<boolean>(1);
 
+  protected initializeAdditionalData(): void {
+    // Método pensado para ser sobrescrito
+  }
+
 
   announcer = inject(LiveAnnouncer);
 
@@ -99,6 +103,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   ngOnInit() {
     this.status.status = 'LOAD';
     this.loadResourceId().subscribe(() => this.loadData());
+    this.initializeAdditionalData();
   }
 
   ngOnDestroy(): void {
@@ -204,6 +209,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     try {
       const payload = await this.createSavePayload();
       this.activeOperation = this.createSaveOperation(payload);
+      console.log('save', payload);
 
       this.status.status = 'PROCESS';
       const result = await firstValueFrom(this.activeOperation);
@@ -225,6 +231,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    * Generates an operation to create a new resource or update an existing one.
    */
   protected createSaveOperation(payload: T) {
+    console.log('createSaveOperation', payload);
     const config: RequestConfig = {
       resourceName: this.resourceName,
     };

@@ -2,7 +2,7 @@ import {Routes} from '@angular/router';
 import { USER_PAGE_ROUTES } from './user/routes';
 import {APPROACH_PAGE_ROUTES} from "@base/pages/approach/routes";
 import { CAMPAIGN_PAGE_ROUTES } from './campaign/routes';
-import { INFRACTION_PAGE_ROUTES } from '@base/pages/infraction/routes';
+import { INFRACTION_PAGE_ROUTES } from '@base/pages/campaign/campaign-see-page/components/infringement/routes';
 import { PROFILE_PAGE_ROUTES } from '@base/pages/profile/routes';
 import { MODULE_PAGE_ROUTES } from '@base/pages/module/routes';
 import { ENTITY_PAGE_ROUTES } from '@base/pages/entity/routes';

@@ -63,6 +63,7 @@
               <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.inspection' | translate}}</h1>
               <h3 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900" >{{ form.get('phaseCampaign')?.value?.description }}</h3>
               <button  class="upload-btn ml-2 mat-button mat-button-base mat-primary"
+                       loadingSpinnerColor="primary"
                        (click)="changePhaseCampaign()"       >
                 <mat-icon>arrow_forward</mat-icon>
               </button>

@@ -14,7 +14,7 @@ public interface DocumentRepository extends GESCOMRepository<DocumentEntity, Lon
         QueryByCriteria<DocumentEntity, DocumentCriteria> {
     @Override
     @Query(value = "SELECT t FROM DocumentEntity t "
-            + "WHERE t.arbitrationId = :#{#criteria.arbitrationId}  "
+            + "WHERE t.campaignId = :#{#criteria.campaignId}  "
             + "AND t.documentType.required = :#{#criteria.documentTypeRequired}  "
     )
     Page<DocumentEntity> findAllByCriteria(DocumentCriteria criteria, Pageable pageable);

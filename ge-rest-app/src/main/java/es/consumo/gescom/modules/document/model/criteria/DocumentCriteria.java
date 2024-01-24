@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DocumentCriteria extends FilterCriteria {
 
-    private long arbitrationId;
+    private long campaignId;
     private boolean documentTypeRequired;
 }

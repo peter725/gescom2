@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Document controller")
 public class DocumentController extends AbstractCrudController<DocumentEntity, DocumentDTO, Long, DocumentCriteria> {
 
-//    private final ObjectFactory<TulsaSampleFileLoader> sampleFileLoader;
-
     @Autowired
     public DocumentController(CrudService<DocumentEntity, Long> service,
                               DataConverter<DocumentEntity, DocumentDTO> dataConverter) {
         super(service, dataConverter);
     }
-
 
 }

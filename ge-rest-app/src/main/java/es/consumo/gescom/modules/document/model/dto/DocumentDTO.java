@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class DocumentDTO implements Serializable, LongIdModel {
 
     private Long id;
-    private long arbitrationId;
+    private long campaignId;
     private String createAt;
     private DocumentTypeEntity documentType;
     private String name;

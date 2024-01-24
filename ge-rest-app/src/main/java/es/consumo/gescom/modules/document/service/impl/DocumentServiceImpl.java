@@ -2,6 +2,7 @@ package es.consumo.gescom.modules.document.service.impl;
 
 
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
+import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
@@ -26,13 +27,13 @@ import java.util.stream.Collectors;
 public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long> {
     @Value("${path.documentos}")
     private String repoPath;
-    private final ReadService<ArbitrationEntity, Long> arbitrationService;
+    private final ReadService<CampaignEntity, Long> campaingService;
 
     @Autowired
     public DocumentServiceImpl(GESCOMRepository<DocumentEntity, Long> repository,
-                               ReadService<ArbitrationEntity, Long> arbitrationService) {
+                               ReadService<CampaignEntity, Long> campaignService) {
         super(repository);
-        this.arbitrationService = arbitrationService;
+        this.campaingService = campaignService;
     }
 
     @Override
@@ -51,14 +52,14 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
 
     @Override
     protected DocumentEntity performCreate(DocumentEntity payload) {
-        boolean exits = arbitrationService.exitsById(payload.getArbitrationId());
+        boolean exits = campaingService.exitsById(payload.getCampaignId());
         if (!exits) {
-            throw new RuntimeException("solictud arbitrasl no existe");
+            throw new RuntimeException("solictud campaña no existe");
         }
         payload.setCreateAt(LocalDateTime.now());
         DocumentEntity entity = super.performCreate(payload);
         try {
-            String path = updLoadFile(entity.getArbitrationId(), entity.getName(), payload.getBase64());
+            String path = updLoadFile(entity.getCampaignId(), entity.getName(), payload.getBase64());
             entity.setPath(path);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -67,8 +68,8 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     }
 
 
-    private String updLoadFile(long arbitrationId, String name, String base64) throws IOException {
-        Path repo = getFilePath(arbitrationId);
+    private String updLoadFile(long campaignId, String name, String base64) throws IOException {
+        Path repo = getFilePath(campaignId);
 
         if ((Files.notExists(repo))) {
             Files.createDirectories(repo);
@@ -82,12 +83,12 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
         return md5;
     }
 
-    private Path getFilePath(long arbitrationId) {
-        return Path.of(repoPath, "/arbitration/attachment/", String.valueOf(arbitrationId));
+    private Path getFilePath(long campaingId) {
+        return Path.of(repoPath, "/campaign/attachment/", String.valueOf(campaingId));
     }
 
     private String getFile(DocumentEntity documentEntity) throws IOException {
-        Path file = Path.of(getFilePath(documentEntity.getArbitrationId()).toString(), "/", documentEntity.getPath());
+        Path file = Path.of(getFilePath(documentEntity.getCampaignId()).toString(), "/", documentEntity.getPath());
         try (BufferedReader reader = Files.newBufferedReader(file)) {
             return reader.lines().collect(Collectors.joining());
         }

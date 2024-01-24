@@ -20,7 +20,7 @@
         <entry key="keyStorePath">./clave.ks</entry>
         <entry key="keyStorePassword">storepass</entry>
         <entry key="keyPassword">keypass</entry>
-        <entry key="issuer">OU=AC Componentes Informáticos,O=FNMT-RCM,C=ES</entry>
-        <entry key="serialNumber">70E58323787FEB2C5FC4D50EF6208903</entry> 
+        <entry key="issuer">CN=AC Representación,OU=CERES,O=FNMT-RCM,C=ES</entry>
+        <entry key="serialNumber">7B460DC0A9A7F8C065252DC04959462A</entry>
         <entry key="keystoreType">JKS</entry>
 </properties>

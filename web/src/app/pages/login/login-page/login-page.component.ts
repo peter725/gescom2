@@ -29,7 +29,8 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authManager.initProcess().then(r => console.log(r));
+    this.authManager.initProcess();
+
   }
 
 }

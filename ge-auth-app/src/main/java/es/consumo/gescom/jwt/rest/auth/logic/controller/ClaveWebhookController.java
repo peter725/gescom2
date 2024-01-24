@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping(ApiEndpoints.HOOKS + "/clave")
+@RequestMapping(ApiEndpoints.V1_API+ApiEndpoints.HOOKS + "/clave")
 public class ClaveWebhookController {
 
     private final ClaveService claveService;

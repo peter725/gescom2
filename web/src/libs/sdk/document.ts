@@ -6,7 +6,7 @@ export interface DocumentForm {
   name: string | null;
   extension: string | null;
   base64: string | null;
-  requestId: number | null;
+  campaignId: number | null;
 }
 
 export interface DocumentsForm {
@@ -29,5 +29,6 @@ export interface SignFile {
   file: File;
   b64: string;
   name: string|null;
+  sign: string|null;
   documentType: Record<string, any>;
 }

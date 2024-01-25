@@ -256,6 +256,7 @@
 			<properties>
 				<activatedProperties>local,jdbc</activatedProperties>
 				<env.domain>local</env.domain>
+                <frontURL>http://localhost:4200/auth/login</frontURL>
 				<baseURL>http://localhost:8085</baseURL>
 				<pathLogs>C:/Users/Juan Pablo Zabala/SoftwareWork/SERIKAT/log/GESCOM.log</pathLogs>
 				<config.files>C:/Users/Juan Pablo Zabala/SoftwareWork/SERIKAT</config.files>

@@ -1,9 +1,10 @@
 export type AuthProcessState = 'INIT' | 'PROCESS' | 'ERROR' | 'DONE';
 
 export enum AuthProcessResultParam {
-  STATUS_PARAM = 'login_status',
-  STATUS_CODE = 'login_status_code',
-  STATUS_MESSAGE = 'login_message',
+  AUTH_ACTION = 'auth_action',
+  STATUS_PARAM = 'auth_status',
+  AUTH_CODE = 'auth_code',
+  STATUS_MESSAGE = 'auth_message'
 }
 
 export enum AuthProcessResultValues {

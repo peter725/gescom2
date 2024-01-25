@@ -10,19 +10,19 @@ export class HttpAuthInterceptorService implements HttpInterceptor {
   /**
    * Lista de rutas que no deben tener la cabecera de autorización
    */
-  //private readonly excludedPaths: string[] = [
-    //`${ gescoAuthAPI.apiPath }/auth/user/request`,
-  //];
+  private readonly excludedPaths: string[] = [
+    `${ gescoAuthAPI.apiPath }/auth/user/request`,
+  ];
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    //const auth = AuthStorage.getUserAuth();
-    //onst requiresAuth = !this.excludedPaths.includes(req.url);
+    const auth = AuthStorage.getUserAuth();
+    const requiresAuth = !this.excludedPaths.includes(req.url);
 
-    //if (auth?.token && requiresAuth) {
-      //const token = `Bearer ${ auth.token }`;
-      //const headers = req.headers.set('Authorization', token);
-      //return next.handle(req.clone({ headers }));
-    //}
+    if (auth?.access_token && requiresAuth) {
+      const token = `Bearer ${ auth.access_token }`;
+      const headers = req.headers.set('Authorization', token);
+      return next.handle(req.clone({ headers }));
+    }
 
     return next.handle(req);
   }

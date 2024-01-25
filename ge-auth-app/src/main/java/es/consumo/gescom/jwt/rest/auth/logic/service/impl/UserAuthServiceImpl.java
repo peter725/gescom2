@@ -145,7 +145,7 @@ public class UserAuthServiceImpl implements UserAuthService {
                 .stream()
                 .map(e -> new AuthModules(e.getKey(), e.getValue()))
                 .collect(Collectors.toSet());
-        final UserEntity user = loginEntity.getUser();
+        final UserEntity user = userRepository.findByLoginId(loginEntity.getId()).orElseThrow();
         return new AuthUserDetails(
                 user.getId(),
                 user.getDni(),

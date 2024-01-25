@@ -49,6 +49,7 @@ export class AuthManagerService {
     try {
       this.updateProcess('PROCESS', 'Completando el proceso de autenticación');
       const authentication = await this.getLoginToken(docNum, secret);
+      console.log('authentication', authentication);
       // Solicitar los datos del usuario autenticado.
       this.updateProcess('PROCESS', 'Recuperando los datos del usuario');
       const authDetails = await this.getUserInfo(authentication);
@@ -111,6 +112,7 @@ export class AuthManagerService {
    * Inicializa el control de estado del proceso de autenticación.
    */
   async initProcess() {
+    console.log('entra initProcess');
     this.updateProcess('PROCESS', 'Inicializando');
     // Si el usuario está autenticado, forzamos la compleción del proceso.
     if (this.authContext.instant().isAuthenticated()) {
@@ -120,10 +122,13 @@ export class AuthManagerService {
     }
 
     const queryParams = await firstValueFrom(this.route.queryParamMap.pipe(take(1)));
+    console.log('queryParams', queryParams);
     const resultStatus = queryParams.get(AuthProcessResultParam.STATUS_PARAM);
     const resultMessage = queryParams.get(AuthProcessResultParam.STATUS_MESSAGE);
-    const resultCode = queryParams.get(AuthProcessResultParam.STATUS_CODE)!;
-
+    const resultCode = queryParams.get(AuthProcessResultParam.AUTH_CODE)!;
+    console.log('resultStatus', resultStatus);
+    console.log('resultMessage', resultMessage);
+    console.log('resultCode', resultCode);
     // Si disponemos de un token temporal, significa que el proceso ha sido
     // inicializado y debemos completarlo en función del resultado recibido
     // por los parámetros de query.
@@ -155,6 +160,7 @@ export class AuthManagerService {
   async requestSignIn() {
     try {
       this.updateProcess('PROCESS', 'generic.actions.loggingIn');
+      console.log('requestSignIn');
 
       // Obtenemos la ruta de login y la transformamos en un string. La tranformación
       // incluye un "/" demás.
@@ -185,6 +191,7 @@ export class AuthManagerService {
    */
   async signIn(code: string) {
     try {
+      console.log('Ento a signIn');
       const auth = {authorizationCode: code}
       // Intentamos realizar login en el sistema utilizando la autorización temporal.
       this.updateProcess('PROCESS', 'Completando el proceso de autenticación');
@@ -295,6 +302,8 @@ export class AuthManagerService {
       'Authorization': gescoAuthAPI.authorization,
       'Content-Type': "application/x-www-form-urlencoded"
     });
+    console.log('url', url);
+    console.log('headers', headers);
     const body = new URLSearchParams();
     body.set('username', docNum);
     body.set('password', secret);

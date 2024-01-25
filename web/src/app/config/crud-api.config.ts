@@ -64,18 +64,18 @@ export const crudOperationsStorageFactory = () => {
 
   const userOperations: OperationsDefSrc = {
     authRequest: {type: HttpOperationType.SIMPLE, path: `/auth/user/request`},
-    authLogIn: {type: HttpOperationType.SIMPLE, path: `/auth/user/sign_in`},
+
     authLogOut: {type: HttpOperationType.SIMPLE, path: `/auth/user/sign_out`},
     authDetails: {type: HttpOperationType.SIMPLE, path: `/auth/user/me`},
   };
 
   const authOperations: OperationsDefSrc = {
     authRequest: { type: HttpOperationType.SIMPLE, path: `/auth/user/request` },
-    authLogIn: { type: HttpOperationType.SIMPLE, path: `/auth/user/sign_in` },
     authLogOut: { type: HttpOperationType.SIMPLE, path: `/auth/user/sign_out` },
     authDetails: { type: HttpOperationType.SIMPLE, path: `/auth/user/me` },
     fakeLogIn: { type: HttpOperationType.SIMPLE, path: `/auth/user/fake-sign-in` },
     manualLogIn: {type: HttpOperationType.SIMPLE, path: `/oauth/token`},
+    authLogIn: {type: HttpOperationType.SIMPLE, path: `/auth/user/sign_in`},
   };
 
   return CrudOperationStorage.from([

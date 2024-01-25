@@ -12,6 +12,8 @@ export const environment: EnvironmentData = {
     auth: {
       host: 'https://gescom-web-jee-r01a-id-vs-1.msc.es/rest',
       api: '/api/v1',
+      username: '',
+      password: ''
     },
   },
 };

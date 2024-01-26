@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 
 @Repository
-public interface AutonomousCommunityRepository extends GESCOMRepository<AutonomousCommunityEntity, Long>, QueryByCriteria<AutonomousCommunityEntity.SimpleProjection, AutonomousCommunityCriteria> {
+public interface AutonomousCommunityRepository extends GESCOMRepository<AutonomousCommunityEntity, Long> {
 
     @Query(value = "SELECT h FROM AuthorityDGCEntity h  where h.name = :name ")
     Page<AutonomousCommunityEntity.SimpleProjection> findAllAutonomousCommunityByName( Pageable pageable, @Param("name") String name);

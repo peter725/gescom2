@@ -1,7 +1,5 @@
 package es.consumo.gescom.modules.autonomousCommunity.repository;
 
-import es.consumo.gescom.commons.db.repository.QueryByCriteria;
-import es.consumo.gescom.modules.autonomousCommunity.model.criteria.AutonomousCommunityCriteria;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

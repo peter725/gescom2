@@ -123,8 +123,8 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     console.log('changePhaseCampaign 1', this.campaign);
   }
 
-  redirectToProtocoAdd(campaignId: string | undefined) {
-    this.router.navigate(['protocolManagementCreate', campaignId]);
+  navegarAComponenteB() {
+    this.router.navigate(['/protocolManagementCreate']);
   }
 
 

@@ -287,6 +287,7 @@
       "proponents": "CCAA Proponentes",
       "specialist": "CCAA Especialista",
       "requiredDoc": "Cargar los documentos"
+
     }
   },
   "text": {
@@ -298,7 +299,8 @@
         "edit": "Modificar Campaña",
         "name": "Nombre",
         "year": "Año",
-        "inspection": "INSPECCIÓN: FASE ACTUAL"
+        "inspection": "INSPECCIÓN: FASE ACTUAL",
+        "protocol": "Alta de protocolo"
     },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},
@@ -563,7 +565,14 @@
       "title": "Campañas",
       "add": "Alta de Campaña",
       "list": "Consulta de Campañas",
-      "edit": "Modificar Campaña"
+      "edit": "Modificar Campaña",
+      "protocol": "Alta de protocolo"
+    },
+    "protocol": {
+      "title": "Protocolo",
+      "add": "Alta de protocolo",
+      "list": "Consulta de protocolo",
+      "edit": "Modificar protocolo"
     },
     "sampleProgramming": {
       "title": "Programación de muestras",

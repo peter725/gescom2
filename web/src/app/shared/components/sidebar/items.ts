@@ -31,9 +31,19 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     },
     {
       text: 'pages.campaign.list', path:'campaignManagementList'
+    }
+    ]
+  },
+  // Protocolos
+  {
+    text: 'pages.protocol.title',
+    icon: 'assignment',
+    expanded: false,
+    children: [{
+      text: 'pages.protocol.add', path:'protocolManagementCreate'
     },
     {
-      text: 'pages.campaign.protocol', path:'protocolManagementCreate'
+      text: 'pages.protocol.list', path:'protocolManagementList'
     }
     ]
   },

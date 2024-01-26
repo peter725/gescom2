@@ -18,7 +18,7 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from "@angular/material/radio";
 
 export class ApproachCampaignProposalComponent extends EditPageBaseComponent<Approach, CreateApproach> {
 
-    readonly resourceName = "campaign_proposal";
+    readonly resourceName = "campaignProposal";
 
     protected override _createResourceTitle = "pages.approach.add";
     protected override _editResourceTitle = "pages.approach.edit";

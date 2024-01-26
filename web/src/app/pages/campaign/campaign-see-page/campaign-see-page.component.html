@@ -76,8 +76,9 @@
               <div class="file-upload text-right">
                 {{"fields.campaign.requiredDoc" | translate}}
                 <button  mat-mini-fab color="primary" class="upload-btn ml-2 "
-                    (click)="redirectToProtocoAdd(form.get('id')?.value?.toString())"
-                >
+                         (click)="navegarAComponenteB()">
+                    <!--[routerLink]="'protocolManagementCreate' | namedRoute: {campaignId: form.get('id')?.value?.toString()}"-->
+
                   <mat-icon>create</mat-icon>
                 </button>
               </div>

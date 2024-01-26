@@ -1,6 +1,6 @@
-import { ProtocolAddPageComponent } from './protocol-add-page.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ProtocolAddPageComponent } from './protocol-add-page.component';
 
 describe('ProtocolAddPageComponent', () => {
   let component: ProtocolAddPageComponent;

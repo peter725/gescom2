@@ -1,5 +1,11 @@
 import { SimpleModel, StatefulAltModel } from '@libs/sdk/common';
 import { AppQuerySource } from '@libs/commons';
+import { TypeCampaign } from '@libs/sdk/typeCampaign';
+import { Ambit } from '@libs/sdk/ambit';
+import { AutonomousCommunity } from '@libs/sdk/autonomousCommunity';
+import { Proponent } from '@libs/sdk/proponent';
+import { Specialist } from '@libs/sdk/specialist';
+import { AbstractControl } from '@angular/forms';
 
 export interface Protocol extends SimpleModel, StatefulAltModel {
   order: number;
@@ -7,6 +13,20 @@ export interface Protocol extends SimpleModel, StatefulAltModel {
   question: string;
   infringement: Infriengement;
   response: boolean;
+
+}
+
+export interface FilaProtocol {
+  id: number | null;
+  order: number | null;
+  codeQuestion: number | null;
+  question: string | null;
+  infringement: Infriengement | null;
+  response: boolean | null;
+}
+
+export interface CreateProtocol {
+   rows: AbstractControl;
 
 }
 

@@ -62,4 +62,5 @@ export const dashboardRoutes: Routes = [
     },
     children: ENTITY_PAGE_ROUTES,
   },
+
 ];

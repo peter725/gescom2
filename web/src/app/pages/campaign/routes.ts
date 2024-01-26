@@ -37,4 +37,12 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
     },
         loadChildren: () => import('./').then(m => m.CampaignSeePageModule),
     },
-  ]
+    {
+        path: 'protocol/:campaignId',
+        data: {
+            breadcrumb,
+            // requireAccess: 'WField'
+        },
+        loadChildren: () => import('./').then(m => m.CampaignAddPageModule),
+    },
+]

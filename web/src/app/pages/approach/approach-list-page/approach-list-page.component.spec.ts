@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArbitrationListPageComponent } from './field-list-page.component';
+import { ApproachListPageComponent } from './approach-list-page.component';
 
 describe('FieldListPageComponent', () => {
-  let component: ArbitrationListPageComponent;
-  let fixture: ComponentFixture<ArbitrationListPageComponent>;
+  let component: ApproachListPageComponent;
+  let fixture: ComponentFixture<ApproachListPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ArbitrationListPageComponent],
+      declarations: [ApproachListPageComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ArbitrationListPageComponent);
+    fixture = TestBed.createComponent(ApproachListPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
@@ -19,6 +19,10 @@ import { Page } from '@libs/crud-api';
 })
 export class CampaignSeePageComponent extends EditPageBaseComponent<any , CampaignForm>  {
 
+  @ViewChild("fileUpload", {read: ElementRef})
+  fileUpload!: ElementRef;
+  @Input() requiredFileType = '';
+
   readonly resourceName = 'campaign';
   readonly protocolFileUpload = 'protocolFileUpload';
   protected override _createResourceTitle = 'pages.campaign.add';
@@ -29,16 +33,13 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   override ngOnInit(): void {
     super.ngOnInit();
     this.loadPhases();
-    console.log('ngOnInit 1', this.loadPhases());
   }
 
   private loadPhases(): void {
     this.crudService.findAll({ resourceName: 'phaseCampaign' })
       .subscribe({
         next: (page: Page<PhaseCampaign>) => {
-          console.log('loadPhases 2', page.content);
           this.phases = page.content;
-          console.log('loadPhases 3', this.phases);
         },
         error: (err) => {
           console.error('Error al cargar las fases de la campaña:', err);
@@ -78,8 +79,10 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   async onUpload(signFile: SignFile) {
     try {
+      console.log('onUpload 0', signFile);
       this.activeOperation = this.sendOperation(signFile);
       const result = await firstValueFrom(this.activeOperation) as DocumentForm;
+      console.log('onUpload 2', result);
       this.activeOperation = undefined;
       signFile.form?.patchValue({'fileName': result.name, id: result.id});
       this.status.status = 'IDLE';
@@ -92,11 +95,17 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   private sendOperation(signFile: SignFile): Observable<any> {
+    console.log('sendOperation 0', signFile);
+    console.log('sendOperation 1', signFile.documentType);
+    console.log('sendOperation 2', signFile.file);
+    console.log('sendOperation 3',  this.form.get('id')?.value);
     return this.crudService.create({
       file: signFile.file,
       name: signFile.file.name,
       extension: signFile.file.type,
-      base64: signFile.b64
+      base64: signFile.b64,
+      campaignId: this.form.get('id')?.value,
+      documentType: signFile.documentType,
     }, {resourceName: this.protocolFileUpload});
   }
 
@@ -113,5 +122,10 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.save().then(r => console.log('changePhaseCampaign 1', this.campaign));
     console.log('changePhaseCampaign 1', this.campaign);
   }
+
+  redirectToProtocoAdd(campaignId: string | undefined) {
+    this.router.navigate(['protocolManagementCreate', campaignId]);
+  }
+
 
 }

@@ -55,19 +55,32 @@
             </div>
 
 
-              <tsw-file-upload [form]="form" (upload)="onUpload($event)" class="px-10 sm:px-5"></tsw-file-upload>
-
+            <tsw-file-upload [formUpload]="form" (upload)="onUpload($event)" requiredFileType="image/png|pdf" class="px-10 sm:px-5" ></tsw-file-upload>
 
 
             <div class="px-10 sm:px-5 sm:grid sm:grid-cols-3">
-              <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.inspection' | translate}}</h1>
-              <h3 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900" >{{ form.get('phaseCampaign')?.value?.description }}</h3>
-              <button  class="upload-btn ml-2 mat-button mat-button-base mat-primary"
-                       loadingSpinnerColor="primary"
-                       (click)="changePhaseCampaign()"       >
-                <mat-icon>arrow_forward</mat-icon>
-              </button>
+                <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.inspection' | translate}}</h1>
+                <h3 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900" >{{ form.get('phaseCampaign')?.value?.description }}</h3>
+                <button  class="upload-btn ml-2 mat-button mat-button-base mat-primary"
+                         loadingSpinnerColor="primary"
+                         (click)="changePhaseCampaign()"       >
+                  <mat-icon>arrow_forward</mat-icon>
+                </button>
+            </div>
 
+<!--
+            <tsw-file-upload *ngIf="form.get('phaseCampaign')?.value?.id! > 1" [formUpload]="form" (upload)="onUpload($event)" requiredFileType="image/png|pdf" class="px-10 sm:px-5" ></tsw-file-upload>
+-->
+            <div  *ngIf="form.get('phaseCampaign')?.value?.id! > 1" class="grid grid-cols-2 gap-1.5 px-10 sm:px-10 w-3/4 sm:w-auto p-4 border border-gray-300 bg-white rounded-md">
+              <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900 justify-items-start" >{{'text.campaign.library' | translate}}</h3>
+              <div class="file-upload text-right">
+                {{"fields.campaign.requiredDoc" | translate}}
+                <button  mat-mini-fab color="primary" class="upload-btn ml-2 "
+                    (click)="redirectToProtocoAdd(form.get('id')?.value?.toString())"
+                >
+                  <mat-icon>create</mat-icon>
+                </button>
+              </div>
 
 
 

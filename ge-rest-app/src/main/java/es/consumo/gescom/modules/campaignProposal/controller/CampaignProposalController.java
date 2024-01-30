@@ -3,8 +3,12 @@ package es.consumo.gescom.modules.campaignProposal.controller;
 import es.consumo.gescom.commons.constants.ApiEndpoints;
 import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
+import es.consumo.gescom.commons.dto.EntityStatusChange;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
+import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
+import es.consumo.gescom.modules.arbitration.service.ArbitrationService;
 import es.consumo.gescom.modules.campaignProposal.model.criteria.CampaignProposalCriteria;
 import es.consumo.gescom.modules.campaignProposal.model.dto.CampaignProposalDTO;
 import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
@@ -25,6 +29,22 @@ public class CampaignProposalController extends AbstractCrudController<CampaignP
         super(service, dataConverter);
     }
 
+    @Override
+    protected Page<?> performFindAll(CriteriaWrapper<?> criteriaWrapper) {
+        return ((CampaignProposalService) service).findAllCampaignProposal(criteriaWrapper);
+    }
+
+    @Override
+    public CampaignProposalDTO performCreate(CampaignProposalDTO payload) {
+        return ((CampaignProposalService) service).createCampaignProposal(payload);
+    }
+
+    @PostMapping("/{id}/switch")
+    public ResponseEntity<CampaignProposalEntity> switchStatus(@RequestBody ChangeStatusDTO changeStatus, @PathVariable  Long id) {
+        CampaignProposalEntity result = ((CampaignProposalService) service).switchStatus(changeStatus, id);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/data/{id}")
     public ResponseEntity<Page<CampaignProposalEntity.SimpleProjection>> findListByCriteria(CampaignProposalCriteria campaignProposalCriteria, @PathVariable  Long id) {
         Page<CampaignProposalEntity.SimpleProjection> result = ((CampaignProposalService) service).findAllCampaignProposalById(new CriteriaWrapper<>(campaignProposalCriteria), id);
@@ -42,6 +62,5 @@ public class CampaignProposalController extends AbstractCrudController<CampaignP
         Page<CampaignProposalEntity.SimpleProjection> result = ((CampaignProposalService) service).findListByCriteriaAutonomousCommunityId(new CriteriaWrapper<>(campaignProposalCriteria), idCA);
         return ResponseEntity.ok(result);
     }
-
 
 }

@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CampaignTypeRepository extends GESCOMRepository<CampaignTypeEntity, Long> , QueryByCriteria<CampaignTypeEntity.SimpleProjection, CampaignTypeCriteria> {
+public interface CampaignTypeRepository extends GESCOMRepository<CampaignTypeEntity, Long> {
 
     @Query(value = "SELECT h FROM CampaignTypeEntity h where h.id = :id ")
     Page<CampaignTypeEntity.SimpleProjection> findAllCampaignTypeEntityById( Pageable pageable, @Param("id") Long id);

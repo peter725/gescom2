@@ -191,11 +191,11 @@ public class ArbitrationServiceImpl extends EntityCrudService<ArbitrationEntity,
     @Override
     @Transactional
     public ArbitrationEntity switchStatus(ChangeStatusDTO changeStatusDTO) {
-        ArbitrationEntity entity = findById(changeStatusDTO.getArbitrationId()).orElseThrow();
-        entity.setStatus(changeStatusDTO.getStatus());
-        entity.setCauses(changeStatusDTO.getCauses());
+        ArbitrationEntity entity = findById(changeStatusDTO.getId()).orElseThrow();
+        //entity.setStatus(changeStatusDTO.getStatus());
+        //entity.setCauses(changeStatusDTO.getCauses());
 
-        createHistory(changeStatusDTO.getCauses(), entity, changeStatusDTO.getStatus());
+        //createHistory(changeStatusDTO.getCauses(), entity, changeStatusDTO.getStatus());
         return arbitrationRepository.save(entity);
     }
 

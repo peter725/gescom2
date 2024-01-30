@@ -13,7 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChangeStatusDTO implements Serializable {
-    private Long arbitrationId;
-    private String causes;
-    private ArbitrationStatusEntity status;
+    private Long id;
+    private Integer status;
 }

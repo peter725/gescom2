@@ -3,6 +3,7 @@ package es.consumo.gescom.modules.campaignProposal.model.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import es.consumo.gescom.commons.constants.EntityState;
 import es.consumo.gescom.commons.dto.LongIdModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,6 +40,6 @@ public class CampaignProposalDTO implements Serializable, LongIdModel {
 
     private String viability;
 
-   // private Integer state = EntityState.ON.getValue();
+   private Integer state = EntityState.ON.getValue();
     
 }

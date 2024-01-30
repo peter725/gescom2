@@ -148,7 +148,7 @@ export class RestCrudOperation {
     if (operation.type === HttpOperationType.CRUD) {
       src.operations.create.path = custom?.create?.path || '/create';
       src.operations.update.path = custom?.update?.path || '/update/:id';
-      src.operations.changeState.path = custom?.changeState?.path || '/patch/:id/status';
+      src.operations.changeState.path = custom?.changeState?.path || '/:id/switch';
       src.operations.delete.path = custom?.delete?.path || '/delete';
     }
 

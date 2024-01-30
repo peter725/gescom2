@@ -38,7 +38,7 @@ public class AutonomousCommunitySpecialistServiceImpl extends EntityCrudService<
 
     @Override
     public List<SpecialistDTO> finByIdCampaign(Long idCampaign) {
-        List<AutonomousCommunitySpecialistEntity> autonomousCommunitySpecialists = autonomousCommunitySpecialistRepository.finByIdCampaign(idCampaign);
+        List<AutonomousCommunitySpecialistEntity> autonomousCommunitySpecialists = autonomousCommunitySpecialistRepository.findByIdCampaign(idCampaign);
         List<SpecialistDTO> specialistDTOS = new ArrayList<>();
         autonomousCommunitySpecialists.forEach(autonomousCommunitySpecialist -> {
             SpecialistEntity specialist = autonomousCommunitySpecialist.getSpecialist();

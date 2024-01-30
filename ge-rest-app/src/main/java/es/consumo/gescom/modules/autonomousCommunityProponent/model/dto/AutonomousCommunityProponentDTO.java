@@ -1,4 +1,4 @@
-package es.consumo.gescom.modules.autonomousCommunityParticipants.model.dto;
+package es.consumo.gescom.modules.autonomousCommunityProponent.model.dto;
 
 import es.consumo.gescom.commons.dto.LongIdModel;
 import lombok.AllArgsConstructor;
@@ -12,9 +12,9 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AutonomousCommunityParticipantsDTO implements Serializable {
+public class AutonomousCommunityProponentDTO implements Serializable, LongIdModel {
 
     private Long id;
     private String name;
-
+    
 }

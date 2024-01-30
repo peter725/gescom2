@@ -39,7 +39,7 @@ public class AutonomousCommunityProponentServiceImpl extends EntityCrudService<A
 
     @Override
     public List<ProponentDTO> finByIdCampaign(Long idCampaign) {
-        List<AutonomousCommunityProponentEntity> autonomousCommunityProponents = autonomousCommunityProponentRepository.finByIdCampaign(idCampaign);
+        List<AutonomousCommunityProponentEntity> autonomousCommunityProponents = autonomousCommunityProponentRepository.findByIdCampaign(idCampaign);
         List<ProponentDTO> proponentDTOS = new ArrayList<>();
         autonomousCommunityProponents.forEach(autonomousCommunityProponent -> {
             ProponentEntity proponent = autonomousCommunityProponent.getProponent();

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AutonomousCommunityParticipantsRepository extends GESCOMRepository<AutonomousCommunityParticipantsEntity, Long>, QueryByCriteria<AutonomousCommunityParticipantsEntity.SimpleProjection, AutonomousCommunityParticipantsCriteria> {
+public interface AutonomousCommunityParticipantsRepository extends GESCOMRepository<AutonomousCommunityParticipantsEntity, Long> {
 
     @Query("SELECT p FROM AutonomousCommunityParticipantsEntity p WHERE p.campaign.id=:campaignId AND p.state=1")
     List<AutonomousCommunityParticipantsEntity> findByIdCampaign(@Param("campaignId") Long idCampaign);

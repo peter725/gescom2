@@ -2,9 +2,9 @@ package es.consumo.gescom.modules.autonomousCommunityParticipants.service.impl;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
-import es.consumo.gescom.modules.autonomousCommunity.model.converter.AutonomousCommunityConverter;
-import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
-import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
+
+import es.consumo.gescom.modules.autonomousCommunityParticipants.model.converter.AutonomousCommunityParticipantsConverter;
+import es.consumo.gescom.modules.autonomousCommunityParticipants.model.dto.AutonomousCommunityParticipantsDTO;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.model.entity.AutonomousCommunityParticipantsEntity;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.repository.AutonomousCommunityParticipantsRepository;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.service.AutonomousCommunityParticipantsService;
@@ -24,18 +24,17 @@ public class AutonomousCommunityParticipantsServiceImpl extends EntityCrudServic
     private AutonomousCommunityParticipantsRepository autonomousCommunityParticipantsRepository;
 
     @Autowired
-    private AutonomousCommunityConverter autonomousCommunityConverter;
+    private AutonomousCommunityParticipantsConverter autonomousCommunityParticipantsConverter;
 
     @Override
-    public List<AutonomousCommunityDTO> findByIdCampaign(Long idCampaign) {
+    public List<AutonomousCommunityParticipantsDTO> findByIdCampaign(Long idCampaign) {
         List<AutonomousCommunityParticipantsEntity> autonomousCommunityParticipants = autonomousCommunityParticipantsRepository.findByIdCampaign(idCampaign);
-        List<AutonomousCommunityDTO> autonomousComunityDTOS = new ArrayList<>();
+        List<AutonomousCommunityParticipantsDTO> autonomousComunityDTOS = new ArrayList<>();
         autonomousCommunityParticipants.forEach(autonomousCommunityParticipant -> {
-            AutonomousCommunityEntity autonomousCommunity = autonomousCommunityParticipant.getAutonomousCommunityEntity();
-            AutonomousCommunityDTO dto = autonomousCommunityConverter.convertToModel(autonomousCommunity);
+            AutonomousCommunityParticipantsDTO dto = autonomousCommunityParticipantsConverter.convertToModel(autonomousCommunityParticipant);
             autonomousComunityDTOS.add(dto);
         });
-        Set<AutonomousCommunityDTO> set = new HashSet<>(autonomousComunityDTOS);
+        Set<AutonomousCommunityParticipantsDTO> set = new HashSet<>(autonomousComunityDTOS);
         return set.stream().toList();
     }
 }

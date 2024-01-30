@@ -1,9 +1,14 @@
 package es.consumo.gescom.modules.campaign.service.impl;
 
+import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.modules.ambit.model.converter.AmbitConverter;
+import es.consumo.gescom.modules.ambit.model.entity.AmbitEntity;
 import es.consumo.gescom.modules.autonomousCommunity.model.converter.AutonomousCommunityConverter;
-import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.autonomousCommunity.repository.AutonomousCommunityRepository;
+import es.consumo.gescom.modules.autonomousCommunity.service.AutonomousCommunityService;
+import es.consumo.gescom.modules.autonomousCommunityParticipants.model.converter.AutonomousCommunityParticipantsConverter;
+import es.consumo.gescom.modules.autonomousCommunityParticipants.model.dto.AutonomousCommunityParticipantsDTO;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.model.entity.AutonomousCommunityParticipantsEntity;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.repository.AutonomousCommunityParticipantsRepository;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.service.AutonomousCommunityParticipantsService;
@@ -18,15 +23,22 @@ import es.consumo.gescom.modules.campaign.model.dto.CampaignDTO;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.repository.CampaignRepository;
 import es.consumo.gescom.modules.campaign.service.CampaignService;
+import es.consumo.gescom.modules.campaignType.model.converter.CampaingnTypeConverter;
+import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
+import es.consumo.gescom.modules.phase.model.converter.PhaseConverter;
 import es.consumo.gescom.modules.phase.model.entity.PhaseEntity;
 import es.consumo.gescom.modules.proponent.model.converter.ProponentConverter;
 import es.consumo.gescom.modules.proponent.model.dto.ProponentDTO;
 import es.consumo.gescom.modules.proponent.model.entity.ProponentEntity;
+import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
 import es.consumo.gescom.modules.specialist.model.converter.SpecialistConverter;
 import es.consumo.gescom.modules.specialist.model.dto.SpecialistDTO;
 import es.consumo.gescom.modules.specialist.model.entity.SpecialistEntity;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +50,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 
 @Service
@@ -52,7 +65,12 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                                   AutonomousCommunityParticipantsRepository autonomousCommunityParticipantsRepository,
                                   ProponentConverter proponentConverter,
                                   SpecialistConverter specialistConverter,
-                                  AutonomousCommunityParticipantsService autonomousCommunityParticipantsService, AutonomousCommunityProponentRepository autonomousCommunityProponentRepository, AutonomousCommunityProponentService autonomousCommunityProponentService, AutonomousCommunitySpecialistRepository autonomousCommunitySpecialistRepository, AutonomousCommunitySpecialistService autonomousCommunitySpecialistService) {
+                                  AutonomousCommunityService autonomousCommunityService,
+                                  AutonomousCommunityParticipantsService autonomousCommunityParticipantsService,
+                                  AutonomousCommunityProponentRepository autonomousCommunityProponentRepository,
+                                  AutonomousCommunityProponentService autonomousCommunityProponentService,
+                                  AutonomousCommunitySpecialistRepository autonomousCommunitySpecialistRepository,
+                                  AutonomousCommunitySpecialistService autonomousCommunitySpecialistService) {
         super(repository);
         this.autonomousCommunityRepository = autonomousCommunityRepository;
         this.autonomousCommunityConverter = autonomousCommunityConverter;
@@ -60,6 +78,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         this.campaingnConverter = campaignConverter;
         this.autonomousCommunityParticipantsRepository = autonomousCommunityParticipantsRepository;
         this.proponentConverter = proponentConverter;
+        this.autonomousCommunityService = autonomousCommunityService;
         this.autonomousCommunityParticipantsService = autonomousCommunityParticipantsService;
         this.autonomousCommunityProponentRepository = autonomousCommunityProponentRepository;
         this.specialistConverter = specialistConverter;
@@ -75,7 +94,19 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     private CampaignConverter campaingnConverter;
 
     @Autowired
+    private CampaingnTypeConverter campaingnTypeConverter;
+
+    @Autowired
+    private AmbitConverter ambitConverter;
+
+    @Autowired
+    private PhaseConverter phaseConverter;
+
+    @Autowired
     private AutonomousCommunityConverter autonomousCommunityConverter;
+
+    @Autowired
+    private AutonomousCommunityParticipantsConverter autonomousCommunityParticipantsConverter;
 
     @Autowired
     private ProponentConverter proponentConverter;
@@ -85,6 +116,8 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
 
     private final AutonomousCommunityRepository autonomousCommunityRepository;
+
+    private final AutonomousCommunityService autonomousCommunityService;
 
     private final AutonomousCommunityParticipantsRepository autonomousCommunityParticipantsRepository;
 
@@ -100,8 +133,6 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     private final AutonomousCommunitySpecialistService autonomousCommunitySpecialistService;
 
 
-
-
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public CampaignEntity performCreate(CampaignEntity payload) {
@@ -115,26 +146,30 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     @Override
     public CampaignDTO createCampaign(CampaignDTO campaignDTO) {
         CampaignEntity campaign = campaingnConverter.convertToEntity(campaignDTO);
-        campaign.setAutonomousCommunityResponsible(campaignDTO.getAutonomousCommunityResponsible());
-        campaign.setCampaignType(campaignDTO.getCampaignType());
-        campaign.setAmbit(campaignDTO.getAmbit());
+        AutonomousCommunityEntity autonomousCommunityEntity = autonomousCommunityConverter.convertToEntity(campaignDTO.getAutonomousCommunityResponsible());
+        campaign.setAutonomousCommunityResponsible(autonomousCommunityEntity);
+        CampaignTypeEntity campaignType = campaingnTypeConverter.convertToEntity(campaignDTO.getCampaignType());
+        campaign.setCampaignType(campaignType);
+        AmbitEntity ambit = ambitConverter.convertToEntity(campaignDTO.getAmbit());
+        campaign.setAmbit(ambit);
 
-        if(campaignDTO.getId() == null){
+        if (campaignDTO.getId() == null) {
             PhaseEntity phaseEntityNew = new PhaseEntity();
             phaseEntityNew.setId(1L);
             campaign.setPhaseCampaign(phaseEntityNew);
-        }else{
-            campaign.setPhaseCampaign(campaignDTO.getPhaseCampaign());
+        } else {
+            PhaseEntity phase = phaseConverter.convertToEntity(campaignDTO.getPhaseCampaign());
+            campaign.setPhaseCampaign(phase);
         }
 
         CampaignEntity campaignSave = campaignRepository.save(campaign);
 
-        List<AutonomousCommunityDTO> participantsList = campaignDTO.getParticipants();
-        List<AutonomousCommunityEntity> autonomousCommunityParticipantsEntities = autonomousCommunityConverter.convertToEntity(participantsList);
+        List<AutonomousCommunityParticipantsDTO> participantsList = campaignDTO.getParticipants();
+        List<AutonomousCommunityParticipantsEntity> autonomousCommunityParticipantsEntities = autonomousCommunityParticipantsConverter.convertToEntity(participantsList);
         autonomousCommunityParticipantsEntities.forEach(participant -> {
             AutonomousCommunityParticipantsEntity autonomousCommunityParticipants = new AutonomousCommunityParticipantsEntity();
             autonomousCommunityParticipants.setCampaign(campaignSave);
-            autonomousCommunityParticipants.setAutonomousCommunityEntity(participant);
+            autonomousCommunityParticipants.setAutonomousCommunityEntity(autonomousCommunityEntity);
             autonomousCommunityParticipants.setCreatedAt(LocalDateTime.now());
             autonomousCommunityParticipants.setUpdatedAt(LocalDateTime.now());
             autonomousCommunityParticipantsRepository.save(autonomousCommunityParticipants);
@@ -162,40 +197,138 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             autonomousCommunitySpecialistRepository.save(autonomousCommunitySpecialistEntity);
         });
 
-        return campaingnConverter.convertToModel(campaignSave);
+        CampaignDTO respuesta = campaingnConverter.convertToModel(campaignSave);
+        respuesta.setParticipants(participantsList);
+        respuesta.setProponents(proponentDTOList);
+        respuesta.setSpecialists(specialistDTOS);
+
+        return respuesta;
     }
 
     @Override
     public CampaignDTO updateCampaign(Long idCampaing, CampaignDTO campaignDTO) {
         CampaignDTO campaign = this.findCampaignById(idCampaing);
+        final List<Long> toDelete = new ArrayList<>();
+        final List<Long> toDeleteProponent = new ArrayList<>();
+        final List<Long> toDeleteSpecialist = new ArrayList<>();
+        final List<RoleHasModuleEntity> toSave = new ArrayList<>();
 
-        if (ObjectUtils.isEmpty(campaignDTO.getId())){
+        if (ObjectUtils.isEmpty(campaign.getId())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
-        if(campaign.getId() == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (campaign.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
+
+        List<AutonomousCommunityParticipantsEntity> acParticipantes = autonomousCommunityParticipantsRepository.findByIdCampaign(campaignDTO.getId());
+        iterateAndDeletedACParticipants(acParticipantes, toDelete);
+
+        if (!toDelete.isEmpty())
+            autonomousCommunityParticipantsRepository.deleteAllById(toDelete);
+
+        List<AutonomousCommunityProponentEntity> acProponentes = autonomousCommunityProponentRepository.findByIdCampaign(campaignDTO.getId());
+        iterateAndDeletedACProponents(acProponentes, toDeleteProponent);
+
+        if (!toDeleteProponent.isEmpty())
+            autonomousCommunityProponentRepository.deleteAllById(toDeleteProponent);
+
+        List<AutonomousCommunitySpecialistEntity> acSpecialists = autonomousCommunitySpecialistRepository.findByIdCampaign(campaignDTO.getId());
+        iterateAndDeletedACSpecialist(acSpecialists, toDeleteSpecialist);
+
+        if (!toDeleteSpecialist.isEmpty())
+            autonomousCommunitySpecialistRepository.deleteAllById(toDeleteSpecialist);
 
         return createCampaign(campaignDTO);
 
     }
 
+    private void iterateAndSaveSpecialist(List<SpecialistDTO> specialists, SpecialistEntity acp, List<Long> toDeleteSpecialist, List<RoleHasModuleEntity> toSave) {
+        for (SpecialistDTO acParticipantsDTO : specialists) {
+            if (acp.getId() != 0) {
+                if (Objects.nonNull(toDeleteSpecialist)) {
+                    toDeleteSpecialist.add(acp.getId());
+                }
+            }
+        }
+    }
+
+    private void iterateAndSaveProponent(List<ProponentDTO> proponents, ProponentEntity acp, List<Long> toDeleteProponent, List<RoleHasModuleEntity> toSave) {
+        for (ProponentDTO acParticipantsDTO : proponents) {
+            if (acp.getId() != 0) {
+                if (Objects.nonNull(toDeleteProponent)) {
+                    toDeleteProponent.add(acp.getId());
+                }
+            }
+        }
+    }
+
+
+    private void iterateAndDeletedACParticipants(List<AutonomousCommunityParticipantsEntity> autonomousCommunityParticipantsDTOS, List<Long> toDelete) {
+        for (AutonomousCommunityParticipantsEntity acParticipantsDTO : autonomousCommunityParticipantsDTOS) {
+            if (acParticipantsDTO.getId() != 0) {
+                if (Objects.nonNull(toDelete)) {
+                    toDelete.add(acParticipantsDTO.getId());
+                }
+            }
+        }
+    }
+
+    private void iterateAndDeletedACProponents(List<AutonomousCommunityProponentEntity> communityProponentEntityList, List<Long> toDeleteProponents) {
+        for (AutonomousCommunityProponentEntity proponentEntity : communityProponentEntityList) {
+            if (proponentEntity.getId() != 0) {
+                if (Objects.nonNull(toDeleteProponents)) {
+                    toDeleteProponents.add(proponentEntity.getId());
+                }
+            }
+        }
+    }
+
+    private void iterateAndDeletedACSpecialist(List<AutonomousCommunitySpecialistEntity> autonomousCommunitySpecialistEntityList, List<Long> toDeleteSpecialist) {
+        for (AutonomousCommunitySpecialistEntity autonomousCommunitySpecialistEntity : autonomousCommunitySpecialistEntityList) {
+            if (autonomousCommunitySpecialistEntity.getId() != 0) {
+                if (Objects.nonNull(toDeleteSpecialist)) {
+                    toDeleteSpecialist.add(autonomousCommunitySpecialistEntity.getId());
+                }
+            }
+        }
+    }
 
     public CampaignDTO findCampaignById(Long idCampaign) {
         CampaignEntity campaign = campaignRepository.findById(idCampaign)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró registro con ID: " + idCampaign));
-        if(campaign != null){
+        if (campaign != null) {
             CampaignDTO campaignDTO = campaingnConverter.convertToModel(campaign);
             campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(idCampaign));
             campaignDTO.setProponents(autonomousCommunityProponentService.finByIdCampaign(idCampaign));
             campaignDTO.setSpecialists(autonomousCommunitySpecialistService.finByIdCampaign(idCampaign));
 
             return campaignDTO;
-        }else {
+        } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaign not found");
 
         }
 
     }
+
+    @Override
+    public Page<CampaignDTO> performFindAllCampaing(CriteriaWrapper<?> wrapper) {
+        Page<CampaignEntity> listCampaign = repository.findAll(wrapper.getCriteria().toPageable());
+        List<CampaignDTO> listCampaingDTO = new ArrayList<>();
+        for (CampaignEntity campaign : listCampaign) {
+            CampaignDTO campaignDTO = campaingnConverter.convertToModel(campaign);
+            campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(campaign.getId()));
+            campaignDTO.setProponents(autonomousCommunityProponentService.finByIdCampaign(campaign.getId()));
+            campaignDTO.setSpecialists(autonomousCommunitySpecialistService.finByIdCampaign(campaign.getId()));
+            listCampaingDTO.add(campaignDTO);
+        }
+        if(listCampaingDTO != null){
+            return new PageImpl<>(listCampaingDTO, PageRequest.of(0, 10), listCampaingDTO.size());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaign not found");
+
+        }
+        
+    }
+
 
 }

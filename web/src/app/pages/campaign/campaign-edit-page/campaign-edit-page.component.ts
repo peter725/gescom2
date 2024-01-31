@@ -27,7 +27,7 @@ export class CampaignEditPageComponent extends EditPageBaseComponent<Campaign, C
       ambit: this.fb.control(null, [Validators.required]),
       specialists: this.fb.control([], [Validators.required]),
       proponents: this.fb.control([], [Validators.required]),
-      responsibleEntity: this.fb.control(null, [Validators.required]),
+      autonomousCommunityResponsible: this.fb.control(null, [Validators.required]),
     });
   }
 }

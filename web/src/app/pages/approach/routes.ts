@@ -24,7 +24,7 @@ export const APPROACH_PAGE_ROUTES: Routes = [
         loadChildren: () => import('./').then(m => m.ApproachCampaignProposalModule),
     },
     {
-        path: ':id',
+        path: ':id/ver',
         data: {
             breadcrumb,
         },

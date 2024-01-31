@@ -8,5 +8,5 @@ export interface TypeCampaign extends SimpleModel,StatefulModel{
 
 export interface TypeCampaignForm {
     id: number | null;
-    name: string | null;
+    description: string | null;
 }

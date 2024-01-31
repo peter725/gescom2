@@ -17,7 +17,7 @@ import {Approach, CreateApproach} from "@libs/sdk/approach";
 
 export class ApproachSeePageComponent extends EditPageBaseComponent<Approach, CreateApproach> {
 
-    readonly resourceName = "approach";
+    readonly resourceName = "campaignProposal";
 
     protected override _createResourceTitle = "pages.approach.add";
     protected override _editResourceTitle = "pages.approach.see";

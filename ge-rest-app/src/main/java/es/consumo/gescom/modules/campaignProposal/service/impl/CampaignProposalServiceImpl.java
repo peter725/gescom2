@@ -47,6 +47,8 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
     public CampaignProposalDTO createCampaignProposal(CampaignProposalDTO campaignProposalDTO) {
         campaignProposalDTO.setDate(LocalDate.now());
         campaignProposalDTO.setSent(true);
+        //ojo cambiar al momento de estar activo el perfil de usuario aqui se debe guardar la comunidad autonoma de usuario logueado
+        campaignProposalDTO.setAutonomousCommunityId(20L);
         CampaignProposalEntity campaignProposal =  campaignProposalConverter.convertToEntity(campaignProposalDTO);
         campaignProposalRepository.save(campaignProposal);
 

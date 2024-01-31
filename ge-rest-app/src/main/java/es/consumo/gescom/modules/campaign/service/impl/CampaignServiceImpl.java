@@ -4,6 +4,7 @@ import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.ambit.model.converter.AmbitConverter;
 import es.consumo.gescom.modules.ambit.model.entity.AmbitEntity;
 import es.consumo.gescom.modules.autonomousCommunity.model.converter.AutonomousCommunityConverter;
+import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.autonomousCommunity.repository.AutonomousCommunityRepository;
 import es.consumo.gescom.modules.autonomousCommunity.service.AutonomousCommunityService;
@@ -27,6 +28,7 @@ import es.consumo.gescom.modules.campaignType.model.converter.CampaingnTypeConve
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
 import es.consumo.gescom.modules.phase.model.converter.PhaseConverter;
 import es.consumo.gescom.modules.phase.model.entity.PhaseEntity;
+import es.consumo.gescom.modules.phase.repository.PhaseRepository;
 import es.consumo.gescom.modules.proponent.model.converter.ProponentConverter;
 import es.consumo.gescom.modules.proponent.model.dto.ProponentDTO;
 import es.consumo.gescom.modules.proponent.model.entity.ProponentEntity;
@@ -61,6 +63,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                                   AutonomousCommunityRepository autonomousCommunityRepository,
                                   AutonomousCommunityConverter autonomousCommunityConverter,
                                   CampaignRepository campaignRepository,
+                                  PhaseRepository phaseRepository,
                                   CampaignConverter campaignConverter,
                                   AutonomousCommunityParticipantsRepository autonomousCommunityParticipantsRepository,
                                   ProponentConverter proponentConverter,
@@ -86,6 +89,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         this.autonomousCommunitySpecialistRepository = autonomousCommunitySpecialistRepository;
         this.autonomousCommunitySpecialistService = autonomousCommunitySpecialistService;
     }
+
+    @Autowired
+    private PhaseRepository phaseRepository;
 
     @Autowired
     private CampaignRepository campaignRepository;
@@ -164,9 +170,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
         CampaignEntity campaignSave = campaignRepository.save(campaign);
 
-        List<AutonomousCommunityParticipantsDTO> participantsList = campaignDTO.getParticipants();
-        List<AutonomousCommunityParticipantsEntity> autonomousCommunityParticipantsEntities = autonomousCommunityParticipantsConverter.convertToEntity(participantsList);
-        autonomousCommunityParticipantsEntities.forEach(participant -> {
+        List<AutonomousCommunityDTO> participantsList = campaignDTO.getParticipants();
+        List<AutonomousCommunityEntity> autonomousCommunityEntities = autonomousCommunityConverter.convertToEntity(participantsList);
+        autonomousCommunityEntities.forEach(participant -> {
             AutonomousCommunityParticipantsEntity autonomousCommunityParticipants = new AutonomousCommunityParticipantsEntity();
             autonomousCommunityParticipants.setCampaign(campaignSave);
             autonomousCommunityParticipants.setAutonomousCommunityEntity(autonomousCommunityEntity);
@@ -301,7 +307,6 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(idCampaign));
             campaignDTO.setProponents(autonomousCommunityProponentService.finByIdCampaign(idCampaign));
             campaignDTO.setSpecialists(autonomousCommunitySpecialistService.finByIdCampaign(idCampaign));
-
             return campaignDTO;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaign not found");

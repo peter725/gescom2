@@ -17,7 +17,8 @@ export interface Campaign extends SimpleModel, StatefulModel {
   nameCampaign: string;
   campaignType: TypeCampaign;
   ambit: Ambit;
-  responsible_entity: string;
+  autonomousCommunityResponsible: string;
+  phaseCampaign: PhaseCampaign | null;
 
 }
 
@@ -33,7 +34,7 @@ export interface CreateCampaign {
   nameCampaign: string | null;
   campaignType: TypeCampaign | null;
   ambit: Ambit | null;
-  responsibleEntity: AutonomousCommunity | null;
+  autonomousCommunityResponsible: AutonomousCommunity | null;
   participants: AutonomousCommunity[] | null;
   proponents: Proponent[] | null;
   specialists: Specialist[] | null;

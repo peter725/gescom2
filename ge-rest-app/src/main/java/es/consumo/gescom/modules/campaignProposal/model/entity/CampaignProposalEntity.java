@@ -29,6 +29,7 @@ public class CampaignProposalEntity extends SimpleEntity {
     @Column(name = "AUTONOMOUS_COMMUNITY_ID")
     private Long autonomousCommunityId;
 
+    @CreatedBy
     @Column(name = "USER_ID")
     private Long userId;
 

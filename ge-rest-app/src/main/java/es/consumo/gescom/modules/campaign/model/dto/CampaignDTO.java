@@ -45,7 +45,7 @@ public class CampaignDTO implements Serializable {
     private CampaignTypeDTO campaignType; /// DTO
     private AmbitDTO ambit; /// DTO
     private AutonomousCommunityDTO autonomousCommunityResponsible; /// DTO
-    private List<AutonomousCommunityParticipantsDTO> participants;
+    private List<AutonomousCommunityDTO> participants;
     private List<ProponentDTO> proponents;
     private List<SpecialistDTO> specialists;
     private PhaseDTO phaseCampaign;   /// DTO

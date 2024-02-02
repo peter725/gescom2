@@ -9,7 +9,6 @@ import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousComm
 import es.consumo.gescom.modules.autonomousCommunity.repository.AutonomousCommunityRepository;
 import es.consumo.gescom.modules.autonomousCommunity.service.AutonomousCommunityService;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.model.converter.AutonomousCommunityParticipantsConverter;
-import es.consumo.gescom.modules.autonomousCommunityParticipants.model.dto.AutonomousCommunityParticipantsDTO;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.model.entity.AutonomousCommunityParticipantsEntity;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.repository.AutonomousCommunityParticipantsRepository;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.service.AutonomousCommunityParticipantsService;
@@ -248,26 +247,6 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
     }
 
-    private void iterateAndSaveSpecialist(List<SpecialistDTO> specialists, SpecialistEntity acp, List<Long> toDeleteSpecialist, List<RoleHasModuleEntity> toSave) {
-        for (SpecialistDTO acParticipantsDTO : specialists) {
-            if (acp.getId() != 0) {
-                if (Objects.nonNull(toDeleteSpecialist)) {
-                    toDeleteSpecialist.add(acp.getId());
-                }
-            }
-        }
-    }
-
-    private void iterateAndSaveProponent(List<ProponentDTO> proponents, ProponentEntity acp, List<Long> toDeleteProponent, List<RoleHasModuleEntity> toSave) {
-        for (ProponentDTO acParticipantsDTO : proponents) {
-            if (acp.getId() != 0) {
-                if (Objects.nonNull(toDeleteProponent)) {
-                    toDeleteProponent.add(acp.getId());
-                }
-            }
-        }
-    }
-
 
     private void iterateAndDeletedACParticipants(List<AutonomousCommunityParticipantsEntity> autonomousCommunityParticipantsDTOS, List<Long> toDelete) {
         for (AutonomousCommunityParticipantsEntity acParticipantsDTO : autonomousCommunityParticipantsDTOS) {
@@ -334,6 +313,5 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         }
         
     }
-
 
 }

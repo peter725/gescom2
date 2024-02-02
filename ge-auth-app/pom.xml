@@ -23,6 +23,7 @@
         <lombok.version>1.18.24</lombok.version>
         <expiringmap.version>0.5.9</expiringmap.version>
         <maven.test.skip>true</maven.test.skip>
+        <modelmapper.version>3.1.1</modelmapper.version>
     </properties>
 
     <dependencies>
@@ -72,7 +73,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
+        <!-- DATABASE -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -211,6 +221,11 @@
             <artifactId>icu4j</artifactId>
             <version>54.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -262,6 +277,16 @@
 				<config.files>C:/Users/Juan Pablo Zabala/SoftwareWork/SERIKAT</config.files>
 			</properties>
 		</profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <activatedProperties>docker,jdbc</activatedProperties>
+                <env.domain>docker</env.domain>
+                <baseURL>http://localhost:9080</baseURL>
+                <pathLogs>GESCO-auth.log</pathLogs>
+                <config.files>conf</config.files>
+            </properties>
+        </profile>
 		<profile>
 			<id>dev</id>
 			<properties>

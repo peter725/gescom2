@@ -114,7 +114,7 @@ public class InfringementEntity extends SimpleEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         InfringementEntity that = (InfringementEntity) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(that.getId(), that.getId());
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
@@ -125,7 +125,9 @@ public class InfringementEntity extends SimpleEntity {
     public interface SimpleProjection {
 
         Long getId();
-        String getName();
+        String getCode();
+        String getInfringement();
+        String getDescription();
 
     }
 }

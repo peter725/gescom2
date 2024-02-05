@@ -111,7 +111,6 @@
             <version>${swagger.version}</version>
         </dependency>
         <!-- /Swagger -->
-
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
@@ -153,6 +152,16 @@
                 <baseURL>http://localhost:8085</baseURL>
                 <pathLogs>C:/Users/wramos/gesco-log/GESCO.log</pathLogs>
                 <config.files>C:/Users/acolina/IdeaProjects/repo</config.files>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <activatedProperties>docker,swagger,jdbc</activatedProperties>
+                <env.domain>docker</env.domain>
+                <baseURL>http://localhost:8080</baseURL>
+                <pathLogs>GESCO.log</pathLogs>
+                <config.files>conf</config.files>
             </properties>
         </profile>
         <profile>

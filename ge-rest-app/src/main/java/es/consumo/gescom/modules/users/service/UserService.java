@@ -1,5 +1,6 @@
 package es.consumo.gescom.modules.users.service;
 
+import es.consumo.gescom.modules.campaignProposal.model.dto.CampaignProposalDTO;
 import es.consumo.gescom.modules.users.model.entity.UserEntity;
 import es.consumo.gescom.modules.users.model.criteria.UserCriteria;
 import es.consumo.gescom.modules.users.model.dto.UserDTO;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 public interface UserService extends CrudService<UserEntity, Long> {
 
     Page<UserEntity.SimpleProjection> findAllSimpleEntity(CriteriaWrapper<UserCriteria> wrapper);
+
+    Page<UserDTO> findAllUsers(CriteriaWrapper<?> criteriaWrapper);
 
     UserDTO findByUserId(Long id);
 

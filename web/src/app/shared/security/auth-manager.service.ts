@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { appOrigin, gescoAuthAPI } from '@base/config/app';
 import { HiddenFormData } from '@base/shared/components/form';
 import { NotificationService } from '@base/shared/notification';
@@ -14,12 +14,12 @@ import {
   UserSignInRequest
 } from '@libs/sdk/auth';
 import { AuthContextService } from '@libs/security';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, switchMap } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthStorage } from './auth-storage';
 import { AppAuthSubject } from './auth-subject';
-import { AuthProcessResultParam, AuthProcessResultValues, AuthProcessState } from './models';
-import { TokenStorageService } from '@base/services/tokenStorageService';
+import { AuthProcessAction, AuthProcessResultParam, AuthProcessResultValues, AuthProcessState } from './models';
+import 'rxjs/internal/observable/throwError';
 
 
 @Injectable({ providedIn: 'root' })
@@ -35,7 +35,6 @@ export class AuthManagerService {
     private route: ActivatedRoute,
     private notification: NotificationService,
     private http: HttpClient,
-    private tokeStorageService: TokenStorageService,
     @Inject(CRUD_OPERATIONS) private operations: CrudOperationStorage,
   ) {
   }
@@ -44,15 +43,14 @@ export class AuthManagerService {
     return this.processMessage.asObservable();
   }
 
-  // Eliminar en producción
   async login(docNum: string, secret: string) {
     try {
       this.updateProcess('PROCESS', 'Completando el proceso de autenticación');
       const authentication = await this.getLoginToken(docNum, secret);
-      console.log('authentication', authentication);
       // Solicitar los datos del usuario autenticado.
       this.updateProcess('PROCESS', 'Recuperando los datos del usuario');
       const authDetails = await this.getUserInfo(authentication);
+      AuthStorage.saveUserSession(authDetails);
       // Limpiamos los datos del almacén
       AuthStorage.saveUserAuth(authentication);
       // Autorizamos al usuario autenticado
@@ -65,26 +63,6 @@ export class AuthManagerService {
       const message = err.message || 'Datos de accesos incorrectos';
       this.updateProcess('ERROR', message);
       throw new Error(message);
-    }
-  }
-
-  hardCodeLogin(docNum: string, secret: string) {
-    if (docNum === '12345678A' && secret === 'admin') {
-      const user = {
-        usuario: 'Usuario Interno',
-        roles: ['interna']
-      }
-      this.tokeStorageService.saveUser(user);
-      this.router.navigate(this.namedRoutes.getRoute('home'));
-    } else if (docNum === '87654321A' && secret === 'admin') {
-      const user = {
-        usuario: 'Usuario Solicitante',
-        roles: ['externa']
-      }
-      this.tokeStorageService.saveUser(user);
-      this.router.navigate(this.namedRoutes.getRoute('home'));
-    } else {
-      this.updateProcess('ERROR', 'Datos de accesos incorrectos');
     }
   }
 
@@ -112,7 +90,6 @@ export class AuthManagerService {
    * Inicializa el control de estado del proceso de autenticación.
    */
   async initProcess() {
-    console.log('entra initProcess');
     this.updateProcess('PROCESS', 'Inicializando');
     // Si el usuario está autenticado, forzamos la compleción del proceso.
     if (this.authContext.instant().isAuthenticated()) {
@@ -122,33 +99,14 @@ export class AuthManagerService {
     }
 
     const queryParams = await firstValueFrom(this.route.queryParamMap.pipe(take(1)));
-    console.log('queryParams', queryParams);
-    const resultStatus = queryParams.get(AuthProcessResultParam.STATUS_PARAM);
-    const resultMessage = queryParams.get(AuthProcessResultParam.STATUS_MESSAGE);
-    const resultCode = queryParams.get(AuthProcessResultParam.AUTH_CODE)!;
-    console.log('resultStatus', resultStatus);
-    console.log('resultMessage', resultMessage);
-    console.log('resultCode', resultCode);
-    // Si disponemos de un token temporal, significa que el proceso ha sido
-    // inicializado y debemos completarlo en función del resultado recibido
-    // por los parámetros de query.
-    if (resultStatus === AuthProcessResultValues.OK) {
-      try {
-        await this.signIn(resultCode);
-        await this.completeProcess();
-      } catch (e) {
-        // ignored
-        const err = AppError.parse(e);
-        const message = resultMessage || err.message || 'No ha sido posible completar el proceso de autenticación.';
-        this.updateProcess('ERROR', message);
-      }
+    const action = queryParams.get(AuthProcessResultParam.AUTH_ACTION);
+    if (action == AuthProcessAction.SIGN_IN) {
+      await this.actionSignIn(queryParams);
       return;
-    } else if (resultStatus === AuthProcessResultValues.KO) {
-      const message = resultMessage || 'No ha sido posible completar el proceso de autenticación.';
-      this.updateProcess('ERROR', message);
+    } else if (action == AuthProcessAction.REGISTER) {
+      await this.actionRegister(queryParams);
       return;
     }
-
     // Si no cumplimos ninguna de las condiciones anteriores, significa que
     // no se ha inicializado el proceso y el usuario no está autenticado.
     this.updateProcess('INIT');
@@ -160,17 +118,8 @@ export class AuthManagerService {
   async requestSignIn() {
     try {
       this.updateProcess('PROCESS', 'generic.actions.loggingIn');
-      console.log('requestSignIn');
 
-      // Obtenemos la ruta de login y la transformamos en un string. La tranformación
-      // incluye un "/" demás.
-      const path = this.namedRoutes.getRoute('login').join('/').replace('//', '/');
-      const payload: UserSignInRequest = {
-        processReturnUrl: appOrigin + path
-      };
-      const loginRequestUrl = this.operations.get('authRequest').base().path;
-      const loginOperation = this.http.post<ClaveRequestFormData>(loginRequestUrl, payload);
-      const response = await firstValueFrom(loginOperation);
+      const response = await this.makeRequestSigIn()
       return this.buildClaveFormData(response);
     } catch (e) {
       const err = AppError.parse(e);
@@ -186,12 +135,23 @@ export class AuthManagerService {
     }
   }
 
+  refreshToken(): Observable<string> {
+    const access = AuthStorage.getUserAuth();
+
+    return this.getRefreshToken(access?.refresh_token)
+      .pipe(switchMap((e: AuthDataResponse) => {
+        AuthStorage.clearUserAuth()
+        AuthStorage.saveUserAuth(e);
+        return e.access_token;
+      }));
+
+  }
+
   /**
    * Realizar el proceso de SignIn y registra el usuario en el contexto de seguridad.
    */
   async signIn(code: string) {
     try {
-      console.log('Ento a signIn');
       const auth = {authorizationCode: code}
       // Intentamos realizar login en el sistema utilizando la autorización temporal.
       this.updateProcess('PROCESS', 'Completando el proceso de autenticación');
@@ -302,8 +262,6 @@ export class AuthManagerService {
       'Authorization': gescoAuthAPI.authorization,
       'Content-Type': "application/x-www-form-urlencoded"
     });
-    console.log('url', url);
-    console.log('headers', headers);
     const body = new URLSearchParams();
     body.set('username', docNum);
     body.set('password', secret);
@@ -311,7 +269,83 @@ export class AuthManagerService {
     return firstValueFrom(this.http.post<AuthDataResponse>(url, body, {headers}));
   }
 
+  private getRefreshToken(refreshToken: string | undefined): Observable<AuthDataResponse> {
+
+    const url = this.operations.get('manualLogIn').base().path;
+    const headers = new HttpHeaders({
+      'Authorization': gescoAuthAPI.authorization,
+      'Content-Type': "application/x-www-form-urlencoded"
+    });
+    const body = new URLSearchParams();
+    body.set('refresh_token', refreshToken || "");
+    body.set('grant_type', 'refresh_token');
+    return this.http.post<AuthDataResponse>(url, body, {headers});
+  }
+
   capitalize(text: string) {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
+
+  private async makeRequestSigIn(): Promise<ClaveRequestFormData> {
+    // Obtenemos la ruta de login y la transformamos en un string. La tranformación
+    // incluye un "/" demás.
+    const path = this.namedRoutes.getRoute('login').join('/').replace('//', '/');
+    const payload: UserSignInRequest = {
+      processReturnUrl: appOrigin + path
+    };
+    const loginRequestUrl = this.operations.get('authRequest').base().path;
+    const loginOperation = this.http.post<ClaveRequestFormData>(loginRequestUrl, payload);
+    return await firstValueFrom(loginOperation);
+  }
+
+  private async actionSignIn(queryParams: ParamMap) {
+    const resultStatus = queryParams.get(AuthProcessResultParam.STATUS_PARAM);
+    const resultMessage = queryParams.get(AuthProcessResultParam.STATUS_MESSAGE);
+    const resultCode = queryParams.get(AuthProcessResultParam.AUTH_CODE)!;
+    // Si disponemos de un token temporal, significa que el proceso ha sido
+    // inicializado y debemos completarlo en función del resultado recibido
+    // por los parámetros de query.
+    if (resultStatus === AuthProcessResultValues.OK) {
+      try {
+        await this.signIn(resultCode);
+        await this.completeProcess();
+      } catch (e) {
+        // ignored
+        const err = AppError.parse(e);
+        const message = resultMessage || err.message || 'No ha sido posible completar el proceso de autenticación.';
+        this.updateProcess('ERROR', message);
+      }
+    } else if (resultStatus === AuthProcessResultValues.KO) {
+      const message = resultMessage || 'No ha sido posible completar el proceso de autenticación.';
+      this.updateProcess('ERROR', message);
+    }
+  }
+
+  private async actionRegister(queryParams: ParamMap) {
+    const res = await this.makeRequestSigIn();
+    const formData = this.buildClaveFormData(res);
+
+    const form = document.createElement('form');
+    form.style.display = 'none';
+    form.method = formData.method;
+    form.action = formData.action;
+
+    formData.params.forEach(e => {
+      let input = document.createElement('input');
+      input.name = e.key
+      input.id = e.key
+      input.value = e.value
+      form.appendChild(input);
+    })
+
+    let relayId = document.createElement('input');
+    relayId.name = "RelayState";
+    relayId.id = "RelayState";
+    relayId.value = queryParams.get("relayId") as string;
+    form.appendChild(relayId);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
 }

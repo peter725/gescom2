@@ -45,6 +45,13 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
     }
 
     @Override
+    public Page<UserDTO> findAllUsers(CriteriaWrapper<?> criteriaWrapper) {
+        Page<UserDTO> response = repository.findAll(criteriaWrapper.getCriteria().toPageable())
+                .map(userEntity -> modelMapper.map(userEntity, UserDTO.class));
+        return response;
+    }
+
+    @Override
     public Page<UserEntity.SimpleProjection> findAllSimpleEntity(CriteriaWrapper<UserCriteria> wrapper) {
         return ((UserRepository) repository).findAllByCriteria(wrapper.getCriteria(), wrapper.getCriteria().toPageable());
     }

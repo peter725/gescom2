@@ -1,13 +1,10 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NamedRoutesConfig } from '@base/config/named-routes.config';
 import { HttpClientConfig } from '@base/config/http-client.config';
 import { routes } from './pages/routes';
-import { HttpClientModule } from '@angular/common/http';
 import { CrudApiConfig } from '@base/config/crud-api.config';
 import { TranslateConfig } from '@base/config/translate.config';
 import { TitleConfig } from '@base/config/title.config';
@@ -20,10 +17,10 @@ import { AuthorizationConfig } from '@base/config/authorization.config';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
+    AuthorizationConfig,
     RouterModule.forRoot(routes, { initialNavigation: 'enabledNonBlocking' }),
     NamedRoutesConfig,
     HttpClientConfig,
-    HttpClientModule,
     CrudApiConfig,
     TranslateConfig,
     TitleConfig,
@@ -31,11 +28,11 @@ import { AuthorizationConfig } from '@base/config/authorization.config';
     NotificationModule.forRoot(),
     FormConfig,
     LocaleConfig,
-    AuthorizationConfig
   ],
   declarations: [
     AppComponent,
   ],
   bootstrap: [AppComponent],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-*' }],
 })
 export class AppModule {}

@@ -15,12 +15,12 @@ import { UserType } from "@libs/sdk/userType";
 export interface User extends SimpleModel, StatefulModel {
 
   name: string;
-  firstSurname: string;
-  secondSurname: string;
+  Surname: string;
+  lastSurname: string;
   fullName: string;
   autonomousCommunity: AutonomousCommunity;
 
-  nif: string;
+  dni: string;
   email: string;
   phone: string;
 
@@ -33,10 +33,10 @@ export interface User extends SimpleModel, StatefulModel {
 }
 
 export interface UserView extends SimpleModel, StatefulAltModel {
-  nif: string;
+  dni: string;
   name: string;
-  firstSurname: string;
-  secondSurname: string;
+  Surname: string;
+  lastSurname: string;
   email: string;
   autonomousCommunity: string;
   provinces: string;
@@ -53,12 +53,11 @@ export interface CreateUser {
   id: number | null;
 
   name: string | null;
-  firstSurname: string | null;
-  secondSurname: string | null;
-  nif: string | null;
+  Surname: string | null;
+  lastSurname: string | null;
+  dni: string | null;
   email: string | null;
   phone: string | null;
-  password: string | null;
 
   userType: UserType[] | null;
   profile: Profile[] | null;
@@ -73,9 +72,9 @@ export interface CreateUser {
 
 export interface UserFilterForm extends AppQuerySource {
   name?: string;
-  firstSurname?: string;
-  secondSurname?: string;
-  nif?: string;
+  Surname?: string;
+  lastSurname?: string;
+  dni?: string;
   email?: string;
   phone?: string;
   profile?: string;

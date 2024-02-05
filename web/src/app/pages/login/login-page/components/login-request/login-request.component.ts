@@ -51,13 +51,7 @@ export class LoginRequestComponent implements OnDestroy {
   // Gracias cl@ve
   // Eliminar al poner en producción
 
-  async doFakeLogin(nif: string, pass: string) {
-    try {
-      await this.authManager.hardCodeLogin(nif, pass);
-    } catch (e) {
-      this.fakeLogin = false;
-    }
-  }
+
   async doLogin(nif: string, pass: string) {
     try {
       await this.authManager.login(nif, pass);

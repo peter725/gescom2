@@ -4,20 +4,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
+import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
+import es.consumo.gescom.modules.userType.model.entity.UserTypeEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -33,25 +28,44 @@ public class UserEntity extends SimpleEntity{
     @Basic
     @Column(name = "create_at", nullable = true)
     private LocalDateTime createAt;
+
     @LastModifiedDate
     @Basic
     @Column(name = "update_at", nullable = true)
     private LocalDateTime updateAt;
+
     @Basic
     @Column(name = "name", nullable = false, length = 40)
     private String name;
+
     @Basic
     @Column(name = "surname", nullable = false, length = 20)
     private String surname;
+
     @Basic
     @Column(name = "last_surname", nullable = true, length = 20)
     private String lastSurname;
+
     @Basic
     @Column(name = "dni", nullable = false, length = 20)
     private String dni;
+
     @Basic
     @Column(name = "email", nullable = false, length = 100)
     private String email;
+
+    @Basic
+    @Column(name = "phone", nullable = false, length = 10)
+    private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "user_type_id")
+    private UserTypeEntity userType;
+
+    @ManyToOne
+    @JoinColumn(name = "ccaa_id")
+    private AutonomousCommunityEntity autonomousCommunityEntity;
+
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "login_id", insertable = true)
@@ -87,6 +101,12 @@ public class UserEntity extends SimpleEntity{
         String getDni();
 
         String getEmail();
+
+        String getPhone();
+
+        UserTypeEntity getUserType();
+
+        AutonomousCommunityEntity getAutonomousCommunityEntity();
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
         LocalDateTime getCreateAt();

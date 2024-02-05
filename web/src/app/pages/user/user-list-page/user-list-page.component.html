@@ -68,9 +68,9 @@
         {{ "fields.surnames" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>
-        {{ element.firstSurname }}
-        <ng-container *ngIf="element.secondSurname">
-          {{ element.secondSurname }}
+        {{ element.surname }}
+        <ng-container *ngIf="element.lastSurname">
+          {{ element.lastSurname }}
         </ng-container>
       </td>
     </ng-container>
@@ -79,14 +79,14 @@
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
         {{ "fields.firstSurname" | translate }}
       </th>
-      <td *matCellDef="let element" mat-cell>{{ element.firstSurname }}</td>
+      <td *matCellDef="let element" mat-cell>{{ element.surname }}</td>
     </ng-container>
 
     <ng-container matColumnDef="secondSurname">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
         {{ "fields.secondSurname" | translate }}
       </th>
-      <td *matCellDef="let element" mat-cell>{{ element.secondSurname }}</td>
+      <td *matCellDef="let element" mat-cell>{{ element.lastSurname }}</td>
     </ng-container>
 
     <ng-container matColumnDef="profile">

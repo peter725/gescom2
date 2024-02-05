@@ -52,7 +52,7 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
       'name',
       {
         name: 'surnames',
-        compositionProps: ['firstSurname', 'secondSurname'],
+        compositionProps: ['Surname', 'lastSurname'],
       },
       { name: 'firstSurname', visible: false },
       { name: 'secondSurname', visible: false },

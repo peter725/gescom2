@@ -1,12 +1,11 @@
-import {Component} from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
-import { CreateUser, User } from '@libs/sdk/user';
-import { CustomValidators } from '@libs/validators';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 import { CreateProtocol, Protocol } from '@libs/sdk/protocol';
+import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infringement-dialog.component';
 
 
 @Component({
@@ -15,13 +14,19 @@ import { CreateProtocol, Protocol } from '@libs/sdk/protocol';
   styleUrls: ['./protocol-add-page.component.scss'],
   providers: [
     { provide: FORM_STATUS, useValue: new ComponentStatus('IDLE') },
-    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' }},
+    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' } }
   ]
 })
 export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, CreateProtocol> {
+
   readonly resourceName = 'protocol';
   protected override _createResourceTitle = 'pages.protocol.add';
 
+  openDialog() {
+    this.dialog.open(InfringementDialogComponent, {
+      width: '75%',
+    });
+  }
 
   protected buildForm(): FormGroup {
     const form = this.fb.group({
@@ -41,7 +46,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     console.log('crearFila', orden);
     return this.fb.group({
       id: null,
-      order: [{value: orden, disabled: true}],
+      order: [{ value: orden, disabled: true }],
       codeQuestion: null,
       question: null,
       infringement: null,
@@ -69,7 +74,4 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     const currentValue = fila.get('response')?.value;
     fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
   }
-
-
-
 }

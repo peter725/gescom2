@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import { NotificationService } from '@base/shared/notification';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Directive()
@@ -94,6 +95,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     protected namedRoutes: NamedRoutes,
     protected notification: NotificationService,
     protected mapper: FormMapper<T, F>,
+    protected dialog: MatDialog,
     @Inject(FORM_STATUS) public status: ComponentStatus,
   ) {
     this.form = this.buildForm();

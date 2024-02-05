@@ -1,1 +1,0 @@
-export * from './infringement-list-page/infringement-list-page.module'

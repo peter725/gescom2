@@ -11,4 +11,7 @@ public interface UserRepository extends GESCOMRepository<UserEntity, Long> {
 
 
     Optional<UserEntity> findByDni(String dni);
+
+
+    Optional<UserEntity> findByLoginId(Long idLogin);
 }

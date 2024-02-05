@@ -17,8 +17,8 @@ export const environment: EnvironmentData = {
     auth: {
       host: 'http://localhost:8085',
       api: '/api/v1',
-      username:'GE',
-      password:'GE'
+      username:'GESCOM',
+      password:'GESCOM'
     },
   },
 };

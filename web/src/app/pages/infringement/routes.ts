@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-const breadcrumb = 'pages.campaign.title';
+const   breadcrumb = 'pages.infringement.title';
 
-export const INFRACTION_PAGE_ROUTES: Routes = [
+export const INFRINGEMENT_PAGE_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'consulta',

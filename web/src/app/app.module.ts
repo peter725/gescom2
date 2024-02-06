@@ -13,6 +13,7 @@ import { NotificationModule } from '@base/shared/notification';
 import { FormConfig } from '@base/config/form.config';
 import { LocaleConfig } from '@base/config/locale.config';
 import { AuthorizationConfig } from '@base/config/authorization.config';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { AuthorizationConfig } from '@base/config/authorization.config';
     NotificationModule.forRoot(),
     FormConfig,
     LocaleConfig,
+    MatNativeDateModule,
   ],
   declarations: [
     AppComponent,

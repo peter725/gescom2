@@ -1,9 +1,10 @@
+
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   InfringementListPageComponent
-} from '@base/pages/campaign/campaign-see-page/components/infringement/infringement-list-page/infringement-list-page.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+} from '@base/pages/infringement/infringement-list-page/infringement-list-page.component';
 
-describe('InfractionListPageComponent', () => {
+describe('InfringementListPageComponent', () => {
   let component: InfringementListPageComponent;
   let fixture: ComponentFixture<InfringementListPageComponent>;
 

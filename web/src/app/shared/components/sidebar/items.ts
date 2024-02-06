@@ -49,12 +49,12 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
   },
   //infracciones
   {
-    text: 'pages.infraction.title',
+    text: 'pages.infringement.title',
     icon: 'report_problem',
     expanded: false,
     children: [
     {
-      text: 'pages.infraction.list', path:'infractionManagementList'
+      text: 'pages.infringement.list', path:'infringementManagementList'
     }
     ]
   },

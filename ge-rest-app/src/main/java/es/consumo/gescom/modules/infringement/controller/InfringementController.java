@@ -9,6 +9,9 @@ import es.consumo.gescom.modules.infringement.model.criteria.InfringementCriteri
 import es.consumo.gescom.modules.infringement.model.dto.InfringementDTO;
 import es.consumo.gescom.modules.infringement.model.entity.InfringementEntity;
 import es.consumo.gescom.modules.infringement.service.InfringementService;
+import es.consumo.gescom.modules.users.model.criteria.UserCriteria;
+import es.consumo.gescom.modules.users.model.entity.UserEntity;
+import es.consumo.gescom.modules.users.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/infringement")
 @Tag(name = "Infringement Controller")
-public class InfringementController extends AbstractCrudController<InfringementEntity, InfringementDTO, Long, FilterCriteria> {
+public class InfringementController extends AbstractCrudController<InfringementEntity, InfringementDTO, Long, InfringementCriteria> {
 
     @Autowired
     public InfringementController(InfringementService service, DataConverter<InfringementEntity, InfringementDTO> campaingTypeDto) {
@@ -30,6 +33,13 @@ public class InfringementController extends AbstractCrudController<InfringementE
     public ResponseEntity<Page<InfringementEntity.SimpleProjection>> findListByCriteria(InfringementCriteria campaignTypeCriteria, @PathVariable Long id) {
         Page<InfringementEntity.SimpleProjection> result =
                 ((InfringementService) service).findAllInfringementEntityById(new CriteriaWrapper<>(campaignTypeCriteria), id);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<Page<InfringementEntity.SimpleProjection>> findListByCriteria(InfringementCriteria infringementCriteria) {
+        Page<InfringementEntity.SimpleProjection> result =
+                ((InfringementService) service).findAllSimpleEntity(new CriteriaWrapper<>(infringementCriteria));
         return ResponseEntity.ok(result);
     }
 }

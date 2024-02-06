@@ -8,5 +8,7 @@ import org.springframework.data.domain.Page;
 
 public interface InfringementService extends CrudService<InfringementEntity, Long>{
 
-    Page<InfringementEntity.SimpleProjection> findAllInfringementEntityById(CriteriaWrapper<InfringementCriteria> campaignTypeCriteriaCriteriaWrapper, Long id);
+    Page<InfringementEntity.SimpleProjection> findAllInfringementEntityById(CriteriaWrapper<InfringementCriteria> wrapper, Long id);
+
+    Page<InfringementEntity.SimpleProjection> findAllSimpleEntity(CriteriaWrapper<InfringementCriteria> wrapper);
 }

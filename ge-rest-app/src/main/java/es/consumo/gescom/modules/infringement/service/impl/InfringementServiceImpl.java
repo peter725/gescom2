@@ -7,6 +7,7 @@ import es.consumo.gescom.modules.infringement.model.criteria.InfringementCriteri
 import es.consumo.gescom.modules.infringement.model.entity.InfringementEntity;
 import es.consumo.gescom.modules.infringement.repository.InfringementRepository;
 import es.consumo.gescom.modules.infringement.service.InfringementService;
+import es.consumo.gescom.modules.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,12 @@ public class InfringementServiceImpl extends EntityCrudService<InfringementEntit
 
     public Page<InfringementEntity.SimpleProjection> findAllInfringementEntityById(CriteriaWrapper<InfringementCriteria> wrapper, Long id) {
         return ((InfringementRepository) repository).findAllInfringementEntityById(wrapper.getCriteria().toPageable(), id);
+    }
+
+    @Override
+    public Page<InfringementEntity.SimpleProjection> findAllSimpleEntity(CriteriaWrapper<InfringementCriteria> wrapper) {
+        return ((InfringementRepository) repository).findAllByCriteria(wrapper.getCriteria(), wrapper.getCriteria().toPageable());
+
     }
 }
 

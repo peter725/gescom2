@@ -5,6 +5,8 @@ import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.modules.campaign.model.dto.CampaignDTO;
+import es.consumo.gescom.modules.campaign.service.CampaignService;
 import es.consumo.gescom.modules.protocol.model.criteria.ProtocolCriteria;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/protocol")
 @Tag(name = "Protocol controller")
-public class ProtocolController extends AbstractCrudController<ProtocolEntity, ProtocolDTO, Long, FilterCriteria> {
+public class ProtocolController extends AbstractCrudController<ProtocolEntity, ProtocolDTO, Long, ProtocolCriteria> {
 
     @Autowired
     public ProtocolController(ProtocolService service,
@@ -41,6 +43,11 @@ public class ProtocolController extends AbstractCrudController<ProtocolEntity, P
         Page<ProtocolEntity> result =
                 ((ProtocolService) service).findProtocolByCampaignId(new CriteriaWrapper<>(protocolCriteria), idCampaign);
         return ResponseEntity.ok(result);
+    }
+
+    @Override
+    protected ProtocolDTO performCreate(ProtocolDTO payload) {
+        return ((ProtocolService) service).createProtocol(payload);
     }
 
 }

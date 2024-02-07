@@ -1,9 +1,9 @@
 package es.consumo.gescom.modules.protocol.model.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
-import es.consumo.gescom.commons.dto.LongIdModel;
-import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
+import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +13,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProtocolDTO implements Serializable, LongIdModel{
+public class ProtocolDTO implements Serializable{
 
     private Long id;
     private String code;
     private String name;
-    private CampaignEntity campaignId;
+    private Long campaignId;
+    private List<QuestionsDTO> questionsDTO;
     
 }

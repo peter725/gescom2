@@ -41,7 +41,7 @@ public class QuestionsEntity extends SimpleEntity {
     private String question;
 
     @Column(name = "INFRINGEMENT")
-    private String infringement;
+    private String codeInfringement;
 
     @Column(name = "BK_TRINTI")
     private String bkTrinti;

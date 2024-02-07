@@ -3,6 +3,7 @@ package es.consumo.gescom.modules.questions.model.dto;
 import java.io.Serializable;
 
 import es.consumo.gescom.commons.dto.LongIdModel;
+import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class QuestionsDTO implements Serializable, LongIdModel{
 
     private Long id;
     private String code;
-    private ProtocolEntity protocolCampaingId;
+    private ProtocolDTO protocolCampaignId;
     private String bkTrnrtipp;
     private String bkTrcotipp;
     private String question;

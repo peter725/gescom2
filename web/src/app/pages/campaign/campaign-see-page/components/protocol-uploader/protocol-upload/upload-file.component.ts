@@ -84,6 +84,7 @@ export class UploadFileComponent<T=any> {
     console.log("DATASET="+this.dataSource)
     this.table?.renderRows();
 
+
     this.form?.reset();
   }
 

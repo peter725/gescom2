@@ -6,29 +6,35 @@
           <mat-card-title>Añadir Documento</mat-card-title>
         </mat-card-header>
 
-        <mat-card-content>
-          <div class="flex flex-row gap-1.5">
+      <mat-card-content>
+        <div class="flex flex-row gap-1.5">
 
-            <mat-form-field class="basis-2/4">
-              <input  matInput type="file" (change)="onFileSelected($event)"/>
-            </mat-form-field>
-
-            <mat-form-field class="basis-1/4">
-              <mat-label>Fecha Creación</mat-label>
-              <input matInput
-                     [matDatepicker]="picker"
-                     formControlName="date"
-              >
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-
-            <div class="basis-1/4">
-              <button mat-raised-button color="primary" (click)="addFile()">Añadir</button>
-            </div>
+          <!-- Sección personalizada para el input de tipo archivo -->
+          <div class="basis-2/4 flex items-center">
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" hidden>
+            <label for="fileInput" class="btn mat-raised-button">
+              Seleccionar Archivo
+            </label>
           </div>
-        </mat-card-content>
+
+          <!-- Campo de Fecha de Creación con mat-form-field -->
+          <mat-form-field class="basis-1/4">
+            <mat-label>Fecha Creación</mat-label>
+            <input matInput
+                   [matDatepicker]="picker"
+                   formControlName="date">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Botón para añadir archivo -->
+          <div class="basis-1/4">
+            <button mat-raised-button color="primary" (click)="addFile()">Añadir</button>
+          </div>
+
+        </div>
+      </mat-card-content>
     </mat-card>
   </form>
 

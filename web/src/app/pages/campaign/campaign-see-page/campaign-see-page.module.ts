@@ -52,11 +52,9 @@ import { TableModule } from '@base/shared/components/table';
   ],
     declarations: [
         CampaignSeePageComponent,
-        UploadFileComponent,
         ],
     exports: [
         CampaignSeePageComponent,
-        UploadFileComponent,
     ]
 })
 export class CampaignSeePageModule {

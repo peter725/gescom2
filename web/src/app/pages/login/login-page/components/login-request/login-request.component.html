@@ -2,13 +2,13 @@
 <!-- Eliminar al poner en producción -->
 <!-- Gracias cl@ve -->
 <div *ngIf="(status.is$('INIT', 'ERROR') | async)  && !gcForm" class="text-center">
-  <tsw-raised-button
+  <!--<tsw-raised-button
     color="primary"
     text="generic.actions.login"
     loadingText="generic.actions.loggingIn"
     errorText="text.err.loginFailed"
     (click)="requestLogin()"
-  ></tsw-raised-button>
+  ></tsw-raised-button>-->
 </div>
 
 <div

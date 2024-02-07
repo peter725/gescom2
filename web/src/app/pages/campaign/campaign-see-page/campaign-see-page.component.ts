@@ -4,10 +4,9 @@ import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.compone
 import { ComponentStatus, ControlsOf } from '@libs/commons';
 import { Campaign, CampaignForm, CreateCampaign } from '@libs/sdk/campaign';
 import { Validators } from '@angular/forms';
-import { DocumentForm, SignFile } from '@libs/sdk/document';
-import { firstValueFrom, Observable, Subscription } from 'rxjs';
 import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
 import { Page } from '@libs/crud-api';
+import { UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -29,6 +28,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   protected override _editResourceTitle = 'pages.campaign.see';
   phases: any[] = [];
   campaign: any;
+  private dataSourceDialog: any;
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -77,37 +77,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     return this.form.get('specialists')?.value?.map((item: any) => item.name).join(', ');
   }
 
-  async onUpload(signFile: SignFile) {
-    try {
-      console.log('onUpload 0', signFile);
-      this.activeOperation = this.sendOperation(signFile);
-      const result = await firstValueFrom(this.activeOperation) as DocumentForm;
-      console.log('onUpload 2', result);
-      this.activeOperation = undefined;
-      signFile.form?.patchValue({'fileName': result.name, id: result.id});
-      this.status.status = 'IDLE';
-      this.notification.show({message: 'text.other.dataSaved'});
-    } catch (e: any) {
-      await this.afterSaveError(e);
-      signFile.form?.patchValue({'fileName': "", id: null});
-    }
 
-  }
-
-  private sendOperation(signFile: SignFile): Observable<any> {
-    console.log('sendOperation 0', signFile);
-    console.log('sendOperation 1', signFile.documentType);
-    console.log('sendOperation 2', signFile.file);
-    console.log('sendOperation 3',  this.form.get('id')?.value);
-    return this.crudService.create({
-      file: signFile.file,
-      name: signFile.file.name,
-      extension: signFile.file.type,
-      base64: signFile.b64,
-      campaignId: this.form.get('id')?.value,
-      documentType: signFile.documentType,
-    }, {resourceName: this.protocolFileUpload});
-  }
 
   protected changePhaseCampaign(){
     let actualId = this.form.get('phaseCampaign')?.value?.id;
@@ -125,6 +95,18 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   navegarAComponenteB() {
     this.router.navigate(['/protocolManagementCreate']);
+  }
+
+  openDialog() {
+
+    const dialogRef = this.dialog.open(UploadFileComponent,{
+      width: '75%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El diálogo se cerró');
+      this.dataSourceDialog = result;
+    });
   }
 
 

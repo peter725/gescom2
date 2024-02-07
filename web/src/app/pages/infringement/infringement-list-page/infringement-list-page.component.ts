@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BaseListPageComponent } from '@base/shared/pages/list';
 import { ExportFileType } from '@base/shared/export-file';
 import { CrudImplService, RequestConfig } from '@libs/crud-api';
 import { FilterService } from '@base/shared/filter';
 import { ColumnSrc } from '@base/shared/collections';
-import { Infraction } from '@libs/sdk/infraction';
+import { Infringement } from '@libs/sdk/infringement';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'tsw-infringement-list-page',
   templateUrl: './infringement-list-page.component.html',
   styleUrls: ['./infringement-list-page.component.scss'],
 })
-export class InfringementListPageComponent extends BaseListPageComponent<Infraction> implements OnInit {
-  readonly resourceName = 'infraction';
+export class InfringementListPageComponent extends BaseListPageComponent<Infringement> implements OnInit {
+
+  @Output() selectionChanged: EventEmitter<{row: any, selected: boolean}> = new EventEmitter();
+
+  readonly resourceName = 'infringement';
 
   override exportFormats = [ExportFileType.CSV];
-  override downloadFileName = 'pages.infraction.title';
+  override downloadFileName = 'pages.infringement.title';
   constructor(
-    crudService: CrudImplService<Infraction>,
+    crudService: CrudImplService<Infringement>,
     filterService: FilterService,
     //private sampleCtx: AppContextService,
   ) {
@@ -27,6 +31,14 @@ export class InfringementListPageComponent extends BaseListPageComponent<Infract
   override async ngOnInit() {
     await super.ngOnInit();
     //this.monitorCtxChanges();
+  }
+
+  override select(ev: MatCheckboxChange, row: any): void {
+    if (ev) {
+      this.selection.toggle(row);
+      // Emite el evento con el objeto de la fila y el estado de selección
+      this.selectionChanged.emit({row: row, selected: this.selection.isSelected(row)});
+    }
   }
 
   protected override async getRequestConfig(): Promise<RequestConfig> {
@@ -44,7 +56,7 @@ export class InfringementListPageComponent extends BaseListPageComponent<Infract
     return [
       'select',
       'code',
-      'name',
+      'infringement',
       'actions',
     ];
   }

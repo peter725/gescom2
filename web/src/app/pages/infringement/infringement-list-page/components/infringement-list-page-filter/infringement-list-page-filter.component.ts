@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FilterComponent } from '@base/shared/filter';
-import { InfractionFilterForm } from '@libs/sdk/infraction';
+import { InfringementFilterForm } from '@libs/sdk/infringement';
 
 
 @Component({
   selector: 'tsw-infringement-list-page-filter',
   templateUrl: './infringement-list-page-filter.component.html',
 })
-export class InfringementListPageFilterComponent extends FilterComponent<InfractionFilterForm> {
+export class InfringementListPageFilterComponent extends FilterComponent<InfringementFilterForm> {
 
-  readonly resourceName = 'infraction';
+  readonly resourceName = 'infringement';
 
   protected buildQueryForm(): FormGroup {
 

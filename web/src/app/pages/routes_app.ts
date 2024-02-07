@@ -6,7 +6,7 @@ import { PROFILE_PAGE_ROUTES } from '@base/pages/profile/routes';
 import { MODULE_PAGE_ROUTES } from '@base/pages/module/routes';
 import { ENTITY_PAGE_ROUTES } from '@base/pages/entity/routes';
 import { PROTOCOL_PAGE_ROUTES } from '@base/pages/protocol/routes';
-import { INFRACTION_PAGE_ROUTES } from '@base/pages/infringement/routes';
+import { INFRINGEMENT_PAGE_ROUTES } from '@base/pages/infringement/routes';
 
 
 export const dashboardRoutes: Routes = [
@@ -64,11 +64,11 @@ export const dashboardRoutes: Routes = [
     children: PROTOCOL_PAGE_ROUTES,
   },
   {
-    path: 'infrigements',
+    path: 'infracciones',
     data: {
       // requireAccess: 'RFieldMod'
     },
-    children: INFRACTION_PAGE_ROUTES,
+    children: INFRINGEMENT_PAGE_ROUTES,
   },
 
 

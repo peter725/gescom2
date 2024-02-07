@@ -8,6 +8,7 @@ import { CreateProtocol, Protocol } from '@libs/sdk/protocol';
 import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infringement-dialog.component';
 
 
+
 @Component({
   selector: 'tsw-protocol-add-page',
   templateUrl: './protocol-add-page.component.html',
@@ -22,14 +23,38 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   readonly resourceName = 'protocol';
   protected override _createResourceTitle = 'pages.protocol.add';
 
-  openDialog() {
-    this.dialog.open(InfringementDialogComponent, {
+  openDialog(rowIndex: number): void {
+    const dialogRef = this.dialog.open(InfringementDialogComponent, {
       width: '75%',
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.length > 0) {
+        const selectedItem = result[0]; // Si esperas un solo objeto, ajusta según sea necesario
+        console.log('selectedItem', selectedItem);
+        this.updateFormRowWithSelectedItem(rowIndex, selectedItem);
+      }
+    });
+  }
+
+  updateFormRowWithSelectedItem(rowIndex: number, selectedItem: any) {
+    const rows = this.form.get('rows') as unknown as FormArray;
+    if (rows.at(rowIndex)) {
+      const row = rows.at(rowIndex) as FormGroup;
+      row.patchValue({
+        // Suponiendo que el campo se llama 'infringement' en tu formulario y 'nombre' en tu objeto seleccionado
+        infringement: selectedItem.code,
+        // Aquí puedes actualizar otros campos relevantes
+      });
+      console.log('row', row);
+    }
   }
 
   protected buildForm(): FormGroup {
     const form = this.fb.group({
+      name: [null, Validators.required],
+      code: [null, ],
+      campaign: [null, ],
       rows: this.fb.array([])
     });
 
@@ -66,8 +91,16 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   }
 
   eliminarFila(index: number) {
+    // Elimina la fila en el índice dado
     this.rows.removeAt(index);
+
+    // Recorre todas las filas restantes para actualizar el campo 'orden'
+    this.rows.controls.forEach((control, i) => {
+      console.log('control', control);
+      control.get('order')?.setValue(i + 1);
+    });
   }
+
 
   toggleResp(filaIndex: number) {
     const fila = (this.form.get('rows') as unknown as FormArray).at(filaIndex) as FormGroup;

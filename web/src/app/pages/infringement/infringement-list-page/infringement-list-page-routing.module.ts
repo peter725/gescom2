@@ -7,7 +7,7 @@ import {
 const routes: Routes = [{
   path: '',
   component: InfringementListPageComponent,
-  title: 'pages.infraction.list',
+  title: 'pages.infringement.list',
   data: { breadcrumb: 'generic.actions.list' },
 }];
 

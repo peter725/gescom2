@@ -9,6 +9,32 @@
     >
 
       <div section-content>
+        <div class=" w-3/4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div>
+            <mat-form-field class="w-full">
+              <mat-label>{{ 'fields.code' | translate }}</mat-label>
+              <input matInput formControlName="code">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <!-- Input de name -->
+            <div class="mb-4"> <!-- mb-4 añade un margen inferior para separar los inputs -->
+              <mat-form-field class="w-full">
+                <mat-label>{{ 'fields.name' | translate }}</mat-label>
+                <input matInput formControlName="name">
+              </mat-form-field>
+            </div>
+
+            <!-- Input de campaignName -->
+            <div>
+              <mat-form-field class="w-full">
+                <mat-label>{{ 'fields.campaing' | translate }}</mat-label>
+                <input matInput formControlName="campaign">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
 
         <div class="w-3/4 mx-auto ">
           <div class="table w-full border-collapse">
@@ -35,9 +61,11 @@
                   <input formControlName="question"  class="w-full">
                 </div>
 
-                <div class="table-cell p-2 border border-gray-300">
-                  <!-- Enlace al listado general -->
-                  <button mat-raised-button (click)="openDialog()"></button>
+                <div class="table-cell p-2 border border-gray-300" style="position: relative;">
+                  <input formControlName="infringement" readonly style="background: transparent; border: none; width: 100%;" onclick="this.blur();">
+                  <a (click)="openDialog(i)" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
+                    <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
+                  </a>
                 </div>
 
                 <div class="table-cell p-2 border border-gray-300">

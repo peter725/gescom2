@@ -26,7 +26,10 @@ export interface FilaProtocol {
 }
 
 export interface CreateProtocol {
-   rows: AbstractControl;
+  name: string;
+  code: string;
+  rows: AbstractControl;
+  campaignId: number;
 
 }
 

@@ -83,7 +83,6 @@ public class InfringementEntity extends SimpleEntity {
     @Column(name = "BK_TTICOICI")
     private String bkTticoici;
 
-
     @JsonIgnore
     @CreatedDate
     @Column(name = "CREATED_AT", nullable = false)

@@ -60,15 +60,15 @@ public class UserEntity extends SimpleEntity{
     private String phone;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private ProfileEntity profile;
 
     @ManyToOne
-    @JoinColumn(name = "user_type_id")
+    @JoinColumn(name = "user_type_id", referencedColumnName = "id")
     private UserTypeEntity userType;
 
     @ManyToOne
-    @JoinColumn(name = "ccaa_id")
+    @JoinColumn(name = "ccaa_id", referencedColumnName = "id")
     private AutonomousCommunityEntity autonomousCommunity;
 
     @JsonIgnore
@@ -112,6 +112,10 @@ public class UserEntity extends SimpleEntity{
         UserTypeEntity getUserType();
 
         AutonomousCommunityEntity getAutonomousCommunity();
+
+        ProfileEntity getProfile();
+
+        Integer getState();
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
         LocalDateTime getCreateAt();

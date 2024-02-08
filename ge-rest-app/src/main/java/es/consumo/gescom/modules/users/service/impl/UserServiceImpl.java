@@ -6,7 +6,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
+import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
+import es.consumo.gescom.modules.autonomousCommunity.service.AutonomousCommunityService;
 import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
+import es.consumo.gescom.modules.profile.model.entity.ProfileEntity;
+import es.consumo.gescom.modules.profile.service.ProfileService;
+import es.consumo.gescom.modules.userType.model.entity.UserTypeEntity;
+import es.consumo.gescom.modules.userType.service.UserTypeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +44,15 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
     RoleRepository roleRepository;
 
     private final ModelMapper modelMapper;
+
+    @Autowired
+    private AutonomousCommunityService autonomousCommunityService;
+
+    @Autowired
+    private UserTypeService userTypeService;
+
+    @Autowired
+    private ProfileService profileService;
 
     @Autowired
     public UserServiceImpl(GESCOMRepository<UserEntity, Long> repository,
@@ -85,7 +100,21 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
     @Transactional(propagation = Propagation.REQUIRED)
     public UserEntity update(UserDTO userDTO) {
         UserEntity userEntity = repository.findById(userDTO.getId()).orElseThrow();
-        modelMapper.map(userDTO, userEntity);
+        //modelMapper.map(userDTO, userEntity);
+        AutonomousCommunityEntity autonomousCommunityEntity = autonomousCommunityService.findById(userDTO.getAutonomousCommunity().getId()).orElseThrow();
+        UserTypeEntity userTypeEntity = userTypeService.findById(userDTO.getUserType().getId()).orElseThrow();
+        ProfileEntity profileEntity = profileService.findById(userDTO.getProfile().getId()).orElseThrow();
+        userEntity.setAutonomousCommunity(autonomousCommunityEntity);
+        userEntity.setUserType(userTypeEntity);
+        userEntity.setProfile(profileEntity);
+        userEntity.setLogin(userEntity.getLogin());
+        userEntity.setState(userDTO.getState());
+        userEntity.setDni(userDTO.getDni());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setLastSurname(userDTO.getLastSurname());
+        userEntity.setName(userDTO.getName());
+        userEntity.setPhone(userDTO.getPhone());
+        userEntity.setSurname(userDTO.getSurname());
         repository.save(userEntity);
         return userEntity;
     }

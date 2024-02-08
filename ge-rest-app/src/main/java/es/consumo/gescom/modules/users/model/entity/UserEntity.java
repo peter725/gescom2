@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
+import es.consumo.gescom.modules.profile.model.entity.ProfileEntity;
 import es.consumo.gescom.modules.userType.model.entity.UserTypeEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,12 +60,16 @@ public class UserEntity extends SimpleEntity{
     private String phone;
 
     @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private ProfileEntity profile;
+
+    @ManyToOne
     @JoinColumn(name = "user_type_id")
     private UserTypeEntity userType;
 
     @ManyToOne
     @JoinColumn(name = "ccaa_id")
-    private AutonomousCommunityEntity autonomousCommunityEntity;
+    private AutonomousCommunityEntity autonomousCommunity;
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
@@ -106,7 +111,7 @@ public class UserEntity extends SimpleEntity{
 
         UserTypeEntity getUserType();
 
-        AutonomousCommunityEntity getAutonomousCommunityEntity();
+        AutonomousCommunityEntity getAutonomousCommunity();
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
         LocalDateTime getCreateAt();

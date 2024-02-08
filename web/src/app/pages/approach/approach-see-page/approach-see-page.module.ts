@@ -8,19 +8,23 @@ import {StateToggleModule} from "@base/shared/components/state-toggle";
 import {ApproachSeePageComponent} from "@base/pages/approach/approach-see-page/approach-see-page.component";
 import {EditPageModule} from "@base/shared/pages/edit-page.module";
 import {TabPanelModule} from "@base/shared/components/tabpanel";
+import { LogosModule } from '@base/shared/gui/logos';
+import { DashboardWrapperPageModule } from '@base/pages/dashboard-wrapper-page';
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ApproachSeePageRoutingModule,
-        CommonsModule,
-        EditPageModule,
-        TableModule,
-        MatDialogModule,
-        StateToggleModule,
-        TabPanelModule,
-    ],
+  imports: [
+    CommonModule,
+    ApproachSeePageRoutingModule,
+    CommonsModule,
+    EditPageModule,
+    TableModule,
+    MatDialogModule,
+    StateToggleModule,
+    TabPanelModule,
+    LogosModule,
+    DashboardWrapperPageModule
+  ],
     declarations: [
         ApproachSeePageComponent,
     ],

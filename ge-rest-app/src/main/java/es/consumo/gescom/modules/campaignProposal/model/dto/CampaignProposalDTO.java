@@ -22,6 +22,8 @@ public class CampaignProposalDTO implements Serializable, LongIdModel {
 
     private LocalDate date;
 
+    private int year;
+
     private Long autonomousCommunityId;
 
     private String autonomousCommunityName;

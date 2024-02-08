@@ -24,7 +24,7 @@ import es.consumo.gescom.modules.users.model.dto.UserDTO;
 import es.consumo.gescom.modules.users.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
-@RequestMapping(ApiEndpoints.V1_API + "/user")
+@RequestMapping(ApiEndpoints.V1_API + "/users")
 @Tag(name = "User Controller")
 public class UserController extends AbstractCrudController<UserEntity, UserDTO, Long, UserCriteria>{
 

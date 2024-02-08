@@ -1,11 +1,12 @@
-import { Component, Output } from '@angular/core';
+import { Component, inject, OnInit, Output } from '@angular/core';
 import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
-import { ComponentStatus, ControlsOf } from '@libs/commons';
+import { ComponentStatus } from '@libs/commons';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 import { CreateProtocol, Protocol } from '@libs/sdk/protocol';
 import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infringement-dialog.component';
+import { DataSharingService } from '@base/services/dataSharingService';
 
 
 
@@ -18,10 +19,44 @@ import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infr
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' } }
   ]
 })
-export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, CreateProtocol> {
+export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, CreateProtocol> implements OnInit{
 
   readonly resourceName = 'protocol';
   protected override _createResourceTitle = 'pages.protocol.add';
+
+  private dataSharingService: DataSharingService = inject(DataSharingService);
+  name: string | null = ''; // Variable para almacenar el nombre de la campaña
+  campaignId: number | null = null; // Variable para almacenar el id de la campaña
+
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+    this.subscribeToCampaignData();
+  }
+
+
+  override getRedirectAfterSaveRoute(){
+    return ['../consulta'];
+  }
+
+  private subscribeToCampaignData(): void {
+    this.dataSharingService.currentCampaign.subscribe(campaignData => {
+      console.log('campaignData', campaignData);
+      if (campaignData) {
+        this.name = campaignData.nameCampaign;
+        this.campaignId = campaignData.id;
+        console.log('campaignData', this.name);
+        // Aquí configuras los datos de la campaña en el formulario de protocolo
+        // Por ejemplo, podrías querer establecer el valor de algún campo basado en campaignData
+        this.form.patchValue({
+          campaignId: campaignData.id,
+          nameCampaign: campaignData.nameCampaign,// Asume que el formulario tiene un campo 'campaign'
+          // Puedes agregar más campos aquí si es necesario
+        });
+      }
+    });
+  }
+
 
   openDialog(rowIndex: number): void {
     const dialogRef = this.dialog.open(InfringementDialogComponent, {
@@ -38,15 +73,15 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   }
 
   updateFormRowWithSelectedItem(rowIndex: number, selectedItem: any) {
-    const rows = this.form.get('rows') as unknown as FormArray;
-    if (rows.at(rowIndex)) {
-      const row = rows.at(rowIndex) as FormGroup;
-      row.patchValue({
+    const questions = this.form.get('question') as unknown as FormArray;
+    if (questions.at(rowIndex)) {
+      const question = questions.at(rowIndex) as FormGroup;
+      question.patchValue({
         // Suponiendo que el campo se llama 'infringement' en tu formulario y 'nombre' en tu objeto seleccionado
-        infringement: selectedItem.code,
+        codeInfringement: selectedItem.code,
         // Aquí puedes actualizar otros campos relevantes
       });
-      console.log('row', row);
+      console.log('row', question);
     }
   }
 
@@ -54,16 +89,17 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     const form = this.fb.group({
       name: [null, Validators.required],
       code: [null, ],
-      campaign: [null, ],
-      rows: this.fb.array([])
+      campaignId: [ null, Validators.required],
+      question: this.fb.array([])
     });
 
     // Usar setTimeout para agregar la primera fila
     setTimeout(() => {
-      const rowsControl = form.get('rows') as FormArray;
-      rowsControl.push(this.crearFila(1));
+      const questionsControl = form.get('question') as FormArray;
+      questionsControl.push(this.crearFila(1));
     }, 0);
 
+    console.log('form', form.get('nameCampaign')?.value);
     return form;
   }
 
@@ -71,31 +107,31 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     console.log('crearFila', orden);
     return this.fb.group({
       id: null,
-      order: [{ value: orden, disabled: true }],
+      orderQuestion: [{ value: orden, disabled: true }],
       codeQuestion: null,
       question: null,
-      infringement: null,
+      codeInfringement: null,
       response: ['SI'] // Inicializar con 'SI'
     });
   }
 
 
-  get rows() {
-    return this.form.get('rows') as unknown as FormArray;
+  get question() {
+    return this.form.get('question') as unknown as FormArray;
   }
 
   agregarFila() {
-    const rowsControl = this.form.get('rows') as unknown as FormArray;
-    const nuevoOrden = rowsControl.length + 1;
-    rowsControl.push(this.crearFila(nuevoOrden));
+    const questionsControl = this.form.get('question') as unknown as FormArray;
+    const nuevoOrden = questionsControl.length + 1;
+    questionsControl.push(this.crearFila(nuevoOrden));
   }
 
   eliminarFila(index: number) {
     // Elimina la fila en el índice dado
-    this.rows.removeAt(index);
+    this.question.removeAt(index);
 
     // Recorre todas las filas restantes para actualizar el campo 'orden'
-    this.rows.controls.forEach((control, i) => {
+    this.question.controls.forEach((control, i) => {
       console.log('control', control);
       control.get('order')?.setValue(i + 1);
     });
@@ -103,7 +139,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
 
 
   toggleResp(filaIndex: number) {
-    const fila = (this.form.get('rows') as unknown as FormArray).at(filaIndex) as FormGroup;
+    const fila = (this.form.get('question') as unknown as FormArray).at(filaIndex) as FormGroup;
     const currentValue = fila.get('response')?.value;
     fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
   }

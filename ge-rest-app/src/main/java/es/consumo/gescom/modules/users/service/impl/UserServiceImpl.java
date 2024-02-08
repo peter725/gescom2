@@ -67,10 +67,10 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         loginEntity.setLastAccess(null);
         loginEntity.setEnable(true);
    //     loginEntity.setArbitrationBoard(null);
-        RoleEntity roleEntity = roleRepository.findById(1L).orElseThrow();
-        Set<RoleEntity> rolesSet = new HashSet<>();
-        rolesSet.add(roleEntity);
-        loginEntity.setRoles(rolesSet);
+        //RoleEntity roleEntity = roleRepository.findById(1L).orElseThrow();
+        //Set<RoleEntity> rolesSet = new HashSet<>();
+       // rolesSet.add(roleEntity);
+        //loginEntity.setRoles(rolesSet);
         loginRepository.save(loginEntity);
 
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
@@ -95,7 +95,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         List<RoleEntity> roleList = loginEntityList.stream()
         .flatMap(loginEntity -> loginEntity.getRoles().stream())
         .collect(Collectors.toList());
-        userDTO.setRoles(roleList);
+        //userDTO.setRoles(roleList);
         return userDTO;
     }
 }

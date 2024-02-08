@@ -1,12 +1,13 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
-import { Campaign, CampaignForm, CreateCampaign } from '@libs/sdk/campaign';
+import { CampaignForm } from '@libs/sdk/campaign';
 import { Validators } from '@angular/forms';
 import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
 import { Page } from '@libs/crud-api';
 import { UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
+import { DataSharingService } from '@base/services/dataSharingService';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -27,8 +28,11 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   protected override _createResourceTitle = 'pages.campaign.add';
   protected override _editResourceTitle = 'pages.campaign.see';
   phases: any[] = [];
+
   campaign: any;
   private dataSourceDialog: any;
+  private dataSharingService: DataSharingService = inject(DataSharingService);
+
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -67,6 +71,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     });
 
   }
+
   get participantsDispaly(){
     return this.form.get('participants')?.value?.map((item: any) => item.name).join(', ');
   }
@@ -93,9 +98,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     console.log('changePhaseCampaign 1', this.campaign);
   }
 
-  navegarAComponenteB() {
-    this.router.navigate(['/protocolManagementCreate']);
-  }
 
   openDialog() {
 
@@ -109,5 +111,17 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     });
   }
 
+  navegarAComponenteProtocol() {
+    // Asumiendo que 'this.campaign' contiene los datos de la campaña actual
+    this.campaign = this.form.value;
+    const minimalCampaignData = {
+      id: this.campaign.id,
+      nameCampaign: this.campaign.nameCampaign
+    };
+
+    this.dataSharingService.changeCampaign(minimalCampaignData);
+    console.log('navegarAComponenteProtocol', minimalCampaignData);
+    this.router.navigate(['/app/protocol/0']);
+  }
 
 }

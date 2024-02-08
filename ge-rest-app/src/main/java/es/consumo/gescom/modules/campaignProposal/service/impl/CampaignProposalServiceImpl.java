@@ -71,6 +71,18 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
     }
 
     @Override
+    public CampaignProposalDTO findCampaignProposalById(Long id) {
+        CampaignProposalEntity campaignProposalEntity = repository.findById(id).orElse(null);
+        CampaignProposalDTO campaignProposalDTO = campaignProposalConverter.convertToModel(campaignProposalEntity);
+        AutonomousCommunityEntity autonomousCommunityEntity = autonmousCommunityRepository.findById(campaignProposalDTO.getAutonomousCommunityId()).orElse(null);
+        CampaignTypeEntity campaignTypeEntity = campaignTypeRepository.findById(campaignProposalDTO.getCampaignTypeId()).orElse(null);
+        campaignProposalDTO.setAutonomousCommunityName(autonomousCommunityEntity.getName());
+        campaignProposalDTO.setCampaignTypeName(campaignTypeEntity.getName());
+        campaignProposalDTO.setYear(campaignProposalEntity.getDate().getYear());
+        return campaignProposalDTO;
+    }
+
+    @Override
     public Page<CampaignProposalEntity.SimpleProjection> findAllCampaignProposalById(CriteriaWrapper<CampaignProposalCriteria> wrapper, Long id) {
         return ((CampaignProposalRepository) repository).findAllCampaignProposalById(wrapper.getCriteria().toPageable(), id);
     }

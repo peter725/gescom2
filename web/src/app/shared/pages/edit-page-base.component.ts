@@ -12,6 +12,7 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import { NotificationService } from '@base/shared/notification';
 import { MatDialog } from '@angular/material/dialog';
+import { DataSharingService } from '@base/services/dataSharingService';
 
 
 @Directive()

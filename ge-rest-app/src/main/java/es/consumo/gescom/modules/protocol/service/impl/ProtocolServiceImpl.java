@@ -68,16 +68,17 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         protocol.setUpdatedAt(LocalDateTime.now());
         ProtocolEntity protocolSave = protocolRepository.save(protocol);
 
-        List<QuestionsDTO> questionsDTOS = payload.getQuestionsDTO();
+        List<QuestionsDTO> questionsDTOS = payload.getQuestion();
         questionsDTOS.forEach(questions -> {
             QuestionsEntity questionsEntity = new QuestionsEntity();
             questionsEntity.setCode(questions.getCode());
             questionsEntity.setProtocolCampaingId(protocolSave);
             questionsEntity.setQuestion(questions.getQuestion());
-            questionsEntity.setCodeInfringement(questions.getInfringement());
-            questionsEntity.setBkTrnrtipp(questions.getBkTrnrtipp());
+            questionsEntity.setCodeInfringement(questions.getCodeInfringement());
+            questionsEntity.setOrderQuestion(questions.getOrderQuestion());
+            questionsEntity.setCodeQuestion(questions.getCodeQuestion());
             questionsEntity.setBkTrinti(questions.getBkTrinti());
-            questionsEntity.setBkTrinre(questions.getBkTrinre());
+            questionsEntity.setResponse(questions.getResponse());
             questionsEntity.setBkTrrees(questions.getBkTrrees());
             questionsEntity.setProtocolCampaignCode(questions.getProtocolCampaignCode());
             questionsEntity.setCreatedAt(LocalDateTime.now());

@@ -25,7 +25,7 @@ export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser
     return this.fb.group<ControlsOf<CreateUser>>({
       id: this.fb.control(null),
       name: this.fb.control(null, [Validators.required, CustomValidators.allowedName]),
-      Surname: this.fb.control(null, [Validators.required, CustomValidators.allowedName]),
+      surname: this.fb.control(null, [Validators.required, CustomValidators.allowedName]),
       lastSurname: this.fb.control(null, [CustomValidators.allowedName]),
       dni: this.fb.control(null, [Validators.required, CustomValidators.nif]),
       email: this.fb.control(null, [Validators.required, Validators.email]),

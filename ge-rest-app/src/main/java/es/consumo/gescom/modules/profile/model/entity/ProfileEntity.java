@@ -48,7 +48,7 @@ public class ProfileEntity extends SimpleEntity {
 
     @Column(name = "ID_STATE", nullable = false)
     @Setter
-    private Integer state;
+    private Integer state = 1;
 
 
     @Override

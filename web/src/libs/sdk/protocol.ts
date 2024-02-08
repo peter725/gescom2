@@ -28,8 +28,9 @@ export interface FilaProtocol {
 export interface CreateProtocol {
   name: string;
   code: string;
-  rows: AbstractControl;
+  questionsDTO: AbstractControl;
   campaignId: number;
+  nameCampaign: string;
 
 }
 

@@ -16,6 +16,8 @@ public interface CampaignProposalService extends CrudService<CampaignProposalEnt
 
     Page<CampaignProposalDTO> findAllCampaignProposal(CriteriaWrapper<?> criteriaWrapper);
 
+    CampaignProposalDTO findCampaignProposalById(Long id);
+
     CampaignProposalEntity switchStatus(ChangeStatusDTO changeStatusDTO, Long id);
 
     Page<CampaignProposalEntity.SimpleProjection> findAllCampaignProposalById(CriteriaWrapper<CampaignProposalCriteria> wrapper, Long id);

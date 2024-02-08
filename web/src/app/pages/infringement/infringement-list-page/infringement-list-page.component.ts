@@ -57,7 +57,6 @@ export class InfringementListPageComponent extends BaseListPageComponent<Infring
       'select',
       'code',
       'infringement',
-      'actions',
     ];
   }
 

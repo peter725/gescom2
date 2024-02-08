@@ -32,7 +32,7 @@ export const crudOperationsStorageFactory = () => {
     users: { type: HttpOperationType.CRUD, path: '/users', },
     userType: { type: HttpOperationType.CRUD, path: '/user_type', },
     usersView: { type: HttpOperationType.READ, path: `/users/simple` },
-    profiles: { type: HttpOperationType.CRUD, path: '/profiles' },
+    profiles: { type: HttpOperationType.CRUD, path: '/profile' },
     roles: { type: HttpOperationType.CRUD, path: '/roles' },
     permissions: { type: HttpOperationType.READ, path: `/permissions` },
     fieldModules: { type: HttpOperationType.CRUD, path: '/field_modules' },

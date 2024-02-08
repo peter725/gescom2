@@ -31,10 +31,12 @@ export class ApproachSeePageComponent extends EditPageBaseComponent<Approach, Cr
             justification: this.fb.control(null, [Validators.required]),
             objective: this.fb.control(null, [Validators.required]),
             viability: this.fb.control(null, [Validators.required]),
-            autonomousCommunity: this.fb.control(null),
+            autonomousCommunityName: this.fb.control(null),
             campaignTypeName: this.fb.control(null),
+            year: this.fb.control(null),
+            date: this.fb.control(null),
+
         });
 
     }
-
 }

@@ -5,9 +5,20 @@
         <tsw-tab-panel></tsw-tab-panel>
         <tsw-section-wrapper
                 class="mb-2"
-                headerLabel="{{'text.approach.campaign-proposal.title' | translate}}"
+                headerLabel="PROPUESTA DE CAMPAÑA NACIONAL DE INSPECCIÓN Y CONTROL DE MERCADO"
                 icon="preview">
             <div section-content>
+
+                    <div class="p-5 grid grid-cols-2 gap-1.5">
+                      <mat-label class="uppercase font-bold">
+                        COMUNIDAD AUTÓNOMA:
+                        <input class="bg-gray-100 rounded-md" matInput formControlName="autonomousCommunityName" readonly>
+                      </mat-label>
+                      <mat-label class="uppercase font-bold">
+                        Año:
+                        <input class="bg-gray-100 rounded-md" matInput formControlName="year" readonly>
+                      </mat-label>
+                    </div>
 
                     <div class="p-5 grid grid-cols-1 gap-1.5">
                             <mat-label class="uppercase font-bold ">{{ 'fields.approach.campaign-proposal.title' | translate }}</mat-label>

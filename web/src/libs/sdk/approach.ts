@@ -9,17 +9,21 @@ export interface Approach extends SimpleModel, StatefulModel, TranslatedModel {
     viability: string;
     campaignTypeId: number;
     campaignTypeName: string;
+
 }
+
 
 export interface CreateApproach {
     id: number | null;
-    autonomousCommunity: string | null;
+    autonomousCommunityName: string | null;
     approach: string | null;
     justification: string | null;
     objective: string | null;
     viability: string | null;
     campaignTypeId: number | null;
     campaignTypeName: string | null;
+    year: number | null;
+    date: [] | null;
 
 }
 

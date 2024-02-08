@@ -53,7 +53,7 @@ export interface CreateUser {
   id: number | null;
 
   name: string | null;
-  Surname: string | null;
+  surname: string | null;
   lastSurname: string | null;
   dni: string | null;
   email: string | null;

@@ -10,21 +10,7 @@ export const PROTOCOL_PAGE_ROUTES: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'consulta',
-    data: {
-      breadcrumb,
-    },
-    loadChildren: () => import('./').then(m => m.ProtocolAddPageModule),
-  },
-  {
     path: '0',
-    data: {
-      breadcrumb,
-    },
-    loadChildren: () => import('./').then(m => m.ProtocolAddPageModule),
-  },
-  {
-    path: ':id',
     data: {
       breadcrumb,
     },

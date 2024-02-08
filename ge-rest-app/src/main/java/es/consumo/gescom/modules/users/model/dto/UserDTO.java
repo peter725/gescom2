@@ -5,6 +5,7 @@ import java.util.List;
 
 import es.consumo.gescom.commons.constants.EntityState;
 import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
+import es.consumo.gescom.modules.profile.model.dto.ProfileDTO;
 import es.consumo.gescom.modules.role.model.entity.RoleEntity;
 import es.consumo.gescom.modules.userType.model.dto.UserTypeDTO;
 import lombok.AllArgsConstructor;
@@ -24,8 +25,9 @@ public class UserDTO implements Serializable {
     private String lastSurname;
     private String email;
     private String phone;
+    private ProfileDTO profile;
     private AutonomousCommunityDTO autonomousCommunity;
     private UserTypeDTO userType;
-    private List<RoleEntity> roles;
+    //private List<RoleEntity> roles;
     private Integer state = EntityState.ON.getValue();
 }

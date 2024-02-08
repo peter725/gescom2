@@ -19,6 +19,6 @@ public class ProtocolDTO implements Serializable{
     private String code;
     private String name;
     private Long campaignId;
-    private List<QuestionsDTO> questionsDTO;
+    private List<QuestionsDTO> question;
     
 }

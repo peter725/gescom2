@@ -31,23 +31,23 @@ public class QuestionsEntity extends SimpleEntity {
     @JoinColumn(name = "PROTOCOL_CAMPAIGN_ID")
     private ProtocolEntity protocolCampaingId;
 
-    @Column(name = "BK_TRNRTIPP")
-    private String bkTrnrtipp;
+    @Column(name = "ORDER_QUESTION")
+    private Long orderQuestion;
 
-    @Column(name = "BK_TRCOTIPP")
-    private String bkTrcotipp;
+    @Column(name = "CODE_QUESTION")
+    private String codeQuestion;
 
     @Column(name = "QUESTION")
     private String question;
 
-    @Column(name = "INFRINGEMENT")
+    @Column(name = "INFRINGEMENT_CODE")
     private String codeInfringement;
 
     @Column(name = "BK_TRINTI")
     private String bkTrinti;
 
-    @Column(name = "BK_TRINRE")
-    private String bkTrinre;
+    @Column(name = "RESPONSE")
+    private String response;
 
     @Column(name = "BK_TRREES")
     private String bkTrrees;

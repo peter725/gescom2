@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
+import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -97,5 +99,14 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         .collect(Collectors.toList());
         //userDTO.setRoles(roleList);
         return userDTO;
+    }
+
+    @Override
+    @Transactional
+    public UserEntity switchStatus(ChangeStatusDTO changeStatusDTO, Long id) {
+        UserEntity entity = findById(id).orElseThrow();
+        entity.setState(changeStatusDTO.getStatus());
+
+        return repository.save(entity);
     }
 }

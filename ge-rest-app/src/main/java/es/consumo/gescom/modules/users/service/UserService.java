@@ -1,5 +1,6 @@
 package es.consumo.gescom.modules.users.service;
 
+import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.campaignProposal.model.dto.CampaignProposalDTO;
 import es.consumo.gescom.modules.users.model.entity.UserEntity;
 import es.consumo.gescom.modules.users.model.criteria.UserCriteria;
@@ -19,4 +20,6 @@ public interface UserService extends CrudService<UserEntity, Long> {
     UserEntity create(UserDTO roleDTO);
 
     UserEntity update(UserDTO userDTO);
+
+    UserEntity switchStatus(ChangeStatusDTO changeStatus, Long id);
 }

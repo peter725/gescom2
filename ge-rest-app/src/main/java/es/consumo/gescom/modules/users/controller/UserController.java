@@ -7,12 +7,12 @@ import java.time.format.DateTimeFormatter;
 
 import javax.validation.Valid;
 
+import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
+import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
+import es.consumo.gescom.modules.campaignProposal.service.CampaignProposalService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
@@ -37,6 +37,12 @@ public class UserController extends AbstractCrudController<UserEntity, UserDTO, 
         convertDates(userCriteria);
         Page<UserEntity.SimpleProjection> result =
                 ((UserService) service).findAllSimpleEntity(new CriteriaWrapper<>(userCriteria));
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/{id}/switch")
+    public ResponseEntity<UserEntity> switchStatus(@RequestBody ChangeStatusDTO changeStatus, @PathVariable  Long id) {
+        UserEntity result = ((UserService) service).switchStatus(changeStatus, id);
         return ResponseEntity.ok(result);
     }
 

@@ -3,6 +3,7 @@ package es.consumo.gescom.modules.campaign.service.impl;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.ambit.model.converter.AmbitConverter;
 import es.consumo.gescom.modules.ambit.model.entity.AmbitEntity;
+import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.converter.AutonomousCommunityConverter;
 import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
@@ -35,6 +36,7 @@ import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
 import es.consumo.gescom.modules.specialist.model.converter.SpecialistConverter;
 import es.consumo.gescom.modules.specialist.model.dto.SpecialistDTO;
 import es.consumo.gescom.modules.specialist.model.entity.SpecialistEntity;
+import es.consumo.gescom.modules.users.model.entity.UserEntity;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -174,7 +176,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         autonomousCommunityEntities.forEach(participant -> {
             AutonomousCommunityParticipantsEntity autonomousCommunityParticipants = new AutonomousCommunityParticipantsEntity();
             autonomousCommunityParticipants.setCampaign(campaignSave);
-            autonomousCommunityParticipants.setAutonomousCommunityEntity(autonomousCommunityEntity);
+            autonomousCommunityParticipants.setAutonomousCommunityEntity(participant);
             autonomousCommunityParticipants.setCreatedAt(LocalDateTime.now());
             autonomousCommunityParticipants.setUpdatedAt(LocalDateTime.now());
             autonomousCommunityParticipantsRepository.save(autonomousCommunityParticipants);
@@ -312,6 +314,14 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
         }
         
+    }
+
+    @Override
+    public CampaignEntity switchStatus(ChangeStatusDTO changeStatusDTO, Long id) {
+        CampaignEntity entity = findById(id).orElseThrow();
+        entity.setState(changeStatusDTO.getStatus());
+
+        return repository.save(entity);
     }
 
 }

@@ -54,7 +54,7 @@ public class DocumentEntity extends SimpleEntity {
     @JsonIgnore
     @Basic
     @Column(name = "campaign_id", nullable = true)
-    private long campaignId;
+    private Long campaignId;
 
     @Transient
     private String base64;
@@ -81,4 +81,6 @@ public class DocumentEntity extends SimpleEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), getCreateAt(), getName(), getPath(), getDocumentType(), getCampaignId());
     }
+
+
 }

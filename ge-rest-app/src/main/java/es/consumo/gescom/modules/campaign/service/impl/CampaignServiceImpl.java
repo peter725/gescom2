@@ -21,6 +21,7 @@ import es.consumo.gescom.modules.autonomousCommunitySpecialist.repository.Autono
 import es.consumo.gescom.modules.autonomousCommunitySpecialist.service.AutonomousCommunitySpecialistService;
 import es.consumo.gescom.modules.campaign.model.converter.CampaignConverter;
 import es.consumo.gescom.modules.campaign.model.dto.CampaignDTO;
+import es.consumo.gescom.modules.campaign.model.dto.ChangePhaseDTO;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.repository.CampaignRepository;
 import es.consumo.gescom.modules.campaign.service.CampaignService;
@@ -120,7 +121,6 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
     @Autowired
     private SpecialistConverter specialistConverter;
-
 
     private final AutonomousCommunityRepository autonomousCommunityRepository;
 
@@ -320,6 +320,15 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     public CampaignEntity switchStatus(ChangeStatusDTO changeStatusDTO, Long id) {
         CampaignEntity entity = findById(id).orElseThrow();
         entity.setState(changeStatusDTO.getStatus());
+
+        return repository.save(entity);
+    }
+
+    @Override
+    public CampaignEntity switchPhase(ChangePhaseDTO changeStatus, Long id) {
+        CampaignEntity entity = findById(id).orElseThrow();
+        PhaseEntity phase = phaseConverter.convertToEntity(changeStatus.getPhaseDTO());
+        entity.setPhaseCampaign(phase);
 
         return repository.save(entity);
     }

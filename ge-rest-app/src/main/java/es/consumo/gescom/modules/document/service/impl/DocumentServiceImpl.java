@@ -1,15 +1,22 @@
 package es.consumo.gescom.modules.document.service.impl;
 
 
+import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.modules.arbiter.service.ArbiterService;
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
+import es.consumo.gescom.modules.document.model.criteria.DocumentCriteria;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.commons.service.ReadService;
+import es.consumo.gescom.modules.document.repository.DocumentRepository;
+import es.consumo.gescom.modules.document.service.DocumentService;
+import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -24,7 +31,7 @@ import java.util.stream.Collectors;
  * @author serikat
  */
 @Service
-public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long> {
+public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long> implements DocumentService {
     @Value("${path.documentos}")
     private String repoPath;
     private final ReadService<CampaignEntity, Long> campaingService;
@@ -92,5 +99,10 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
         try (BufferedReader reader = Files.newBufferedReader(file)) {
             return reader.lines().collect(Collectors.joining());
         }
+    }
+
+    @Override
+    public Page<DocumentEntity> findDocumentByCampaignId(CriteriaWrapper<DocumentCriteria> wrapper, Long idCampaign) {
+        return ((DocumentRepository) repository).findDocumentByCampaignId(wrapper.getCriteria().toPageable(), idCampaign);
     }
 }

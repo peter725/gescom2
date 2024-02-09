@@ -62,3 +62,20 @@ export interface ProtocolFilterForm extends AppQuerySource {
 
 }
 
+export interface QuestionDetailForm {
+  question: string;
+  infringement: string;
+}
+
+export interface ProtocolDetailForm {
+  CampaignName: string;
+  year: string;
+  typeCampaign: string;
+  ambit: string;
+  responsible: string;
+  participants: string;
+  codeCPA: string;
+  protocolName: string;
+  questions: QuestionDetailForm[];
+}
+

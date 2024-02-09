@@ -6,7 +6,7 @@ import { CampaignForm } from '@libs/sdk/campaign';
 import { Validators } from '@angular/forms';
 import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
 import { Page } from '@libs/crud-api';
-import { UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
+import { ProtocolDetailComponent, UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
 import { DataSharingService } from '@base/services/dataSharingService';
 
 @Component({
@@ -124,4 +124,16 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.router.navigate(['/app/protocol/0']);
   }
 
+  openProtocolDetailDialog() {
+    const dialogRef = this.dialog.open(ProtocolDetailComponent, {
+      width: '600px',
+      // Puedes pasar datos al diálogo así:
+      data: { /* datos que quieras pasar */ }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // Aquí puedes manejar datos de retorno si es necesario
+    });
+  }
 }

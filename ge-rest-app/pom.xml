@@ -21,7 +21,7 @@
     <properties>
         <maven.test.skip>true</maven.test.skip>
         <java.version>17</java.version>
-        <modelmapper.version>3.1.1</modelmapper.version>
+        <modelmapper.version>3.2.0</modelmapper.version>
         <swagger.version>1.6.15</swagger.version>
     </properties>
 
@@ -150,7 +150,7 @@
                 <activatedProperties>local,swagger,jdbc</activatedProperties>
                 <env.domain>local</env.domain>
                 <baseURL>http://localhost:8085</baseURL>
-                <pathLogs>C:/Users/wramos/gesco-log/GESCO.log</pathLogs>
+                <pathLogs>C:/home/maldonado/OneDrive/Documents/Documents</pathLogs>
                 <config.files>C:/Users/acolina/IdeaProjects/repo</config.files>
             </properties>
         </profile>

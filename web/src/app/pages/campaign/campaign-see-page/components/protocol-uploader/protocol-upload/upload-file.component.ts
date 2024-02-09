@@ -21,7 +21,8 @@ const ELEMENT_DATA: FileData[] = [];
 @Component({
   selector: 'tsw-file-upload',
   templateUrl: "./upload-file.component.html",
-  standalone: true,imports: [
+  standalone: true,
+  imports: [
     MatDialogModule,
     MatButtonModule,
     MatCardModule,

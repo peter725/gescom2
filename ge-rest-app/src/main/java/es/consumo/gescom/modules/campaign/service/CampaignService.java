@@ -1,6 +1,7 @@
 package es.consumo.gescom.modules.campaign.service;
 
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.campaign.model.dto.CampaignDTO;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 
@@ -16,4 +17,6 @@ public interface CampaignService extends CrudService<CampaignEntity, Long>{
     CampaignDTO findCampaignById(Long idCampaignDTO);
 
     Page<CampaignDTO> performFindAllCampaing(CriteriaWrapper<?> criteriaWrapper);
+
+    CampaignEntity switchStatus(ChangeStatusDTO changeStatus, Long id);
 }

@@ -9,12 +9,19 @@ import es.consumo.gescom.modules.phase.model.criteria.PhaseCriteria;
 import es.consumo.gescom.modules.phase.model.dto.PhaseDTO;
 import es.consumo.gescom.modules.phase.model.entity.PhaseEntity;
 import es.consumo.gescom.modules.phase.service.PhaseService;
+import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
+import io.micrometer.core.annotation.Timed;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.net.URISyntaxException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +40,16 @@ public class PhaseController extends AbstractCrudController<PhaseEntity, PhaseDT
         Page<PhaseEntity.SimpleProjection> result =
                 ((PhaseService) service).findAllPhaseById(new CriteriaWrapper<>(phaseCriteria), id);
         return ResponseEntity.ok(result);
+    }
+    
+    
+    @PostMapping("/exportExcel")
+    @Timed
+    public byte[] exportTable(@RequestBody ProtocolDTO datosExport)
+        throws URISyntaxException {
+        byte[] excel = null;
+        boolean falloCreacion = false;
+
+        return excel;
     }
 }

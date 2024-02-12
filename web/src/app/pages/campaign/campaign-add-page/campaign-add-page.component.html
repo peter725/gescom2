@@ -1,103 +1,82 @@
 <tsw-breadcrumbs></tsw-breadcrumbs>
 
 <form [formGroup]="form">
-    <tsw-form-container>
-      <tsw-section-wrapper
-              class="mb-5"
-              headerLabel="Campaña"
-              icon="edit_note"
-      >
-  
-        <div section-content>
-          <div class="grid grid-cols-6 gap-1.5">
-            <mat-form-field>
-              <mat-label>{{ 'fields.year' | translate }}</mat-label>
-              <input matInput formControlName="year">
-            </mat-form-field>
-  
-            <mat-form-field>
-              <mat-label>{{ 'fields.code_cpa' | translate }}</mat-label>
-              <input matInput formControlName="codeCpa">
-            </mat-form-field>    
-  
-          </div>
+  <tsw-form-container>
+    <tsw-section-wrapper class="mb-5" headerLabel="Campaña" icon="edit_note">
 
-          <div class="grid grid-cols-1 gap-1.5">
+      <div section-content>
+        <div class="grid grid-cols-6 gap-1.5">
+          <mat-form-field>
+            <mat-label>{{ 'fields.year' | translate }}</mat-label>
+            <input matInput formControlName="year">
+          </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>{{ 'fields.campaign.name' | translate }}</mat-label>
-              <input matInput formControlName="nameCampaign">
-            </mat-form-field>
-
-          </div>
-  
-          <div class="grid grid-cols-6 gap-1.5">
-            <mat-form-field>
-              <mat-label>{{ 'fields.type' | translate }}</mat-label>
-
-              <tsw-custom-select
-                      resourceName="campaignType"
-                      formControlName="campaignType"
-              ></tsw-custom-select>
-              <mat-error>{{ form.controls.campaignType.errors | extractValidationError }}</mat-error>
-            </mat-form-field>
-  
-            <mat-form-field>
-              <mat-label>{{ 'fields.ambit' | translate }}</mat-label>
-              <tsw-custom-select
-                      resourceName="ambit"
-                      formControlName="ambit"
-              ></tsw-custom-select>
-            </mat-form-field>
-  
-            <mat-form-field>
-              <mat-label>{{ 'fields.responsibleEntity' | translate }}</mat-label>
-              <tsw-custom-select
-                      resourceName="responsibleEntity"
-                      formControlName="autonomousCommunityResponsible"
-              ></tsw-custom-select>
-            </mat-form-field>
-          </div>
-
-          <div class="grid grid-cols-1 gap-1.5">
-            <mat-form-field>
-              <mat-label>{{ 'fields.ccaaParticipants' | translate}}</mat-label>
-                <tsw-custom-select  [multiple]="true"
-                                    resourceName="participants"
-                                    formControlName="participants">
-                </tsw-custom-select>
-            </mat-form-field>
-          </div>
-          <div class="grid grid-cols-1 gap-1.5">
-            <mat-form-field>
-              <mat-label>{{ 'fields.ccaaProponents' | translate}}</mat-label>
-              <tsw-custom-select  [multiple]="true"
-                                  resourceName="proponents"
-                                  formControlName="proponents">
-              </tsw-custom-select>
-            </mat-form-field>
-          </div>
-            <div class="grid grid-cols-1 gap-1.5">
-              <mat-form-field>
-                <mat-label>{{ 'fields.ccaaSpecialist' | translate}}</mat-label>
-                <tsw-custom-select  [multiple]="true"
-                                    resourceName="specialists"
-                                    formControlName="specialists">
-                </tsw-custom-select>
-              </mat-form-field>
-            </div>
-
+          <mat-form-field>
+            <mat-label>{{ 'fields.code_cpa' | translate }}</mat-label>
+            <input matInput formControlName="codeCpa">
+          </mat-form-field>
 
         </div>
-  
-      </tsw-section-wrapper>
-  
-      <tsw-form-actions
-              [saveBtnSkipConfirmation]="skipSaveConfirmation"
-              (reset)="resetForm()"
-              (save)="submitForm()"
-      ></tsw-form-actions>
-  
-    </tsw-form-container>
-  </form>
-  
+
+        <div class="grid grid-cols-1 gap-1.5">
+
+          <mat-form-field>
+            <mat-label>{{ 'fields.campaign.name' | translate }}</mat-label>
+            <input matInput formControlName="nameCampaign">
+          </mat-form-field>
+
+        </div>
+
+        <div class="grid grid-cols-6 gap-1.5">
+          <mat-form-field class="col-span-1">
+            <mat-label>{{ 'fields.type' | translate }}</mat-label>
+            <tsw-custom-select resourceName="campaignType" formControlName="campaignType"></tsw-custom-select>
+            <mat-error>{{ form.controls.campaignType.errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-span-1">
+            <mat-label>{{ 'fields.ambit' | translate }}</mat-label>
+            <tsw-custom-select resourceName="ambit" formControlName="ambit"></tsw-custom-select>
+          </mat-form-field>
+
+          <mat-form-field class="col-span-2">
+            <mat-label>{{ 'fields.responsibleEntity' | translate }}</mat-label>
+            <tsw-custom-select resourceName="responsibleEntity"
+              formControlName="autonomousCommunityResponsible"></tsw-custom-select>
+          </mat-form-field>
+        </div>
+
+
+
+        <div class="grid grid-cols-1 gap-1.5">
+          <mat-form-field>
+            <mat-label>{{ 'fields.ccaaParticipants' | translate}}</mat-label>
+            <tsw-custom-select [multiple]="true" resourceName="participants" formControlName="participants">
+            </tsw-custom-select>
+          </mat-form-field>
+        </div>
+        <div class="grid grid-cols-1 gap-1.5">
+          <mat-form-field>
+            <mat-label>{{ 'fields.ccaaProponents' | translate}}</mat-label>
+            <tsw-custom-select [multiple]="true" resourceName="proponents" formControlName="proponents">
+            </tsw-custom-select>
+          </mat-form-field>
+        </div>
+        <div class="grid grid-cols-1 gap-1.5">
+          <mat-form-field>
+            <mat-label>{{ 'fields.ccaaSpecialist' | translate}}</mat-label>
+            <tsw-custom-select [multiple]="true" resourceName="specialists" formControlName="specialists">
+            </tsw-custom-select>
+          </mat-form-field>
+        </div>
+
+
+      </div>
+
+    </tsw-section-wrapper>
+
+    <tsw-form-actions [saveBtnSkipConfirmation]="skipSaveConfirmation" (reset)="resetForm()"
+      (save)="submitForm()"></tsw-form-actions>
+
+  </tsw-form-container>
+</form>

@@ -33,6 +33,11 @@ import es.consumo.gescom.modules.phase.repository.PhaseRepository;
 import es.consumo.gescom.modules.proponent.model.converter.ProponentConverter;
 import es.consumo.gescom.modules.proponent.model.dto.ProponentDTO;
 import es.consumo.gescom.modules.proponent.model.entity.ProponentEntity;
+import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
+import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
+import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
+import es.consumo.gescom.modules.protocol.service.ProtocolService;
+import es.consumo.gescom.modules.protocol.service.impl.ProtocolServiceImpl;
 import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
 import es.consumo.gescom.modules.specialist.model.converter.SpecialistConverter;
 import es.consumo.gescom.modules.specialist.model.dto.SpecialistDTO;
@@ -70,9 +75,10 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                                   AutonomousCommunityParticipantsRepository autonomousCommunityParticipantsRepository,
                                   ProponentConverter proponentConverter,
                                   SpecialistConverter specialistConverter,
+                                  ProtocolService protocolService,
                                   AutonomousCommunityService autonomousCommunityService,
                                   AutonomousCommunityParticipantsService autonomousCommunityParticipantsService,
-                                  AutonomousCommunityProponentRepository autonomousCommunityProponentRepository,
+                                  AutonomousCommunityProponentRepository autonomousCommunityProponentRepository, ProtocolService protocolService1,
                                   AutonomousCommunityProponentService autonomousCommunityProponentService,
                                   AutonomousCommunitySpecialistRepository autonomousCommunitySpecialistRepository,
                                   AutonomousCommunitySpecialistService autonomousCommunitySpecialistService) {
@@ -87,6 +93,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         this.autonomousCommunityParticipantsService = autonomousCommunityParticipantsService;
         this.autonomousCommunityProponentRepository = autonomousCommunityProponentRepository;
         this.specialistConverter = specialistConverter;
+        this.protocolService = protocolService1;
         this.autonomousCommunityProponentService = autonomousCommunityProponentService;
         this.autonomousCommunitySpecialistRepository = autonomousCommunitySpecialistRepository;
         this.autonomousCommunitySpecialistService = autonomousCommunitySpecialistService;
@@ -94,6 +101,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
     @Autowired
     private PhaseRepository phaseRepository;
+
+    @Autowired
+    private ProtocolRepository protocolRepository;
 
     @Autowired
     private CampaignRepository campaignRepository;
@@ -131,6 +141,8 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     private final AutonomousCommunityParticipantsService autonomousCommunityParticipantsService;
 
     private final AutonomousCommunityProponentRepository autonomousCommunityProponentRepository;
+
+    private final ProtocolService protocolService;
 
     private final AutonomousCommunityProponentService autonomousCommunityProponentService;
 
@@ -283,11 +295,13 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     public CampaignDTO findCampaignById(Long idCampaign) {
         CampaignEntity campaign = campaignRepository.findById(idCampaign)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró registro con ID: " + idCampaign));
+        List<ProtocolDTO> protocolDTO = protocolService.findProtocolByCampaignId(idCampaign);
         if (campaign != null) {
             CampaignDTO campaignDTO = campaingnConverter.convertToModel(campaign);
             campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(idCampaign));
             campaignDTO.setProponents(autonomousCommunityProponentService.finByIdCampaign(idCampaign));
             campaignDTO.setSpecialists(autonomousCommunitySpecialistService.finByIdCampaign(idCampaign));
+            campaignDTO.setProtocols(protocolDTO);
             return campaignDTO;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaign not found");

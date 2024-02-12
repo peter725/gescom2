@@ -16,7 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ProtocolDetailComponent implements OnInit {
 
-  protocolDetail: ProtocolDetailForm = {
+  /*protocolDetail: ProtocolDetailForm = {
     // Tus datos aquí
     CampaignName: 'Campaña de ejemplo',
     year: '2024',
@@ -31,7 +31,7 @@ export class ProtocolDetailComponent implements OnInit {
       { question: 'Pregunta 1', infringement: 'Infracción 1' },
       // Agrega más preguntas según sea necesario
     ]
-  };
+  };*/
 
   constructor() { }
 

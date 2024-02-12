@@ -16,6 +16,8 @@ import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
 import es.consumo.gescom.modules.phase.model.dto.PhaseDTO;
 import es.consumo.gescom.modules.phase.model.entity.PhaseEntity;
 import es.consumo.gescom.modules.proponent.model.dto.ProponentDTO;
+import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
+import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import es.consumo.gescom.modules.specialist.model.dto.SpecialistDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,6 +50,7 @@ public class CampaignDTO implements Serializable {
     private List<AutonomousCommunityDTO> participants;
     private List<ProponentDTO> proponents;
     private List<SpecialistDTO> specialists;
+    private List<ProtocolDTO> protocols; /// DTO
     private PhaseDTO phaseCampaign;   /// DTO
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

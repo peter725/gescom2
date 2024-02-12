@@ -23,7 +23,7 @@ public class QuestionsDTO implements Serializable, LongIdModel{
 
     private Long id;
     private String code;
-    private ProtocolDTO protocolCampaignId;
+    private Long protocolCampaignId;
     private Long orderQuestion;
     private String codeQuestion;
     private String question;

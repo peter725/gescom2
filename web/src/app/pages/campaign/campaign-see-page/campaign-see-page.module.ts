@@ -20,12 +20,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TswSelectModule } from '@base/shared/select';
 import { MatButtonModule } from '@angular/material/button';
-import { UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
 import { MatSortModule } from '@angular/material/sort';
 import { TableModule } from '@base/shared/components/table';
+import { ProtocolListComponent } from '@base/pages/campaign/campaign-see-page/components';
 
 @NgModule({
   imports: [
+    ProtocolListComponent,
     BreadcrumbsModule,
     ReactiveFormsModule,
     FormExtensionModule,

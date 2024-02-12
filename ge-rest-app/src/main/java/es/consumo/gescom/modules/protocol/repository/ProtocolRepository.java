@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProtocolRepository extends GESCOMRepository<ProtocolEntity, Long>{
 
@@ -17,5 +19,5 @@ public interface ProtocolRepository extends GESCOMRepository<ProtocolEntity, Lon
     Page<ProtocolEntity> getProtocolByNameOrCode(Pageable pageable, @Param("protocol") String protocol, @Param("code") String code);
 
     @Query(value = "SELECT pr FROM ProtocolEntity pr WHERE pr.campaignId.id = :idCampaign  ")
-    Page<ProtocolEntity> findProtocolByCampaignId(Pageable pageable, Long idCampaign);
+    List<ProtocolEntity> findProtocolByCampaignId(Long idCampaign);
 }

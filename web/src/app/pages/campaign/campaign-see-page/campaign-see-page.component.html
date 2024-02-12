@@ -78,36 +78,34 @@
             <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;">
 
 
-            <div class="grid grid-cols-2 gap-1.5 px-10 sm:px-10 max-w-screen-lg mx-auto p-4 border border-solid border-gray-500 bg-gray-400 rounded-md mb-8">
-              <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900 justify-items-start" >Protocolo</h3>
-              <div class="file-upload text-right">
+            <div class="max-w-screen-lg mx-auto p-4 border border-solid border-gray-500 bg-gray-400 rounded-md mb-8">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-semibold text-gray-900">Protocolo</h3>
                 <button mat-button (click)="navegarAComponenteProtocol()">
                   <mat-icon>create</mat-icon>
                 </button>
               </div>
+              <div class="border-b border-gray-300 mb-4"></div>
+              <div class="space-y-4">
+                <div *ngFor="let protocol of protocolsDisplay; let i = index"
+                     [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
+                     class="flex justify-between items-center p-4 shadow-md rounded-lg">
+                  <p class="flex-1">
+                    {{protocol.name}}
+                  </p>
+                  <div>
+                    <button mat-button >
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button mat-button >
+                      <mat-icon>download</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
 
-
             <button mat-button (click)="openProtocolDetailDialog()">Protocolo</button>
-
-            <!--<div  *ngIf="form.get('phaseCampaign')?.value?.id! > 1" class="grid grid-cols-2 gap-1.5 px-10 sm:px-10 w-3/4 sm:w-auto p-4 border border-gray-300 bg-white rounded-md">
-              <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900 justify-items-start" >{{'text.campaign.library' | translate}}</h3>
-              <div class="file-upload text-right">
-                {{"fields.campaign.requiredDoc" | translate}}
-                <button  mat-mini-fab color="primary" class="upload-btn ml-2 "
-                         (click)="navegarAComponenteB()">
-                    &lt;!&ndash;[routerLink]="'protocolManagementCreate' | namedRoute: {campaignId: form.get('id')?.value?.toString()}"&ndash;&gt;
-
-                  <mat-icon>create</mat-icon>
-                </button>
-              </div>
-
-
-
-            </div>-->
-
-
-
           </dl>
 
         </div>

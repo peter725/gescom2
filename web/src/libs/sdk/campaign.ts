@@ -6,6 +6,7 @@ import { Proponent } from "@libs/sdk/proponent";
 import { Specialist } from "@libs/sdk/specialist";
 import { AppQuerySource } from '@libs/commons';
 import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
+import { Protocol } from '@libs/sdk/protocol';
 
 /**
  * Default Campaign structure.
@@ -19,6 +20,7 @@ export interface Campaign extends SimpleModel, StatefulModel {
   ambit: Ambit;
   autonomousCommunityResponsible: string;
   phaseCampaign: PhaseCampaign | null;
+  protocols: Protocol[] | null;
 
 }
 
@@ -38,6 +40,7 @@ export interface CreateCampaign {
   participants: AutonomousCommunity[] | null;
   proponents: Proponent[] | null;
   specialists: Specialist[] | null;
+  protocols: Protocol[] | null;
 
 }
 
@@ -55,6 +58,7 @@ export interface CampaignForm {
   proponents: Proponent[] | null;
   specialists: Specialist[] | null;
   phaseCampaign: PhaseCampaign | null;
+  protocols: Protocol[] | null;
   createdAt?: string;
   updatedAt?: string;
   state?: number | null;

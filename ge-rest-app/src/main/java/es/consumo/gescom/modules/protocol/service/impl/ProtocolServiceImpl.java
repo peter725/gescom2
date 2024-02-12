@@ -4,13 +4,13 @@ import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.campaign.model.converter.CampaignConverter;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.repository.CampaignRepository;
-import es.consumo.gescom.modules.proponent.model.converter.ProponentConverter;
 import es.consumo.gescom.modules.protocol.model.converter.ProtocolConverter;
 import es.consumo.gescom.modules.protocol.model.criteria.ProtocolCriteria;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
+import es.consumo.gescom.modules.questions.model.converter.QuestionsConverter;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import es.consumo.gescom.modules.questions.model.entity.QuestionsEntity;
 import es.consumo.gescom.modules.questions.repository.QuestionsRepository;
@@ -30,6 +30,12 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
     @Autowired
     private ProtocolConverter protocolConverter;
+
+    @Autowired
+    private CampaignConverter campaignConverter;
+
+    @Autowired
+    private QuestionsConverter questionsConverter;
 
     @Autowired
     private CampaignRepository campaignRepository;
@@ -52,8 +58,24 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     }
 
     @Override
-    public Page<ProtocolEntity> findProtocolByCampaignId(CriteriaWrapper<ProtocolCriteria> wrapper, Long idCampaign) {
-        return ((ProtocolRepository) repository).findProtocolByCampaignId(wrapper.getCriteria().toPageable(), idCampaign);
+    public List<ProtocolDTO> findProtocolByCampaignId(Long idCampaign) {
+
+        List<ProtocolEntity> protocolEntity = protocolRepository.findProtocolByCampaignId(idCampaign);
+        List<ProtocolDTO> listProtocolDTO = protocolConverter.convertToModel(protocolEntity);
+        for (ProtocolDTO protocolDTO : listProtocolDTO) {
+            List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
+            List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
+            protocolDTO.setQuestionsDTOS(listQuestionsDTOS);
+        }
+
+
+        /*listProtocolDTO.forEach(protocol -> {
+            List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocol.getId());
+            List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
+            protocol.setQuestionsDTOS(listQuestionsDTOS);
+        });*/
+
+        return (listProtocolDTO);
     }
 
     @Override
@@ -68,7 +90,7 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         protocol.setUpdatedAt(LocalDateTime.now());
         ProtocolEntity protocolSave = protocolRepository.save(protocol);
 
-        List<QuestionsDTO> questionsDTOS = payload.getQuestion();
+        List<QuestionsDTO> questionsDTOS = payload.getQuestionsDTOS();
         questionsDTOS.forEach(questions -> {
             QuestionsEntity questionsEntity = new QuestionsEntity();
             questionsEntity.setCode(questions.getCode());

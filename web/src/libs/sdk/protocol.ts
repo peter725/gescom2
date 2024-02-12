@@ -8,11 +8,12 @@ import { Specialist } from '@libs/sdk/specialist';
 import { AbstractControl } from '@angular/forms';
 
 export interface Protocol extends SimpleModel, StatefulAltModel {
-  order: number;
-  codeQuestion: number;
-  question: string;
-  infringement: Infriengement;
-  response: boolean;
+  id: number;
+  code: string;
+  name: string;
+  campaignId: number;
+  createdAt: string;
+  Questions: Question[];
 
 }
 
@@ -39,13 +40,15 @@ export interface Infriengement extends SimpleModel, StatefulAltModel {
   infringement: string;
 }
 
-export interface ProtocolForm {
+export interface Question {
   id: number | null;
-  order: number | null;
+  orderQuestion: number | null;
   codeQuestion: number | null;
   question: string | null;
-  infringement: Infriengement | null;
+  codeInfringement: string | null;
+  bkTrinti: string | null;
   response: boolean | null;
+  bkTrrees: string | null;
 }
 
 export interface InfriengementForm {
@@ -68,7 +71,7 @@ export interface QuestionDetailForm {
 }
 
 export interface ProtocolDetailForm {
-  CampaignName: string;
+  campaignName: string;
   year: string;
   typeCampaign: string;
   ambit: string;

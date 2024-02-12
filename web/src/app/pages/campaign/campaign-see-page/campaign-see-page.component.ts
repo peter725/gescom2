@@ -3,11 +3,12 @@ import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
 import { CampaignForm } from '@libs/sdk/campaign';
-import { Validators } from '@angular/forms';
+import { Validators, ɵFormGroupRawValue, ɵGetProperty, ɵTypedOrUntyped } from '@angular/forms';
 import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
 import { Page } from '@libs/crud-api';
 import { ProtocolDetailComponent, UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
 import { DataSharingService } from '@base/services/dataSharingService';
+import { Protocol } from '@libs/sdk/protocol';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -68,8 +69,8 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       createdAt: this.fb.control(null),
       updatedAt: this.fb.control(null),
       state: this.fb.control(null),
+      protocols: this.fb.control([]),
     });
-
   }
 
   get participantsDispaly(){
@@ -82,9 +83,16 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     return this.form.get('specialists')?.value?.map((item: any) => item.name).join(', ');
   }
 
+  get protocolsDisplay(){
+
+    return this.form.get('protocols')?.value!;
+
+  }
+
 
 
   protected changePhaseCampaign(){
+
     let actualId = this.form.get('phaseCampaign')?.value?.id;
     let newPhase;
     if (actualId! <= 14){
@@ -114,6 +122,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   navegarAComponenteProtocol() {
     // Asumiendo que 'this.campaign' contiene los datos de la campaña actual
     this.campaign = this.form.value;
+    console.log('Ver los Protocolos', this.campaign.get('protocols')?.value?.length);
     const minimalCampaignData = {
       id: this.campaign.id,
       nameCampaign: this.campaign.nameCampaign
@@ -136,4 +145,9 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       // Aquí puedes manejar datos de retorno si es necesario
     });
   }
+
+
+
+
+  protected readonly console = console;
 }

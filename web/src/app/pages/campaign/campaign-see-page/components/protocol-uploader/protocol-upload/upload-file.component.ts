@@ -87,6 +87,7 @@ export class UploadFileComponent<T=any> {
 
 
     this.form?.reset();
+    console.log("Registro agregado:"+nuevoRegistro);
   }
 
   deleteFile(id : number) : void {
@@ -142,60 +143,6 @@ export class UploadFileComponent<T=any> {
     return new File([blob], name, { type: 'tipo/mime' });
 
   }
-
-
-  /*@ViewChild("fileUpload", {read: ElementRef})
-  fileUpload!: ElementRef;
-  readonly source = this.createDataSource();
-
-
-  @Input() requiredFileType = '';
-  @Input() formUpload: FormGroup|any;
-  @Output() upload = new EventEmitter<SignFile>();
-
-
-
-
-  @HostListener('change', ['$event.target.files'])
-  async handleChangeInput(list: FileList) {
-    console.log(this.requiredFileType);
-    console.log('aqui se imprime el formulario',this.formUpload);
-
-
-    if (list.length > 0) {
-      this.formUpload.patchValue({fileName: 'procesando' || ''});
-      const file = list.item(0);
-      const b64 = await fileToB64(file);
-      console.log(file);
-      console.log(this.formUpload.get("documentType")?.value);
-      if (file !== null)
-        this.upload.emit({
-          sign: "",
-          documentType: file,
-          form: this.formUpload,
-          b64: b64.data,
-          file,
-          name: ""
-        });
-    }
-
-  }
-
-  columns: ColumnSource | undefined;
-  protected createDataSource() {
-    return new MatTableDataSource<T>([]);
-  }
-  protected getColumns(): ColumnSrc[] {
-    return [
-      'name',
-      'type',
-      'size',
-      'createdAt',
-      'updatedAt',
-    ];
-  }*/
-
-
 }
 
 

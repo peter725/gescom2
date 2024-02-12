@@ -67,14 +67,6 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
             List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
             protocolDTO.setQuestionsDTOS(listQuestionsDTOS);
         }
-
-
-        /*listProtocolDTO.forEach(protocol -> {
-            List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocol.getId());
-            List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
-            protocol.setQuestionsDTOS(listQuestionsDTOS);
-        });*/
-
         return (listProtocolDTO);
     }
 

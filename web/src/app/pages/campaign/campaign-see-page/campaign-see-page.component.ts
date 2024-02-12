@@ -122,14 +122,12 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   navegarAComponenteProtocol() {
     // Asumiendo que 'this.campaign' contiene los datos de la campaña actual
     this.campaign = this.form.value;
-    console.log('Ver los Protocolos', this.campaign.get('protocols')?.value?.length);
     const minimalCampaignData = {
       id: this.campaign.id,
       nameCampaign: this.campaign.nameCampaign
     };
 
     this.dataSharingService.changeCampaign(minimalCampaignData);
-    console.log('navegarAComponenteProtocol', minimalCampaignData);
     this.router.navigate(['/app/protocol/0']);
   }
 

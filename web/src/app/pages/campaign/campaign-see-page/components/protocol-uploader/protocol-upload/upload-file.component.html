@@ -17,17 +17,6 @@
             </label>
           </div>
 
-          <!-- Campo de Fecha de Creación con mat-form-field -->
-          <mat-form-field class="basis-1/4">
-            <mat-label>Fecha Creación</mat-label>
-            <input matInput
-                   [matDatepicker]="picker"
-                   formControlName="date">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-
           <!-- Botón para añadir archivo -->
           <div class="basis-1/4">
             <button mat-raised-button color="primary" (click)="addFile()">Añadir</button>

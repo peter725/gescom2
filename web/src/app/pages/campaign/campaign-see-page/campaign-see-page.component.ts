@@ -9,6 +9,7 @@ import { Page } from '@libs/crud-api';
 import { ProtocolDetailComponent, UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
 import { DataSharingService } from '@base/services/dataSharingService';
 import { Protocol } from '@libs/sdk/protocol';
+import { ExcelService } from '@base/shared/utilsExcel/excel.service';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -33,6 +34,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   campaign: any;
   private dataSourceDialog: any;
   private dataSharingService: DataSharingService = inject(DataSharingService);
+  private excelService: ExcelService = inject(ExcelService);
 
 
   override ngOnInit(): void {
@@ -142,6 +144,27 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       console.log('The dialog was closed');
       // Aquí puedes manejar datos de retorno si es necesario
     });
+  }
+
+  clickExportExcel(protocol: Protocol): void {
+    this.excelService.exportExcel(protocol).subscribe(
+      (res: Blob | MediaSource) => {
+        const fileName = 'listado_protocolos.xlsx';
+        const objectUrl = URL.createObjectURL(res);
+        const a: HTMLAnchorElement = document.createElement('a');
+
+        a.href = objectUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+
+        document.body.removeChild(a);
+        URL.revokeObjectURL(objectUrl);
+      },
+      (error: any) => {
+        console.log('Error download {}', error);
+      }
+    );
   }
 
 

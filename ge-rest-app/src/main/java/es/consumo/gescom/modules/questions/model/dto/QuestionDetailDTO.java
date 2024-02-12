@@ -15,5 +15,7 @@ public class QuestionDetailDTO implements Serializable {
 
     private String question;
     private String infringement;
+    private String response;
+
 }
 

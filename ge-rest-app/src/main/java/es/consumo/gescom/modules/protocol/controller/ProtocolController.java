@@ -41,16 +41,28 @@ public class ProtocolController extends AbstractCrudController<ProtocolEntity, P
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/getByCampaign/{idCampaign}")
-    public ResponseEntity<List<ProtocolDTO>> findListByCriteria(@PathVariable  Long idCampaign) {
+    @GetMapping("/campaign/{id}")
+    public ResponseEntity<List<ProtocolDTO>> findListByCriteria(@PathVariable  Long id) {
         List<ProtocolDTO> result =
-                ((ProtocolService) service).findProtocolByCampaignId(idCampaign);
+                ((ProtocolService) service).findProtocolByCampaignId(id);
         return ResponseEntity.ok(result);
     }
+
+//    @GetMapping("/protocolo/{id}")
+//    public ResponseEntity<List<ProtocolDetailDTO>> findListByProtocol(@PathVariable  Long id) {
+//        List<ProtocolDetailDTO> result =
+//                ((ProtocolService) service).findProtocolById(id);
+//        return ResponseEntity.ok(result);
+//    }
 
     @Override
     protected ProtocolDTO performCreate(ProtocolDTO payload) {
         return ((ProtocolService) service).createProtocol(payload);
+    }
+
+    @GetMapping("/protocolo/{id}")
+    protected ProtocolDetailDTO findListByProtocol(@PathVariable Long id) {
+        return ((ProtocolService) service).findProtocolById(id);
     }
 
 

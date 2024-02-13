@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProtocolServicesDTO implements Serializable, LongIdModel{
+public class ProductServiceDTO implements Serializable, LongIdModel{
 
     private Long id;
     private String name;

@@ -22,8 +22,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "protocol_service")
-public class ProtocolServicesEntity extends SimpleEntity {
+@Table(name = "product_service")
+public class ProductServiceEntity extends SimpleEntity {
 
     @Column(name = "CODE")
     @Size(min = 1, max = 10)
@@ -82,7 +82,7 @@ public class ProtocolServicesEntity extends SimpleEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        ProtocolServicesEntity that = (ProtocolServicesEntity) o;
+        ProductServiceEntity that = (ProductServiceEntity) o;
         return Objects.equals(getId(), that.getId()) && Objects.equals(name, that.name);
     }
 

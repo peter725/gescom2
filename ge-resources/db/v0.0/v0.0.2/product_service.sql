@@ -1,3 +1,9 @@
+create sequence dbo.seq_product_service;
+
+alter sequence dbo.seq_product_service owner to gesco;
+
+
+
 create table if not exists dbo.product_service
 (
     id          numeric default nextval('dbo.seq_product_service'::regclass) not null

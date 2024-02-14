@@ -91,23 +91,23 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         protocol.setUpdatedAt(LocalDateTime.now());
         ProtocolEntity protocolSave = protocolRepository.save(protocol);
 
-        List<QuestionsDTO> questionsDTOS = payload.getQuestionsDTOS();
-        questionsDTOS.forEach(questions -> {
+        List<QuestionsDTO> questions = payload.getQuestionsDTOS();
+        questions.forEach(question -> {
             QuestionsEntity questionsEntity = new QuestionsEntity();
-            questionsEntity.setCode(questions.getCode());
+            questionsEntity.setCode(question.getCode());
             questionsEntity.setProtocolCampaingId(protocolSave);
-            questionsEntity.setQuestion(questions.getQuestion());
-            questionsEntity.setCodeInfringement(questions.getCodeInfringement());
-            questionsEntity.setOrderQuestion(questions.getOrderQuestion());
-            questionsEntity.setCodeQuestion(questions.getCodeQuestion());
-            questionsEntity.setBkTrinti(questions.getBkTrinti());
-            if(questions.getResponse().equals("SI")){
+            questionsEntity.setQuestion(question.getQuestion());
+            questionsEntity.setCodeInfringement(question.getCodeInfringement());
+            questionsEntity.setOrderQuestion(question.getOrderQuestion());
+            questionsEntity.setCodeQuestion(question.getCodeQuestion());
+            questionsEntity.setBkTrinti(question.getBkTrinti());
+            if(question.getResponse().equals("SI")){
                 questionsEntity.setResponse("S");
-            }else if (questions.getResponse().equals("NO")){
+            }else if (question.getResponse().equals("NO")){
                 questionsEntity.setResponse("N");
             }
-            questionsEntity.setBkTrrees(questions.getBkTrrees());
-            questionsEntity.setProtocolCampaignCode(questions.getProtocolCampaignCode());
+            questionsEntity.setBkTrrees(question.getBkTrrees());
+            questionsEntity.setProtocolCampaignCode(question.getProtocolCampaignCode());
             questionsEntity.setCreatedAt(LocalDateTime.now());
             questionsEntity.setUpdatedAt(LocalDateTime.now());
 

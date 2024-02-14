@@ -1,4 +1,4 @@
-package es.consumo.gescom.modules.protocolServices.model.entity;
+package es.consumo.gescom.modules.campaignProduct.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
@@ -22,36 +22,28 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "protocol_service")
-public class ProtocolServicesEntity extends SimpleEntity {
+@Table(name = "campaign_product_service")
+public class CampaignProductEntity extends SimpleEntity {
+
+    @Column(name = "CAMPAIGN_ID")
+    @Size(min = 1, max = 10)
+    private Long campaignId;
+
+    @Column(name = "CODE_PRODUCT_SERVICE")
+    @Size(min = 1, max = 10)
+    private String codeProductService;
+
+    @Column(name = "BK_CPNOPS")
+    @Size(min = 1, max = 10)
+    private String bkCpnops;
 
     @Column(name = "CODE")
     @Size(min = 1, max = 10)
     private String code;
 
-    @Column(name = "NAME")
+    @Column(name = "PRODUCT_SERVICE_ID")
     @Size(min = 1, max = 10)
-    private String name;
-
-    @Column(name = "BK_NOCO")
-    @Size(min = 1, max = 10)
-    private String bkNoco;
-
-    @Column(name = "BK_PSDESCRI")
-    @Size(min = 1, max = 10)
-    private String bkPsdescri;
-
-    @Column(name = "BK_PSINSEL1")
-    @Size(min = 1, max = 10)
-    private String bkPsinsel1;
-
-    @Column(name = "BK_PSCON0")
-    @Size(min = 1, max = 10)
-    private String bkPscon0;
-
-    @Column(name = "BK_PSCOICP")
-    @Size(min = 1, max = 10)
-    private String bkPscoicp;
+    private Long ProductServiceId;
 
     @JsonIgnore
     @CreatedDate
@@ -82,8 +74,8 @@ public class ProtocolServicesEntity extends SimpleEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        ProtocolServicesEntity that = (ProtocolServicesEntity) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(name, that.name);
+        CampaignProductEntity that = (CampaignProductEntity) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
@@ -95,7 +87,6 @@ public class ProtocolServicesEntity extends SimpleEntity {
 
         Long getId();
         String getCode();
-        String getName();
 
     }
 }

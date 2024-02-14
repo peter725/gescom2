@@ -14,7 +14,7 @@ export interface Protocol extends SimpleModel, StatefulAltModel {
   campaignId: number;
   createdAt: string;
   Questions: Question[];
-
+  nameCampaign: string;
 }
 
 export interface FilaProtocol {

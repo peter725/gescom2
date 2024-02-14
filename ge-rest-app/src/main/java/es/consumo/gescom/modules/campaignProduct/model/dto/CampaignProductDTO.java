@@ -1,4 +1,4 @@
-package es.consumo.gescom.modules.protocolServices.model.dto;
+package es.consumo.gescom.modules.campaignProduct.model.dto;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductServiceDTO implements Serializable, LongIdModel{
+public class CampaignProductDTO implements Serializable, LongIdModel{
 
     private Long id;
     private String name;

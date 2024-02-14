@@ -1,14 +1,14 @@
-package es.consumo.gescom.modules.protocolServices.controller;
+package es.consumo.gescom.modules.productServices.controller;
 
 import es.consumo.gescom.commons.constants.ApiEndpoints;
 import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
-import es.consumo.gescom.modules.protocolServices.model.criteria.ProductServiceCriteria;
-import es.consumo.gescom.modules.protocolServices.model.dto.ProductServiceDTO;
-import es.consumo.gescom.modules.protocolServices.model.entity.ProductServiceEntity;
-import es.consumo.gescom.modules.protocolServices.service.ProductServiceService;
+import es.consumo.gescom.modules.productServices.model.criteria.ProductServiceCriteria;
+import es.consumo.gescom.modules.productServices.model.dto.ProductServiceDTO;
+import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEntity;
+import es.consumo.gescom.modules.productServices.service.ProductServiceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -74,7 +74,7 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         for (ProtocolDTO protocolDTO : listProtocolDTO) {
             List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
             List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
-            protocolDTO.setQuestionsDTOS(listQuestionsDTOS);
+            protocolDTO.setQuestion(listQuestionsDTOS);
         }
         return (listProtocolDTO);
     }
@@ -91,7 +91,7 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         protocol.setUpdatedAt(LocalDateTime.now());
         ProtocolEntity protocolSave = protocolRepository.save(protocol);
 
-        List<QuestionsDTO> questions = payload.getQuestionsDTOS();
+        List<QuestionsDTO> questions = payload.getQuestion();
         questions.forEach(question -> {
             QuestionsEntity questionsEntity = new QuestionsEntity();
             questionsEntity.setCode(question.getCode());

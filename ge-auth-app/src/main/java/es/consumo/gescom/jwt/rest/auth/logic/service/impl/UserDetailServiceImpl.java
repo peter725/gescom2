@@ -23,7 +23,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             return userRepository.findByUsername(username).orElseThrow();
         } catch (Exception ex) {
             String message = "user : '" + username + "' not found";
-            log.error("[{}]", message);
+            log.error("Error",ex);
             throw new UsernameNotFoundException(message);
         }
     }

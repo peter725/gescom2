@@ -221,10 +221,10 @@ public class ExcelUtils {
         cell.setCellStyle(styleTituloPreguntas);
         
         // Preguntas
-        if (null != protocolo.getQuestionsDTOS()) {
+        if (null != protocolo.getQuestion()) {
         	int numPregunta = 0;
         	
-        	for (QuestionsDTO pregunta : protocolo.getQuestionsDTOS()) {
+        	for (QuestionsDTO pregunta : protocolo.getQuestion()) {
         		colHeader = 0;
         		numPregunta++;
         		row = sheet.createRow(rowNum++);

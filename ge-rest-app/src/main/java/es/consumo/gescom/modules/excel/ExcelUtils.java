@@ -41,8 +41,19 @@ public class ExcelUtils {
         // Creamos el libro de trabajo de Excel formato OOXML
         XSSFWorkbook workbook = new XSSFWorkbook();
         
-        // XSSFSheet sheetPortada = workbook.createSheet("PORTADA");
-        
+        XSSFSheet sheetPortada = workbook.createSheet("PORTADA");
+
+        int rowNumP = 0;
+        int colHeaderP = 0;
+        XSSFCellStyle styleP = workbook.createCellStyle();
+
+        XSSFRow rowP = sheetPortada.createRow(rowNumP++);
+        rowP.setHeightInPoints(50);
+        XSSFCell cellP = rowP.createCell(colHeaderP);
+        cellP.setCellValue(protocolo.getNameCampaign());
+        cellP.setCellStyle(styleP);
+        sheetPortada.addMergedRegion(new CellRangeAddress(rowNumP - 1, rowNumP - 1, colHeaderP, colHeaderP + 3));
+
         // La hoja donde pondremos los datos
         XSSFSheet sheet = workbook.createSheet("DATOS");
         
@@ -101,6 +112,11 @@ public class ExcelUtils {
         XSSFCellStyle styleRespuestas = workbook.createCellStyle();
         styleRespuestas.cloneStyleFrom(styleTituloPreguntas);
         styleRespuestas.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+
+        // Establecer el color de fondo Interlineado
+        XSSFCellStyle styleInterlineado = workbook.createCellStyle();
+        styleInterlineado.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        styleInterlineado.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         
         log.debug("Creating excel");
 
@@ -220,23 +236,45 @@ public class ExcelUtils {
         // Preguntas
         if (null != protocolo.getQuestion()) {
         	int numPregunta = 0;
-        	
+
         	for (QuestionsDTO pregunta : protocolo.getQuestion()) {
         		colHeader = 0;
         		numPregunta++;
-        		row = sheet.createRow(rowNum++);
-        		cell = row.createCell(colHeader++);
-        		cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
-                cell.setCellStyle(stylePreguntas);
-                
-                cell = row.createCell(colHeader++);
-                cell.setCellStyle(styleRespuestas);
-                
-                cell = row.createCell(colHeader++);
-                cell.setCellStyle(styleRespuestas);
-                
-                cell = row.createCell(colHeader++);
-                cell.setCellStyle(styleRespuestas);
+                if(pregunta.getResponse().equals("N")){
+                    row = sheet.createRow(rowNum++);
+                    cell = row.createCell(colHeader++);
+                    cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
+                    cell.setCellStyle(stylePreguntas);
+
+                    cell = row.createCell(colHeader++);
+                    cell.setCellStyle(stylePreguntas);
+
+                    cell = row.createCell(colHeader++);
+                    cell.setCellStyle(stylePreguntas);
+
+                    cell = row.createCell(colHeader++);
+                    cell.setCellStyle(stylePreguntas);
+
+                    row = sheet.createRow(rowNum++);
+                    row.setHeightInPoints(5);
+                    cell = row.createCell(colHeader);
+                    sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+
+                }else {
+                    row = sheet.createRow(rowNum++);
+                    cell = row.createCell(colHeader++);
+                    cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
+                    cell.setCellStyle(stylePreguntas);
+
+                    cell = row.createCell(colHeader++);
+                    cell.setCellStyle(styleRespuestas);
+
+                    cell = row.createCell(colHeader++);
+                    cell.setCellStyle(styleRespuestas);
+
+                    cell = row.createCell(colHeader++);
+                    cell.setCellStyle(styleRespuestas);
+                }
         	}
         	
         }

@@ -47,7 +47,7 @@ export interface Question {
   question: string | null;
   codeInfringement: string | null;
   bkTrinti: string | null;
-  response: boolean | null;
+  response: any | null;
   bkTrrees: string | null;
 }
 

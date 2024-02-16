@@ -1,22 +1,90 @@
-<!--
-<div class="container mx-auto p-4">
-  <div class="header mb-5">
-    <h1 class="text-2xl font-bold mb-3">{{protocolDetail.protocolName}}</h1>
-    <p>Campaña: {{protocolDetail.CampaignName}}</p>
-    <p>Año: {{protocolDetail.year}}</p>
-    <p>Tipo de Campaña: {{protocolDetail.typeCampaign}}</p>
-    <p>Ámbito: {{protocolDetail.ambit}}</p>
-    <p>Responsable: {{protocolDetail.responsible}}</p>
-    <p>Participantes: {{protocolDetail.participants}}</p>
-    <p>Código CPA: {{protocolDetail.codeCPA}}</p>
-  </div>
-  <div class="body">
-    <ul class="list-disc pl-5">
-      <li *ngFor="let question of protocolDetail.questions" class="mb-2">
-        <span class="font-bold" *ngIf="question.infringement === null">{{ question.question }}</span>
-        <span *ngIf="question.infringement !== null">{{ question.question }} - Infracción: {{ question.infringement }}</span>
-      </li>
-    </ul>
-  </div>
+<div class="centered-title">
+  <h1>{{'fields.campaign.protocolDetails' | translate}}</h1>
+
 </div>
--->
+<hr>
+<mat-dialog-content>
+  <div class="div-margin">
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.title' | translate}}</p>
+    <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.nameCampaign }}</h3>
+  </div>
+  
+  <div class="div-margin grid grid-cols-4 gap-1.5">
+    <div>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.year' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.year }}</h3>
+    </div>
+    <div>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.code' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.codeCpa }}</h3>
+    </div>
+    <div>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.campaignType' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.campaignType?.name }}</h3>
+    </div>
+    <div>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.ambit' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.ambit?.name }}</h3>
+    </div>
+  </div>
+  
+  <div class="div-margin">
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.responsible' | translate}}</p>
+    <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.autonomousCommunityResponsible?.name }}</h3>
+  </div>
+  
+  <div class="div-margin" >
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.participants' | translate}}</p>
+    <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ participantes }}</h3>
+  </div>
+
+  <hr>
+    <div class="centered-title nombre-protocolo">
+      <h2 class="text-base font-semibold leading-7">{{ protocol?.name }}</h2>
+    </div>
+  <hr>
+  
+  <mat-grid-list cols="2" rowHeight="50px">
+    <mat-grid-tile colspan="1" class="header-titles">
+      <div> {{'fields.campaign.question' | translate}} </div>
+    </mat-grid-tile>
+  
+    <mat-grid-tile colspan="1" class="header-titles">
+      <div> {{'fields.campaign.codInfraction' | translate}} </div>
+    </mat-grid-tile>
+  
+    <hr>
+  
+    <ng-container *ngFor="let pregunta of preguntas">
+      <ng-container *ngIf="pregunta.response == 'N'">
+        <mat-grid-tile [colspan]="2" [rowspan]="1" [style.background]="colorGris">
+          <div class="preguntas-gris">
+            {{ pregunta.question}}
+          </div>
+        </mat-grid-tile>
+      </ng-container>
+      <ng-container *ngIf="pregunta.response == 'S'">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <div class="preguntas-blanco">
+            {{ pregunta.question}}
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            {{ pregunta.codeInfringement}}
+        </mat-grid-tile>
+        <hr>
+      </ng-container>
+      
+  
+      <hr>
+    </ng-container>
+  
+  </mat-grid-list>
+  
+  
+  
+  <div mat-dialog-actions>
+    <button mat-button (click)="close()">Cerrar</button>
+  </div>
+  
+</mat-dialog-content>

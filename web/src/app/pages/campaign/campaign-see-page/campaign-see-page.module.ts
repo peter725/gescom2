@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
 import { TableModule } from '@base/shared/components/table';
 import { ProtocolListComponent } from '@base/pages/campaign/campaign-see-page/components';
+import { MatGridListModule } from '@angular/material/grid-list';  
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { ProtocolListComponent } from '@base/pages/campaign/campaign-see-page/co
     StateToggleModule,
     MatTableModule,
     MatSortModule,
-    TableModule
+    TableModule,
+    MatGridListModule
   ],
     declarations: [
         CampaignSeePageComponent,

@@ -94,7 +94,7 @@
                     {{protocol.name}}
                   </p>
                   <div>
-                    <button mat-button >
+                    <button mat-button (click)="verDetallesProtocol(protocol)" >
                       <mat-icon>visibility</mat-icon>
                     </button>
                     <button mat-button (click)="clickExportExcel(protocol)">

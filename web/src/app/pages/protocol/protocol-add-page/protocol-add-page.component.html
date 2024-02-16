@@ -40,7 +40,7 @@
             <div class="table-header-group bg-gray-200">
               <div class="table-cell p-2 border border-gray-300 w-1/12">Orden</div>
               <div class="table-cell p-2 border border-gray-300 w-2/12">Cod. Pregunta</div>
-              <div class="table-cell p-2 border border-gray-300 w-6/12">Pregunta</div>
+              <div class="table-cell p-2 border border-gray-300 w-6/12">Pregunta*</div>
               <div class="table-cell p-2 border border-gray-300 w-2/12">Infraccion</div>
               <div class="table-cell p-2 border border-gray-300 w-1/12">Resp</div>
             </div>
@@ -96,7 +96,7 @@
     <tsw-form-actions
             [saveBtnSkipConfirmation]="skipSaveConfirmation"
             (reset)="resetForm()"
-            (save)="submitForm()"
+            (save)="saveForm()"
     ></tsw-form-actions>
 
   </tsw-form-container>

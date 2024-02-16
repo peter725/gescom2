@@ -286,8 +286,10 @@
       "participants": "CCAA Participantes",
       "proponents": "CCAA Proponentes",
       "specialist": "CCAA Especialista",
-      "requiredDoc": "Cargar los documentos"
-
+      "requiredDoc": "Cargar los documentos",
+      "question": "Pregunta",
+      "codInfraction": "Cod. Infracción",
+      "protocolDetails": "Detalles del protocolo"
     }
   },
   "text": {

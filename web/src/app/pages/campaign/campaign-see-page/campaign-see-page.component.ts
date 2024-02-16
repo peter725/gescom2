@@ -167,7 +167,17 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     );
   }
 
-
+  verDetallesProtocol(protocol: Protocol): void {
+    const campaign = this.form.value;
+    const datos = {
+      protocol,
+      campaign,
+    };
+    const dialogRef = this.dialog.open(ProtocolDetailComponent, {
+      width: '1000px',
+      data: datos
+    });
+  }
 
 
   protected readonly console = console;

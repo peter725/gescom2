@@ -109,7 +109,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
       codeQuestion: null,
-      question: null,
+      question: ['', Validators.required],
       codeInfringement: null,
       response: ['SI'] // Inicializar con 'SI'
     });
@@ -143,4 +143,14 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     const currentValue = fila.get('response')?.value;
     fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
   }
+
+  saveForm() {
+    if (this.form.invalid) {
+      this.notification.show({ message: 'text.other.pleaseReview' });
+    } else {
+      this.submitForm();
+    }
+    
+  }
+
 }

@@ -1,5 +1,5 @@
 import {
-  Component,
+  Component, Output,
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -42,7 +42,8 @@ export class UploadFileComponent<T=any> {
 
   private contadorId = 1;
 
-  displayedColumns: string[] = ['date','out','type','description','openFile','delete'];
+
+  displayedColumns: string[] = ['date','size','type','description','openFile','delete'];
   dataSource = [...ELEMENT_DATA];
   form: FormGroup;
   selectedFile : File | undefined;
@@ -63,32 +64,52 @@ export class UploadFileComponent<T=any> {
     console.log("Archivo="+this.selectedFile?.name)
   }
 
-  addFile() : void {
 
-    let nuevoRegistro: FileData = this.form.value;
-
+  addFile(): void {
     if (this.selectedFile) {
+      fileToB64(this.selectedFile).then(result => {
+        // Obtener la extensión del archivo seleccionado
+        const fileExtension = this.getExtensionFromFileName(this.selectedFile!.name);
 
-      fileToB64(this.selectedFile).then(result=>{
-        nuevoRegistro.b64 = result;
+        // Crear el registro incluyendo la extensión del archivo
+        let nuevoRegistro: FileData = {
+          ...this.form.value,
+          b64: result.data, // Asumiendo que result.data contiene el contenido base64 del archivo
+          id: this.contadorId++,
+          /*campaignId: ,*/ // Asumiendo que esta variable contiene el ID de la campaña
+          date: new Date().toISOString(),
+          name: result.name, // Asumiendo que este es el nombre del archivo
+          extension: fileExtension, // Almacenar la extensión del archivo
+          size: this.formatBytesToKB(result.size), // Usamos la función de conversión aquíextension:  // Almacenar la extensión del archivo
+        };
+
+        this.dataSource.push(nuevoRegistro);
+        console.log("DATASET=", this.dataSource);
+        this.table?.renderRows();
+
+        this.form.reset();
+        console.log("Registro agregado:", nuevoRegistro);
+      }).catch(error => {
+        console.error("Error al convertir archivo a base64:", error);
       });
-      /*
-      this.convertirABase64( this.selectedFile).then(base64=>{
-          nuevoRegistro.base64=base64;
-      });
-       */
+    } else {
+      console.log("No se seleccionó archivo.");
     }
-
-    const pipe = new DatePipe('en-US');
-    nuevoRegistro.id =  this.contadorId++;
-    this.dataSource.push(nuevoRegistro);
-    console.log("DATASET="+this.dataSource)
-    this.table?.renderRows();
-
-
-    this.form?.reset();
-    console.log("Registro agregado:"+nuevoRegistro);
   }
+
+
+
+  formatBytesToKB(bytes: number): string {
+    return (bytes / 1024).toFixed(2) + ' KB';
+  }
+
+  getExtensionFromFileName(fileName: string): string {
+    const parts = fileName.split('.');
+    return parts[parts.length - 1];
+  }
+
+
+
 
   deleteFile(id : number) : void {
     console.log("registro a eliminar:"+id);
@@ -122,6 +143,8 @@ export class UploadFileComponent<T=any> {
   closeDialog(): void {
     this.dialogRef.close(this.dataSource);
   }
+
+
 
   base64AFile(base64: string, name : string) : File {
 

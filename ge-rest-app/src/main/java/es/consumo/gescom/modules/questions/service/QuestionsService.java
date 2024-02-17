@@ -14,5 +14,7 @@ public interface QuestionsService extends CrudService<QuestionsEntity, Long>{
     Page<QuestionsEntity.SimpleProjection> findAllQuestionsById(CriteriaWrapper<QuestionsCriteria> wrapper, Long id);
 
     List<QuestionsEntity> findAllQuestionsByProtocolId(Long id);
+
+    List<QuestionsEntity> findAllQuestionsByProtocolCode(String code);
     
 }

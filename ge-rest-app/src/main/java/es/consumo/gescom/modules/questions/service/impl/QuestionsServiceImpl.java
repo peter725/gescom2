@@ -34,4 +34,9 @@ public class QuestionsServiceImpl extends EntityCrudService<QuestionsEntity, Lon
     public List<QuestionsEntity> findAllQuestionsByProtocolId(Long id) {
         return questionsRepository.findAllQuestionsByProtocolId(id);
     }
+
+    @Override
+    public List<QuestionsEntity> findAllQuestionsByProtocolCode(String code) {
+        return questionsRepository.findAllQuestionsByProtocolCode(code);
+    }
 }

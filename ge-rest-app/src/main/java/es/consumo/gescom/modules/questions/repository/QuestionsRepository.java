@@ -23,4 +23,7 @@ public interface QuestionsRepository extends GESCOMRepository<QuestionsEntity, L
 
     @Query(value = "SELECT h FROM QuestionsEntity h where h.protocolCampaingId.id = :id ")
     List<QuestionsEntity> findAllQuestionsByProtocolId(Long id);
+
+    @Query(value = "SELECT h FROM QuestionsEntity h where h.protocolCampaignCode = :code ")
+    List<QuestionsEntity> findAllQuestionsByProtocolCode(String code);
 }

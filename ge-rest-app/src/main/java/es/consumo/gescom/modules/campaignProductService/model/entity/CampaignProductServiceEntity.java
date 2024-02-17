@@ -1,4 +1,4 @@
-package es.consumo.gescom.modules.campaignProduct.model.entity;
+package es.consumo.gescom.modules.campaignProductService.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
@@ -23,7 +23,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "campaign_product_service")
-public class CampaignProductEntity extends SimpleEntity {
+public class CampaignProductServiceEntity extends SimpleEntity {
 
     @Column(name = "CAMPAIGN_ID")
     @Size(min = 1, max = 10)
@@ -74,7 +74,7 @@ public class CampaignProductEntity extends SimpleEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        CampaignProductEntity that = (CampaignProductEntity) o;
+        CampaignProductServiceEntity that = (CampaignProductServiceEntity) o;
         return Objects.equals(getId(), that.getId());
     }
 

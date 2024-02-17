@@ -1,4 +1,4 @@
-package es.consumo.gescom.modules.campaignProduct.model.criteria;
+package es.consumo.gescom.modules.campaignProductService.model.criteria;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import es.consumo.gescom.commons.dto.FilterCriteria;
@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CampaignProductCriteria extends FilterCriteria {
+public class CampaignProductServiceCriteria extends FilterCriteria {
     private Long id;
 }

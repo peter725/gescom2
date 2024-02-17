@@ -25,11 +25,17 @@ import es.consumo.gescom.modules.campaign.model.dto.ChangePhaseDTO;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.repository.CampaignRepository;
 import es.consumo.gescom.modules.campaign.service.CampaignService;
+import es.consumo.gescom.modules.campaignProductService.model.converter.CampaignProductServiceConverter;
+import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
+import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
+import es.consumo.gescom.modules.campaignProductService.repository.CampaignProductServiceRepository;
 import es.consumo.gescom.modules.campaignType.model.converter.CampaingnTypeConverter;
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
 import es.consumo.gescom.modules.phase.model.converter.PhaseConverter;
 import es.consumo.gescom.modules.phase.model.entity.PhaseEntity;
 import es.consumo.gescom.modules.phase.repository.PhaseRepository;
+import es.consumo.gescom.modules.productServices.model.dto.ProductServiceDTO;
+import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEntity;
 import es.consumo.gescom.modules.proponent.model.converter.ProponentConverter;
 import es.consumo.gescom.modules.proponent.model.dto.ProponentDTO;
 import es.consumo.gescom.modules.proponent.model.entity.ProponentEntity;
@@ -78,7 +84,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                                   AutonomousCommunityProponentRepository autonomousCommunityProponentRepository, ProtocolService protocolService1,
                                   AutonomousCommunityProponentService autonomousCommunityProponentService,
                                   AutonomousCommunitySpecialistRepository autonomousCommunitySpecialistRepository,
-                                  AutonomousCommunitySpecialistService autonomousCommunitySpecialistService) {
+                                  AutonomousCommunitySpecialistService autonomousCommunitySpecialistService, CampaignProductServiceRepository campaignProductServiceRepository) {
         super(repository);
         this.autonomousCommunityRepository = autonomousCommunityRepository;
         this.autonomousCommunityConverter = autonomousCommunityConverter;
@@ -94,6 +100,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         this.autonomousCommunityProponentService = autonomousCommunityProponentService;
         this.autonomousCommunitySpecialistRepository = autonomousCommunitySpecialistRepository;
         this.autonomousCommunitySpecialistService = autonomousCommunitySpecialistService;
+        this.campaignProductServiceRepository = campaignProductServiceRepository;
     }
 
     @Autowired
@@ -129,6 +136,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     @Autowired
     private SpecialistConverter specialistConverter;
 
+    @Autowired
+    private CampaignProductServiceConverter campaignProductServiceConverter;
+
     private final AutonomousCommunityRepository autonomousCommunityRepository;
 
     private final AutonomousCommunityService autonomousCommunityService;
@@ -143,10 +153,11 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
     private final AutonomousCommunityProponentService autonomousCommunityProponentService;
 
-
     private final AutonomousCommunitySpecialistRepository autonomousCommunitySpecialistRepository;
 
     private final AutonomousCommunitySpecialistService autonomousCommunitySpecialistService;
+
+    private final CampaignProductServiceRepository campaignProductServiceRepository;
 
 
     @Override
@@ -211,6 +222,20 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             autonomousCommunitySpecialistEntity.setCreatedAt(LocalDateTime.now());
             autonomousCommunitySpecialistEntity.setUpdatedAt(LocalDateTime.now());
             autonomousCommunitySpecialistRepository.save(autonomousCommunitySpecialistEntity);
+        });
+
+        List<CampaignProductServiceDTO> productServiceDTOList = campaignDTO.getProductServiceDTOS();
+        List<CampaignProductServiceEntity> productServiceEntities = campaignProductServiceConverter.convertToEntity(productServiceDTOList);
+        productServiceEntities.forEach(productService -> {
+            CampaignProductServiceEntity campaignProductServiceEntity = new CampaignProductServiceEntity();
+            campaignProductServiceEntity.setCampaignId(campaignSave.getId());
+            campaignProductServiceEntity.setCodeProductService(productService.getCodeProductService());
+            campaignProductServiceEntity.setBkCpnops(productService.getBkCpnops());
+            campaignProductServiceEntity.setCode(productService.getCode());
+            campaignProductServiceEntity.setProductServiceId(productService.getProductServiceId());
+            campaignProductServiceEntity.setCreatedAt(LocalDateTime.now());
+            campaignProductServiceEntity.setUpdatedAt(LocalDateTime.now());
+            campaignProductServiceRepository.save(campaignProductServiceEntity);
         });
 
         CampaignDTO respuesta = campaingnConverter.convertToModel(campaignSave);

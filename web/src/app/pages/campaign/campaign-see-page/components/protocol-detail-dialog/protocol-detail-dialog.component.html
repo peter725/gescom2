@@ -42,47 +42,50 @@
     <div class="centered-title nombre-protocolo">
       <h2 class="text-base font-semibold leading-7">{{ protocol?.name }}</h2>
     </div>
-  <hr>
-  
-  <mat-grid-list cols="2" rowHeight="50px">
-    <mat-grid-tile colspan="1" class="header-titles">
-      <div> {{'fields.campaign.question' | translate}} </div>
-    </mat-grid-tile>
-  
-    <mat-grid-tile colspan="1" class="header-titles">
-      <div> {{'fields.campaign.codInfraction' | translate}} </div>
-    </mat-grid-tile>
-  
-    <hr>
-  
-    <ng-container *ngFor="let pregunta of preguntas">
-      <ng-container *ngIf="pregunta.response == 'N'">
-        <mat-grid-tile [colspan]="2" [rowspan]="1" [style.background]="colorGris">
-          <div class="preguntas-gris">
-            {{ pregunta.question}}
+  <hr class="mb-4">
+
+  <div class="flex flex-col gap-4">
+    <!-- Encabezados -->
+    <div class="flex border-b border-gray-200">
+      <div class="flex-grow header-titles p-4">
+        {{ 'fields.campaign.question' | translate }}
+      </div>
+      <div class="flex-none w-1/5 header-titles p-4">
+        {{ 'fields.campaign.codInfraction' | translate }}
+      </div>
+    </div>
+
+    <!-- Iteración sobre preguntas -->
+    <div class="flex flex-col">
+      <ng-container *ngFor="let pregunta of preguntas">
+        <ng-container *ngIf="pregunta.response == 'N'">
+          <!-- Pregunta con respuesta 'N' -->
+          <div class="flex border-b border-l border-gray-200 p-4 bg-gray-200">
+            {{ pregunta.question }}
           </div>
-        </mat-grid-tile>
-      </ng-container>
-      <ng-container *ngIf="pregunta.response == 'S'">
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-          <div class="preguntas-blanco">
-            {{ pregunta.question}}
+        </ng-container>
+        <ng-container *ngIf="pregunta.response == 'S'">
+          <!-- Pregunta con respuesta 'S' -->
+          <div class="flex border-b border-l border-gray-200 p-4">
+            <div class="flex-grow preguntas-blanco">
+              {{ pregunta.question }}
+            </div>
+            <div class="flex-none w-1/5 border-l border-gray-200 p-4">
+              {{ pregunta.codeInfringement }}
+            </div>
           </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            {{ pregunta.codeInfringement}}
-        </mat-grid-tile>
-        <hr>
+        </ng-container>
       </ng-container>
-      
-  
-      <hr>
-    </ng-container>
-  
-  </mat-grid-list>
-  
-  
-  
+    </div>
+  </div>
+
+
+
+
+
+
+
+
   <div mat-dialog-actions>
     <button mat-button (click)="close()">Cerrar</button>
   </div>

@@ -28,22 +28,6 @@ export class ProtocolDetailComponent implements OnInit {
   preguntas: Question [] | undefined;
   colorGris: any = '#e3e3e3';
 
-  /*protocolDetail: ProtocolDetailForm = {
-    // Tus datos aquí
-    CampaignName: 'Campaña de ejemplo',
-    year: '2024',
-    typeCampaign: 'Tipo 1',
-    ambit: 'Nacional',
-    responsible: 'Juan Pérez',
-    participants: '100',
-    codeCPA: 'CPA123',
-    protocolName: 'Nombre del Protocolo',
-    questions: [
-      { question: 'Cabecera 1', infringement: '' },
-      { question: 'Pregunta 1', infringement: 'Infracción 1' },
-      // Agrega más preguntas según sea necesario
-    ]
-  };*/
 
   constructor(private dialogRef: MatDialogRef<ProtocolDetailComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,) { }

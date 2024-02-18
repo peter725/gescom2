@@ -1,8 +1,7 @@
-.header-titles div {
+.header-titles {
   background-color: rgb(21,68,129);
   font-weight: bold;
   color: white;
-  padding: 1000px;
 }
 
 .centered-title {
@@ -19,13 +18,16 @@
   background-color: rgb(227,227,227);
   font-weight: bold;
   text-transform: uppercase;
-  position: absolute;
-  left: 33px;
+  /*position: absolute;
+  left: 33px;*/
+  padding: 33px;
 }
 
-.preguntas-blanco {
-  position: absolute;
-  left: 33px;
+.dynamic-height {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden; /* O 'visible', dependiendo de cómo quieras manejar el desbordamiento */
 }
 
 .nombre-protocolo {

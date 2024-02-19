@@ -63,7 +63,7 @@ public class ExcelUtils {
         sheet.setColumnWidth(2, 25 * 120);
         sheet.setColumnWidth(3, 25 * 120);
 
-        // Creamos el estilo paga las celdas del encabezado - Titulo campaña
+        // Creamos el estilo para las celdas del encabezado - Titulo campaña
         XSSFCellStyle style = workbook.createCellStyle();
 
         // Establecer la fuente Arial 10 en negrita

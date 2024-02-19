@@ -43,7 +43,7 @@ public class CampaignProductServiceEntity extends SimpleEntity {
 
     @Column(name = "PRODUCT_SERVICE_ID")
     @Size(min = 1, max = 10)
-    private Long ProductServiceId;
+    private Long productServiceId;
 
     @JsonIgnore
     @CreatedDate

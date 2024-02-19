@@ -15,6 +15,7 @@ import lombok.Setter;
 public class ProductServiceDTO implements Serializable, LongIdModel{
 
     private Long id;
+    private String code;
     private String name;
     
 }

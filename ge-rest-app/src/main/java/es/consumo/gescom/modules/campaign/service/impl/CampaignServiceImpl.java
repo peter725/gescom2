@@ -29,6 +29,7 @@ import es.consumo.gescom.modules.campaignProductService.model.converter.Campaign
 import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
 import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
 import es.consumo.gescom.modules.campaignProductService.repository.CampaignProductServiceRepository;
+import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
 import es.consumo.gescom.modules.campaignType.model.converter.CampaingnTypeConverter;
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
 import es.consumo.gescom.modules.phase.model.converter.PhaseConverter;
@@ -79,7 +80,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                                   ProponentConverter proponentConverter,
                                   SpecialistConverter specialistConverter,
                                   ProtocolService protocolService,
-                                  AutonomousCommunityService autonomousCommunityService,
+                                  AutonomousCommunityService autonomousCommunityService, CampaignProductServiceService campaignProductServiceService,
                                   AutonomousCommunityParticipantsService autonomousCommunityParticipantsService,
                                   AutonomousCommunityProponentRepository autonomousCommunityProponentRepository, ProtocolService protocolService1,
                                   AutonomousCommunityProponentService autonomousCommunityProponentService,
@@ -93,6 +94,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         this.autonomousCommunityParticipantsRepository = autonomousCommunityParticipantsRepository;
         this.proponentConverter = proponentConverter;
         this.autonomousCommunityService = autonomousCommunityService;
+        this.campaignProductServiceService = campaignProductServiceService;
         this.autonomousCommunityParticipantsService = autonomousCommunityParticipantsService;
         this.autonomousCommunityProponentRepository = autonomousCommunityProponentRepository;
         this.specialistConverter = specialistConverter;
@@ -142,6 +144,8 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     private final AutonomousCommunityRepository autonomousCommunityRepository;
 
     private final AutonomousCommunityService autonomousCommunityService;
+
+    private final CampaignProductServiceService campaignProductServiceService;
 
     private final AutonomousCommunityParticipantsRepository autonomousCommunityParticipantsRepository;
 
@@ -224,7 +228,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             autonomousCommunitySpecialistRepository.save(autonomousCommunitySpecialistEntity);
         });
 
-        List<CampaignProductServiceDTO> productServiceDTOList = campaignDTO.getProductServiceDTOS();
+        List<CampaignProductServiceDTO> productServiceDTOList = campaignDTO.getCampaignproductServiceDTOS();
         List<CampaignProductServiceEntity> productServiceEntities = campaignProductServiceConverter.convertToEntity(productServiceDTOList);
         productServiceEntities.forEach(productService -> {
             CampaignProductServiceEntity campaignProductServiceEntity = new CampaignProductServiceEntity();
@@ -323,7 +327,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(idCampaign));
             campaignDTO.setProponents(autonomousCommunityProponentService.finByIdCampaign(idCampaign));
             campaignDTO.setSpecialists(autonomousCommunitySpecialistService.finByIdCampaign(idCampaign));
+            campaignDTO.setCampaignproductServiceDTOS(campaignProductServiceService.findCampaignProductServiceByCampaignId(idCampaign));
             campaignDTO.setProtocols(protocolDTO);
+
             return campaignDTO;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaign not found");

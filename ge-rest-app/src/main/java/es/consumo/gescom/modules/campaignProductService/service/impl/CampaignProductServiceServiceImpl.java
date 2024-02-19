@@ -9,6 +9,10 @@ import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProduc
 import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
 import es.consumo.gescom.modules.campaignProductService.repository.CampaignProductServiceRepository;
 import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
+import es.consumo.gescom.modules.productServices.model.converter.ProductServiceConverter;
+import es.consumo.gescom.modules.productServices.model.dto.ProductServiceDTO;
+import es.consumo.gescom.modules.productServices.service.ProductServiceService;
+import es.consumo.gescom.modules.protocol.model.converter.ProtocolConverter;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
@@ -31,6 +35,12 @@ public class CampaignProductServiceServiceImpl extends EntityCrudService<Campaig
     @Autowired
     private CampaignProductServiceConverter campaignProductServiceConverter;
 
+    @Autowired
+    ProductServiceConverter productServiceConverter;
+
+    @Autowired
+    private ProductServiceService productServiceService;
+
 
     public Page<CampaignProductServiceEntity.SimpleProjection> findAllCampaignProductById(CriteriaWrapper<CampaignProductServiceCriteria> wrapper, Long id) {
         return ((CampaignProductServiceRepository) repository).findAllCampaignProductById(wrapper.getCriteria().toPageable(), id);
@@ -39,7 +49,18 @@ public class CampaignProductServiceServiceImpl extends EntityCrudService<Campaig
     @Override
     public List<CampaignProductServiceDTO> findCampaignProductServiceByCampaignId(Long id) {
         List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(id);
+        List<CampaignProductServiceDTO> campaignProductServiceDTOS = campaignProductServiceConverter.convertToModel(campaignProductServiceEntities);
+        ProductServiceDTO productServiceDTO;
+        for (CampaignProductServiceDTO campaignProductServiceDTO : campaignProductServiceDTOS) {
+            if (campaignProductServiceDTO.getProductServiceId() == null) {
+                productServiceDTO = productServiceConverter.convertToModel(productServiceService.findByCode(campaignProductServiceDTO.getCodeProductService()));
+            }else {
+                productServiceDTO = productServiceConverter.convertToModel(productServiceService.findProductServiceById(campaignProductServiceDTO.getProductServiceId()));
+                campaignProductServiceDTO.setCodeProductService(productServiceDTO.getCode());
+            }
 
-        return (campaignProductServiceConverter.convertToModel(campaignProductServiceEntities));
+            campaignProductServiceDTO.setProductName(productServiceDTO.getName());
+        }
+        return campaignProductServiceDTOS;
     }
 }

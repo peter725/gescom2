@@ -242,6 +242,11 @@ public class ExcelUtils {
         		numPregunta++;
                 if(pregunta.getResponse().equals("N")){
                     row = sheet.createRow(rowNum++);
+                    row.setHeightInPoints(5);
+                    cell = row.createCell(colHeader);
+                    sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+
+                    row = sheet.createRow(rowNum++);
                     cell = row.createCell(colHeader++);
                     cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
                     cell.setCellStyle(stylePreguntas);

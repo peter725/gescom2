@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/campaignProductService")
-@Tag(name = "Campaign Product controller")
+@Tag(name = "Campaign Product Service controller")
 public class CampaignProductServiceController extends AbstractCrudController<CampaignProductServiceEntity, CampaignProductServiceDTO, Long, FilterCriteria> {
 
     @Autowired

@@ -188,9 +188,6 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             PhaseEntity phaseEntityNew = new PhaseEntity();
             phaseEntityNew.setId(1L);
             campaign.setPhaseCampaign(phaseEntityNew);
-        } else {
-            PhaseEntity phase = phaseConverter.convertToEntity(campaignDTO.getPhaseCampaign());
-            campaign.setPhaseCampaign(phase);
         }
 
         CampaignEntity campaignSave = campaignRepository.save(campaign);
@@ -282,6 +279,12 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
         if (!toDeleteSpecialist.isEmpty())
             autonomousCommunitySpecialistRepository.deleteAllById(toDeleteSpecialist);
+
+        campaignDTO.setCreatedAt(campaign.getCreatedAt());
+        campaignDTO.setCreatedBy(campaign.getCreatedBy());
+        campaignDTO.setUpdatedAt(LocalDateTime.now());
+        campaignDTO.setUpdatedBy(campaign.getUpdatedBy());
+        campaignDTO.setPhaseCampaign(campaign.getPhaseCampaign());
 
         return createCampaign(campaignDTO);
 

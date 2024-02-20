@@ -1,0 +1,7 @@
+<mat-dialog-content>
+  <products-list (selectionChanged)="handleSelectionChange($event)"></products-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button type="button" mat-raised-button mat-dialog-close color="primary" class="text-white font-bold py-2 px-4 rounded">{{ 'generic.actions.cancel' | translate}}</button>
+  <button type="button" mat-raised-button color="primary" class="text-white font-bold py-2 px-4 rounded" (click)="closeDialog()">{{ 'generic.actions.save' | translate }}</button>
+</mat-dialog-actions>

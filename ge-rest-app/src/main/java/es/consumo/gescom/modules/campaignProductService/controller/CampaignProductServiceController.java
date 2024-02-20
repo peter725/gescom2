@@ -9,17 +9,24 @@ import es.consumo.gescom.modules.campaignProductService.model.criteria.CampaignP
 import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
 import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
 import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
+import es.consumo.gescom.modules.excel.ExcelUtils;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
+import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -44,5 +51,19 @@ public class CampaignProductServiceController extends AbstractCrudController<Cam
         List<CampaignProductServiceDTO> result =
                 ((CampaignProductServiceService) service).findCampaignProductServiceByCampaignId(id);
         return ResponseEntity.ok(result);
+    }
+    
+    @PostMapping("/saveRelation")
+    public ResponseEntity<List<CampaignProductServiceDTO>> saveRelation(@RequestBody CampaignProductServiceDTO producto){
+        boolean falloCreacion = false;
+
+        return null;
+    }
+    
+    @DeleteMapping("/delete/deleteRelation/{id}")
+    public ResponseEntity<Object> deleteRelation(@PathVariable Long id) {
+    	boolean falloCreacion = false;
+
+        return null;
     }
 }

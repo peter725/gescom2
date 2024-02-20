@@ -225,7 +225,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             autonomousCommunitySpecialistRepository.save(autonomousCommunitySpecialistEntity);
         });
 
-        List<CampaignProductServiceDTO> productServiceDTOList = campaignDTO.getCampaignproductServiceDTOS();
+        List<CampaignProductServiceDTO> productServiceDTOList = campaignDTO.getCampaignProductServiceDTOS();
         List<CampaignProductServiceEntity> productServiceEntities = campaignProductServiceConverter.convertToEntity(productServiceDTOList);
         productServiceEntities.forEach(productService -> {
             CampaignProductServiceEntity campaignProductServiceEntity = new CampaignProductServiceEntity();
@@ -330,7 +330,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(idCampaign));
             campaignDTO.setProponents(autonomousCommunityProponentService.finByIdCampaign(idCampaign));
             campaignDTO.setSpecialists(autonomousCommunitySpecialistService.finByIdCampaign(idCampaign));
-            campaignDTO.setCampaignproductServiceDTOS(campaignProductServiceService.findCampaignProductServiceByCampaignId(idCampaign));
+            campaignDTO.setCampaignProductServiceDTOS(campaignProductServiceService.findCampaignProductServiceByCampaignId(idCampaign));
             campaignDTO.setProtocols(protocolDTO);
 
             return campaignDTO;

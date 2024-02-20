@@ -41,7 +41,7 @@ public class CampaignDTO implements Serializable {
     private LocalDateTime updatedAt;
     private Long createdBy;
     private Long updatedBy;
-    private List<CampaignProductServiceDTO> CampaignproductServiceDTOS;
+    private List<CampaignProductServiceDTO> campaignProductServiceDTOS;
     private Integer state = EntityState.ON.getValue();
 
     //lista de productos

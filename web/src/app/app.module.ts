@@ -15,6 +15,7 @@ import { LocaleConfig } from '@base/config/locale.config';
 import { AuthorizationConfig } from '@base/config/authorization.config';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ExcelModule } from './shared/utilsExcel/excel.module';
+import { UtilsServiceModule } from './shared/utilsService/utilsService.module';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { ExcelModule } from './shared/utilsExcel/excel.module';
     FormConfig,
     LocaleConfig,
     MatNativeDateModule,
-    ExcelModule
+    ExcelModule,
+    UtilsServiceModule
   ],
   declarations: [
     AppComponent,

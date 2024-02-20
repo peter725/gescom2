@@ -61,6 +61,8 @@ export const crudOperationsStorageFactory = () => {
     businessRuleDefinitions: { type: HttpOperationType.READ, path: `/business_rules/definitions` },
     infoTypes: { type: HttpOperationType.READ, path: `/info_types` },
     templateManagement: { type: HttpOperationType.CRUD, path: `/sample_templates` },
+    productServices: { type: HttpOperationType.CRUD, path: `/productServices` },
+    campaignProductService: { type: HttpOperationType.CRUD, path: `/campaignProductService` },
   };
 
   const userOperations: OperationsDefSrc = {

@@ -302,7 +302,8 @@
         "name": "Nombre",
         "year": "Año",
         "inspection": "INSPECCIÓN: FASE ACTUAL",
-        "protocol": "Alta de protocolo"
+        "protocol": "Alta de protocolo",
+        "products": "Productos"
     },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},

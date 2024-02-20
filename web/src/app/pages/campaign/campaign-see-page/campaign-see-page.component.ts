@@ -10,6 +10,10 @@ import { ProtocolDetailComponent, UploadFileComponent } from '@base/pages/campai
 import { DataSharingService } from '@base/services/dataSharingService';
 import { Protocol } from '@libs/sdk/protocol';
 import { ExcelService } from '@base/shared/utilsExcel/excel.service';
+import { InfringementDialogComponent } from '@base/pages/infringement-dialog/infringement-dialog.component';
+import { ProductsDialogComponent } from './products-dialog/products-dialog.component';
+import { CampaignProductServiceDTO, ProductService } from '@libs/sdk/productService';
+import { CampaignProductService } from '@base/shared/utilsService/campaignProduct.service';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -30,12 +34,13 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   protected override _createResourceTitle = 'pages.campaign.add';
   protected override _editResourceTitle = 'pages.campaign.see';
   phases: any[] = [];
+  campaignProducts: ProductService[] | null | undefined = [];
 
   campaign: any;
   private dataSourceDialog: any;
   private dataSharingService: DataSharingService = inject(DataSharingService);
   private excelService: ExcelService = inject(ExcelService);
-
+  private campaignProductService: CampaignProductService = inject(CampaignProductService);
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -72,6 +77,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       updatedAt: this.fb.control(null),
       state: this.fb.control(null),
       protocols: this.fb.control([]),
+      campaignProductServiceDTOS: this.fb.control([]),
     });
   }
 
@@ -86,12 +92,21 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   get protocolsDisplay(){
-
     return this.form.get('protocols')?.value!;
-
   }
 
+  get productsDisplay(){
+    if (this.form.get('campaignProductServiceDTOS')?.value) {
+      this.campaignProducts = this.form.get('campaignProductServiceDTOS')?.value;
+    }
+    return this.form.get('campaignProductServiceDTOS')?.value!;
+  }
 
+  loadProductsDisplay(){
+    if (this.campaignProducts?.length === 0) {
+      this.campaignProducts = this.form.get('campaignProductServiceDTOS')?.value!;
+    }
+  }
 
   protected changePhaseCampaign(){
 
@@ -108,6 +123,51 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     console.log('changePhaseCampaign 1', this.campaign);
   }
 
+  agregarProducto(): void {
+    const dialogRef = this.dialog.open(ProductsDialogComponent, {
+      width: '75%',
+    });
+
+    dialogRef.afterClosed().subscribe((result: ProductService[]) => {
+      if (result && result.length > 0) {
+        const newProducts: CampaignProductServiceDTO[] = [];
+        result.forEach(prod => {
+          const newProductService: CampaignProductServiceDTO = {
+            id: undefined,
+            productName: prod.name,
+            campaignId: this.form.get('id')?.value!,
+            codeProductService: prod.code,
+            productServiceId: prod.id
+          };
+
+          newProducts.push(newProductService);
+        });
+
+
+        this.campaignProductService.saveCampaignProduct(newProducts).subscribe((result: any) => {
+          console.log('El diálogo se cerró');
+        });
+      }
+    });
+  }
+
+  borrarProducto(id: number): void {
+    
+
+    this.campaignProductService.delete(id).subscribe({
+      next: () => {
+        // Handle successful response
+        console.log('Producto eliminado correctamente');
+      },
+      error: (err) => {
+        // Handle error
+        console.error('Error al eliminar el producto:', err);
+      },
+      complete: () => {
+        // Optional: Do something after completion (e.g., cleanup)
+      }
+    });
+  }
 
   openDialog() {
 

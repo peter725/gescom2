@@ -63,6 +63,43 @@
               </div>
             </div>
 
+            <!-- Productos / Servicios -->
+
+            <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;">
+
+            <div class="px-10 sm:px-5 sm:grid sm:grid-cols-3">
+                <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.products' | translate}}</h1>
+            </div>
+            
+            <div class="flex justify-center mt-4"> <!-- Flex container para alinear a la derecha -->
+              <button type="button" mat-raised-button color="primary" (click)="agregarProducto()"
+                      class="text-white font-bold py-2 px-4 rounded">
+                Añadir Producto
+              </button>
+            </div>
+
+            <div class="w-3/4 mx-auto mt-4">
+              <div class="table w-full border-collapse">
+                <div class="table-header-group bg-gray-200">
+                  <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12">Clase del producto / servicio</div>
+                  <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12">Nombre concreto del producto / servicio</div>
+                  <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12"></div>
+                </div>
+    
+                <!-- Filas de la tabla -->
+                <div class="table-row-group">
+                  <tr *ngFor="let prod of productsDisplay">
+                    <td>{{ prod['codeProductService'] }}</td>
+                    <td>{{ prod['productName'] }}</td>
+                    <button type="button" (click)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
+                      <span class="material-icons">delete_forever</span>
+                    </button>
+                  </tr>
+                </div>
+              </div>
+            </div>
+
+
             <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;">
 
             <div class="px-10 sm:px-5 sm:grid sm:grid-cols-3">

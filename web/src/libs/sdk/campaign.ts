@@ -7,6 +7,7 @@ import { Specialist } from "@libs/sdk/specialist";
 import { AppQuerySource } from '@libs/commons';
 import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
 import { Protocol } from '@libs/sdk/protocol';
+import { ProductService } from './productService';
 
 /**
  * Default Campaign structure.
@@ -21,7 +22,7 @@ export interface Campaign extends SimpleModel, StatefulModel {
   autonomousCommunityResponsible: string;
   phaseCampaign: PhaseCampaign | null;
   protocols: Protocol[] | null;
-
+  campaignProductServiceDTOS: ProductService[] | null;
 }
 
 
@@ -62,7 +63,7 @@ export interface CampaignForm {
   createdAt?: string;
   updatedAt?: string;
   state?: number | null;
-
+  campaignProductServiceDTOS?: any[] | null;
 }
 
 

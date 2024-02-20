@@ -13,12 +13,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NamedRoutesModule } from '@libs/named-routes';
-import { InfringementListPageFilterComponent } from '@base/pages/infringement/infringement-list-page/components';
 import {
   InfringementListPageRoutingModule
 } from '@base/pages/infringement/infringement-list-page/infringement-list-page-routing.module';
 import { ProductsListComponent } from './products-list.component';
-import { ProductsDialogComponent } from './products-dialog.component';
 
 @NgModule({
   imports: [
@@ -40,8 +38,7 @@ import { ProductsDialogComponent } from './products-dialog.component';
     NamedRoutesModule
   ],
   declarations: [
-    ProductsListComponent,
-    InfringementListPageFilterComponent
+    ProductsListComponent
   ],
   exports: [
     ProductsListComponent

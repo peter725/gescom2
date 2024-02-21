@@ -7,7 +7,7 @@ import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 import { CreateProtocol, Protocol } from '@libs/sdk/protocol';
 import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infringement-dialog.component';
 import { DataSharingService } from '@base/services/dataSharingService';
-
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -23,17 +23,23 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
 
   readonly resourceName = 'protocol';
   protected override _createResourceTitle = 'pages.protocol.add';
+  cancelRedirectPath = '../../campanas/consulta';
 
   private dataSharingService: DataSharingService = inject(DataSharingService);
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
   campaignId: number | null = null; // Variable para almacenar el id de la campaña
-
+  private location: Location = inject(Location);
 
   override ngOnInit(): void {
     super.ngOnInit();
     this.subscribeToCampaignData();
+    
   }
 
+  ngAfterViewInit(): void {
+    let campaignId = this.form.get('campaignId')?.value;
+    this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../campanas/consulta';
+  }
 
   override getRedirectAfterSaveRoute(){
     return ['../consulta'];
@@ -148,7 +154,10 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     if (this.form.invalid) {
       this.notification.show({ message: 'text.other.pleaseReview' });
     } else {
+      super.setRedirectAfterSave(false);
       this.submitForm();
+
+      this.location.back();
     }
     
   }

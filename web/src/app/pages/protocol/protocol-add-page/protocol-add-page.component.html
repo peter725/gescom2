@@ -13,7 +13,7 @@
           <div>
             <mat-form-field class="w-full">
               <mat-label>{{ 'fields.code' | translate }}</mat-label>
-              <input matInput formControlName="code">
+              <input matInput formControlName="code" readonly>
             </mat-form-field>
           </div>
 
@@ -95,6 +95,7 @@
 
     <tsw-form-actions
             [saveBtnSkipConfirmation]="skipSaveConfirmation"
+            [cancelRedirectPath]="cancelRedirectPath"
             (reset)="resetForm()"
             (save)="saveForm()"
     ></tsw-form-actions>

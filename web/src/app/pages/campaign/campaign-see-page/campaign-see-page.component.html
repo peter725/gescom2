@@ -78,7 +78,7 @@
               </button>
             </div>
 
-            <div class="w-3/4 mx-auto mt-4">
+            <div class="w-3/4 mx-auto mt-4" *ngIf="productsDisplay.length > 0">
               <div class="table w-full border-collapse">
                 <div class="table-header-group bg-gray-200">
                   <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12">Clase del producto / servicio</div>
@@ -91,7 +91,7 @@
                   <tr *ngFor="let prod of productsDisplay">
                     <td>{{ prod['codeProductService'] }}</td>
                     <td>{{ prod['productName'] }}</td>
-                    <button type="button" (click)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
+                    <button type="button" tswConfirmAction (confirmed)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
                       <span class="material-icons">delete_forever</span>
                     </button>
                   </tr>
@@ -99,6 +99,7 @@
               </div>
             </div>
 
+            <div *ngIf="productsDisplay.length == 0"></div>
 
             <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;">
 

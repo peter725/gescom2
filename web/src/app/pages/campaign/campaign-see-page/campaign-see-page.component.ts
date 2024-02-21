@@ -145,7 +145,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
 
         this.campaignProductService.saveCampaignProduct(newProducts).subscribe((result: any) => {
-          console.log('El diálogo se cerró');
+          location.reload();
         });
       }
     });
@@ -157,7 +157,9 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.campaignProductService.delete(id).subscribe({
       next: () => {
         // Handle successful response
+        
         console.log('Producto eliminado correctamente');
+        location.reload();
       },
       error: (err) => {
         // Handle error

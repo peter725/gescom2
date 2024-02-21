@@ -125,6 +125,10 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     this.save();
   }
 
+  setRedirectAfterSave(value: boolean) {
+    this.redirectAfterSave = value;
+  }
+
   /**
    * Registers a route param listener and loads the current resource ID
    * into the component.

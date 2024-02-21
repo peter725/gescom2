@@ -17,7 +17,7 @@ public interface CampaignProductServiceRepository extends GESCOMRepository<Campa
     @Query(value = "SELECT h FROM CampaignProductServiceEntity h where h.id = :id ")
     Page<CampaignProductServiceEntity.SimpleProjection> findAllCampaignProductById(Pageable pageable, @Param("id") Long id);
 
-    @Query(value = "SELECT h FROM CampaignProductServiceEntity h where h.campaignId = :id ")
+    @Query(value = "SELECT h FROM CampaignProductServiceEntity h where h.campaignId = :id and h.state = 1")
     List<CampaignProductServiceEntity> findCampaignProductServiceByCampaignId(@Param("id") Long id);
 
     @Modifying

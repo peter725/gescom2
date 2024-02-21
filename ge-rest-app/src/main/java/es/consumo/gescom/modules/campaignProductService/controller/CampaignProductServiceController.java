@@ -61,9 +61,10 @@ public class CampaignProductServiceController extends AbstractCrudController<Cam
     }
     
     @DeleteMapping("/delete/deleteRelation/{id}")
-    public ResponseEntity<Object> deleteRelation(@PathVariable Long id) {
-    	boolean falloCreacion = false;
+    public ResponseEntity<CampaignProductServiceEntity> deleteRelation(@PathVariable Long id) {
+    	CampaignProductServiceEntity result = ((CampaignProductServiceService)service).deleteByIdCPSE(id);
 
-        return null;
+        return ResponseEntity.ok(result);
     }
+
 }

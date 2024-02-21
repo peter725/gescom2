@@ -26,23 +26,18 @@ import java.util.Objects;
 public class CampaignProductServiceEntity extends SimpleEntity {
 
     @Column(name = "CAMPAIGN_ID")
-    @Size(min = 1, max = 10)
     private Long campaignId;
 
     @Column(name = "CODE_PRODUCT_SERVICE")
-    @Size(min = 1, max = 10)
     private String codeProductService;
 
     @Column(name = "BK_CPNOPS")
-    @Size(min = 1, max = 10)
     private String bkCpnops;
 
     @Column(name = "CODE")
-    @Size(min = 1, max = 10)
     private String code;
 
     @Column(name = "PRODUCT_SERVICE_ID")
-    @Size(min = 1, max = 10)
     private Long productServiceId;
 
     @JsonIgnore
@@ -66,7 +61,6 @@ public class CampaignProductServiceEntity extends SimpleEntity {
     private Long updatedBy;
 
     @Column(name = "ID_STATE", nullable = false)
-    @Setter
     private Integer state = 1;
 
     @Override

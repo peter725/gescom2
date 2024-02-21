@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -62,5 +63,13 @@ public class CampaignProductServiceServiceImpl extends EntityCrudService<Campaig
             campaignProductServiceDTO.setProductName(productServiceDTO.getName());
         }
         return campaignProductServiceDTOS;
+    }
+
+    @Override
+    public CampaignProductServiceEntity deleteByIdCPSE(Long id) {
+        CampaignProductServiceEntity entity = findById(id).orElseThrow();
+        entity.setState(2);
+
+        return repository.save(entity);
     }
 }

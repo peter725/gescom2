@@ -18,4 +18,6 @@ public interface CampaignProductServiceService extends CrudService<CampaignProdu
     List<CampaignProductServiceDTO> findCampaignProductServiceByCampaignId(Long id);
 
     CampaignProductServiceEntity deleteByIdCPSE(Long id);
+
+    List<CampaignProductServiceEntity> saveRelation(List<CampaignProductServiceDTO> productos);
 }

@@ -9,10 +9,6 @@ import es.consumo.gescom.modules.campaignProductService.model.criteria.CampaignP
 import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
 import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
 import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
-import es.consumo.gescom.modules.excel.ExcelUtils;
-import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
-import es.consumo.gescom.modules.protocol.service.ProtocolService;
-import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -54,12 +48,16 @@ public class CampaignProductServiceController extends AbstractCrudController<Cam
     }
     
     @PostMapping("/saveRelation")
-    public ResponseEntity<List<CampaignProductServiceDTO>> saveRelation(@RequestBody CampaignProductServiceDTO producto){
-        boolean falloCreacion = false;
-
-        return null;
+    public ResponseEntity<List<CampaignProductServiceEntity>> saveRelation(@RequestBody List<CampaignProductServiceDTO> productos){
+        List<CampaignProductServiceEntity> result = ((CampaignProductServiceService) service).saveRelation(productos);
+        return ResponseEntity.ok(result);
     }
-    
+
+    @Override
+    protected CampaignProductServiceDTO performCreate(CampaignProductServiceDTO payload) {
+        return super.performCreate(payload);
+    }
+
     @DeleteMapping("/delete/deleteRelation/{id}")
     public ResponseEntity<CampaignProductServiceEntity> deleteRelation(@PathVariable Long id) {
     	CampaignProductServiceEntity result = ((CampaignProductServiceService)service).deleteByIdCPSE(id);

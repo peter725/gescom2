@@ -22,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,5 +72,26 @@ public class CampaignProductServiceServiceImpl extends EntityCrudService<Campaig
         entity.setState(2);
 
         return repository.save(entity);
+    }
+
+    @Override
+    public List<CampaignProductServiceEntity> saveRelation(List<CampaignProductServiceDTO> productos) {
+        List<CampaignProductServiceEntity> campaignProductServiceEntities = new ArrayList<>();
+        for(CampaignProductServiceDTO campaignProductServiceDTO : productos){
+            CampaignProductServiceEntity campaignProductServiceEntity = new CampaignProductServiceEntity();
+            campaignProductServiceEntity.setCampaignId(campaignProductServiceDTO.getCampaignId());
+            campaignProductServiceEntity.setCodeProductService(campaignProductServiceDTO.getCodeProductService());
+            campaignProductServiceEntity.setCode(campaignProductServiceDTO.getCodeProductService());
+            campaignProductServiceEntity.setProductServiceId(campaignProductServiceDTO.getProductServiceId());
+            campaignProductServiceEntity.setCreatedAt(LocalDateTime.now());
+            campaignProductServiceEntity.setUpdatedAt(LocalDateTime.now());
+            campaignProductServiceEntity.setState(1);
+
+            campaignProductServiceRepository.save(campaignProductServiceEntity);
+
+            campaignProductServiceEntities.add(campaignProductServiceEntity);
+        }
+
+        return campaignProductServiceEntities;
     }
 }

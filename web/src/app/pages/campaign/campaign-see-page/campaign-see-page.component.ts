@@ -195,6 +195,16 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.router.navigate(['/app/protocol/0']);
   }
 
+  navegarAComponenteResultados() {
+    this.campaign = this.form.value;
+
+    this.router.navigate(['/app/resultados/0'], {
+      state: {
+        campaign: this.campaign
+      }
+    });
+  }
+
   openProtocolDetailDialog() {
     const dialogRef = this.dialog.open(ProtocolDetailComponent, {
       width: '600px',

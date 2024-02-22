@@ -3,11 +3,19 @@
 <form [formGroup]="form">
   <tsw-form-container>
     <tsw-tab-panel></tsw-tab-panel>
+      
     <tsw-section-wrapper
       class="mb-2"
       headerLabel="{{'text.campaign.title' | translate }}"
       icon="visibility">
+      
       <div section-content>
+        <div class="flex justify-right mt-4 mr-3">
+          <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultados()"
+                  class="text-white font-bold py-2 px-4 rounded">
+            Cumplimentación resultados CCAA
+          </button>
+        </div>
         <div class="px-10 sm:px-5">
           <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.title' | translate}}</p>
           <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('nameCampaign')?.value }}</h3>
@@ -71,7 +79,7 @@
                 <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.products' | translate}}</h1>
             </div>
             
-            <div class="flex justify-center mt-4"> <!-- Flex container para alinear a la derecha -->
+            <div class="flex justify-center mt-4">
               <button type="button" mat-raised-button color="primary" (click)="agregarProducto()"
                       class="text-white font-bold py-2 px-4 rounded">
                 Añadir Producto

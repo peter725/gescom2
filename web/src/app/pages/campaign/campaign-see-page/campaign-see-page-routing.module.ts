@@ -1,6 +1,7 @@
 import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import { CampaignSeePageComponent } from '@base/pages/campaign/campaign-see-page/campaign-see-page.component';
+import { ResultadosComponent } from "./resultados/resultados.component";
 
 const routes: Routes = [
     {
@@ -8,7 +9,7 @@ const routes: Routes = [
         component: CampaignSeePageComponent,
         title: 'pages.campaign.see',
         data: {breadcrumb: 'generic.actions.see'}
-    }
+    },
 ];
 
 @NgModule({

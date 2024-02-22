@@ -37,4 +37,11 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
     },
         loadChildren: () => import('./').then(m => m.CampaignSeePageModule),
     },
+    {
+        path: ':id/resultados',
+        data: {
+        breadcrumb,
+    },
+        loadChildren: () => import('./').then(m => m.ResultadosModule),
+    },
 ]

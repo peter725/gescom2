@@ -31,7 +31,7 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     },
     {
       text: 'pages.campaign.list', path:'campaignManagementList'
-    }
+    },
     ]
   },
   // Protocolos

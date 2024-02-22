@@ -14,6 +14,7 @@ import { InfringementDialogComponent } from '@base/pages/infringement-dialog/inf
 import { ProductsDialogComponent } from './products-dialog/products-dialog.component';
 import { CampaignProductServiceDTO, ProductService } from '@libs/sdk/productService';
 import { CampaignProductService } from '@base/shared/utilsService/campaignProduct.service';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -197,12 +198,12 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   navegarAComponenteResultados() {
     this.campaign = this.form.value;
-
-    this.router.navigate(['/app/resultados/0'], {
+    const navigationExtras: NavigationExtras = {
       state: {
         campaign: this.campaign
       }
-    });
+    };
+    this.router.navigate([`app/campanas/${this.campaign.id}/resultados`], navigationExtras);
   }
 
   openProtocolDetailDialog() {

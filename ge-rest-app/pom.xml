@@ -169,7 +169,7 @@
             <properties>
                 <activatedProperties>docker,swagger,jdbc</activatedProperties>
                 <env.domain>docker</env.domain>
-                <baseURL>http://localhost:8080</baseURL>
+                <baseURL>http://localhost:9080</baseURL>
                 <pathLogs>GESCO.log</pathLogs>
                 <config.files>conf</config.files>
             </properties>

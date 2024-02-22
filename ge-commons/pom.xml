@@ -15,7 +15,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <description>Juntas arbitrales Commons Module</description>
+    <description>GESCOM Commons Module</description>
 
     <properties>
         <maven.test.skip>true</maven.test.skip>

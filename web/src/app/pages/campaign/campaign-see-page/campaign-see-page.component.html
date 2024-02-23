@@ -86,7 +86,7 @@
               </button>
             </div>
 
-            <div class="w-3/4 mx-auto mt-4" *ngIf="productsDisplay.length > 0">
+            <div class="w-3/4 mx-auto mt-4" *ngIf="productsDisplay && productsDisplay.length > 0">
               <div class="table w-full border-collapse">
                 <div class="table-header-group bg-gray-200">
                   <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12">Clase del producto / servicio</div>
@@ -107,7 +107,7 @@
               </div>
             </div>
 
-            <div *ngIf="productsDisplay.length == 0"></div>
+            <div *ngIf="!productsDisplay || productsDisplay.length == 0"></div>
 
             <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;">
 

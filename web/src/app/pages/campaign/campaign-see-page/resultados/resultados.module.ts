@@ -15,6 +15,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { NamedRoutesModule } from '@libs/named-routes';
 import { ResultadosComponent } from './resultados.component';
 import { ResultadosRoutingModule } from './resultados-routing.module';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -33,7 +36,10 @@ import { ResultadosRoutingModule } from './resultados-routing.module';
     MatButtonModule,
     MatIconModule,
     NamedRoutesModule,
-    ResultadosRoutingModule
+    ResultadosRoutingModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatCardModule
   ],
   declarations: [
     ResultadosComponent

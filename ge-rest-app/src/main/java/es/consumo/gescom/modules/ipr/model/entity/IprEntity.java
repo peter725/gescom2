@@ -5,13 +5,11 @@ import es.consumo.gescom.commons.db.entity.SimpleEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,17 +17,23 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "ambit")
-public class AmbitEntity extends SimpleEntity {
+@Table(name = "ipr")
+public class IprEntity extends SimpleEntity {
 
-    @Column(name = "AMBIT")
-    @Size(min = 1, max = 10)
+    @Column(name = "CODE")
+    private String code;
+
+    @Column(name = "PROTOCOL_CODE")
+    private String protocolCode;
+
+    @Column(name = "NAME")
     private String name;
 
-    @JsonIgnore
-    @CreatedDate
-    @Column(name = "CREATED_AT", nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "CAMPAIGN_ID")
+    private Long campaignId;
+
+    @Column(name = "PROTOCOL_ID")
+    private Long protocolId;
 
     @JsonIgnore
     @LastModifiedDate
@@ -55,7 +59,7 @@ public class AmbitEntity extends SimpleEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        AmbitEntity that = (AmbitEntity) o;
+        IprEntity that = (IprEntity) o;
         return Objects.equals(getId(), that.getId()) && Objects.equals(name, that.name);
     }
 

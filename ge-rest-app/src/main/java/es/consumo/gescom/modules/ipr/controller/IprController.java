@@ -5,10 +5,10 @@ import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
-import es.consumo.gescom.modules.ambit.model.criteria.AmbitCriteria;
-import es.consumo.gescom.modules.ambit.model.dto.AmbitDTO;
-import es.consumo.gescom.modules.ambit.model.entity.AmbitEntity;
-import es.consumo.gescom.modules.ambit.service.AmbitService;
+import es.consumo.gescom.modules.ipr.model.criteria.IprCriteria;
+import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
+import es.consumo.gescom.modules.ipr.model.entity.IprEntity;
+import es.consumo.gescom.modules.ipr.service.IprService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(ApiEndpoints.V1_API + "/ambit")
-@Tag(name = "Ambit controller")
-public class AmbitController extends AbstractCrudController<AmbitEntity, AmbitDTO, Long, FilterCriteria> {
+@RequestMapping(ApiEndpoints.V1_API + "/ipr")
+@Tag(name = "IPR controller")
+public class IprController extends AbstractCrudController<IprEntity, IprDTO, Long, FilterCriteria> {
 
     @Autowired
-    public AmbitController(AmbitService service, DataConverter<AmbitEntity, AmbitDTO> dataConverter) {
+    public IprController(IprService service, DataConverter<IprEntity, IprDTO> dataConverter) {
         super(service, dataConverter);
     }
 
     @GetMapping("/data/{id}")
-    public ResponseEntity<Page<AmbitEntity.SimpleProjection>> findListByCriteria(AmbitCriteria ambitCriteria, @PathVariable  Long id) {
-        Page<AmbitEntity.SimpleProjection> result =
-                ((AmbitService) service).findAllAmbitById(new CriteriaWrapper<>(ambitCriteria), id);
+    public ResponseEntity<Page<IprEntity.SimpleProjection>> findListByCriteria(IprCriteria iprCriteria, @PathVariable  Long id) {
+        Page<IprEntity.SimpleProjection> result =
+                ((IprService) service).findAllIprById(new CriteriaWrapper<>(iprCriteria), id);
         return ResponseEntity.ok(result);
     }
 }

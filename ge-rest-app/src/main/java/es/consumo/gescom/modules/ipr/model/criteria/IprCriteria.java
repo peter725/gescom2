@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AmbitCriteria extends FilterCriteria {
+public class IprCriteria extends FilterCriteria {
     private Long id;
 }

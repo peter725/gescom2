@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AmbitDTO implements Serializable, LongIdModel{
+public class IprDTO implements Serializable, LongIdModel{
 
     private Long id;
     private String name;

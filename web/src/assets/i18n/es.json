@@ -602,6 +602,20 @@
     "helpModule": {
       "title": "Ayuda",
       "list": "Listado de ficheros"
+    },
+    "results": {
+      "title": "Resultados",
+      "protocolo": "Protocolo",
+      "producto": "Producto",
+      "ca": "C.A.",
+      "ano": "Año",
+      "numEstablecimientos": "Nº de establecimientos",
+      "numExistentes": "Existentes",
+      "numControlados": "Controlados",
+      "tProductos": "Total de productos / servicios",
+      "tProdControlados": "Controlados",
+      "tProdCorrectos": "Correctos",
+      "tProdIncorrectos": "Incorrectos"
     }
   }
 }

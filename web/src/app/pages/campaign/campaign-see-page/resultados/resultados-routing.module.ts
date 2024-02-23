@@ -6,7 +6,7 @@ const routes: Routes = [{
   path: '',
   component: ResultadosComponent,
   title: 'pages.user.add',
-  data: { },
+  data: {breadcrumb: 'pages.results.title'}
 }];
 
 @NgModule({

@@ -31,3 +31,6 @@ bin/
 .DS_Store
 ja-auth-app/src/main/resources/config/application-jdbc.properties
 ja-rest-app/src/main/resources/config/application-jdbc.properties
+@pathLogs@.2024-02-14.0.gz
+@pathLogs@
+@pathLogs@

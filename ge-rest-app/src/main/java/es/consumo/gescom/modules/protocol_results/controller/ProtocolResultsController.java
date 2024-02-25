@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/protocol_results")
-@Tag(name = "SumProtocol controller")
+@Tag(name = "ProtocolResults controller")
 public class ProtocolResultsController extends AbstractCrudController<ProtocolResultsEntity, ProtocolResultsDTO, Long, FilterCriteria> {
 
     @Autowired

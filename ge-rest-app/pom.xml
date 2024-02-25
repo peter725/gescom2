@@ -169,7 +169,7 @@
             <properties>
                 <activatedProperties>docker,swagger,jdbc</activatedProperties>
                 <env.domain>docker</env.domain>
-                <baseURL>http://localhost:9080</baseURL>
+                <baseURL>http://localhost:8080</baseURL>
                 <pathLogs>GESCO.log</pathLogs>
                 <config.files>conf</config.files>
             </properties>
@@ -181,7 +181,7 @@
                 <env.domain>dev</env.domain>
                 <baseURL>http://micapps01des.consumo.gob.es:8080</baseURL>
                 <pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
-                <config.files>/documentospro/properties/GESCOM</config.files>
+                <config.files>/documentospro/properties/GESCO</config.files>
             </properties>
         </profile>
         <profile>
@@ -191,7 +191,7 @@
                 <env.domain>pre</env.domain>
                 <baseURL>http://micapps01pre.consumo.gob.es:8080</baseURL>
                 <pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
-                <config.files>/documentospro/properties/GESCOM</config.files>
+                <config.files>/documentospro/properties/GESCO</config.files>
             </properties>
         </profile>
     </profiles>

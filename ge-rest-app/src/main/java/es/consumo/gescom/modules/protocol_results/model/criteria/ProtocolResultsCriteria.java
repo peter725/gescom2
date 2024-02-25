@@ -1,4 +1,4 @@
-package es.consumo.gescom.modules.sumProtocol.model.criteria;
+package es.consumo.gescom.modules.protocol_results.model.criteria;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import es.consumo.gescom.commons.dto.FilterCriteria;
@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SumProtocolCriteria extends FilterCriteria {
+public class ProtocolResultsCriteria extends FilterCriteria {
     private Long id;
 }

@@ -1,4 +1,4 @@
-package es.consumo.gescom.modules.sumProtocol.model.entity;
+package es.consumo.gescom.modules.protocol_results.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
@@ -19,8 +19,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "sum_protocol")
-public class SumProtocolEntity extends SimpleEntity {
+@Table(name = "protocol_results")
+public class ProtocolResultsEntity extends SimpleEntity {
 
     @Column(name = "AUTONOMOUS_COMMUNITY_COUNTRY_CODE")
     @Size(min = 1, max = 10)
@@ -72,7 +72,7 @@ public class SumProtocolEntity extends SimpleEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        SumProtocolEntity that = (SumProtocolEntity) o;
+        ProtocolResultsEntity that = (ProtocolResultsEntity) o;
         return Objects.equals(getId(), that.getId());
     }
 

@@ -147,6 +147,34 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         return getProtocolDetailDTO(questionDetailDTOList, protocol, campaignEntity, participants);
     }
 
+    @Override
+    public List<QuestionsDTO> findProtocolByIdOrCode(ProtocolDTO protocolDTO) {
+
+        List<QuestionsDTO> questionDetailDTOList = new ArrayList<>();
+        if(protocolDTO.getId() != null){
+            List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
+            questionsEntities.forEach( questionsEntity -> {
+                QuestionsDTO questionsDTO = new QuestionsDTO();
+                questionsDTO.setQuestion(questionsEntity.getQuestion());
+                questionsDTO.setCodeQuestion(questionsEntity.getCodeQuestion());
+                questionDetailDTOList.add(questionsDTO);
+            });
+        }else if(protocolDTO.getCode() != null){
+            Long idConsulta = protocolRepository.findProtocoloByCode(protocolDTO.getCode());
+
+            List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(idConsulta);
+            questionsEntities.forEach( questionsEntity -> {
+                QuestionsDTO questionsDTO = new QuestionsDTO();
+                questionsDTO.setQuestion(questionsEntity.getQuestion());
+                questionsDTO.setCodeQuestion(questionsEntity.getCodeQuestion());
+                questionDetailDTOList.add(questionsDTO);
+            });
+
+        }
+
+        return questionDetailDTOList;
+    }
+
     private static ProtocolDetailDTO getProtocolDetailDTO(List<QuestionDetailDTO> questionDetailDTOList, Optional<ProtocolEntity> protocol, CampaignEntity campaignEntity, String participants) {
         ProtocolDetailDTO result = new ProtocolDetailDTO();
         result.setQuestions(questionDetailDTOList);

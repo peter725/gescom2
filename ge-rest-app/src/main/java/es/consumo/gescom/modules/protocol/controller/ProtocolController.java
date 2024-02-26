@@ -9,6 +9,7 @@ import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDetailDTO;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
+import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,6 +61,11 @@ public class ProtocolController extends AbstractCrudController<ProtocolEntity, P
     @GetMapping("/protocolo/{id}")
     protected ProtocolDetailDTO findListByProtocol(@PathVariable Long id) {
         return ((ProtocolService) service).findProtocolById(id);
+    }
+
+    @GetMapping("/code")
+    protected List<QuestionsDTO> findListByProtocol(ProtocolDTO protocolDTO) {
+        return ((ProtocolService) service).findProtocolByIdOrCode(protocolDTO);
     }
 
 

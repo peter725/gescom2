@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IprRepository extends GESCOMRepository<IprEntity, Long> {
 
-    @Query(value = "SELECT h FROM CountryEntity h where h.id = :id ")
+    @Query(value = "SELECT h FROM IprEntity h where h.id = :id ")
     Page<IprEntity.SimpleProjection> findAllIprById(Pageable pageable, @Param("id") Long id);
 
 }

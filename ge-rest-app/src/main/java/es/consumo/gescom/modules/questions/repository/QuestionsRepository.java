@@ -19,9 +19,6 @@ public interface QuestionsRepository extends GESCOMRepository<QuestionsEntity, L
     Page<QuestionsEntity.SimpleProjection> findAllQuestionsById(Pageable pageable, @Param("id") Long id);
 
     @Query(value = "SELECT h FROM QuestionsEntity h where h.protocolCampaingId.id = :id ")
-    Page<QuestionsEntity> findAllQuestionsByProtocolCampaingId(Pageable pageable, Long id);
-
-    @Query(value = "SELECT h FROM QuestionsEntity h where h.protocolCampaingId.id = :id ")
     List<QuestionsEntity> findAllQuestionsByProtocolId(Long id);
 
     @Query(value = "SELECT h FROM QuestionsEntity h where h.protocolCampaignCode = :code ")

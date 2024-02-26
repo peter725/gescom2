@@ -64,7 +64,7 @@ public class ProtocolController extends AbstractCrudController<ProtocolEntity, P
     }
 
     @GetMapping("/code")
-    protected List<QuestionsDTO> findListByProtocol(ProtocolDTO protocolDTO) {
+    protected List<QuestionsDTO> findListByProtocol(@RequestBody ProtocolDTO protocolDTO) {
         return ((ProtocolService) service).findProtocolByIdOrCode(protocolDTO);
     }
 

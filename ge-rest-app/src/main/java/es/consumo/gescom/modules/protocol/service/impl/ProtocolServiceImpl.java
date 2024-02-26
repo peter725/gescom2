@@ -159,19 +159,15 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                 questionsDTO.setCodeQuestion(questionsEntity.getCodeQuestion());
                 questionDetailDTOList.add(questionsDTO);
             });
-        }else if(protocolDTO.getCode() != null){
-            Long idConsulta = protocolRepository.findProtocoloByCode(protocolDTO.getCode());
-
-            List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(idConsulta);
+        }else {
+            List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolCode(protocolDTO.getCode());
             questionsEntities.forEach( questionsEntity -> {
                 QuestionsDTO questionsDTO = new QuestionsDTO();
                 questionsDTO.setQuestion(questionsEntity.getQuestion());
                 questionsDTO.setCodeQuestion(questionsEntity.getCodeQuestion());
                 questionDetailDTOList.add(questionsDTO);
             });
-
         }
-
         return questionDetailDTOList;
     }
 

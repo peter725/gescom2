@@ -17,7 +17,7 @@
             I.P.R
           </button>
 
-          <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultados()"
+          <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)"
                   class="text-white font-bold py-2 px-4 rounded">
             Cumplimentación resultados CCAA
           </button>
@@ -158,7 +158,46 @@
               </div>
             </div>
 
-            <button mat-button (click)="openProtocolDetailDialog()">Protocolo</button>
+            <!-- RESULTADOS CCAA -->
+
+            <div class="px-10 sm:px-5 sm:grid sm:grid-cols-3">
+              <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.resultados' | translate}}</h1>
+            </div>
+
+            <div class="max-w-screen-lg mx-auto p-4 border border-solid border-gray-500 bg-gray-400 rounded-md mb-8">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-semibold text-gray-900">Resultados</h3>
+              </div>
+              <div class="border-b border-gray-300 mb-4"></div>
+              <div class="space-y-4">
+                <div *ngFor="let resultado of resultsDisplay; let i = index"
+                     [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
+                     class="justify-between items-center p-4 shadow-md rounded-lg">
+                  <div class="flex">
+                    <p class="flex-1">
+                      <!-- {{ getAutonomousCommunityName(resultado.autonomousCommunityCountryCode) }} -->
+                      [ {{ resultado.autonomousCommunityCountryName }} ]
+                    </p>
+                    <div>
+                      <button mat-button (click)="navegarAComponenteResultados(resultado)" >
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                 
+                  <p class="flex-1">
+                    <!-- {{ getProductServiceName(resultado.productServiceId) }} -->
+                    {{ resultado.protocolName }}
+                  </p>
+                  <p class="flex-1">
+                    <!-- {{ getProtocolName(resultado.protocolId) }} -->
+                    {{ resultado.productServiceName }}
+                  </p>
+                  
+                </div>
+              </div>
+            </div>
+
           </dl>
 
         </div>

@@ -4,7 +4,6 @@ import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.modules.autonomousCommunityCountry.service.AutonomousCommunityCountryService;
-import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEntity;
 import es.consumo.gescom.modules.productServices.service.ProductServiceService;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
 import es.consumo.gescom.modules.protocol_results.model.converter.ProtocolResultsConverter;
@@ -13,6 +12,9 @@ import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsDTO;
 import es.consumo.gescom.modules.protocol_results.model.entity.ProtocolResultsEntity;
 import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
 import es.consumo.gescom.modules.protocol_results.service.ProtocolResultsService;
+import es.consumo.gescom.modules.totalProtocolResults.model.dto.TotalProtocolResultsDTO;
+import es.consumo.gescom.modules.totalProtocolResults.model.entity.TotalProtocolResultsEntity;
+import es.consumo.gescom.modules.totalProtocolResults.repository.TotalProtocolResultsRepository;
 import es.consumo.gescom.modules.totalProtocolResults.service.TotalProtocolResultsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +33,7 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
     private ProtocolResultsRepository protocolResultsRepository;
 
     @Autowired
+    private TotalProtocolResultsRepository totalProtocolResultsRepository;
     private TotalProtocolResultsService totalProtocolResultsService;
 
     @Autowired
@@ -51,6 +54,26 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
     }
 
     @Override
+    public ProtocolResultsEntity saveProtocolResults(ProtocolResultsDTO protocolResults) {
+        ProtocolResultsEntity protocolResultsEntity = protocolResultsConverter.convertToEntity(protocolResults);
+        ProtocolResultsEntity protocolResultsEntitySave = protocolResultsRepository.save(protocolResultsEntity);
+
+        List<TotalProtocolResultsDTO> totalProtocolResultsDTOS = protocolResults.getTotalProtocolResultsDTOS();
+        totalProtocolResultsDTOS.forEach(totalProtocolResults -> {
+            TotalProtocolResultsEntity totalProtocolResultsEntity = new TotalProtocolResultsEntity();
+            totalProtocolResultsEntity.setCcaaRen(totalProtocolResults.getCcaaRen());
+            totalProtocolResultsEntity.setCcaaRep(totalProtocolResults.getCcaaRep());
+            totalProtocolResultsEntity.setCcaaRes(totalProtocolResults.getCcaaRes());
+            totalProtocolResultsEntity.setCode(totalProtocolResults.getCode());
+            totalProtocolResultsEntity.setProtocolResultsCode(totalProtocolResults.getProtocolResultsCode());
+            totalProtocolResultsEntity.setCodeQuestion(totalProtocolResults.getCodeQuestion());
+            totalProtocolResultsEntity.setProtocolResultsId(protocolResultsEntitySave.getId());
+
+            totalProtocolResultsRepository.save(totalProtocolResultsEntity);
+        });
+
+        return protocolResultsEntitySave;
+    }
     public List<ProtocolResultsDTO> findProtocolResultsByCampaignId(Long campaignId) {
         List<ProtocolResultsEntity> protocolResultsEntities = protocolResultsRepository.findAllByCampaignId(campaignId);
         List<ProtocolResultsDTO> protocolResultsDTOS = protocolResultsConverter.convertToModel(protocolResultsEntities);
@@ -82,6 +105,5 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
 
         return protocolResultsDTOS;
     }
-
 
 }

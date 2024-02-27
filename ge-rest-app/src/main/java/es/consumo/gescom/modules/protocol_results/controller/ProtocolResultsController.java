@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/protocol_results")
-@Tag(name = "ProtocolResults controller")
+@Tag(name = "Protocol Results controller")
 public class ProtocolResultsController extends AbstractCrudController<ProtocolResultsEntity, ProtocolResultsDTO, Long, FilterCriteria> {
 
     @Autowired
@@ -44,9 +44,8 @@ public class ProtocolResultsController extends AbstractCrudController<ProtocolRe
     }
     
     @PostMapping("/saveprotocolresults")
-    public ResponseEntity<List<ProtocolResultsEntity>> saveProtocolResults(@RequestBody ProtocolResultsDTO protocolResults){
-//        List<CampaignProductServiceEntity> result = ((CampaignProductServiceService) service).saveRelation(productos);
-//        return ResponseEntity.ok(result);
-    	return null;
+    public ResponseEntity<ProtocolResultsEntity> saveProtocolResults(@RequestBody ProtocolResultsDTO protocolResults){
+        ProtocolResultsEntity result = ((ProtocolResultsService) service).saveProtocolResults(protocolResults);
+        return ResponseEntity.ok(result);
     }
 }

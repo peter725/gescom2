@@ -30,6 +30,12 @@ export class ResultadosComponent implements OnInit{
   readonly resourceName = 'protocol';
   cancelRedirectPath = '../../campanas/consulta';
 
+  codNumExistentes: string = 'DC1';
+  codNumControlados: string = 'DC8';
+  codProdControlados: string = 'DC9';
+  codProdCorrectos: string = 'DC10';
+  codProdIncorrectos: string = 'DC11';
+
   private dataSharingService: DataSharingService = inject(DataSharingService);
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
   campaignId: number | null = null; // Variable para almacenar el id de la campaña
@@ -39,11 +45,13 @@ export class ResultadosComponent implements OnInit{
   productosList: CampaignProductServiceDTO[] = [];
   caList: AutonomousCommunity[] = [];
 
-  protocoloSelected: Protocol | undefined;
-  productoSelected: CampaignProductServiceDTO | undefined;
-  caSelected: AutonomousCommunity | undefined;
+  protocoloSelected: any;
+  productoSelected: any;
+  caSelected: any;
 
   preguntasProtocolo: Question [] = [];
+
+  resultadoSelected: ProtocolResults | undefined = undefined;
 
   editForm1 = this.fb.group({
     id: [],
@@ -87,8 +95,10 @@ export class ResultadosComponent implements OnInit{
       const navigation = this.router.getCurrentNavigation();
       const state = navigation!.extras.state as {
         campaign: any,
+        resultadoSelected: any
     }
     this.campaign = state.campaign;
+    this.resultadoSelected = state.resultadoSelected;
   }
 
   ngOnInit(): void {
@@ -96,6 +106,56 @@ export class ResultadosComponent implements OnInit{
     console.log("Prueba");
     this.updateForm1(this.campaign);
     this.loadOptions(this.campaign);
+    if (this.resultadoSelected) {
+      this.loadResultados(this.resultadoSelected);
+    }
+  }
+
+  loadResultados(resultadoSelected: ProtocolResults) {
+    this.protocoloSelected = this.getProtocolo(resultadoSelected.protocolId);
+    this.productoSelected = this.getProductService(resultadoSelected.productServiceId);
+    this.caSelected = this.getAutonomousCommunity(resultadoSelected.autonomousCommunityCountryCode);
+    this.preguntasProtocolo = this.protocoloSelected?.question;
+
+    this.editForm1.patchValue({
+      protocolo: this.protocoloSelected,
+      producto: this.productoSelected,
+      ca: this.caSelected,
+    });
+
+    resultadoSelected.totalProtocolResultsDTOS?.forEach((protocolResult) => {
+      if (protocolResult.codeQuestion === this.codNumExistentes) {
+        this.editForm2.patchValue({
+          numExistentes: protocolResult.ccaa_res
+        });
+      } else if (protocolResult.codeQuestion === this.codNumControlados) {
+        this.editForm2.patchValue({
+          numControlados: protocolResult.ccaa_res
+        });
+      } else if (protocolResult.codeQuestion === this.codProdControlados) {
+        this.editForm2.patchValue({
+          totalProdControlados: protocolResult.ccaa_res
+        });
+      } else if (protocolResult.codeQuestion === this.codProdCorrectos) {
+        this.editForm2.patchValue({
+          totalProdCorrectos: protocolResult.ccaa_res
+        });
+      } else if (protocolResult.codeQuestion === this.codProdIncorrectos) {
+        this.editForm2.patchValue({
+          totalProdIncorrectos: protocolResult.ccaa_res
+        });
+      } else {
+
+        this.preguntasProtocolo.forEach((question) => {
+          if (question.orderQuestion === protocolResult.codeQuestion) {
+            // Asignar el resultado a la pregunta
+            question.numResponseSi = protocolResult.ccaa_res;
+            question.numResponseNo = protocolResult.ccaa_ren;
+            question.numResponseNoProcede = protocolResult.ccaa_rep;
+          }
+        });
+      }
+    });
   }
 
   protected updateForm1(campania: CampaignForm): void {
@@ -116,12 +176,23 @@ export class ResultadosComponent implements OnInit{
     }
   }
 
+  getAutonomousCommunity(code: any): any {
+    return this.caList?.find(participant => participant.id === code);
+  }
+
+  getProductService(id: any): any {
+    return this.productosList?.find(producto => producto.id === id);
+  }
+
+  getProtocolo(id: any): any {
+    return this.protocolosList?.find(protocolo => protocolo.id === id);
+  }
+
   save() {
 
     let preguntas: TotalProtocolResults[] = [];
     let totalProtocoloResults: TotalProtocolResults;
     this.preguntasProtocolo.forEach(preg => {
-      if (preg.response == 'S') {
         totalProtocoloResults = {
           id: undefined,
           ccaa_ren: preg.numResponseNo,
@@ -129,13 +200,18 @@ export class ResultadosComponent implements OnInit{
           ccaa_res: preg.numResponseSi,
           code: null, 
           protocolResultsCode: null,
-          codeQuestion: null, // poner el numero de pregunta
+          codeQuestion: preg.orderQuestion?.toString(), // poner el numero de pregunta
           productServiceId: this.productoSelected?.id
         };
         preguntas.push(totalProtocoloResults);
-      }
-
     });
+
+    preguntas.push(this.buildResultsTotales(this.editForm1.get('numExistentes')?.value!, this.codNumExistentes));
+    preguntas.push(this.buildResultsTotales(this.editForm1.get('numControlados')?.value!, this.codNumControlados));
+    preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdControlados')?.value!, this.codProdControlados));
+    preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdCorrectos')?.value!, this.codProdCorrectos));
+    preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdIncorrectos')?.value!, this.codProdIncorrectos));
+
 
     let protocolResults: ProtocolResults = {
       id: undefined,
@@ -146,7 +222,7 @@ export class ResultadosComponent implements OnInit{
       campaignId: this.protocoloSelected?.campaignId,
       productServiceId: this.productoSelected?.id,
       protocolId: this.protocoloSelected?.id,
-      totalProtocolResults: preguntas
+      totalProtocolResultsDTOS: preguntas
     };
 
     this.protocolResultsService.saveResults(protocolResults).subscribe((result: any) => {
@@ -154,6 +230,21 @@ export class ResultadosComponent implements OnInit{
     });
 
     this.editForm1;
+  }
+
+  buildResultsTotales(numTotal: number, codigo: string): TotalProtocolResults {
+    let result: TotalProtocolResults;
+      result = {
+        id: undefined,
+        ccaa_ren: null,
+        ccaa_rep: null,
+        ccaa_res: numTotal,
+        code: null, 
+        protocolResultsCode: null,
+        codeQuestion: codigo, // poner el numero de pregunta
+        productServiceId: this.productoSelected?.id
+      };
+      return result;
   }
 
   onStepChange(event: any): void {

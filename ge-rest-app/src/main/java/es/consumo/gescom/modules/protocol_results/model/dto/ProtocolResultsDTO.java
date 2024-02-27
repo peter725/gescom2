@@ -37,6 +37,7 @@ public class ProtocolResultsDTO implements Serializable, LongIdModel{
     private Long protocolId;
     private String protocolCode;
     private ProtocolDTO protocolDTO;
+    private String protocolName;
 
     private String Code;
 

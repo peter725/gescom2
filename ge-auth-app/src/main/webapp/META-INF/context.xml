@@ -1,6 +1,6 @@
 <Context reloadable="true">
-    <Parameter name="PATH_REPO" value="C:/Users/angel/consumo/"/>
+    <Parameter name="PATH_REPO" value="C:/documentospro/properties/GESCO"/>
     <!--...-->
-    <ResourceLink name="jdbc/GESCOM" global="jdbc/GESCOM" type="javax.sql.DataSource"/>
+    <ResourceLink name="jdbc/GESCO" global="jdbc/GESCO" type="javax.sql.DataSource"/>
     <!--...-->
 </Context>

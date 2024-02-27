@@ -36,4 +36,14 @@ public class AutonomousCommunityCountryServiceImpl extends EntityCrudService<Aut
         return ((AutonomousCommunityCountryRepository) repository).findAllAutonomousCommunityCountryByName(wrapper.getCriteria().toPageable(), id);
     }
 
+    @Override
+    public AutonomousCommunityCountryEntity findByCode(String code) {
+        return autonomousCommunityRepository.findByCode(code);
+    }
+
+    @Override
+    public AutonomousCommunityCountryEntity findCCAAById(Long id) {
+        return autonomousCommunityRepository.findCCAAById(id);
+    }
+
 }

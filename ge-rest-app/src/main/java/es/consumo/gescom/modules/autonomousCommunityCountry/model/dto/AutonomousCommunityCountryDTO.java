@@ -15,5 +15,8 @@ public class AutonomousCommunityCountryDTO implements Serializable {
 
     private Long id;
     private String name;
+    private String code;
+    private String countryCode;
+    private Long countryId;
     
 }

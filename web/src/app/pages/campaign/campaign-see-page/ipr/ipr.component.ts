@@ -11,6 +11,11 @@ import { CampaignIpr } from '@libs/sdk/campaign';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { ProtocolQuestionDialogComponent } from '@base/pages/protocolQuestion-dialog/protocolQuestion-dialog.component';
 
+interface RequestConfig {
+  resourceName: string;
+  pathParams?: any;
+}
+
 @Component({
   selector: 'tsw-ipr',
   templateUrl: './ipr.component.html',
@@ -330,6 +335,42 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     };
 
     console.log(jsonData);
+
+    const config: RequestConfig = {
+      resourceName: 'ipr', // Nombre del recurso a crear
+      // Puedes proporcionar parámetros de ruta si es necesario
+    };
+
+    this.crudService.create(jsonData, config)
+  .subscribe(
+    response => {
+      console.log('IPR creado exitosamente:', response);
+      // Maneja la respuesta según sea necesario
+    },
+    error => {
+      console.error('Error al crear IPR:', error);
+      // Maneja el error según sea necesario
+    }
+  );
+
+    // this.crudService.create({
+    //   fichaProyecto: {
+    //     id: Number(this.fichaProyectoId)
+    //   },
+    //   medidaActuacion: {
+    //     id: this.form.get('medidaActuacionId')?.value.id,
+    //     ejeArea: {
+    //       id: this.form.get('ejeAreaId')?.value.id,
+    //       pacto: {
+    //         id: 1
+    //       }
+    //     }
+    //   },
+    //   activo: true
+    // }, {resourceName: this.resourceName})
+    // .subscribe(() => {
+    //     window.location.reload()
+    // });
 
     
 

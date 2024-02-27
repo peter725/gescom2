@@ -66,6 +66,7 @@ export const crudOperationsStorageFactory = () => {
     templateManagement: { type: HttpOperationType.CRUD, path: `/sample_templates` },
     productServices: { type: HttpOperationType.CRUD, path: `/productServices` },
     campaignProductService: { type: HttpOperationType.CRUD, path: `/campaignProductService` },
+    ipr: { type: HttpOperationType.CRUD, path: `/ipr` },
   };
 
   const userOperations: OperationsDefSrc = {

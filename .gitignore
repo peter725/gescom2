@@ -34,3 +34,12 @@ ja-rest-app/src/main/resources/config/application-jdbc.properties
 @pathLogs@.2024-02-14.0.gz
 @pathLogs@
 @pathLogs@
+web/src/environments/environment.ts
+ge-auth-app/src/main/resources/config/application-docker.properties
+ge-auth-app/src/main/resources/config/application-local.properties
+ge-rest-app/src/main/resources/config/application-local.properties
+web/src/environments/environment.ts
+web/src/environments/environment.dev.ts
+web/src/environments/environment.dev.ts
+ge-auth-app/src/main/resources/config/application-docker.properties
+ge-auth-app/src/main/resources/config/application-local.properties

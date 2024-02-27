@@ -11,11 +11,11 @@ export const environment: EnvironmentData = {
   baseHref: '',
   srv: {
     app: {
-      host: 'http://localhost:9080/gescom-rest-app',
+      host: 'http://localhost:8080/gescom-rest-app',
       api: '/api/v1',
     },
     auth: {
-      host: 'http://localhost:9080/gescom-auth-app',
+      host: 'http://localhost:8080/gescom-auth-app',
       api: '/api/v1',
       username:'GESCOM',
       password:'GESCOM'

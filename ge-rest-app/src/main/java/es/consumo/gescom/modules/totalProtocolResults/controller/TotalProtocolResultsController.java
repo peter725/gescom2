@@ -34,4 +34,7 @@ public class TotalProtocolResultsController extends AbstractCrudController<Total
                 ((TotalProtocolResultsService) service).findAllSumProtocolById(new CriteriaWrapper<>(ambitCriteria), id);
         return ResponseEntity.ok(result);
     }
+    
+    
+    
 }

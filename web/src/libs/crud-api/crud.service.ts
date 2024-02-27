@@ -7,6 +7,8 @@ export interface CrudService<T, ID> {
   findAny<Result = T>(config: RequestConfig): Observable<Result>;
 
   findAll<Result = T>(config: RequestConfig): Observable<Page<Result>>;
+  
+  findAllFilter<Result = T>(id: ID, config: RequestConfig): Observable<Page<Result>>;
 
   findById<Result = T>(id: ID, config: RequestConfig): Observable<Result>;
 

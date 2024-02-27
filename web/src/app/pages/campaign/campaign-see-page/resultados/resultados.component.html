@@ -96,7 +96,7 @@
         <form [formGroup]="editForm2">
             <mat-card>
                 <mat-card-header>
-                    <mat-card-subtitle class="header-titles">{{ 'pages.results.numEstablecimientos' | translate }}</mat-card-subtitle>
+                    <mat-card-subtitle>{{ 'pages.results.numEstablecimientos' | translate }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
                     <div class="grid grid-cols-6 gap-1.5">
@@ -119,7 +119,7 @@
 
             <mat-card class="mt-4">
                 <mat-card-header>
-                    <mat-card-subtitle class="header-titles">{{ 'pages.results.tProductos' | translate }}</mat-card-subtitle>
+                    <mat-card-subtitle>{{ 'pages.results.tProductos' | translate }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
                     <div class="grid grid-cols-6 gap-1.5">
@@ -196,20 +196,52 @@
             <div class="w-3/4 mx-auto mt-4" *ngIf="preguntasProtocolo && preguntasProtocolo.length > 0">
                 <div class="table w-full border-collapse">
                   <div class="table-header-group bg-gray-200">
-                    <div class="table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
-                    <div class="table-cell font-semibold p-2 border border-gray-300 w-5/12">Pregunta</div>
-                    <div class="table-cell font-semibold p-2 border border-gray-300 w-2/12">Si</div>
-                    <div class="table-cell font-semibold p-2 border border-gray-300 w-2/12">No</div>
-                    <div class="table-cell font-semibold p-2 border border-gray-300 w-2/12">No Procede</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Si</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede</div>
                   </div>
       
                   <!-- Filas de la tabla -->
-                  <!-- <div class="table-row-group">
-                    <tr *ngFor="let prod of productsDisplay">
-                      <td>{{ prod['codeProductService'] }}</td>
-                      <td>{{ prod['productName'] }}</td>
+                  <div class="table-row-group">
+                    <tr *ngFor="let preg of preguntasProtocolo">
+                        <ng-container *ngIf="preg.response == 'N'">
+                            <!-- Pregunta con respuesta 'N' -->                        
+                                <td class="p-4 bg-gray-200">
+                                    {{ preg['codeQuestion'] }}
+                                    
+                                </td>
+                                <td  class="p-4 bg-gray-200">
+                                    {{ preg['question'] }}
+                                </td>
+                                <td class="p-4 bg-gray-200"></td>
+                                <td class="p-4 bg-gray-200"></td>
+                                <td class="p-4 bg-gray-200"></td>
+                        </ng-container>
+
+                        <ng-container *ngIf="preg.response == 'S'">
+                            <!-- Pregunta con respuesta 'S' -->                        
+                                <td class="p-4">
+                                    {{ preg['codeQuestion'] }}
+                                    
+                                </td>
+                                <td  class="p-4">
+                                    {{ preg['question'] }}
+                                </td>
+                                <td class="p-4">
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" />
+                                </td>
+                                <td class="p-4">
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" />
+                                </td>
+                                <td class="p-4">
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" />
+                                </td>
+                        </ng-container>
+                      
                     </tr>
-                  </div> -->
+                  </div>
                 </div>
               </div>
 

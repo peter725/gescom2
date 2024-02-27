@@ -18,12 +18,23 @@ import lombok.Setter;
 public class ProtocolResultsDTO implements Serializable, LongIdModel{
 
     private Long id;
+    private String name;
+
+    private Long autonomousCommunityCountryId;
     private String autonomousCommunityCountryCode;
-    private String productServiceCode;
-    private Long campaignId;
-    private String protocolCode;
+    private String autonomousCommunityCountryName;
+
     private Long productServiceId;
+    private String productServiceCode;
+    private String productServiceName;
+
+    private Long campaignId;
+
     private Long protocolId;
-    private List<TotalProtocolResultsDTO> totalProtocolResults;
+    private String protocolCode;
+    private String protocolName;
+
+    private String Code;
+    private List<TotalProtocolResultsDTO> totalProtocolResultsDTOS;
 
 }

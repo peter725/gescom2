@@ -171,6 +171,16 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         return questionDetailDTOList;
     }
 
+    @Override
+    public String findProtocolNameById(Long id) {
+        return protocolRepository.findProtocolNameById(id);
+    }
+
+    @Override
+    public String findProtocolNameByCode(String code) {
+        return protocolRepository.findProtocolNameByCode(code);
+    }
+
     private static ProtocolDetailDTO getProtocolDetailDTO(List<QuestionDetailDTO> questionDetailDTOList, Optional<ProtocolEntity> protocol, CampaignEntity campaignEntity, String participants) {
         ProtocolDetailDTO result = new ProtocolDetailDTO();
         result.setQuestions(questionDetailDTOList);

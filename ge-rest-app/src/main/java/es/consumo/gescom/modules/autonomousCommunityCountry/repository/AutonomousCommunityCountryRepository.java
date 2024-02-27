@@ -15,4 +15,9 @@ public interface AutonomousCommunityCountryRepository extends GESCOMRepository<A
     @Query(value = "SELECT h FROM AutonomousCommunityCountryEntity h  where h.id = :id ")
     Page<AutonomousCommunityCountryEntity.SimpleProjection> findAllAutonomousCommunityCountryByName( Pageable pageable, @Param("id") Long id);
 
+    @Query(value = "SELECT h FROM AutonomousCommunityCountryEntity h  where h.id = :id ")
+    AutonomousCommunityCountryEntity findCCAAById( @Param("id") Long id);
+
+    @Query(value = "SELECT h FROM AutonomousCommunityCountryEntity h  where h.code = :code ")
+    AutonomousCommunityCountryEntity findByCode( @Param("code") String code);
 }

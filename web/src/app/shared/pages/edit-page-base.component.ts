@@ -13,6 +13,7 @@ import {LiveAnnouncer} from "@angular/cdk/a11y";
 import { NotificationService } from '@base/shared/notification';
 import { MatDialog } from '@angular/material/dialog';
 import { DataSharingService } from '@base/services/dataSharingService';
+import { SharedDataService } from '@base/services/sharedDataService';
 
 
 @Directive()
@@ -95,6 +96,7 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     protected router: Router,
     protected namedRoutes: NamedRoutes,
     protected notification: NotificationService,
+    protected sharedDataService: SharedDataService,
     protected mapper: FormMapper<T, F>,
     protected dialog: MatDialog,
     @Inject(FORM_STATUS) public status: ComponentStatus,

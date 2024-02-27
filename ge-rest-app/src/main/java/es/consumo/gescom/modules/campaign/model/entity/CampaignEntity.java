@@ -61,7 +61,6 @@ public class CampaignEntity extends SimpleEntity {
     private PhaseEntity phaseCampaign;
 
     @JsonIgnore
-
     @CreatedDate
     @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;

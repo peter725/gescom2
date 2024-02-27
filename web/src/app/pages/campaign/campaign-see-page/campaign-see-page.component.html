@@ -10,11 +10,18 @@
       icon="visibility">
       
       <div section-content>
-        <div class="flex justify-right mt-4 mr-3">
+        <div class="flex justify-right mt-4 mr-3 space-x-4">
+
+          <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteIpr()"
+                  class="text-white font-bold py-2 px-4 rounded">
+            I.P.R
+          </button>
+
           <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultados()"
                   class="text-white font-bold py-2 px-4 rounded">
             Cumplimentación resultados CCAA
           </button>
+
         </div>
         <div class="px-10 sm:px-5">
           <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.title' | translate}}</p>

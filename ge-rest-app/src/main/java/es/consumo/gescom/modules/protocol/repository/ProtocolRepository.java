@@ -22,4 +22,7 @@ public interface ProtocolRepository extends GESCOMRepository<ProtocolEntity, Lon
 
     @Query(value = "SELECT pr FROM ProtocolEntity pr WHERE pr.campaignId.id = :idCampaign  ")
     List<ProtocolEntity> findProtocolByCampaignId(Long idCampaign);
+
+    @Query(value = "SELECT pr.id FROM ProtocolEntity pr WHERE pr.code =:code ")
+    Long findProtocoloByCode(String code);
 }

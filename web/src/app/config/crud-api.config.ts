@@ -10,6 +10,8 @@ export const crudOperationsStorageFactory = () => {
     provinces: { type: HttpOperationType.READ, path: `/provinces` },
     campaignProposal: { type: HttpOperationType.CRUD, path: `/campaign_proposal` },
     protocol: { type: HttpOperationType.CRUD, path: `/protocol` },
+    protocolListCampaign: { type: HttpOperationType.READ, path: `/protocol/campaign` },
+    protocolQuestionsList: { type: HttpOperationType.READ, path: `/protocol/code` },
     phaseCampaign: { type: HttpOperationType.CRUD, path: `/phase_campaign` },
     campaign: { type: HttpOperationType.CRUD, path: `/campaign` },
     protocolFileUpload: { type: HttpOperationType.SIMPLE, path: `/document/create` },
@@ -64,6 +66,7 @@ export const crudOperationsStorageFactory = () => {
     templateManagement: { type: HttpOperationType.CRUD, path: `/sample_templates` },
     productServices: { type: HttpOperationType.CRUD, path: `/productServices` },
     campaignProductService: { type: HttpOperationType.CRUD, path: `/campaignProductService` },
+    ipr: { type: HttpOperationType.CRUD, path: `/ipr` },
   };
 
   const userOperations: OperationsDefSrc = {

@@ -25,6 +25,7 @@ public class ProtocolResultsDTO implements Serializable, LongIdModel{
     private String protocolCode;
     private Long productServiceId;
     private Long protocolId;
-    private List<TotalProtocolResultsDTO> totalProtocolResults;
+    private String Code;
+    private List<TotalProtocolResultsDTO> totalProtocolResultsDTOS;
 
 }

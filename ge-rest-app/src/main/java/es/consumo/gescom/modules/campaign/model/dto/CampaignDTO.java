@@ -13,6 +13,7 @@ import es.consumo.gescom.modules.phase.model.dto.PhaseDTO;
 import es.consumo.gescom.modules.productServices.model.dto.ProductServiceDTO;
 import es.consumo.gescom.modules.proponent.model.dto.ProponentDTO;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
+import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsDTO;
 import es.consumo.gescom.modules.specialist.model.dto.SpecialistDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +43,7 @@ public class CampaignDTO implements Serializable {
     private Long createdBy;
     private Long updatedBy;
     private List<CampaignProductServiceDTO> campaignProductServiceDTOS;
+    private List<ProtocolResultsDTO> protocolResultsDTOS;
     private Integer state = EntityState.ON.getValue();
 
     //lista de productos

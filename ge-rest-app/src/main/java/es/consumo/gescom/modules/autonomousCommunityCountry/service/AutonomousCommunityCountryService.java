@@ -3,6 +3,7 @@ package es.consumo.gescom.modules.autonomousCommunityCountry.service;
 import es.consumo.gescom.modules.autonomousCommunity.model.criteria.AutonomousCommunityCriteria;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.autonomousCommunityCountry.model.criteria.AutonomousCommunityCountryCriteria;
+import es.consumo.gescom.modules.autonomousCommunityCountry.model.dto.AutonomousCommunityCountryDTO;
 import es.consumo.gescom.modules.autonomousCommunityCountry.model.entity.AutonomousCommunityCountryEntity;
 import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEntity;
 import org.springframework.data.domain.Page;
@@ -14,8 +15,8 @@ public interface AutonomousCommunityCountryService extends CrudService<Autonomou
 
     Page<AutonomousCommunityCountryEntity.SimpleProjection> findAllAutonomousCommunityCountryByName(CriteriaWrapper<AutonomousCommunityCountryCriteria> wrapper, Long id);
 
-    AutonomousCommunityCountryEntity findByCode(String code);
+    AutonomousCommunityCountryDTO findByCode(String code);
 
-    AutonomousCommunityCountryEntity findCCAAById(Long id);
+    AutonomousCommunityCountryDTO findCCAAById(Long id);
 
 }

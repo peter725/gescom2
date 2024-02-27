@@ -16,6 +16,8 @@ import lombok.Setter;
 public class AutonomousCommunityDTO implements Serializable {
 
     private Long id;
+
     private String name;
+
     
 }

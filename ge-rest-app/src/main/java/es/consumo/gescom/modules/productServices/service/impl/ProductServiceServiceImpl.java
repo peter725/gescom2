@@ -3,6 +3,7 @@ package es.consumo.gescom.modules.productServices.service.impl;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
+import es.consumo.gescom.modules.productServices.model.converter.ProductServiceConverter;
 import es.consumo.gescom.modules.productServices.model.criteria.ProductServiceCriteria;
 import es.consumo.gescom.modules.productServices.model.dto.ProductServiceDTO;
 import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEntity;
@@ -23,18 +24,21 @@ public class ProductServiceServiceImpl extends EntityCrudService<ProductServiceE
     @Autowired
     private ProductServiceRepository productServiceRepository;
 
+    @Autowired
+    private ProductServiceConverter productServiceConverter;
+
 
     public Page<ProductServiceEntity.SimpleProjection> findAllProductServiceById(CriteriaWrapper<ProductServiceCriteria> wrapper, Long id) {
         return ((ProductServiceRepository) repository).findAllProductServiceById(wrapper.getCriteria().toPageable(), id);
     }
 
     @Override
-    public ProductServiceEntity findByCode(String code) {
-        return productServiceRepository.findProductServiceByCode(code);
+    public ProductServiceDTO findByCode(String code) {
+        return productServiceConverter.convertToModel(productServiceRepository.findProductServiceByCode(code));
     }
 
     @Override
-    public ProductServiceEntity findProductServiceById(Long id) {
-        return productServiceRepository.findProductServiceById(id);
+    public ProductServiceDTO findProductServiceById(Long id) {
+        return productServiceConverter.convertToModel(productServiceRepository.findProductServiceById(id));
     }
 }

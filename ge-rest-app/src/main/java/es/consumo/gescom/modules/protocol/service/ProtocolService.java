@@ -23,7 +23,7 @@ public interface ProtocolService extends CrudService<ProtocolEntity, Long>{
 
     List<QuestionsDTO> findProtocolByIdOrCode(ProtocolDTO protocolDTO);
 
-    String findProtocolNameById(Long id);
+    ProtocolDTO findProtocolDTOById(Long id);
 
-    String findProtocolNameByCode(String code);
+    ProtocolDTO findProtocolByCode(String code);
 }

@@ -26,9 +26,9 @@ public interface ProtocolRepository extends GESCOMRepository<ProtocolEntity, Lon
     @Query(value = "SELECT pr.id FROM ProtocolEntity pr WHERE pr.code =:code ")
     Long findProtocoloByCode(String code);
 
-    @Query(value = "SELECT pr.name FROM ProtocolEntity pr WHERE pr.code =:code ")
-    String findProtocolNameByCode(String code);
+    @Query(value = "SELECT pr FROM ProtocolEntity pr WHERE pr.code =:code ")
+    ProtocolEntity findProtocolNameByCode(String code);
 
-    @Query(value = "SELECT pr.name FROM ProtocolEntity pr WHERE pr.id =:id ")
-    String findProtocolNameById(Long id);
+    @Query(value = "SELECT pr FROM ProtocolEntity pr WHERE pr.id =:id ")
+    ProtocolEntity findProtocolNameById(Long id);
 }

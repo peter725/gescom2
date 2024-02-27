@@ -57,24 +57,24 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
         for (ProtocolResultsDTO protocolResultsDTO : protocolResultsDTOS){
 
             if (protocolResultsDTO.getAutonomousCommunityCountryCode() != null){
-                protocolResultsDTO.setAutonomousCommunityCountryName(autonomousCommunityCountryService.findByCode(protocolResultsDTO.getAutonomousCommunityCountryCode()).getName());
+                protocolResultsDTO.setAutonomousCommunityCountryDTO(autonomousCommunityCountryService.findByCode(protocolResultsDTO.getAutonomousCommunityCountryCode()));
             }else{
-                protocolResultsDTO.setAutonomousCommunityCountryName(autonomousCommunityCountryService.findCCAAById(protocolResultsDTO.getAutonomousCommunityCountryId()).getName());
+                protocolResultsDTO.setAutonomousCommunityCountryDTO(autonomousCommunityCountryService.findCCAAById(protocolResultsDTO.getAutonomousCommunityCountryId()));
             }
 
 
             if (protocolResultsDTO.getProductServiceCode() != null){
-                protocolResultsDTO.setProductServiceName(productServiceService.findByCode(protocolResultsDTO.getProductServiceCode()).getName());
+                protocolResultsDTO.setProductServiceDTO(productServiceService.findByCode(protocolResultsDTO.getProductServiceCode()));
             }else{
-                protocolResultsDTO.setProductServiceName(productServiceService.findProductServiceById(protocolResultsDTO.getProductServiceId()).getName());
+                protocolResultsDTO.setProductServiceDTO(productServiceService.findProductServiceById(protocolResultsDTO.getProductServiceId()));
             }
 
             protocolResultsDTO.setTotalProtocolResultsDTOS(totalProtocolResultsService.findByProtocolResultsId(protocolResultsDTO));
 
             if (protocolResultsDTO.getProtocolCode() != null){
-                protocolResultsDTO.setProtocolName(protocolService.findProtocolNameByCode(protocolResultsDTO.getProtocolCode()));
+                protocolResultsDTO.setProtocolDTO(protocolService.findProtocolByCode(protocolResultsDTO.getProtocolCode()));
             }else{
-                protocolResultsDTO.setProtocolName(protocolService.findProtocolNameById(protocolResultsDTO.getProtocolId()));
+                protocolResultsDTO.setProtocolDTO(protocolService.findProtocolDTOById(protocolResultsDTO.getProtocolId()));
             }
 
 

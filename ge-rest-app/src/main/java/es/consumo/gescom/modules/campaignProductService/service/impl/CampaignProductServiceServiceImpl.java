@@ -55,9 +55,9 @@ public class CampaignProductServiceServiceImpl extends EntityCrudService<Campaig
         ProductServiceDTO productServiceDTO;
         for (CampaignProductServiceDTO campaignProductServiceDTO : campaignProductServiceDTOS) {
             if (campaignProductServiceDTO.getProductServiceId() == null) {
-                productServiceDTO = productServiceConverter.convertToModel(productServiceService.findByCode(campaignProductServiceDTO.getCodeProductService()));
+                productServiceDTO = productServiceService.findByCode(campaignProductServiceDTO.getCodeProductService());
             }else {
-                productServiceDTO = productServiceConverter.convertToModel(productServiceService.findProductServiceById(campaignProductServiceDTO.getProductServiceId()));
+                productServiceDTO = productServiceService.findProductServiceById(campaignProductServiceDTO.getProductServiceId());
                 campaignProductServiceDTO.setCodeProductService(productServiceDTO.getCode());
             }
 

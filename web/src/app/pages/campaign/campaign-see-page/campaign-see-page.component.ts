@@ -26,6 +26,7 @@ import { NavigationExtras } from '@angular/router';
 })
 export class CampaignSeePageComponent extends EditPageBaseComponent<any , CampaignForm>  {
 
+
   @ViewChild("fileUpload", {read: ElementRef})
   fileUpload!: ElementRef;
   @Input() requiredFileType = '';
@@ -204,6 +205,12 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       }
     };
     this.router.navigate([`app/campanas/${this.campaign.id}/resultados`], navigationExtras);
+  }
+
+  navegarAComponenteIpr() {
+    this.campaign = this.form.value;
+    
+    this.router.navigate([`app/campanas/${this.campaign.id}/ipr`]); 
   }
 
   openProtocolDetailDialog() {

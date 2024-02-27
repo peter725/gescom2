@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Event, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart, Router} from '@angular/router';
 import {SidebarMode, SidebarService} from "@base/shared/components/sidebar";
+import { AuthStorage } from '@base/shared/security/auth-storage';
 import {ReplaySubject, takeUntil} from "rxjs";
 
 @Component({
@@ -26,6 +27,7 @@ export class DashboardWrapperPageComponent implements OnInit {
     this.listenToRouterEvents();
     this.syncSidebarMode();
     this.routeConfigLoading = false
+
   }
 
   ngOnDestroy(): void {

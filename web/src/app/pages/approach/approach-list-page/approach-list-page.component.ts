@@ -35,6 +35,7 @@ export class ApproachListPageComponent extends BaseListPageComponent<Approach> i
 
   override async ngOnInit() {
     await super.ngOnInit();
+    console.log('entro');
     //this.monitorCtxChanges();
   }
 

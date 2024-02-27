@@ -44,4 +44,11 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
     },
         loadChildren: () => import('./').then(m => m.ResultadosModule),
     },
+    {
+        path: ':id/ipr',
+        data: {
+        breadcrumb,
+    },
+        loadChildren: () => import('./').then(m => m.IprModule),
+    },
 ]

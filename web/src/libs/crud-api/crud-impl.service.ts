@@ -34,6 +34,16 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
     );
   }
 
+  findAllFilter<Result = T>(id: ID, config: RequestConfig): Observable<Page<Result>> {
+    const def = this.operations.get(config.resourceName);
+    const operation = def.findAllFilter(config.pathParams);
+    const params = this.buildHttpParams(config);
+    return this.http.get<Result[] | PageResponse<Result>>(operation.path, { params }).pipe(
+      map(result => this.pageResponseToPage(result, config.pageReq?.sort)),
+    );
+  }
+  
+  
   findById<Result = T>(id: ID, config: RequestConfig): Observable<Result> {
     const def = this.operations.get(config.resourceName);
     const operation = def.findById(config.pathParams);

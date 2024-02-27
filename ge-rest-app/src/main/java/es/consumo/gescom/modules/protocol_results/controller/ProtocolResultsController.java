@@ -43,8 +43,8 @@ public class ProtocolResultsController extends AbstractCrudController<ProtocolRe
         return ResponseEntity.ok(result);
     }
     
-    @PostMapping("/saveProtocolResults")
-    public ResponseEntity<List<ProtocolResultsEntity>> saveProtocolResults(@RequestBody List<ProtocolResultsDTO> protocolResults){
+    @PostMapping("/saveprotocolresults")
+    public ResponseEntity<List<ProtocolResultsEntity>> saveProtocolResults(@RequestBody ProtocolResultsDTO protocolResults){
 //        List<CampaignProductServiceEntity> result = ((CampaignProductServiceService) service).saveRelation(productos);
 //        return ResponseEntity.ok(result);
     	return null;

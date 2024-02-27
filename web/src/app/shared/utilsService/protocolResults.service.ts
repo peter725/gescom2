@@ -19,7 +19,7 @@ export class ProtocolResultsService {
         const def = this.operations.get(this.resourceUrl);
         const operation = def.findAll();
         return this.http
-                        .post<ProtocolResults>(operation.path + '/saveProtocolResults', producto, { observe: 'response' });
+                        .post<ProtocolResults>(operation.path + '/saveprotocolresults', producto, { observe: 'response' });
 
     }
 

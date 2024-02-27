@@ -39,7 +39,7 @@ public class TotalProtocolResultsEntity extends SimpleEntity {
     @Column(name = "protocol_results_code", length = 50)
     private String protocolResultsCode;
 
-    @Column(name = "code_question", length = 5)
+    @Column(name = "code_question")
     private String codeQuestion;
 
     @Column(name = "protocol_results_id")
@@ -63,7 +63,7 @@ public class TotalProtocolResultsEntity extends SimpleEntity {
     @JsonIgnore
     @LastModifiedBy
     @Column(name = "updated_by")
-    private Integer updatedBy;
+    private Long updatedBy;
 
     @Column(name = "id_state")
     @Setter

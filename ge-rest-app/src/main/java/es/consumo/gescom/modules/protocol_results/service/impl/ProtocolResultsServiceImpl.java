@@ -58,12 +58,12 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
         ProtocolResultsEntity protocolResultsEntity = protocolResultsConverter.convertToEntity(protocolResults);
         ProtocolResultsEntity protocolResultsEntitySave = protocolResultsRepository.save(protocolResultsEntity);
 
-        List<TotalProtocolResultsDTO> totalProtocolResultsDTOS = protocolResults.getTotalProtocolResults();
+        List<TotalProtocolResultsDTO> totalProtocolResultsDTOS = protocolResults.getTotalProtocolResultsDTOS();
         totalProtocolResultsDTOS.forEach(totalProtocolResults -> {
             TotalProtocolResultsEntity totalProtocolResultsEntity = new TotalProtocolResultsEntity();
-            totalProtocolResultsEntity.setCcaaRen(totalProtocolResults.getCcaa_ren());
-            totalProtocolResultsEntity.setCcaaRep(totalProtocolResults.getCcaa_rep());
-            totalProtocolResultsEntity.setCcaaRes(totalProtocolResults.getCcaa_res());
+            totalProtocolResultsEntity.setCcaaRen(totalProtocolResults.getCcaaRen());
+            totalProtocolResultsEntity.setCcaaRep(totalProtocolResults.getCcaaRep());
+            totalProtocolResultsEntity.setCcaaRes(totalProtocolResults.getCcaaRes());
             totalProtocolResultsEntity.setCode(totalProtocolResults.getCode());
             totalProtocolResultsEntity.setProtocolResultsCode(totalProtocolResults.getProtocolResultsCode());
             totalProtocolResultsEntity.setCodeQuestion(totalProtocolResults.getCodeQuestion());

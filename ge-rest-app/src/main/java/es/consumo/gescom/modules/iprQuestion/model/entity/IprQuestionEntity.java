@@ -1,41 +1,55 @@
-package es.consumo.gescom.modules.ipr.model.entity;
+package es.consumo.gescom.modules.iprQuestion.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
-import es.consumo.gescom.modules.iprQuestion.model.dto.IprQuestionDTO;
+import es.consumo.gescom.modules.ipr.model.entity.IprEntity;
+import es.consumo.gescom.modules.questions.model.entity.QuestionsEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @Entity
-@Table(name = "ipr")
-public class IprEntity extends SimpleEntity {
+@Table(name = "ipr_question")
+public class IprQuestionEntity extends SimpleEntity {
 
     @Column(name = "CODE")
     private String code;
 
-    @Column(name = "PROTOCOL_CODE")
-    private String protocolCode;
+    @Column(name = "IPR_CODE")
+    private String iprCode;
 
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "ORDER_QUESTION")
+    private Integer orderQuestion;
 
-    @Column(name = "CAMPAIGN_ID")
-    private Long campaignId;
+    @Column(name = "PERCENTAGE_RESPECT_TO")
+    private Integer percentageRespectTo;
 
-    @Column(name = "PROTOCOL_ID")
-    private Long protocolId;
+    @Column(name = "FORMULA")
+    private String formula;
+
+    @Column(name = "QUESTION")
+    private String question;
+
+    @ManyToOne
+    @JoinColumn(name = "IPR_ID")
+    private IprEntity iprId;
+
+    @JsonIgnore
+    @CreatedDate
+    @Column(name = "CREATED_AT", nullable = false)
+    private LocalDateTime createdAt;
+
 
     @JsonIgnore
     @LastModifiedDate
@@ -61,8 +75,8 @@ public class IprEntity extends SimpleEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        IprEntity that = (IprEntity) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(name, that.name);
+        IprQuestionEntity that = (IprQuestionEntity) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
@@ -73,12 +87,13 @@ public class IprEntity extends SimpleEntity {
     public interface SimpleProjection {
 
         Long getId();
-        String getName();
         String getCode();
-        String getProtocolCode();
-        Long getCampaignId();
-        Long getProtocolId();
-        List<IprQuestionDTO> getIprQuestionDTOList();
+        String getIprCode();
+        Integer getOrderQuestion();
+        Integer getPercentageRespectTo();
+        String getFormula();
+        String getQuestion();
+        IprEntity getIprId();
 
     }
 }

@@ -15,9 +15,9 @@ import java.io.Serializable;
 public class TotalProtocolResultsDTO implements Serializable, LongIdModel {
 
     private Long id;
-    private Integer ccaa_ren;
-    private Integer ccaa_rep;
-    private Integer ccaa_res;
+    private Long ccaa_ren;
+    private Long ccaa_rep;
+    private Long ccaa_res;
     private String code;
     private String protocolResultsCode;
     private String codeQuestion;

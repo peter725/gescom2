@@ -7,7 +7,7 @@ export interface ProtocolResults {
   campaignId: number | undefined;
   productServiceId: number | undefined;
   protocolId: number | undefined;
-  totalProtocolResults: TotalProtocolResults[] | undefined;
+  totalProtocolResultsDTOS: TotalProtocolResults[] | undefined;
 
 }
 
@@ -15,9 +15,9 @@ export interface TotalProtocolResults {
   id: number | undefined;
   ccaa_ren: number | null;
   ccaa_rep: number | null;
-  ccaa_res: number | null;
+  ccaa_res: any;
   code: string | null;
   protocolResultsCode: string | null;
-  codeQuestion: string | null;
+  codeQuestion: any;
   productServiceId: number | undefined;
 }

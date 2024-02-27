@@ -303,7 +303,8 @@
         "year": "Año",
         "inspection": "INSPECCIÓN: FASE ACTUAL",
         "protocol": "Alta de protocolo",
-        "products": "Productos"
+        "products": "PRODUCTOS",
+        "resultados": "CUMPLIMENTACIÓN DE RESULTADOS DE CCAA"
     },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},

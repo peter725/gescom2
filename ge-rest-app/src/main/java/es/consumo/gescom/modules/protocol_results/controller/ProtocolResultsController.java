@@ -5,16 +5,24 @@ import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
+import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
+import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
 import es.consumo.gescom.modules.protocol_results.model.criteria.ProtocolResultsCriteria;
 import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsDTO;
 import es.consumo.gescom.modules.protocol_results.model.entity.ProtocolResultsEntity;
 import es.consumo.gescom.modules.protocol_results.service.ProtocolResultsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +41,12 @@ public class ProtocolResultsController extends AbstractCrudController<ProtocolRe
         Page<ProtocolResultsEntity.SimpleProjection> result =
                 ((ProtocolResultsService) service).findAllSumProtocolById(new CriteriaWrapper<>(ambitCriteria), id);
         return ResponseEntity.ok(result);
+    }
+    
+    @PostMapping("/saveprotocolresults")
+    public ResponseEntity<List<ProtocolResultsEntity>> saveProtocolResults(@RequestBody ProtocolResultsDTO protocolResults){
+//        List<CampaignProductServiceEntity> result = ((CampaignProductServiceService) service).saveRelation(productos);
+//        return ResponseEntity.ok(result);
+    	return null;
     }
 }

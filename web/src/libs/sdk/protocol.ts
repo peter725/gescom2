@@ -15,6 +15,7 @@ export interface Protocol extends SimpleModel, StatefulAltModel {
   createdAt: string;
   Questions: Question[];
   nameCampaign: string;
+  question: Question[];
 }
 
 export interface FilaProtocol {
@@ -49,6 +50,9 @@ export interface Question {
   bkTrinti: string | null;
   response: any | null;
   bkTrrees: string | null;
+  numResponseSi: number | null;
+  numResponseNo: number | null;
+  numResponseNoProcede: number | null;
 }
 
 export interface InfriengementForm {

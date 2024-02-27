@@ -1,0 +1,125 @@
+<tsw-breadcrumbs></tsw-breadcrumbs>
+
+<form [formGroup]="form">
+  <tsw-form-container>
+    <tsw-section-wrapper
+            class="mb-5"
+            headerLabel="Datos del Protocolo"
+            icon="edit_note"
+    >
+
+      <div section-content>
+        <div class=" w-3/4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div>
+            <mat-form-field class="w-full">
+              <mat-label>Campaña</mat-label>
+              <input matInput formControlName="nameCampaign" readonly>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="w-full">
+              <mat-label>Año</mat-label>
+              <input matInput formControlName="year" readonly>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field class="w-full">
+            <mat-label>I.P.R</mat-label>
+            <input matInput formControlName="iprName">
+          </mat-form-field>
+
+            <mat-form-field> 
+
+              <mat-label>Protocolo</mat-label>
+                <mat-select formControlName="protocols"  (selectionChange)="onProtocolSelectionChange($event.value)" matNativeControl >
+                    <mat-option *ngFor="let protocol of protocolArray" [value]="protocol.id + '-' + protocol.code">                  
+                        {{protocol.name}}
+                    </mat-option>
+                </mat-select> 
+                
+            </mat-form-field>  
+
+          <div>
+            <!-- Input de name -->
+            <!-- <div class="mb-4"> 
+              <mat-form-field class="w-full">
+                <mat-label>{{ 'fields.name' | translate }}</mat-label>
+                <input matInput formControlName="name">
+              </mat-form-field>
+            </div> -->
+
+            <!-- Input de campaignName -->
+            <!-- <div>
+              <mat-form-field class="w-full">
+                <input matInput [value]="name" readonly>
+              </mat-form-field>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="w-3/4 mx-auto ">
+          <div class="table w-full border-collapse">
+            <div class="table-header-group bg-gray-200">
+              <div class="table-cell p-2 border border-gray-300 w-1/12">Nº</div>
+              <div class="table-cell p-2 border border-gray-300 w-2/12">Pregunta</div>
+              <div class="table-cell p-2 border border-gray-300 w-6/12">Fórmula</div>
+              <div class="table-cell p-2 border border-gray-300 w-2/12">% respecto al</div>
+            </div>
+
+            <!-- Filas de la tabla -->
+            <div formArrayName="question" class="table-row-group">
+              <div *ngFor="let fila of question.controls; let i=index" [formGroupName]="i" class="table-row">
+                <div class="table-cell p-2 border border-gray-300">
+                  <input formControlName="orderQuestion" class="w-full" >
+                </div>
+
+                <div class="table-cell p-2 border border-gray-300">
+                  <input formControlName="question"  class="w-full">
+                </div>
+
+                <!-- Input de fórmula con un identificador único -->
+                <div class="table-cell p-2 border border-gray-300" style="position: relative;">
+                  <input [id]="'formulaInput_' + i" formControlName="formula" class="w-full">
+                  <a (click)="protocolSelectedId && openDialog(i)" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
+                    <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
+                  </a>
+                </div>
+
+                <div class="table-cell p-2 border border-gray-300" >
+                  <input type="number" formControlName="porcentaje" style="background: transparent; border: none; width: 100%;">
+                </div>
+
+                <!-- <div class="table-cell p-2 border border-gray-300">
+                  <button type="button" (click)="toggleResp(i)" class="w-full">
+                    {{ fila.get('response')?.value }}
+                  </button>
+                </div> -->
+
+
+                <!-- Agrega los demás campos aquí -->
+                <button type="button" (click)="eliminarFila(i)" class="text-red-500 hover:text-red-700">
+                  <span class="material-icons">delete_forever</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center mt-4"> <!-- Flex container para alinear a la derecha -->
+          <button type="button" mat-raised-button color="primary" (click)="agregarFila()"
+                  class="text-white font-bold py-2 px-4 rounded">
+            Añadir Fila
+          </button>
+        </div>
+
+      </div>
+
+    </tsw-section-wrapper>
+
+    <tsw-form-actions
+            [saveBtnSkipConfirmation]="skipSaveConfirmation"
+            (reset)="resetForm()"
+            (save)="saveForm()"
+    ></tsw-form-actions>
+
+  </tsw-form-container>
+</form>

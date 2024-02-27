@@ -2,6 +2,7 @@ package es.consumo.gescom.modules.ipr.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
+import es.consumo.gescom.modules.iprQuestion.model.dto.IprQuestionDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @EntityListeners(AuditingEntityListener.class)
@@ -72,6 +74,11 @@ public class IprEntity extends SimpleEntity {
 
         Long getId();
         String getName();
+        String getCode();
+        String getProtocolCode();
+        Long getCampaignId();
+        Long getProtocolId();
+        List<IprQuestionDTO> getIprQuestionDTOList();
 
     }
 }

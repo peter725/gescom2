@@ -66,6 +66,12 @@ export interface CampaignForm {
   campaignProductServiceDTOS?: any[] | null;
 }
 
+export interface CampaignIpr{
+  nameCampaign: string | null;
+  year: number | null;
+  protocols: Protocol[] | null;
+}
+
 
 export interface CampaignFilterForm extends AppQuerySource {
   nameCampaign?: string;

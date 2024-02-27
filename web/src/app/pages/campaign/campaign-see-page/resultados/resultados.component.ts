@@ -12,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Campaign, CampaignForm } from '@libs/sdk/campaign';
 import { AutonomousCommunity } from '@libs/sdk/autonomousCommunity';
 import { CampaignProductServiceDTO } from '@libs/sdk/productService';
+import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults';
+import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
 
 
 @Component({
@@ -80,7 +82,8 @@ export class ResultadosComponent implements OnInit{
 
   constructor(protected activatedRoute: ActivatedRoute, 
     protected fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private protocolResultsService: ProtocolResultsService) {
       const navigation = this.router.getCurrentNavigation();
       const state = navigation!.extras.state as {
         campaign: any,
@@ -114,6 +117,42 @@ export class ResultadosComponent implements OnInit{
   }
 
   save() {
+
+    let preguntas: TotalProtocolResults[] = [];
+    let totalProtocoloResults: TotalProtocolResults;
+    this.preguntasProtocolo.forEach(preg => {
+      if (preg.response == 'S') {
+        totalProtocoloResults = {
+          id: undefined,
+          ccaa_ren: preg.numResponseNo,
+          ccaa_rep: preg.numResponseNoProcede,
+          ccaa_res: preg.numResponseSi,
+          code: null, 
+          protocolResultsCode: null,
+          codeQuestion: null, // poner el numero de pregunta
+          productServiceId: this.productoSelected?.id
+        };
+        preguntas.push(totalProtocoloResults);
+      }
+
+    });
+
+    let protocolResults: ProtocolResults = {
+      id: undefined,
+      autonomousCommunityCountryCode: undefined,
+      name: this.protocoloSelected?.name,
+      productServiceCode: this.productoSelected?.codeProductService,
+      protocolCode: this.protocoloSelected?.code,
+      campaignId: this.protocoloSelected?.campaignId,
+      productServiceId: this.productoSelected?.id,
+      protocolId: this.protocoloSelected?.id,
+      totalProtocolResults: preguntas
+    };
+
+    this.protocolResultsService.saveResults(protocolResults).subscribe((result: any) => {
+      location.reload();
+    });
+
     this.editForm1;
   }
 
@@ -127,8 +166,11 @@ export class ResultadosComponent implements OnInit{
     if (this.editForm1.get('ca')?.value) {
       this.caSelected = this.editForm1.get('ca')?.value!;
     }
-    if (this.protocoloSelected && this.preguntasProtocolo.length == 0) {
-      this.preguntasProtocolo = this.protocoloSelected.Questions;
+    if (this.protocoloSelected) {
+      if (!this.preguntasProtocolo || this.preguntasProtocolo.length == 0) {
+        this.preguntasProtocolo = this.protocoloSelected.question;
+      }
+      
     }
   }
 }

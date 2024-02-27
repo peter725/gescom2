@@ -151,7 +151,7 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     public List<QuestionsDTO> findProtocolByIdOrCode(ProtocolDTO protocolDTO) {
 
         List<QuestionsDTO> questionDetailDTOList = new ArrayList<>();
-        if(protocolDTO.getId() != null){
+        if(protocolDTO.getCode() == null){
             List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
             questionsEntities.forEach( questionsEntity -> {
                 QuestionsDTO questionsDTO = new QuestionsDTO();

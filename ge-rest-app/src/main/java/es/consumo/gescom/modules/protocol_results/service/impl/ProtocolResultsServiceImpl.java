@@ -58,6 +58,7 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
     @Override
     public ProtocolResultsEntity saveProtocolResults(ProtocolResultsDTO protocolResults) {
         ProtocolResultsEntity protocolResultsEntity = protocolResultsConverter.convertToEntity(protocolResults);
+        protocolResultsEntity.setAutonomousCommunityCountryId(protocolResults.getAutonomousCommunityCountryDTO().getId());
         ProtocolResultsEntity protocolResultsEntitySave = protocolResultsRepository.save(protocolResultsEntity);
 
         List<TotalProtocolResultsDTO> totalProtocolResultsDTOS = protocolResults.getTotalProtocolResultsDTOS();

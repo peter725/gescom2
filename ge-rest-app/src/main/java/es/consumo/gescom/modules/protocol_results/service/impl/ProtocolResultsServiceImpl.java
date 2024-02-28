@@ -34,6 +34,8 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
 
     @Autowired
     private TotalProtocolResultsRepository totalProtocolResultsRepository;
+
+    @Autowired
     private TotalProtocolResultsService totalProtocolResultsService;
 
     @Autowired

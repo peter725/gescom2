@@ -176,7 +176,7 @@
                   <div class="flex">
                     <p class="flex-1">
                       <!-- {{ getAutonomousCommunityName(resultado.autonomousCommunityCountryCode) }} -->
-                      [ {{ resultado.autonomousCommunityCountryName }} ]
+                      [ {{ resultado.autonomousCommunityCountryDTO?.name }} ]
                     </p>
                     <div>
                       <button mat-button (click)="navegarAComponenteResultados(resultado)" >
@@ -187,11 +187,11 @@
                  
                   <p class="flex-1">
                     <!-- {{ getProductServiceName(resultado.productServiceId) }} -->
-                    {{ resultado.protocolName }}
+                    {{ resultado.protocolDTO.name }}
                   </p>
                   <p class="flex-1">
                     <!-- {{ getProtocolName(resultado.protocolId) }} -->
-                    {{ resultado.productServiceName }}
+                    {{ resultado.productServiceDTO?.name }}
                   </p>
                   
                 </div>

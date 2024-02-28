@@ -74,6 +74,7 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
 
         return protocolResultsEntitySave;
     }
+
     public List<ProtocolResultsDTO> findProtocolResultsByCampaignId(Long campaignId) {
         List<ProtocolResultsEntity> protocolResultsEntities = protocolResultsRepository.findAllByCampaignId(campaignId);
         List<ProtocolResultsDTO> protocolResultsDTOS = protocolResultsConverter.convertToModel(protocolResultsEntities);

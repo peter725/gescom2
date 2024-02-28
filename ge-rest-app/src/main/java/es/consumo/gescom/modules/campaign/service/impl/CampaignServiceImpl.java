@@ -360,7 +360,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             listCampaingDTO.add(campaignDTO);
         }
         if(listCampaingDTO != null){
-            return new PageImpl<>(listCampaingDTO, PageRequest.of(0, 10), listCampaingDTO.size());
+            return new PageImpl<>(listCampaingDTO, PageRequest.of(wrapper.getCriteria().toPageable().getPageNumber(), wrapper.getCriteria().toPageable().getPageSize()), listCampaign.getTotalElements());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaign not found");
 

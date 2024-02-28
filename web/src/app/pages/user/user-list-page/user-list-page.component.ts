@@ -48,11 +48,10 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
 
   protected getColumns(): ColumnSrc[] {
     return [
-      'select',
       'name',
       {
         name: 'surnames',
-        compositionProps: ['Surname', 'lastSurname'],
+        compositionProps: ['surname', 'lastSurname'],
       },
       { name: 'firstSurname', visible: false },
       { name: 'secondSurname', visible: false },

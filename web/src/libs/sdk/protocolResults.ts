@@ -1,3 +1,7 @@
+import { AutonomousCommunity } from "./autonomousCommunity";
+import { ProductService } from "./productService";
+import { Protocol } from "./protocol";
+
 export interface ProtocolResults {
   id: number | undefined;
   autonomousCommunityCountryCode: string | undefined;
@@ -8,14 +12,17 @@ export interface ProtocolResults {
   productServiceId: number | undefined;
   protocolId: number | undefined;
   totalProtocolResultsDTOS: TotalProtocolResults[] | undefined;
+  protocolDTO: Protocol | undefined;
+  productServiceDTO: ProductService | undefined;
+  autonomousCommunityCountryDTO: AutonomousCommunity | undefined;
 
 }
 
 export interface TotalProtocolResults {
   id: number | undefined;
-  ccaa_ren: number | null;
-  ccaa_rep: number | null;
-  ccaa_res: any;
+  ccaaRen: number | null;
+  ccaaRep: number | null;
+  ccaaRes: any;
   code: string | null;
   protocolResultsCode: string | null;
   codeQuestion: any;

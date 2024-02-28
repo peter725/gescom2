@@ -17,15 +17,15 @@ import { ProtocolResultsService } from '@base/shared/utilsService/protocolResult
 
 
 @Component({
-  selector: 'tsw-resultados',
-  templateUrl: './resultados.component.html',
+  selector: 'tsw-resultados-see',
+  templateUrl: './resultados-see.component.html',
   styleUrls: ['./resultados.component.scss'],
   providers: [
     { provide: FORM_STATUS, useValue: new ComponentStatus('IDLE') },
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' } }
   ]
 })
-export class ResultadosComponent implements OnInit{
+export class ResultadosSeeComponent implements OnInit{
 
   readonly resourceName = 'protocol';
   cancelRedirectPath = '../../campanas/consulta';
@@ -112,9 +112,9 @@ export class ResultadosComponent implements OnInit{
   }
 
   loadResultados(resultadoSelected: ProtocolResults) {
-    this.protocoloSelected = this.getProtocolo(resultadoSelected?.protocolDTO?.id);
-    this.productoSelected = this.getProductService(resultadoSelected?.productServiceDTO?.id);
-    this.caSelected = this.getAutonomousCommunity(resultadoSelected?.autonomousCommunityCountryDTO?.id);
+    this.protocoloSelected = resultadoSelected?.protocolDTO;
+    this.productoSelected = resultadoSelected?.productServiceDTO;
+    this.caSelected = resultadoSelected?.autonomousCommunityCountryDTO;
     this.preguntasProtocolo = this.protocoloSelected?.question;
 
     this.editForm1.patchValue({
@@ -215,7 +215,7 @@ export class ResultadosComponent implements OnInit{
 
     let protocolResults: ProtocolResults = {
       id: undefined,
-      autonomousCommunityCountryCode: this.caSelected?.id,
+      autonomousCommunityCountryCode: undefined,
       name: this.protocoloSelected?.name,
       productServiceCode: this.productoSelected?.codeProductService,
       protocolCode: this.protocoloSelected?.code,
@@ -250,21 +250,4 @@ export class ResultadosComponent implements OnInit{
       return result;
   }
 
-  onStepChange(event: any): void {
-    if (this.editForm1.get('protocolo')?.value) {
-      this.protocoloSelected = this.editForm1.get('protocolo')?.value!;
-    }
-    if (this.editForm1.get('producto')?.value) {
-      this.productoSelected = this.editForm1.get('producto')?.value!;
-    }
-    if (this.editForm1.get('ca')?.value) {
-      this.caSelected = this.editForm1.get('ca')?.value!;
-    }
-    if (this.protocoloSelected) {
-      if (!this.preguntasProtocolo || this.preguntasProtocolo.length == 0) {
-        this.preguntasProtocolo = this.protocoloSelected.question;
-      }
-      
-    }
-  }
 }

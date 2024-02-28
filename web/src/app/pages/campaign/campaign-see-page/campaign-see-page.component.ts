@@ -257,6 +257,17 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.router.navigate([`app/campanas/${this.campaign.id}/resultados`], navigationExtras);
   }
 
+  navegarAComponenteVerResultados(resultado: ProtocolResults | undefined) {
+    this.campaign = this.form.value;
+    const navigationExtras: NavigationExtras = {
+      state: {
+        campaign: this.campaign,
+        resultadoSelected: resultado ? resultado : undefined
+      }
+    };
+    this.router.navigate([`app/campanas/${this.campaign.id}/resultados/ver`], navigationExtras);
+  }
+
   navegarAComponenteIpr() {
     this.campaign = this.form.value;
     

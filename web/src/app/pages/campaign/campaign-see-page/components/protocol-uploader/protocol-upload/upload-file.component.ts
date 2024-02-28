@@ -15,6 +15,7 @@ import { TswSelectModule } from '@base/shared/select';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { FileData } from '@libs/sdk/file-data';
+import { CrudImplService } from '@libs/crud-api';
 
 const ELEMENT_DATA: FileData[] = [];
 
@@ -42,28 +43,28 @@ export class UploadFileComponent<T=any> {
 
   private contadorId = 1;
 
-
   displayedColumns: string[] = ['date','size','type','description','openFile','delete'];
   dataSource = [...ELEMENT_DATA];
   form: FormGroup;
   selectedFile : File | undefined;
   @ViewChild(MatTable) table: MatTable<FileData> | undefined;
 
-  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<UploadFileComponent>) {
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<UploadFileComponent>,
+    private crudService: CrudImplService) {
 
     this.form = this.fb.group({
       description : this.fb.control(null),
       typeDocument : this.fb.control(null),
       date : this.fb.control(null),
     });
-
   }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     console.log("Archivo="+this.selectedFile?.name)
   }
-
 
   addFile(): void {
     if (this.selectedFile) {
@@ -97,8 +98,6 @@ export class UploadFileComponent<T=any> {
     }
   }
 
-
-
   formatBytesToKB(bytes: number): string {
     return (bytes / 1024).toFixed(2) + ' KB';
   }
@@ -107,9 +106,6 @@ export class UploadFileComponent<T=any> {
     const parts = fileName.split('.');
     return parts[parts.length - 1];
   }
-
-
-
 
   deleteFile(id : number) : void {
     console.log("registro a eliminar:"+id);
@@ -140,12 +136,6 @@ export class UploadFileComponent<T=any> {
     }
   }
 
-  closeDialog(): void {
-    this.dialogRef.close(this.dataSource);
-  }
-
-
-
   base64AFile(base64: string, name : string) : File {
 
     // Elimina el prefijo de la cadena Base64 si existe
@@ -165,6 +155,21 @@ export class UploadFileComponent<T=any> {
     // Crea y retorna el objeto File
     return new File([blob], name, { type: 'tipo/mime' });
 
+  }
+
+  async saveFile() {
+    const payload = {
+      file: this.selectedFile,
+      description: this.form.get('description')?.value,
+      typeDocument: this.form.get('typeDocument')?.value,
+      date: this.form.get('date')?.value
+    };
+    console.log("PAYLOAD=",payload);
+    const request = this.crudService.create<void>(payload, {
+      resourceName: 'document',
+    });
+    this.dialogRef.close(this.dataSource);
+    await request;
   }
 }
 

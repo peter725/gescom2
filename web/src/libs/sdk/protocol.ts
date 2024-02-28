@@ -50,9 +50,9 @@ export interface Question {
   bkTrinti: string | null;
   response: any | null;
   bkTrrees: string | null;
-  numResponseSi: number | null;
-  numResponseNo: number | null;
-  numResponseNoProcede: number | null;
+  numResponseSi: any;
+  numResponseNo: any;
+  numResponseNoProcede: any;
 }
 
 export interface InfriengementForm {

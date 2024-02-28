@@ -144,8 +144,8 @@ export class ResultadosSeeComponent implements OnInit{
         this.editForm2.patchValue({
           totalProdIncorrectos: protocolResult.ccaaRes
         });
-      } else {
-
+      } else if (this.preguntasProtocolo && this.preguntasProtocolo.length > 0) {
+       
         this.preguntasProtocolo.forEach((question) => {
           if (question.orderQuestion === protocolResult.codeQuestion) {
             // Asignar el resultado a la pregunta

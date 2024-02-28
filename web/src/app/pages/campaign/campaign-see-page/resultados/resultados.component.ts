@@ -14,6 +14,7 @@ import { AutonomousCommunity } from '@libs/sdk/autonomousCommunity';
 import { CampaignProductServiceDTO } from '@libs/sdk/productService';
 import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults';
 import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
+import { NotificationService } from '@base/shared/notification';
 
 
 @Component({
@@ -40,10 +41,11 @@ export class ResultadosComponent implements OnInit{
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
   campaignId: number | null = null; // Variable para almacenar el id de la campaña
   private location: Location = inject(Location);
-  campaign: CampaignForm;
+  campaign: CampaignForm | any;
   protocolosList: Protocol[] = [];
   productosList: CampaignProductServiceDTO[] = [];
   caList: AutonomousCommunity[] = [];
+  totalProductosControlados: any;
 
   protocoloSelected: any;
   productoSelected: any;
@@ -91,14 +93,22 @@ export class ResultadosComponent implements OnInit{
   constructor(protected activatedRoute: ActivatedRoute, 
     protected fb: FormBuilder,
     private router: Router,
-    private protocolResultsService: ProtocolResultsService) {
+    private protocolResultsService: ProtocolResultsService,
+    protected notification: NotificationService) {
       const navigation = this.router.getCurrentNavigation();
-      const state = navigation!.extras.state as {
+      let state = undefined;
+      if (navigation) {
+        state = navigation!.extras.state as {
         campaign: any,
         resultadoSelected: any
-    }
-    this.campaign = state.campaign;
-    this.resultadoSelected = state.resultadoSelected;
+        }
+        this.campaign = state.campaign;
+        this.resultadoSelected = state.resultadoSelected;
+      } else {
+        this.router.navigate([`app/campanas/consulta`]);
+      }
+      
+    
   }
 
   ngOnInit(): void {
@@ -144,8 +154,8 @@ export class ResultadosComponent implements OnInit{
         this.editForm2.patchValue({
           totalProdIncorrectos: protocolResult.ccaaRes
         });
-      } else {
-
+      } else if (this.preguntasProtocolo && this.preguntasProtocolo.length > 0) {
+       
         this.preguntasProtocolo.forEach((question) => {
           if (question.orderQuestion === protocolResult.codeQuestion) {
             // Asignar el resultado a la pregunta
@@ -188,51 +198,75 @@ export class ResultadosComponent implements OnInit{
     return this.protocolosList?.find(protocolo => protocolo.id === id);
   }
 
+  getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): boolean {
+    let sumaMayor = false;
+
+    if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
+      pregSi !== undefined && pregNo !== undefined && pregNoProcede !== undefined) {
+      if (pregSi + pregNo + pregNoProcede !== this.totalProductosControlados) {
+        sumaMayor = true;
+      }
+    }
+
+    return sumaMayor;
+  }
+
   save() {
-
-    let preguntas: TotalProtocolResults[] = [];
-    let totalProtocoloResults: TotalProtocolResults;
-    this.preguntasProtocolo.forEach(preg => {
-        totalProtocoloResults = {
-          id: undefined,
-          ccaaRen: preg.numResponseNo,
-          ccaaRep: preg.numResponseNoProcede,
-          ccaaRes: preg.numResponseSi,
-          code: null, 
-          protocolResultsCode: null,
-          codeQuestion: preg.orderQuestion?.toString(), // poner el numero de pregunta
-          productServiceId: this.productoSelected?.id
-        };
-        preguntas.push(totalProtocoloResults);
+    let respuestasInvalid = false;
+    this.preguntasProtocolo.forEach((preg) => {
+      if (preg.response === 'S' && preg.numResponseSi !== null && preg.numResponseNo !== null && preg.numResponseNoProcede !== null && 
+        preg.numResponseSi !== undefined && preg.numResponseNo !== undefined && preg.numResponseNoProcede !== undefined) {
+        if (preg.numResponseSi + preg.numResponseNo + preg.numResponseNoProcede !== this.totalProductosControlados) {
+          respuestasInvalid = true;
+        }
+      }
     });
 
-    preguntas.push(this.buildResultsTotales(this.editForm1.get('numExistentes')?.value!, this.codNumExistentes));
-    preguntas.push(this.buildResultsTotales(this.editForm1.get('numControlados')?.value!, this.codNumControlados));
-    preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdControlados')?.value!, this.codProdControlados));
-    preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdCorrectos')?.value!, this.codProdCorrectos));
-    preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdIncorrectos')?.value!, this.codProdIncorrectos));
-
-
-    let protocolResults: ProtocolResults = {
-      id: undefined,
-      autonomousCommunityCountryCode: this.caSelected?.id,
-      name: this.protocoloSelected?.name,
-      productServiceCode: this.productoSelected?.codeProductService,
-      protocolCode: this.protocoloSelected?.code,
-      campaignId: this.protocoloSelected?.campaignId,
-      productServiceId: this.productoSelected?.id,
-      protocolId: this.protocoloSelected?.id,
-      totalProtocolResultsDTOS: preguntas,
-      protocolDTO: this.protocoloSelected,
-      productServiceDTO: this.productoSelected,
-      autonomousCommunityCountryDTO: this.caSelected
-    };
-
-    this.protocolResultsService.saveResults(protocolResults).subscribe((result: any) => {
-      location.reload();
-    });
-
-    this.editForm1;
+    if (respuestasInvalid) {
+      this.notification.show({ message: 'text.other.pleaseReview' });
+    } else {
+      let preguntas: TotalProtocolResults[] = [];
+      let totalProtocoloResults: TotalProtocolResults;
+      this.preguntasProtocolo.forEach(preg => {
+          totalProtocoloResults = {
+            id: undefined,
+            ccaaRen: preg.numResponseNo,
+            ccaaRep: preg.numResponseNoProcede,
+            ccaaRes: preg.numResponseSi,
+            code: null, 
+            protocolResultsCode: null,
+            codeQuestion: preg.orderQuestion?.toString(), // poner el numero de pregunta
+            productServiceId: this.productoSelected?.id
+          };
+          preguntas.push(totalProtocoloResults);
+      });
+  
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('numExistentes')?.value!, this.codNumExistentes));
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('numControlados')?.value!, this.codNumControlados));
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdControlados')?.value!, this.codProdControlados));
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdCorrectos')?.value!, this.codProdCorrectos));
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdIncorrectos')?.value!, this.codProdIncorrectos));
+  
+  
+      let protocolResults: ProtocolResults = {
+        id: undefined,
+        autonomousCommunityCountryCode: undefined,
+        name: this.protocoloSelected?.name,
+        productServiceCode: this.productoSelected?.codeProductService,
+        protocolCode: this.protocoloSelected?.code,
+        campaignId: this.protocoloSelected?.campaignId,
+        productServiceId: this.productoSelected?.id,
+        protocolId: this.protocoloSelected?.id,
+        totalProtocolResultsDTOS: preguntas,
+        protocolDTO: this.protocoloSelected,
+        productServiceDTO: this.productoSelected,
+        autonomousCommunityCountryDTO: this.caSelected
+      };
+  
+      this.protocolResultsService.saveResults(protocolResults).subscribe((result: any) => {
+        this.router.navigate([`app/campanas/${this.campaign.id}/ver`]);
+      });
+    }
   }
 
   buildResultsTotales(numTotal: number, codigo: string): TotalProtocolResults {
@@ -265,6 +299,9 @@ export class ResultadosComponent implements OnInit{
         this.preguntasProtocolo = this.protocoloSelected.question;
       }
       
+    }
+    if (this.editForm2.get('totalProdControlados')?.value) {
+      this.totalProductosControlados = this.editForm2.get('totalProdControlados')?.value!;
     }
   }
 }

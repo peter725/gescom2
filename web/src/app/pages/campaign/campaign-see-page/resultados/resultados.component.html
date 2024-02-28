@@ -238,6 +238,9 @@
                                 <td class="p-4">
                                     <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" />
                                 </td>
+                                <div class="p-4 position-absolute" *ngIf="getSumaRespuestas(preg?.numResponseSi, preg?.numResponseNo, preg?.numResponseNoProcede)">
+                                    <mat-error>La suma no coincide con el total de productos controlados.</mat-error>
+                                </div>
                         </ng-container>
                       
                     </tr>

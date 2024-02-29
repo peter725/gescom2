@@ -66,6 +66,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -331,6 +332,14 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró registro con ID: " + idCampaign));
         List<ProtocolDTO> protocolDTO = protocolService.findProtocolByCampaignId(idCampaign);
         List<ProtocolResultsDTO>  protocolResultsDTOS = protocolResultsService.findProtocolResultsByCampaignId(idCampaign);
+        protocolResultsDTOS.forEach(protocolResultsDTO -> {
+            protocolDTO.forEach(protocolDTO1 -> {
+                if(protocolDTO1.getId().equals(protocolResultsDTO.getProtocolDTO().getId())){
+                    protocolResultsDTO.getProtocolDTO().setQuestion(protocolDTO1.getQuestion());
+                }
+            });
+        });
+
         if (campaign != null) {
             CampaignDTO campaignDTO = campaingnConverter.convertToModel(campaign);
             campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(idCampaign));

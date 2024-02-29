@@ -12,6 +12,7 @@ import es.consumo.gescom.modules.campaignProposal.repository.CampaignProposalRep
 import es.consumo.gescom.modules.campaignProposal.service.CampaignProposalService;
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
 import es.consumo.gescom.modules.campaignType.repository.CampaignTypeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -41,6 +43,9 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
 
     @Autowired
     private CampaignProposalConverter campaignProposalConverter;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     @Override
@@ -107,6 +112,18 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         entity.setState(changeStatusDTO.getStatus());
 
         return campaignProposalRepository.save(entity);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CampaignProposalEntity update(CampaignProposalDTO payload) {
+        CampaignProposalEntity campaignProposalEntity = repository.findById(payload.getId()).orElseThrow();
+        payload.setSent(campaignProposalEntity.getSent());
+        payload.setAutonomousCommunityId(campaignProposalEntity.getAutonomousCommunityId());
+        payload.setUserId(campaignProposalEntity.getUserId());
+        modelMapper.map( payload,campaignProposalEntity);
+        repository.save(campaignProposalEntity);
+        return campaignProposalEntity;
     }
 
 }

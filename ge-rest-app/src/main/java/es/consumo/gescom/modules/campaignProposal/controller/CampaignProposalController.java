@@ -68,4 +68,10 @@ public class CampaignProposalController extends AbstractCrudController<CampaignP
         return ResponseEntity.ok(result);
     }
 
+    @Override
+    public ResponseEntity<Object> update(Long id, @RequestBody CampaignProposalDTO payload) {
+        CampaignProposalEntity result = ((CampaignProposalService) service).update(payload);
+        return ResponseEntity.ok(result);
+    }
+
 }

@@ -2,8 +2,6 @@ package es.consumo.gescom.modules.document.service.impl;
 
 
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
-import es.consumo.gescom.modules.arbiter.service.ArbiterService;
-import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.document.model.criteria.DocumentCriteria;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;

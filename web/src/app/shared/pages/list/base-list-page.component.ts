@@ -152,7 +152,7 @@ export abstract class BaseListPageComponent<T = any, ID = number> implements OnI
     return {
       length: 0,
       pageIndex: 0,
-      pageSize: 10,
+      pageSize: 50,
     };
   }
 

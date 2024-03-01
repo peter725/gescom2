@@ -1,18 +1,12 @@
-<!-- <tsw-breadcrumbs></tsw-breadcrumbs> -->
-
-<tsw-filters-container class="pt-3">
-
-</tsw-filters-container>
-
 <tsw-table-container
   [resourceName]="resourceName"
   [queryParams]="previousRequestConfig?.queryParams"
   class="pt-3"
   [loading]="loading"
-  [paginator]="paginator"
   [columns]="columns"
-  (reload)="reloadData()"
-  (page)="navigatePage($event)"
+  [showFullScreen]="false"
+  [showRefresh]="false"
+  [showSettings]="false"
 >
   <table
     tsw-table
@@ -52,50 +46,34 @@
 
     <ng-container matColumnDef="si">
       <th *matHeaderCellDef mat-header-cell style="width: 10%">Si</th>
-      <td *matCellDef="let element" mat-cell>
+      <!-- <td *matCellDef="let element" mat-cell>
         <mat-checkbox [(ngModel)]="element.si"></mat-checkbox>
+      </td> -->
+      <td *matCellDef="let element" mat-cell>
+        <mat-checkbox [(ngModel)]="element.si" (change)="checkboxChanged($event, element, 'si')"></mat-checkbox>
       </td>
     </ng-container>
     
     <ng-container matColumnDef="no">
       <th *matHeaderCellDef mat-header-cell style="width: 10%">No</th>
-      <td *matCellDef="let element" mat-cell>
+      <!-- <td *matCellDef="let element" mat-cell>
         <mat-checkbox [(ngModel)]="element.no"></mat-checkbox>
+      </td> -->
+      <td *matCellDef="let element" mat-cell>
+        <mat-checkbox [(ngModel)]="element.no" (change)="checkboxChanged($event, element, 'no')"></mat-checkbox>
       </td>
     </ng-container>
     
     <ng-container matColumnDef="noProcede">
-      <th *matHeaderCellDef mat-header-cell style="width: 10%">No procede</th>
-      <td *matCellDef="let element" mat-cell>
+      <th *matHeaderCellDef mat-header-cell style="width: 15%">No procede</th>
+      <!-- <td *matCellDef="let element" mat-cell>
         <mat-checkbox [(ngModel)]="element.noProcede"></mat-checkbox>
+      </td> -->
+      <td *matCellDef="let element" mat-cell>
+        <mat-checkbox [(ngModel)]="element.noProcede" (change)="checkboxChanged($event, element, 'noProcede')"></mat-checkbox>
       </td>
     </ng-container>
 
     
-    
-    
-
-    <ng-container
-      matColumnDef="actions"
-      [stickyEnd]="true"
-    >
-      <th *matHeaderCellDef mat-header-cell style="width: 10%"></th>
-      <!--<td *matCellDef="let element" mat-cell class="text-right">
-        <ng-container >
-          <div class="additional-actions">
-            &lt;!&ndash;<a
-              mat-button
-              [routerLink]="'campaignManagementEdit' | namedRoute: { id: element.id }">
-              <mat-icon>edit</mat-icon>
-            </a>&ndash;&gt;
-          </div>
-          <tsw-state-toggle
-            [data]="element"
-            [resource]="resourceName"
-          ></tsw-state-toggle>
-        </ng-container>
-      </td>-->
-    </ng-container>
-
   </table>
 </tsw-table-container>

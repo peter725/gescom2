@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CampaignIpr } from '@libs/sdk/campaign';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { ProtocolQuestionDialogComponent } from '@base/pages/protocolQuestion-dialog/protocolQuestion-dialog.component';
+import { Validator } from '@base/shared/functions/validators';
 
 interface RequestConfig {
   resourceName: string;
@@ -80,9 +81,11 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     const form = this.fb.group({
       nameCampaign: { value: null, disabled: true },
       year: { value: null, disabled: true },
-      iprName : [null, Validators.required],
-      protocols: [null, Validators.required],
-      question: this.fb.array([])
+      iprName : this.fb.control(null,[Validators.required]),
+      protocols: this.fb.control(null,[Validators.required]),
+      question: this.fb.array([]),
+      formula: null,
+      porcentaje: null,
     });
 
     // Usar setTimeout para agregar la primera fila
@@ -94,34 +97,21 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     return form;
   }
 
-
-  // ngAfterViewInit(): void {
-  //   let campaignId = this.form.get('campaignId')?.value;
-  //   this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../campanas/consulta';
-  // }
+  crearFila(orden: number): FormGroup {
+    console.log('crearFila', orden);
+    return this.fb.group({
+      id: null,
+      orderQuestion: [{ value: orden, disabled: true }],
+      question: this.fb.control(null,[Validators.required]),
+      formula: this.fb.control(null,[Validators.required]),
+      porcentaje: this.fb.control(null,[Validators.required, Validator.validateNumber()]),
+    });
+  }
 
 
   override getRedirectAfterSaveRoute(){
     return ['../consulta'];
   }
-
-  // private subscribeToCampaignData(): void {
-  //   this.dataSharingService.currentCampaign.subscribe(campaignData => {
-  //     console.log('campaignData', campaignData);
-  //     if (campaignData) {
-  //       this.name = campaignData.nameCampaign;
-  //       this.campaignId = campaignData.id;
-  //       console.log('campaignData', this.name);
-  //       // Aquí configuras los datos de la campaña en el formulario de protocolo
-  //       // Por ejemplo, podrías querer establecer el valor de algún campo basado en campaignData
-  //       // this.form.patchValue({
-  //       //   campaignId: campaignData.id,
-  //       //   nameCampaign: campaignData.nameCampaign,// Asume que el formulario tiene un campo 'campaign'
-  //       //   // Puedes agregar más campos aquí si es necesario
-  //       // });
-  //     }
-  //   });
-  // }
 
 
 
@@ -176,42 +166,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     const formulaInputId = 'formulaInput_' + rowIndex;
   
     // Establecer el valor de stringCombinado en el input de fórmula correspondiente
-    const formulaInputElement = document.getElementById(formulaInputId) as HTMLInputElement;
-    // if (formulaInputElement) {
-    //   formulaInputElement.value = stringCombinado;
-    // } else {
-    //   console.error('Input de fórmula no encontrado con el ID:', formulaInputId);
-    // }
-
-
-    // // Supongamos que 'formIdInput' es la ID del input que quieres modificar
-    // const formIdInput = 'formulaInput_' + rowIndex;
-
-    // // Obtener referencia al elemento del input
-    // const inputElement = document.getElementById(formIdInput) as HTMLInputElement;
-
-    // // Verificar si el elemento existe
-    // if (inputElement) {
-    //   // Establecer el valor del input
-    //   inputElement.value = stringCombinado;
-    // } else {
-    //   console.error('Input no encontrado con la ID:', formIdInput);
-    // }
-
-
-
-
-      // this.respuestasUsuarioCombined = respuestas;    
-      // this.respuestasUsuarioCombined.forEach((respuesta, index) => {
-      //   const respuestaValue = respuesta.respuesta ?? '';
-      //   const preguntaValue = respuesta.pregunta ?? '';
-        
-      //   stringCombinado += respuestaValue + preguntaValue;
-        
-      //   if (index < this.respuestasUsuarioCombined.length - 1) {
-      //     stringCombinado += ' + ';
-      //   }
-      // });
+      const formulaInputElement = document.getElementById(formulaInputId) as HTMLInputElement;
     
       const question = this.form.get('question');
     
@@ -246,19 +201,6 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
       console.log('row', question);
     }
   }
-
-
-  crearFila(orden: number): FormGroup {
-    console.log('crearFila', orden);
-    return this.fb.group({
-      id: null,
-      orderQuestion: [{ value: orden, disabled: true }],
-      question: ['', Validators.required],
-      formula: null,
-      porcentaje: null
-    });
-  }
-
 
   get question() {
     return this.form.get('question') as unknown as FormArray;
@@ -300,14 +242,10 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
         console.log('formulario recibido' + formulaQuestion)
 
         const newQuestion = {
-          id: 0, 
-          code: "code",
-          iprCode: "iprCode",
           orderQuestion: control.get('orderQuestion')?.value, 
           percentageRespectTo: control.get('porcentaje')?.value, 
           formula: control.get('formula')?.value, 
           question: control.get('question')?.value, 
-          iprId: 0
         };
         this.iprQuestionDTOList.push(newQuestion);
       });
@@ -320,6 +258,11 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
 
   saveForm() {
 
+      // Verificar si el formulario es válido
+    if (this.form.invalid) {
+      console.log('El formulario no es válido. No se puede guardar.');
+      return; // Salir de la función si el formulario no es válido
+    }
 
     console.log('guardamos');
 
@@ -327,8 +270,6 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
 
     const jsonData = {
       name: this.form.get('iprName')?.value,
-      code: "code",
-      protocolCode: this.protocolSelectedCode,
       campaignId: this.idCampaign,
       protocolId: this.protocolSelectedId,
       iprQuestionDTOList: this.iprQuestionDTOList
@@ -337,55 +278,30 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     console.log(jsonData);
 
     const config: RequestConfig = {
-      resourceName: 'ipr', // Nombre del recurso a crear
-      // Puedes proporcionar parámetros de ruta si es necesario
+      resourceName: 'ipr', 
     };
 
     this.crudService.create(jsonData, config)
-  .subscribe(
-    response => {
-      console.log('IPR creado exitosamente:', response);
-      // Maneja la respuesta según sea necesario
-    },
-    error => {
-      console.error('Error al crear IPR:', error);
-      // Maneja el error según sea necesario
-    }
-  );
+    .subscribe(
+      response => {
+        console.log('IPR creado exitosamente:', response);
 
-    // this.crudService.create({
-    //   fichaProyecto: {
-    //     id: Number(this.fichaProyectoId)
-    //   },
-    //   medidaActuacion: {
-    //     id: this.form.get('medidaActuacionId')?.value.id,
-    //     ejeArea: {
-    //       id: this.form.get('ejeAreaId')?.value.id,
-    //       pacto: {
-    //         id: 1
-    //       }
-    //     }
-    //   },
-    //   activo: true
-    // }, {resourceName: this.resourceName})
-    // .subscribe(() => {
-    //     window.location.reload()
-    // });
+        this.notification.show({
+          title: 'text.other.dataSaved',
+          message: 'IPR creado exitosamente',
+        });
+      },
+      error => {
+        console.error('Error al crear IPR:', error);
 
-    
+        this.notification.show({
+          title: 'Error',
+          message: 'Ha ocurrido un error',
+        });
+      }
+    );
 
-
-    // if (this.form.invalid) {
-    //   this.notification.show({ message: 'text.other.pleaseReview' });
-    // } else {
-    //   super.setRedirectAfterSave(false);
-    //   this.submitForm();
-
-    //   this.location.back();
-    //}
     
   }
-
-
 
 }

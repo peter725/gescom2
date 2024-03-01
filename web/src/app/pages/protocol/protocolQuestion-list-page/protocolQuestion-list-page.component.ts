@@ -4,18 +4,9 @@ import { ExportFileType } from '@base/shared/export-file';
 import { CrudImplService, RequestConfig } from '@libs/crud-api';
 import { FilterService } from '@base/shared/filter';
 import { ColumnSrc } from '@base/shared/collections';
-import { Infringement } from '@libs/sdk/infringement';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { SharedDataService } from '@base/services/sharedDataService';
-
-
-// interface questionResponse {
-//   question: string;
-//   si: boolean;
-//   no: boolean;
-//   noProcede: boolean;
-// }
 
 
 interface TableRow {
@@ -74,6 +65,22 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
     
     this.fetchQuestions();
     //this.monitorCtxChanges();
+  }
+
+  checkboxChanged(event: MatCheckboxChange, row: any, column: string): void {
+    if (event.checked) {
+      // Si el checkbox actual está siendo marcado, desmarca los otros checkboxes de la misma fila
+      if (column === 'si') {
+        row.no = false;
+        row.noProcede = false;
+      } else if (column === 'no') {
+        row.si = false;
+        row.noProcede = false;
+      } else if (column === 'noProcede') {
+        row.si = false;
+        row.no = false;
+      }
+    }
   }
 
  

@@ -64,6 +64,7 @@ export interface CampaignForm {
   updatedAt?: string;
   state?: number | null;
   campaignProductServiceDTOS?: any[] | null;
+  protocolResultsDTOS?: any[] | null;
 }
 
 export interface CampaignIpr{

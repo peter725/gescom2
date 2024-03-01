@@ -45,11 +45,13 @@
                     <mat-form-field>
                         <mat-label>{{ 'fields.email' | translate }}</mat-label>
                         <input matInput formControlName="email">
+                        <mat-error>{{ form.controls.email.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>{{ 'fields.phone' | translate }}</mat-label>
                         <input matInput formControlName="phone">
+                        <mat-error>{{ form.controls.phone.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
                 </div>
 
@@ -60,6 +62,7 @@
                                 resourceName="autonomousCommunity"
                                 formControlName="autonomousCommunity"
                         ></tsw-custom-select>
+                        <mat-error>{{ form.controls.autonomousCommunity.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
@@ -77,6 +80,7 @@
                         resourceName="userType"
                         formControlName="userType"
                       ></tsw-custom-select>
+                      <mat-error>{{ form.controls.userType.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
 
                   <!--<mat-form-field class="col-span-2">

@@ -17,11 +17,13 @@ public interface ProtocolService extends CrudService<ProtocolEntity, Long>{
 
     List<ProtocolDTO> findProtocolByCampaignId(Long idCampaign);
 
-    //ProtocolDTO findProtocolDetailById(Long id);
-
     ProtocolDTO createProtocol(ProtocolDTO payload);
 
     ProtocolDetailDTO findProtocolById(Long id);
 
     List<QuestionsDTO> findProtocolByIdOrCode(ProtocolDTO protocolDTO);
+
+    ProtocolDTO findProtocolDTOById(Long id);
+
+    ProtocolDTO findProtocolByCode(String code);
 }

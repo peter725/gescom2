@@ -7,6 +7,7 @@ import es.consumo.gescom.modules.autonomousCommunity.repository.AutonomousCommun
 import es.consumo.gescom.modules.autonomousCommunity.service.AutonomousCommunityService;
 import es.consumo.gescom.modules.autonomousCommunityCountry.model.converter.AutonomousCommunityCountryConverter;
 import es.consumo.gescom.modules.autonomousCommunityCountry.model.criteria.AutonomousCommunityCountryCriteria;
+import es.consumo.gescom.modules.autonomousCommunityCountry.model.dto.AutonomousCommunityCountryDTO;
 import es.consumo.gescom.modules.autonomousCommunityCountry.model.entity.AutonomousCommunityCountryEntity;
 import es.consumo.gescom.modules.autonomousCommunityCountry.repository.AutonomousCommunityCountryRepository;
 import es.consumo.gescom.modules.autonomousCommunityCountry.service.AutonomousCommunityCountryService;
@@ -34,6 +35,16 @@ public class AutonomousCommunityCountryServiceImpl extends EntityCrudService<Aut
     @Override
     public Page<AutonomousCommunityCountryEntity.SimpleProjection> findAllAutonomousCommunityCountryByName(CriteriaWrapper<AutonomousCommunityCountryCriteria> wrapper, Long id) {
         return ((AutonomousCommunityCountryRepository) repository).findAllAutonomousCommunityCountryByName(wrapper.getCriteria().toPageable(), id);
+    }
+
+    @Override
+    public AutonomousCommunityCountryDTO findByCode(String code) {
+        return autonomousCommunityConverter.convertToModel(autonomousCommunityRepository.findByCode(code));
+    }
+
+    @Override
+    public AutonomousCommunityCountryDTO findCCAAById(Long id) {
+        return autonomousCommunityConverter.convertToModel(autonomousCommunityRepository.findCCAAById(id));
     }
 
 }

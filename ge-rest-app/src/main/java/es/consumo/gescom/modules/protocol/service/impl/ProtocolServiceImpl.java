@@ -151,7 +151,7 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     public List<QuestionsDTO> findProtocolByIdOrCode(ProtocolDTO protocolDTO) {
 
         List<QuestionsDTO> questionDetailDTOList = new ArrayList<>();
-        if(protocolDTO.getId() != null){
+        if(protocolDTO.getCode() == null){
             List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
             questionsEntities.forEach( questionsEntity -> {
                 QuestionsDTO questionsDTO = new QuestionsDTO();
@@ -169,6 +169,16 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
             });
         }
         return questionDetailDTOList;
+    }
+
+    @Override
+    public ProtocolDTO findProtocolDTOById(Long id) {
+        return protocolConverter.convertToModel(protocolRepository.findProtocolNameById(id));
+    }
+
+    @Override
+    public ProtocolDTO findProtocolByCode(String code) {
+        return protocolConverter.convertToModel(protocolRepository.findProtocolNameByCode(code));
     }
 
     private static ProtocolDetailDTO getProtocolDetailDTO(List<QuestionDetailDTO> questionDetailDTOList, Optional<ProtocolEntity> protocol, CampaignEntity campaignEntity, String participants) {

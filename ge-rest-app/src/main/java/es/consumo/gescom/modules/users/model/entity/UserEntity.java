@@ -103,6 +103,8 @@ public class UserEntity extends SimpleEntity{
 
         String getSurname();
 
+        String getLastSurname();
+
         String getDni();
 
         String getEmail();

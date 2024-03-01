@@ -24,24 +24,31 @@ public class ProtocolResultsEntity extends SimpleEntity {
 
     @Column(name = "AUTONOMOUS_COMMUNITY_COUNTRY_CODE")
     @Size(min = 1, max = 10)
-    private String AutonomousCommunityCountryCode;
+    private String autonomousCommunityCountryCode;
+
+    @Column(name = "AUTONOMOUS_COMMUNITY_COUNTRY_ID")
+    private Long autonomousCommunityCountryId;
 
     @Column(name = "PRODUCT_SERVICE_CODE")
     @Size(min = 1, max = 10)
-    private String ProductServiceCode;
+    private String productServiceCode;
 
     @Column(name = "CAMPAIGN_ID")
-    private Long CampaignId;
+    private Long campaignId;
 
     @Column(name = "PROTOCOL_CODE")
     @Size(min = 1, max = 10)
-    private String ProtocolCode;
+    private String protocolCode;
 
     @Column(name = "PRODUCT_SERVICE_ID")
-    private Long ProductServiceId;
+    private Long productServiceId;
 
     @Column(name = "PROTOCOL_ID")
-    private Long ProtocolId;
+    private Long protocolId;
+
+    @Column(name = "CODE")
+    @Size(min = 1, max = 10)
+    private String code;
 
     @JsonIgnore
     @CreatedDate
@@ -84,6 +91,14 @@ public class ProtocolResultsEntity extends SimpleEntity {
     public interface SimpleProjection {
 
         Long getId();
+        String getAutonomousCommunityCountryCode();
+        Long getAutonomousCommunityCountryId();
+        String getProductServiceCode();
+        Long getCampaignId();
+        String getProtocolCode();
+        Long getProductServiceId();
+        Long getProtocolId();
+        String getCode();
 
     }
 }

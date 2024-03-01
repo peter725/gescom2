@@ -12,6 +12,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Campaign, CampaignForm } from '@libs/sdk/campaign';
 import { AutonomousCommunity } from '@libs/sdk/autonomousCommunity';
 import { CampaignProductServiceDTO } from '@libs/sdk/productService';
+import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults';
+import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
+import { NotificationService } from '@base/shared/notification';
 
 
 @Component({
@@ -28,20 +31,29 @@ export class ResultadosComponent implements OnInit{
   readonly resourceName = 'protocol';
   cancelRedirectPath = '../../campanas/consulta';
 
+  codNumExistentes: string = 'DC1';
+  codNumControlados: string = 'DC8';
+  codProdControlados: string = 'DC9';
+  codProdCorrectos: string = 'DC10';
+  codProdIncorrectos: string = 'DC11';
+
   private dataSharingService: DataSharingService = inject(DataSharingService);
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
   campaignId: number | null = null; // Variable para almacenar el id de la campaña
   private location: Location = inject(Location);
-  campaign: CampaignForm;
+  campaign: CampaignForm | any;
   protocolosList: Protocol[] = [];
   productosList: CampaignProductServiceDTO[] = [];
   caList: AutonomousCommunity[] = [];
+  totalProductosControlados: any;
 
-  protocoloSelected: Protocol | undefined;
-  productoSelected: CampaignProductServiceDTO | undefined;
-  caSelected: AutonomousCommunity | undefined;
+  protocoloSelected: any;
+  productoSelected: any;
+  caSelected: any;
 
   preguntasProtocolo: Question [] = [];
+
+  resultadoSelected: ProtocolResults | undefined = undefined;
 
   editForm1 = this.fb.group({
     id: [],
@@ -80,12 +92,23 @@ export class ResultadosComponent implements OnInit{
 
   constructor(protected activatedRoute: ActivatedRoute, 
     protected fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private protocolResultsService: ProtocolResultsService,
+    protected notification: NotificationService) {
       const navigation = this.router.getCurrentNavigation();
-      const state = navigation!.extras.state as {
+      let state = undefined;
+      if (navigation) {
+        state = navigation!.extras.state as {
         campaign: any,
-    }
-    this.campaign = state.campaign;
+        resultadoSelected: any
+        }
+        this.campaign = state.campaign;
+        this.resultadoSelected = state.resultadoSelected;
+      } else {
+        this.router.navigate([`app/campanas/consulta`]);
+      }
+      
+    
   }
 
   ngOnInit(): void {
@@ -93,6 +116,56 @@ export class ResultadosComponent implements OnInit{
     console.log("Prueba");
     this.updateForm1(this.campaign);
     this.loadOptions(this.campaign);
+    if (this.resultadoSelected) {
+      this.loadResultados(this.resultadoSelected);
+    }
+  }
+
+  loadResultados(resultadoSelected: ProtocolResults) {
+    this.protocoloSelected = this.getProtocolo(resultadoSelected?.protocolDTO?.id);
+    this.productoSelected = this.getProductService(resultadoSelected?.productServiceDTO?.id);
+    this.caSelected = this.getAutonomousCommunity(resultadoSelected?.autonomousCommunityCountryDTO?.id);
+    this.preguntasProtocolo = this.protocoloSelected?.question;
+
+    this.editForm1.patchValue({
+      protocolo: this.protocoloSelected,
+      producto: this.productoSelected,
+      ca: this.caSelected,
+    });
+
+    resultadoSelected.totalProtocolResultsDTOS?.forEach((protocolResult) => {
+      if (protocolResult.codeQuestion === this.codNumExistentes) {
+        this.editForm2.patchValue({
+          numExistentes: protocolResult.ccaaRes
+        });
+      } else if (protocolResult.codeQuestion === this.codNumControlados) {
+        this.editForm2.patchValue({
+          numControlados: protocolResult.ccaaRes
+        });
+      } else if (protocolResult.codeQuestion === this.codProdControlados) {
+        this.editForm2.patchValue({
+          totalProdControlados: protocolResult.ccaaRes
+        });
+      } else if (protocolResult.codeQuestion === this.codProdCorrectos) {
+        this.editForm2.patchValue({
+          totalProdCorrectos: protocolResult.ccaaRes
+        });
+      } else if (protocolResult.codeQuestion === this.codProdIncorrectos) {
+        this.editForm2.patchValue({
+          totalProdIncorrectos: protocolResult.ccaaRes
+        });
+      } else if (this.preguntasProtocolo && this.preguntasProtocolo.length > 0) {
+       
+        this.preguntasProtocolo.forEach((question) => {
+          if (question.orderQuestion === protocolResult.codeQuestion) {
+            // Asignar el resultado a la pregunta
+            question.numResponseSi = protocolResult.ccaaRes;
+            question.numResponseNo = protocolResult.ccaaRen;
+            question.numResponseNoProcede = protocolResult.ccaaRep;
+          }
+        });
+      }
+    });
   }
 
   protected updateForm1(campania: CampaignForm): void {
@@ -113,8 +186,102 @@ export class ResultadosComponent implements OnInit{
     }
   }
 
+  getAutonomousCommunity(code: any): any {
+    return this.caList?.find(participant => participant.id === code);
+  }
+
+  getProductService(id: any): any {
+    return this.productosList?.find(producto => producto.id === id);
+  }
+
+  getProtocolo(id: any): any {
+    return this.protocolosList?.find(protocolo => protocolo.id === id);
+  }
+
+  getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): boolean {
+    let sumaMayor = false;
+
+    if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
+      pregSi !== undefined && pregNo !== undefined && pregNoProcede !== undefined) {
+      if (pregSi + pregNo + pregNoProcede !== this.totalProductosControlados) {
+        sumaMayor = true;
+      }
+    }
+
+    return sumaMayor;
+  }
+
   save() {
-    this.editForm1;
+    let respuestasInvalid = false;
+    this.preguntasProtocolo.forEach((preg) => {
+      if (preg.response === 'S' && preg.numResponseSi !== null && preg.numResponseNo !== null && preg.numResponseNoProcede !== null && 
+        preg.numResponseSi !== undefined && preg.numResponseNo !== undefined && preg.numResponseNoProcede !== undefined) {
+        if (preg.numResponseSi + preg.numResponseNo + preg.numResponseNoProcede !== this.totalProductosControlados) {
+          respuestasInvalid = true;
+        }
+      }
+    });
+
+    if (respuestasInvalid) {
+      this.notification.show({ message: 'text.other.pleaseReview' });
+    } else {
+      let preguntas: TotalProtocolResults[] = [];
+      let totalProtocoloResults: TotalProtocolResults;
+      this.preguntasProtocolo.forEach(preg => {
+          totalProtocoloResults = {
+            id: undefined,
+            ccaaRen: preg.numResponseNo,
+            ccaaRep: preg.numResponseNoProcede,
+            ccaaRes: preg.numResponseSi,
+            code: null, 
+            protocolResultsCode: null,
+            codeQuestion: preg.orderQuestion?.toString(), // poner el numero de pregunta
+            productServiceId: this.productoSelected?.id
+          };
+          preguntas.push(totalProtocoloResults);
+      });
+  
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('numExistentes')?.value!, this.codNumExistentes));
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('numControlados')?.value!, this.codNumControlados));
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdControlados')?.value!, this.codProdControlados));
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdCorrectos')?.value!, this.codProdCorrectos));
+      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdIncorrectos')?.value!, this.codProdIncorrectos));
+  
+  
+      let protocolResults: ProtocolResults = {
+        id: undefined,
+        autonomousCommunityCountryCode: undefined,
+        name: this.protocoloSelected?.name,
+        productServiceCode: this.productoSelected?.codeProductService,
+        protocolCode: this.protocoloSelected?.code,
+        campaignId: this.protocoloSelected?.campaignId,
+        productServiceId: this.productoSelected?.id,
+        protocolId: this.protocoloSelected?.id,
+        totalProtocolResultsDTOS: preguntas,
+        protocolDTO: this.protocoloSelected,
+        productServiceDTO: this.productoSelected,
+        autonomousCommunityCountryDTO: this.caSelected
+      };
+  
+      this.protocolResultsService.saveResults(protocolResults).subscribe((result: any) => {
+        this.router.navigate([`app/campanas/${this.campaign.id}/ver`]);
+      });
+    }
+  }
+
+  buildResultsTotales(numTotal: number, codigo: string): TotalProtocolResults {
+    let result: TotalProtocolResults;
+      result = {
+        id: undefined,
+        ccaaRen: null,
+        ccaaRep: null,
+        ccaaRes: numTotal,
+        code: null, 
+        protocolResultsCode: null,
+        codeQuestion: codigo, // poner el numero de pregunta
+        productServiceId: this.productoSelected?.id
+      };
+      return result;
   }
 
   onStepChange(event: any): void {
@@ -127,8 +294,14 @@ export class ResultadosComponent implements OnInit{
     if (this.editForm1.get('ca')?.value) {
       this.caSelected = this.editForm1.get('ca')?.value!;
     }
-    if (this.protocoloSelected && this.preguntasProtocolo.length == 0) {
-      this.preguntasProtocolo = this.protocoloSelected.Questions;
+    if (this.protocoloSelected) {
+      if (!this.preguntasProtocolo || this.preguntasProtocolo.length == 0) {
+        this.preguntasProtocolo = this.protocoloSelected.question;
+      }
+      
+    }
+    if (this.editForm2.get('totalProdControlados')?.value) {
+      this.totalProductosControlados = this.editForm2.get('totalProdControlados')?.value!;
     }
   }
 }

@@ -43,6 +43,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
     private final ModelMapper modelMapper;
 
     @Autowired

@@ -15,6 +15,7 @@ import { ProductsDialogComponent } from './products-dialog/products-dialog.compo
 import { CampaignProductServiceDTO, ProductService } from '@libs/sdk/productService';
 import { CampaignProductService } from '@base/shared/utilsService/campaignProduct.service';
 import { NavigationExtras } from '@angular/router';
+import { ProtocolResults } from '@libs/sdk/protocolResults';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -37,6 +38,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   protected override _editResourceTitle = 'pages.campaign.see';
   phases: any[] = [];
   campaignProducts: ProductService[] | null | undefined = [];
+  campaignResults: ProtocolResults[] | null | undefined = [];
 
   campaign: any;
   private dataSourceDialog: any;
@@ -80,6 +82,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       state: this.fb.control(null),
       protocols: this.fb.control([]),
       campaignProductServiceDTOS: this.fb.control([]),
+      protocolResultsDTOS: this.fb.control([])
     });
   }
 
@@ -102,6 +105,52 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       this.campaignProducts = this.form.get('campaignProductServiceDTOS')?.value;
     }
     return this.form.get('campaignProductServiceDTOS')?.value!;
+  }
+
+  get resultsDisplay(){
+    if (this.form.get('protocolResultsDTOS')?.value) {
+      this.campaignResults = this.form.get('protocolResultsDTOS')?.value;
+    }
+    return this.form.get('protocolResultsDTOS')?.value!;
+  }
+
+  getAutonomousCommunityName(code: any): string {
+    let name = "";
+    if (this.form.get('participants')?.value) {
+      this.form.get('participants')?.value?.forEach((participant) => {
+        if (participant.id === code) {
+          name = '[' + participant.name + ']';
+        }
+      });
+    }
+    
+    return name;
+  }
+
+  getProductServiceName(id: any): string {
+    let name = "";
+    if (this.form.get('campaignProductServiceDTOS')?.value) {
+      this.form.get('campaignProductServiceDTOS')?.value?.forEach((producto) => {
+        if (producto.id === id) {
+          name = producto.name;
+        }
+      });
+    }
+    
+    return name;
+  }
+
+  getProtocolName(id: any): string {
+    let name = "";
+    if (this.form.get('protocols')?.value) {
+      this.form.get('protocols')?.value?.forEach((protocolo) => {
+        if (protocolo.id === id) {
+          name = protocolo.name;
+        }
+      });
+    }
+    
+    return name;
   }
 
   loadProductsDisplay(){
@@ -197,14 +246,26 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.router.navigate(['/app/protocol/0']);
   }
 
-  navegarAComponenteResultados() {
+  navegarAComponenteResultados(resultado: ProtocolResults | undefined) {
     this.campaign = this.form.value;
     const navigationExtras: NavigationExtras = {
       state: {
-        campaign: this.campaign
+        campaign: this.campaign,
+        resultadoSelected: resultado ? resultado : undefined
       }
     };
     this.router.navigate([`app/campanas/${this.campaign.id}/resultados`], navigationExtras);
+  }
+
+  navegarAComponenteVerResultados(resultado: ProtocolResults | undefined) {
+    this.campaign = this.form.value;
+    const navigationExtras: NavigationExtras = {
+      state: {
+        campaign: this.campaign,
+        resultadoSelected: resultado ? resultado : undefined
+      }
+    };
+    this.router.navigate([`app/campanas/${this.campaign.id}/resultados/ver`], navigationExtras);
   }
 
   navegarAComponenteIpr() {

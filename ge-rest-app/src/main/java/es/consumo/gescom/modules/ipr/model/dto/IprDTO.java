@@ -1,12 +1,16 @@
 package es.consumo.gescom.modules.ipr.model.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import es.consumo.gescom.commons.dto.LongIdModel;
+import es.consumo.gescom.modules.iprQuestion.model.dto.IprQuestionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Column;
 
 @Getter
 @Setter
@@ -16,5 +20,9 @@ public class IprDTO implements Serializable, LongIdModel{
 
     private Long id;
     private String name;
-    
+    private String code;
+    private String protocolCode;
+    private Long campaignId;
+    private Long protocolId;
+    private List<IprQuestionDTO> iprQuestionDTOList;
 }

@@ -43,6 +43,8 @@ import es.consumo.gescom.modules.proponent.model.entity.ProponentEntity;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
+import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsDTO;
+import es.consumo.gescom.modules.protocol_results.service.ProtocolResultsService;
 import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
 import es.consumo.gescom.modules.specialist.model.converter.SpecialistConverter;
 import es.consumo.gescom.modules.specialist.model.dto.SpecialistDTO;
@@ -64,6 +66,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -83,7 +86,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                                   AutonomousCommunityService autonomousCommunityService, CampaignProductServiceService campaignProductServiceService,
                                   AutonomousCommunityParticipantsService autonomousCommunityParticipantsService,
                                   AutonomousCommunityProponentRepository autonomousCommunityProponentRepository, ProtocolService protocolService1,
-                                  AutonomousCommunityProponentService autonomousCommunityProponentService,
+                                  AutonomousCommunityProponentService autonomousCommunityProponentService, ProtocolResultsService protocolResultsService,
                                   AutonomousCommunitySpecialistRepository autonomousCommunitySpecialistRepository,
                                   AutonomousCommunitySpecialistService autonomousCommunitySpecialistService, CampaignProductServiceRepository campaignProductServiceRepository) {
         super(repository);
@@ -100,6 +103,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         this.specialistConverter = specialistConverter;
         this.protocolService = protocolService1;
         this.autonomousCommunityProponentService = autonomousCommunityProponentService;
+        this.protocolResultsService = protocolResultsService;
         this.autonomousCommunitySpecialistRepository = autonomousCommunitySpecialistRepository;
         this.autonomousCommunitySpecialistService = autonomousCommunitySpecialistService;
         this.campaignProductServiceRepository = campaignProductServiceRepository;
@@ -156,6 +160,8 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     private final ProtocolService protocolService;
 
     private final AutonomousCommunityProponentService autonomousCommunityProponentService;
+
+    private final ProtocolResultsService protocolResultsService;
 
     private final AutonomousCommunitySpecialistRepository autonomousCommunitySpecialistRepository;
 
@@ -325,6 +331,15 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         CampaignEntity campaign = campaignRepository.findById(idCampaign)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró registro con ID: " + idCampaign));
         List<ProtocolDTO> protocolDTO = protocolService.findProtocolByCampaignId(idCampaign);
+        List<ProtocolResultsDTO>  protocolResultsDTOS = protocolResultsService.findProtocolResultsByCampaignId(idCampaign);
+        protocolResultsDTOS.forEach(protocolResultsDTO -> {
+            protocolDTO.forEach(protocolDTO1 -> {
+                if(protocolDTO1.getId().equals(protocolResultsDTO.getProtocolDTO().getId())){
+                    protocolResultsDTO.getProtocolDTO().setQuestion(protocolDTO1.getQuestion());
+                }
+            });
+        });
+
         if (campaign != null) {
             CampaignDTO campaignDTO = campaingnConverter.convertToModel(campaign);
             campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(idCampaign));
@@ -332,6 +347,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             campaignDTO.setSpecialists(autonomousCommunitySpecialistService.finByIdCampaign(idCampaign));
             campaignDTO.setCampaignProductServiceDTOS(campaignProductServiceService.findCampaignProductServiceByCampaignId(idCampaign));
             campaignDTO.setProtocols(protocolDTO);
+            campaignDTO.setProtocolResultsDTOS(protocolResultsDTOS);
 
             return campaignDTO;
         } else {
@@ -353,7 +369,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             listCampaingDTO.add(campaignDTO);
         }
         if(listCampaingDTO != null){
-            return new PageImpl<>(listCampaingDTO, PageRequest.of(0, 10), listCampaingDTO.size());
+            return new PageImpl<>(listCampaingDTO, PageRequest.of(wrapper.getCriteria().toPageable().getPageNumber(), wrapper.getCriteria().toPageable().getPageSize()), listCampaign.getTotalElements());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaign not found");
 

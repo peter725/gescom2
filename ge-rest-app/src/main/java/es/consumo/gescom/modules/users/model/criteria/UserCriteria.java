@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserCriteria extends FilterCriteria {
+
     private String name;
     private String surname;
     private String dni;

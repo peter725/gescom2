@@ -142,31 +142,31 @@
         <dependency>
             <groupId>eu.eidas</groupId>
             <artifactId>eidas-encryption</artifactId>
-            <version>1.4.3-clave</version>
+            <version>2.7</version>
             <!--			<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>eu.eidas</groupId>
             <artifactId>eidas-commons</artifactId>
-            <version>1.4.3-clave</version>
+            <version>2.7</version>
             <!--			<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>eu.eidas</groupId>
             <artifactId>eidas-configmodule</artifactId>
-            <version>1.4.3-clave</version>
+            <version>2.7</version>
             <!--			<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>eu.eidas</groupId>
             <artifactId>eidas-light-commons</artifactId>
-            <version>1.4.3-clave</version>
+            <version>2.7</version>
             <!--			<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>eu.eidas</groupId>
             <artifactId>eidas-saml-engine</artifactId>
-            <version>1.4.3-clave</version>
+            <version>2.7</version>
             <!--			<scope>provided</scope>-->
         </dependency>
         <dependency>
@@ -248,17 +248,16 @@
                 <includes>
                     <include>**/EncryptModule_SP.xml</include>
                     <include>**/SignModule_SP.xml</include>
-                    <include>**/cliente-keystore-integra-nuevo.jks</include>
+                    <include>**/encryptionConf.xml</include>
                 </includes>
             </resource>
             <resource>
                 <directory>src/main/security</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>**/clave.ks</include>
+                    <include>**/cliente-keystore-integra-nuevo.jks</include>
                 </includes>
             </resource>
-
         </resources>
     </build>
 

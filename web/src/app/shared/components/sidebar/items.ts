@@ -18,7 +18,7 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     },
     {
       text: 'pages.approach.list', path:'approachManagementList'
-    }
+    },
     ]
   },
   // Campañas

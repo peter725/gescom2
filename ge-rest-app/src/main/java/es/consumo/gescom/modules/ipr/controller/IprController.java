@@ -5,6 +5,7 @@ import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.modules.campaign.service.CampaignService;
 import es.consumo.gescom.modules.ipr.model.criteria.IprCriteria;
 import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
 import es.consumo.gescom.modules.ipr.model.entity.IprEntity;
@@ -33,5 +34,10 @@ public class IprController extends AbstractCrudController<IprEntity, IprDTO, Lon
         Page<IprEntity.SimpleProjection> result =
                 ((IprService) service).findAllIprById(new CriteriaWrapper<>(iprCriteria), id);
         return ResponseEntity.ok(result);
+    }
+
+    @Override
+    protected IprDTO performCreate(IprDTO payload) {
+        return ((IprService) service).createIPR(payload);
     }
 }

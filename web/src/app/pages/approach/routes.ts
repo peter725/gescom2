@@ -30,4 +30,11 @@ export const APPROACH_PAGE_ROUTES: Routes = [
         },
         loadChildren: () => import('./').then(m => m.ApproachSeePageModule),
     },
+    {
+        path: ':id',
+        data: {
+            breadcrumb,
+        },
+        loadChildren: () => import('./').then(m => m.ApproachEditPageModule),
+    },
   ]

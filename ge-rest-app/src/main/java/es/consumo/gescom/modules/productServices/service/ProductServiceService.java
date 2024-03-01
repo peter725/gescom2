@@ -14,7 +14,7 @@ public interface ProductServiceService extends CrudService<ProductServiceEntity,
     Page<ProductServiceEntity.SimpleProjection> findAllProductServiceById(CriteriaWrapper<ProductServiceCriteria> wrapper, Long id);
 
 
-    ProductServiceEntity findByCode(String code);
+    ProductServiceDTO findByCode(String code);
 
-    ProductServiceEntity findProductServiceById(Long id);
+    ProductServiceDTO findProductServiceById(Long id);
 }

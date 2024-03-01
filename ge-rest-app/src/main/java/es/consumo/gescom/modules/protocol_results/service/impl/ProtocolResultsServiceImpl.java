@@ -3,13 +3,24 @@ package es.consumo.gescom.modules.protocol_results.service.impl;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
+import es.consumo.gescom.modules.autonomousCommunityCountry.service.AutonomousCommunityCountryService;
+import es.consumo.gescom.modules.productServices.service.ProductServiceService;
+import es.consumo.gescom.modules.protocol.service.ProtocolService;
+import es.consumo.gescom.modules.protocol_results.model.converter.ProtocolResultsConverter;
 import es.consumo.gescom.modules.protocol_results.model.criteria.ProtocolResultsCriteria;
+import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsDTO;
 import es.consumo.gescom.modules.protocol_results.model.entity.ProtocolResultsEntity;
 import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
 import es.consumo.gescom.modules.protocol_results.service.ProtocolResultsService;
+import es.consumo.gescom.modules.totalProtocolResults.model.dto.TotalProtocolResultsDTO;
+import es.consumo.gescom.modules.totalProtocolResults.model.entity.TotalProtocolResultsEntity;
+import es.consumo.gescom.modules.totalProtocolResults.repository.TotalProtocolResultsRepository;
+import es.consumo.gescom.modules.totalProtocolResults.service.TotalProtocolResultsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -21,8 +32,82 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
     @Autowired
     private ProtocolResultsRepository protocolResultsRepository;
 
+    @Autowired
+    private TotalProtocolResultsRepository totalProtocolResultsRepository;
+
+    @Autowired
+    private TotalProtocolResultsService totalProtocolResultsService;
+
+    @Autowired
+    private ProtocolResultsConverter protocolResultsConverter;
+
+    @Autowired
+    private ProtocolService protocolService;
+
+    @Autowired
+    private ProductServiceService productServiceService;
+
+    @Autowired
+    private AutonomousCommunityCountryService autonomousCommunityCountryService;
+
     @Override
     public Page<ProtocolResultsEntity.SimpleProjection> findAllSumProtocolById(CriteriaWrapper<ProtocolResultsCriteria> wrapper, Long id) {
         return ((ProtocolResultsRepository) repository).findAllSumProtocolById(wrapper.getCriteria().toPageable(), id);
     }
+
+    @Override
+    public ProtocolResultsEntity saveProtocolResults(ProtocolResultsDTO protocolResults) {
+        ProtocolResultsEntity protocolResultsEntity = protocolResultsConverter.convertToEntity(protocolResults);
+        protocolResultsEntity.setAutonomousCommunityCountryId(protocolResults.getAutonomousCommunityCountryDTO().getId());
+        ProtocolResultsEntity protocolResultsEntitySave = protocolResultsRepository.save(protocolResultsEntity);
+
+        List<TotalProtocolResultsDTO> totalProtocolResultsDTOS = protocolResults.getTotalProtocolResultsDTOS();
+        totalProtocolResultsDTOS.forEach(totalProtocolResults -> {
+            TotalProtocolResultsEntity totalProtocolResultsEntity = new TotalProtocolResultsEntity();
+            totalProtocolResultsEntity.setCcaaRen(totalProtocolResults.getCcaaRen());
+            totalProtocolResultsEntity.setCcaaRep(totalProtocolResults.getCcaaRep());
+            totalProtocolResultsEntity.setCcaaRes(totalProtocolResults.getCcaaRes());
+            totalProtocolResultsEntity.setCode(totalProtocolResults.getCode());
+            totalProtocolResultsEntity.setProtocolResultsCode(totalProtocolResults.getProtocolResultsCode());
+            totalProtocolResultsEntity.setCodeQuestion(totalProtocolResults.getCodeQuestion());
+            totalProtocolResultsEntity.setProtocolResultsId(protocolResultsEntitySave.getId());
+
+            totalProtocolResultsRepository.save(totalProtocolResultsEntity);
+        });
+
+        return protocolResultsEntitySave;
+    }
+
+    public List<ProtocolResultsDTO> findProtocolResultsByCampaignId(Long campaignId) {
+        List<ProtocolResultsEntity> protocolResultsEntities = protocolResultsRepository.findAllByCampaignId(campaignId);
+        List<ProtocolResultsDTO> protocolResultsDTOS = protocolResultsConverter.convertToModel(protocolResultsEntities);
+        for (ProtocolResultsDTO protocolResultsDTO : protocolResultsDTOS){
+
+            if (protocolResultsDTO.getAutonomousCommunityCountryCode() != null){
+                protocolResultsDTO.setAutonomousCommunityCountryDTO(autonomousCommunityCountryService.findByCode(protocolResultsDTO.getAutonomousCommunityCountryCode()));
+            }else{
+                protocolResultsDTO.setAutonomousCommunityCountryDTO(autonomousCommunityCountryService.findCCAAById(protocolResultsDTO.getAutonomousCommunityCountryId()));
+            }
+
+
+            if (protocolResultsDTO.getProductServiceCode() != null){
+                protocolResultsDTO.setProductServiceDTO(productServiceService.findByCode(protocolResultsDTO.getProductServiceCode()));
+            }else{
+                protocolResultsDTO.setProductServiceDTO(productServiceService.findProductServiceById(protocolResultsDTO.getProductServiceId()));
+            }
+
+            protocolResultsDTO.setTotalProtocolResultsDTOS(totalProtocolResultsService.findByProtocolResultsId(protocolResultsDTO));
+
+            if (protocolResultsDTO.getProtocolCode() != null){
+                protocolResultsDTO.setProtocolDTO(protocolService.findProtocolByCode(protocolResultsDTO.getProtocolCode()));
+            }else{
+                protocolResultsDTO.setProtocolDTO(protocolService.findProtocolDTOById(protocolResultsDTO.getProtocolId()));
+            }
+
+
+        }
+
+        return protocolResultsDTOS;
+    }
+
 }

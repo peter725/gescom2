@@ -15,6 +15,7 @@ import lombok.Setter;
 public class PhaseDTO implements Serializable, LongIdModel {
 
     private Long id;
+    private String phase;
     private String description;
     
 }

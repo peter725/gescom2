@@ -33,6 +33,7 @@ import es.consumo.gescom.modules.campaignProductService.service.CampaignProductS
 import es.consumo.gescom.modules.campaignType.model.converter.CampaingnTypeConverter;
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
 import es.consumo.gescom.modules.phase.model.converter.PhaseConverter;
+import es.consumo.gescom.modules.phase.model.dto.PhaseDTO;
 import es.consumo.gescom.modules.phase.model.entity.PhaseEntity;
 import es.consumo.gescom.modules.phase.repository.PhaseRepository;
 import es.consumo.gescom.modules.productServices.model.dto.ProductServiceDTO;
@@ -386,9 +387,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     }
 
     @Override
-    public CampaignEntity switchPhase(ChangePhaseDTO changeStatus, Long id) {
+    public CampaignEntity switchPhase(PhaseDTO changeStatus, Long id) {
         CampaignEntity entity = findById(id).orElseThrow();
-        PhaseEntity phase = phaseConverter.convertToEntity(changeStatus.getPhaseDTO());
+        PhaseEntity phase = phaseConverter.convertToEntity(changeStatus);
         entity.setPhaseCampaign(phase);
 
         return repository.save(entity);

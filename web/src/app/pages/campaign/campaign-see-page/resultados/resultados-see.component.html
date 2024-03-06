@@ -6,43 +6,52 @@
 
 
     <ng-template>Datos Compl.</ng-template>
-        <form [formGroup]="editForm1">
-            <div class="grid grid-cols-6 gap-1.5 mt-4" formGroupName="campania">
-                    <mat-form-field class="col-span-4">
-                        <mat-label>{{ 'fields.campaign.name' | translate }}</mat-label>
-                        <input matInput formControlName="nameCampaign" readonly>
-                    </mat-form-field>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-subtitle>{{ 'pages.results.numEstablecimientos' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="editForm1">
+                    <div class="grid grid-cols-6 gap-1.5 mt-4" formGroupName="campania">
+                            <mat-form-field class="col-span-4">
+                                <mat-label>{{ 'fields.campaign.name' | translate }}</mat-label>
+                                <input matInput formControlName="nameCampaign" readonly>
+                            </mat-form-field>
+        
+                            <mat-form-field class="col-span-2">
+                                <mat-label>{{ 'fields.campaign.year' | translate }}</mat-label>
+                                <input matInput formControlName="year" readonly>
+                            </mat-form-field>
+                    </div>
+                    
+                </form>
+        
+                    <div class="grid grid-cols-6 gap-1.5">
+                        <mat-form-field class="col-span-3">
+                            <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
+                            <input matInput [value]="protocoloSelected?.name" readonly>
+                        </mat-form-field>
+        
+                        <mat-form-field class="col-span-3">
+                            <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
+                            <input matInput [value]="productoSelected?.name" readonly>
+                        </mat-form-field>
+                    </div>
+        
+        
+                    <div class="grid grid-cols-6 gap-1.5">
+                        <mat-form-field class="col-span-6">
+                            <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
+                            <input matInput [value]="caSelected?.name" readonly>
+                        </mat-form-field>
+                    </div>
+        
+                
+            </mat-card-content>
+        </mat-card>
 
-                    <mat-form-field class="col-span-2">
-                        <mat-label>{{ 'fields.campaign.year' | translate }}</mat-label>
-                        <input matInput formControlName="year" readonly>
-                    </mat-form-field>
-            </div>
-            
-        </form>
-
-            <div class="grid grid-cols-6 gap-1.5">
-                <mat-form-field class="col-span-3">
-                    <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
-                    <input matInput [value]="protocoloSelected?.name" readonly>
-                </mat-form-field>
-
-                <mat-form-field class="col-span-3">
-                    <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
-                    <input matInput [value]="productoSelected?.name" readonly>
-                </mat-form-field>
-            </div>
-
-
-            <div class="grid grid-cols-6 gap-1.5">
-                <mat-form-field class="col-span-6">
-                    <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
-                    <input matInput [value]="caSelected?.name" readonly>
-                </mat-form-field>
-            </div>
-
-        <form [formGroup]="editForm2">
-            <mat-card>
+        <form>
+            <mat-card class="mt-4">
                 <mat-card-header>
                     <mat-card-subtitle>{{ 'pages.results.numEstablecimientos' | translate }}</mat-card-subtitle>
                 </mat-card-header>
@@ -51,14 +60,14 @@
                         <div class="col-span-3 div-center ">
                             <mat-form-field>
                             <mat-label>{{ 'pages.results.numExistentes' | translate }}</mat-label>
-                            <input matInput formControlName="numExistentes" type="number">
+                            <input matInput [value]="numExistentes" type="number" readonly>
                             </mat-form-field>
                         </div>
         
                         <div class="col-span-3 div-center ">
                             <mat-form-field>
                             <mat-label>{{ 'pages.results.numControlados' | translate }}</mat-label>
-                            <input matInput formControlName="numControlados" type="number" required>
+                            <input matInput [value]="numControlados" type="number" readonly>
                             </mat-form-field>
                         </div>
                     </div>
@@ -74,21 +83,21 @@
                         <div class="col-span-2 div-center ">
                             <mat-form-field>
                               <mat-label>{{ 'pages.results.tProdControlados' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdControlados" type="number" required>
+                              <input matInput [value]="totalProdControlados" type="number" readonly>
                             </mat-form-field>
                         </div>
         
                         <div class="col-span-2 div-center ">
                             <mat-form-field class="col-span-1">
                               <mat-label>{{ 'pages.results.tProdCorrectos' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdCorrectos" type="number" required>
+                              <input matInput [value]="totalProdCorrectos" type="number" readonly>
                             </mat-form-field>
                         </div>
     
                         <div class="col-span-2 div-center ">
                             <mat-form-field class="col-span-1">
                               <mat-label>{{ 'pages.results.tProdIncorrectos' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdIncorrectos" type="number" required>
+                              <input matInput [value]="totalProdIncorrectos" type="number" readonly>
                             </mat-form-field>
                         </div>
                     </div>
@@ -135,13 +144,13 @@
                                 {{ preg['question'] }}
                             </td>
                             <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" />
+                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
                             </td>
                             <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" />
+                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
                             </td>
                             <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" />
+                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
                             </td>
                     </ng-container>
                   

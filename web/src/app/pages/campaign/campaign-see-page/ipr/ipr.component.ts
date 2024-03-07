@@ -40,6 +40,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
   responseUser: any;
   respuestasUsuarioCombined: any[] = [];
   iprQuestionDTOList: any[] = []; // Declaración de la propiedad iprQuestionDTOList
+  cancelRedirectPath = '../../campanas/consulta';
 
   override async ngOnInit(): Promise<void> {
     super.ngOnInit();
@@ -95,10 +96,9 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
   }
 
 
-  // ngAfterViewInit(): void {
-  //   let campaignId = this.form.get('campaignId')?.value;
-  //   this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../campanas/consulta';
-  // }
+  ngAfterViewInit(): void {
+   this.cancelRedirectPath = this.idCampaign ? `../ver` : '../../consulta';
+  }
 
 
   override getRedirectAfterSaveRoute(){

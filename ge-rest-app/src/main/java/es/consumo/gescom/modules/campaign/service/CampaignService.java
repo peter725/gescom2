@@ -2,8 +2,7 @@ package es.consumo.gescom.modules.campaign.service;
 
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
-import es.consumo.gescom.modules.campaign.model.dto.CampaignDTO;
-import es.consumo.gescom.modules.campaign.model.dto.ChangePhaseDTO;
+import es.consumo.gescom.modules.campaign.model.dto.*;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 
 import es.consumo.gescom.commons.service.CrudService;
@@ -22,4 +21,6 @@ public interface CampaignService extends CrudService<CampaignEntity, Long>{
     CampaignEntity switchStatus(ChangeStatusDTO changeStatus, Long id);
 
     CampaignEntity switchPhase(ChangePhaseDTO changeStatus, Long id);
+
+    ResultsResponseDTO getResults(SearchDTO searchDTO);
 }

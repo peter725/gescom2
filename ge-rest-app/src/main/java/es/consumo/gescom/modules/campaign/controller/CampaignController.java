@@ -7,8 +7,7 @@ import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.campaign.model.criteria.CampaignCriteria;
-import es.consumo.gescom.modules.campaign.model.dto.CampaignDTO;
-import es.consumo.gescom.modules.campaign.model.dto.ChangePhaseDTO;
+import es.consumo.gescom.modules.campaign.model.dto.*;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.service.CampaignService;
 import es.consumo.gescom.modules.users.model.entity.UserEntity;
@@ -68,4 +67,8 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/results")
+    public ResponseEntity<ResultsResponseDTO> getResults(@RequestBody SearchDTO searchDTO) {
+        return ResponseEntity.ok(((CampaignService) service).getResults(searchDTO));
+    }
 }

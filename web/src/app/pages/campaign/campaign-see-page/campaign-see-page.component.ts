@@ -13,9 +13,10 @@ import { ExcelService } from '@base/shared/utilsExcel/excel.service';
 import { InfringementDialogComponent } from '@base/pages/infringement-dialog/infringement-dialog.component';
 import { ProductsDialogComponent } from './products-dialog/products-dialog.component';
 import { CampaignProductServiceDTO, ProductService } from '@libs/sdk/productService';
-import { CampaignProductService } from '@base/shared/utilsService/campaignProduct.service';
+import { CampaignService } from '@base/shared/utilsService/campaign.service';
 import { NavigationExtras } from '@angular/router';
 import { ProtocolResults } from '@libs/sdk/protocolResults';
+import { PHASE_BORRADOR_RESULTADOS, PHASE_DATOS_INICIALES, PHASE_DOC_INSPECCION, PHASE_FICHA_TRANSPARENCIA, PHASE_IMPRESO_DEFINITIVO, PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE } from '@base/shared/utils/constants';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -44,7 +45,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   private dataSourceDialog: any;
   private dataSharingService: DataSharingService = inject(DataSharingService);
   private excelService: ExcelService = inject(ExcelService);
-  private campaignProductService: CampaignProductService = inject(CampaignProductService);
+  private campaignService: CampaignService = inject(CampaignService);
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -161,17 +162,38 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   protected changePhaseCampaign(){
 
-    let actualId = this.form.get('phaseCampaign')?.value?.id;
+    let actualPhase = this.form.get('phaseCampaign')?.value;
     let newPhase;
-    if (actualId! <= 14){
-      actualId = actualId! + 1;
-      newPhase = this.phases.find((item: any) => item.id === actualId);
+    let save = true;
+
+    if (actualPhase?.phase === PHASE_DATOS_INICIALES) {
+      newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_DOC_INSPECCION);
+    } else if (actualPhase?.phase === PHASE_DOC_INSPECCION) {
+      newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_BORRADOR_RESULTADOS);
+    } else if (actualPhase?.phase === PHASE_BORRADOR_RESULTADOS) {
+      newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_IMPRESO_DEFINITIVO);
+    } else if (actualPhase?.phase === PHASE_IMPRESO_DEFINITIVO) {
+      newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_RESULTADOS_DEFINITIVOS);
+    } else if (actualPhase?.phase === PHASE_RESULTADOS_DEFINITIVOS) {
+      newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_RESULTADOS_FINALES);
+    } else if (actualPhase?.phase === PHASE_RESULTADOS_FINALES || actualPhase?.phase === PHASE_RESULTADOS_FINALES_DEBATE) {
+      newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_FICHA_TRANSPARENCIA);
+    } else if (actualPhase?.phase === PHASE_FICHA_TRANSPARENCIA) {
+      save = false;
+      this.notification.show({ message: 'text.other.finalPhase' });
+    } else {
+      save = false;
+      this.notification.show({ message: 'text.other.errorPhase' });
+    } 
+
+    if (save){
+      this.campaign = this.form.value;
+      this.campaignService.saveChangePhase(this.campaign.id, newPhase).subscribe((result: any) => {
+        location.reload();
+      });
     }
-    this.campaign = this.form.value;
-    this.campaign.phaseCampaign = newPhase;
-    this.form.patchValue(this.campaign);
-    this.save().then(r => console.log('changePhaseCampaign 1', this.campaign));
-    console.log('changePhaseCampaign 1', this.campaign);
+    
+
   }
 
   agregarProducto(): void {
@@ -195,7 +217,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
         });
 
 
-        this.campaignProductService.saveCampaignProduct(newProducts).subscribe((result: any) => {
+        this.campaignService.saveCampaignProduct(newProducts).subscribe((result: any) => {
           location.reload();
         });
       }
@@ -205,7 +227,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   borrarProducto(id: number): void {
     
 
-    this.campaignProductService.delete(id).subscribe({
+    this.campaignService.deleteProduct(id).subscribe({
       next: () => {
         // Handle successful response
         

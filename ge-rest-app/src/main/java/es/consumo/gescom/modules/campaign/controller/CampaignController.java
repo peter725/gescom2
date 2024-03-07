@@ -10,6 +10,7 @@ import es.consumo.gescom.modules.campaign.model.criteria.CampaignCriteria;
 import es.consumo.gescom.modules.campaign.model.dto.*;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.service.CampaignService;
+import es.consumo.gescom.modules.phase.model.dto.PhaseDTO;
 import es.consumo.gescom.modules.users.model.entity.UserEntity;
 import es.consumo.gescom.modules.users.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -62,7 +63,7 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
     }
 
     @PostMapping("/{id}/phase")
-    public ResponseEntity<CampaignEntity> switchPhase(@RequestBody ChangePhaseDTO changeStatus, @PathVariable  Long id) {
+    public ResponseEntity<CampaignEntity> switchPhase(@RequestBody PhaseDTO changeStatus, @PathVariable  Long id) {
         CampaignEntity result = ((CampaignService) service).switchPhase(changeStatus, id);
         return ResponseEntity.ok(result);
     }

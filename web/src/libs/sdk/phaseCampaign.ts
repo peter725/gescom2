@@ -2,6 +2,7 @@ import {SimpleModel, StatefulAltModel} from "@libs/sdk/common";
 
 export interface PhaseCampaign extends SimpleModel,StatefulAltModel{
 
+  id: number;
   phase: string;
   description: string;
 

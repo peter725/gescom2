@@ -123,7 +123,8 @@
                 <h3 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900" >{{ form.get('phaseCampaign')?.value?.description }}</h3>
                 <button  class="upload-btn ml-2 mat-button mat-button-base mat-primary"
                          loadingSpinnerColor="primary"
-                         (click)="changePhaseCampaign()"       >
+                         tswConfirmAction
+                         (confirmed)="changePhaseCampaign()"       >
                   <mat-icon>arrow_forward</mat-icon>
                 </button>
             </div>

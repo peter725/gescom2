@@ -116,56 +116,6 @@ export class ResultadosComponent implements OnInit{
     console.log("Prueba");
     this.updateForm1(this.campaign);
     this.loadOptions(this.campaign);
-    if (this.resultadoSelected) {
-      this.loadResultados(this.resultadoSelected);
-    }
-  }
-
-  loadResultados(resultadoSelected: ProtocolResults) {
-    this.protocoloSelected = this.getProtocolo(resultadoSelected?.protocolDTO?.id);
-    this.productoSelected = this.getProductService(resultadoSelected?.productServiceDTO?.id);
-    this.caSelected = this.getAutonomousCommunity(resultadoSelected?.autonomousCommunityCountryDTO?.id);
-    this.preguntasProtocolo = this.protocoloSelected?.question;
-
-    this.editForm1.patchValue({
-      protocolo: this.protocoloSelected,
-      producto: this.productoSelected,
-      ca: this.caSelected,
-    });
-
-    resultadoSelected.totalProtocolResultsDTOS?.forEach((protocolResult) => {
-      if (protocolResult.codeQuestion === this.codNumExistentes) {
-        this.editForm2.patchValue({
-          numExistentes: protocolResult.ccaaRes
-        });
-      } else if (protocolResult.codeQuestion === this.codNumControlados) {
-        this.editForm2.patchValue({
-          numControlados: protocolResult.ccaaRes
-        });
-      } else if (protocolResult.codeQuestion === this.codProdControlados) {
-        this.editForm2.patchValue({
-          totalProdControlados: protocolResult.ccaaRes
-        });
-      } else if (protocolResult.codeQuestion === this.codProdCorrectos) {
-        this.editForm2.patchValue({
-          totalProdCorrectos: protocolResult.ccaaRes
-        });
-      } else if (protocolResult.codeQuestion === this.codProdIncorrectos) {
-        this.editForm2.patchValue({
-          totalProdIncorrectos: protocolResult.ccaaRes
-        });
-      } else if (this.preguntasProtocolo && this.preguntasProtocolo.length > 0) {
-       
-        this.preguntasProtocolo.forEach((question) => {
-          if (question.orderQuestion === protocolResult.codeQuestion) {
-            // Asignar el resultado a la pregunta
-            question.numResponseSi = protocolResult.ccaaRes;
-            question.numResponseNo = protocolResult.ccaaRen;
-            question.numResponseNoProcede = protocolResult.ccaaRep;
-          }
-        });
-      }
-    });
   }
 
   protected updateForm1(campania: CampaignForm): void {
@@ -241,11 +191,11 @@ export class ResultadosComponent implements OnInit{
           preguntas.push(totalProtocoloResults);
       });
   
-      preguntas.push(this.buildResultsTotales(this.editForm1.get('numExistentes')?.value!, this.codNumExistentes));
-      preguntas.push(this.buildResultsTotales(this.editForm1.get('numControlados')?.value!, this.codNumControlados));
-      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdControlados')?.value!, this.codProdControlados));
-      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdCorrectos')?.value!, this.codProdCorrectos));
-      preguntas.push(this.buildResultsTotales(this.editForm1.get('totalProdIncorrectos')?.value!, this.codProdIncorrectos));
+      preguntas.push(this.buildResultsTotales(this.editForm2.get('numExistentes')?.value!, this.codNumExistentes));
+      preguntas.push(this.buildResultsTotales(this.editForm2.get('numControlados')?.value!, this.codNumControlados));
+      preguntas.push(this.buildResultsTotales(this.editForm2.get('totalProdControlados')?.value!, this.codProdControlados));
+      preguntas.push(this.buildResultsTotales(this.editForm2.get('totalProdCorrectos')?.value!, this.codProdCorrectos));
+      preguntas.push(this.buildResultsTotales(this.editForm2.get('totalProdIncorrectos')?.value!, this.codProdIncorrectos));
   
   
       let protocolResults: ProtocolResults = {

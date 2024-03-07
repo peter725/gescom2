@@ -6,48 +6,45 @@ import { CRUD_OPERATIONS, CrudOperationStorage, HttpParamsSrc, RequestConfig } f
 import { Protocol } from '@libs/sdk/protocol';
 import { CampaignProductServiceDTO, ProductService } from '@libs/sdk/productService';
 import { Observable } from 'rxjs';
+import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
 
 @Injectable()
-export class CampaignProductService {
-    private resourceUrl = 'campaignProductService';
+export class CampaignService {
+    private resourceUrlProduct = 'campaignProductService';
+    private resourceUrlCampaign = 'campaign';
 
     constructor(private http: HttpClient,
         @Inject(CRUD_OPERATIONS) private operations: CrudOperationStorage,) { }
     
     saveCampaignProduct(producto: CampaignProductServiceDTO[]):any{
-        const def = this.operations.get(this.resourceUrl);
+        const def = this.operations.get(this.resourceUrlProduct);
         const operation = def.findAll();
         return this.http
                         .post<CampaignProductServiceDTO[]>(operation.path + '/saveRelation', producto, { observe: 'response' });
 
     }
 
-    /* deleteCampaignProduct(id: ID, config: RequestConfig): Observable<void> {
-        const def = this.operations.get(config.resourceName);
-        const operation = def.delete(config.pathParams);
-        const params = this.buildHttpParams(config);
-        return this.http.post<void>(operation.path, {}, { params });
-      } */
-
-      /* deleteCampaignProduct(id: ID, config: RequestConfig): Observable<void> {
-        const def = this.operations.get(config.resourceName);
-        const operation = def.delete();
-        return this.http.post<void>(operation.path, {}, { params });
-      } */
-
-      delete(id: number): Observable<any> {
+    deleteProduct(id: number): Observable<any> {
         const config: RequestConfig = {
-            resourceName: this.resourceUrl,
+            resourceName: this.resourceUrlProduct,
         };
         config.pathParams = {id};
-        const def = this.operations.get(this.resourceUrl);
+        const def = this.operations.get(this.resourceUrlProduct);
         const operation = def.delete(config.pathParams);
         const params = this.buildHttpParams(config);
         return this.http.delete<void>(`${operation.path}/deleteRelation/${id}`, { params });
         // return this.http.delete(`${operation.path}/${id}`, { observe: 'response' });
-      }
+    }
 
-      private buildHttpParams(config: RequestConfig) {
+    saveChangePhase(campaignId: number, phase: PhaseCampaign):any{
+      const def = this.operations.get(this.resourceUrlCampaign);
+      const operation = def.findAll();
+      return this.http
+                      .post<any>(`${operation.path}/${campaignId}/phase`, phase, { observe: 'response' });
+
+  }
+
+    private buildHttpParams(config: RequestConfig) {
         const { queryParams, pageReq } = config;
         const fromObject: Record<string, HttpParamsSrc> = {};
     
@@ -58,14 +55,6 @@ export class CampaignProductService {
           .forEach(([key, value]) => fromObject[key] = value);
     
         return new HttpParams({ fromObject });
-      }
+    }
 
-      /* protected createDeleteOperation(id: any): Observable<void> {
-        const config: RequestConfig = {
-          resourceName: this.resourceName,
-        };
-        config.pathParams = {id};
-    
-        return this.crudService.delete(id, config);
-      } */
 }

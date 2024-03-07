@@ -1,0 +1,159 @@
+<tsw-breadcrumbs></tsw-breadcrumbs> 
+
+<!-- <form [formGroup]="form">
+  
+</form> -->
+
+
+<mat-stepper [linear]="true" (selectionChange)="onStepChange($event)" #stepper>
+    <mat-step [stepControl]="editForm1">
+    <ng-template matStepLabel>Criterios</ng-template>
+      <form [formGroup]="editForm1">
+            <div formGroupName="campania">
+                <div class="grid grid-cols-1 gap-1.5 mt-4">
+                    <mat-form-field>
+                      <mat-label>{{ 'fields.campaign.name' | translate }}</mat-label>
+                      <input matInput formControlName="nameCampaign">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-1.5 mt-4">
+                <mat-form-field>
+                    <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
+                    <mat-select name="protocolos" formControlName="protocolo" required>
+                        <mat-option *ngFor="let proto of protocolosList" [value]="proto">
+                          {{proto.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="grid grid-cols-1 gap-1.5 mt-4">
+                <mat-form-field>
+                    <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
+                    <mat-select name="protocolos" formControlName="producto" required>
+                        <mat-option *ngFor="let prod of productosList" [value]="prod">
+                          {{prod.productName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="grid grid-cols-1 gap-1.5 mt-4">
+                <mat-form-field>
+                    <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
+                    <mat-select name="protocolos" formControlName="ca" required>
+                        <mat-option *ngFor="let ca of caList" [value]="ca">
+                          {{ca.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        <div class="justify-center mt-3">
+          <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 rounded" matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="editForm1">
+        <ng-template matStepLabel>Resultados</ng-template>
+        <form [formGroup]="editForm1">
+            <div class="grid grid-cols-6 gap-1.5 mt-4" formGroupName="campania">
+                    <mat-form-field class="col-span-4">
+                        <mat-label>{{ 'fields.campaign.name' | translate }}</mat-label>
+                        <input matInput formControlName="nameCampaign" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-span-2">
+                        <mat-label>{{ 'fields.campaign.year' | translate }}</mat-label>
+                        <input matInput formControlName="year" readonly>
+                    </mat-form-field>
+            </div>
+            
+        </form>
+
+            <div class="grid grid-cols-6 gap-1.5">
+                <mat-form-field class="col-span-3">
+                    <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
+                    <input matInput [value]="protocoloSelected?.name" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="col-span-3">
+                    <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
+                    <input matInput [value]="productoSelected?.productName" readonly>
+                </mat-form-field>
+            </div>
+
+
+            <div class="grid grid-cols-6 gap-1.5">
+                <mat-form-field class="col-span-6">
+                    <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
+                    <input matInput [value]="caSelected?.name" readonly>
+                </mat-form-field>
+            </div>
+
+            <div class="w-3/4 mx-auto mt-4" *ngIf="preguntasProtocolo && preguntasProtocolo.length > 0">
+                <div class="table w-full border-collapse">
+                  <div class="table-header-group bg-gray-200">
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Si</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede</div>
+                  </div>
+      
+                  <!-- Filas de la tabla -->
+                  <div class="table-row-group">
+                    <tr *ngFor="let preg of preguntasProtocolo">
+                        <ng-container *ngIf="preg.response == 'N'">
+                            <!-- Pregunta con respuesta 'N' -->                        
+                                <td class="p-4 bg-gray-200">
+                                    {{ preg['orderQuestion'] }}
+                                    
+                                </td>
+                                <td  class="p-4 bg-gray-200">
+                                    {{ preg['question'] }}
+                                </td>
+                                <td class="p-4 bg-gray-200"></td>
+                                <td class="p-4 bg-gray-200"></td>
+                                <td class="p-4 bg-gray-200"></td>
+                        </ng-container>
+
+                        <ng-container *ngIf="preg.response == 'S'">
+                            <!-- Pregunta con respuesta 'S' -->                        
+                                <td class="p-4">
+                                    {{ preg['orderQuestion'] }}
+                                    
+                                </td>
+                                <td  class="p-4">
+                                    {{ preg['question'] }}
+                                </td>
+                                <td class="p-4">
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" />
+                                </td>
+                                <td class="p-4">
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" />
+                                </td>
+                                <td class="p-4">
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" />
+                                </td>
+                                <div class="p-4 position-absolute" *ngIf="getSumaRespuestas(preg?.numResponseSi, preg?.numResponseNo, preg?.numResponseNoProcede)">
+                                    <mat-error>La suma no coincide con el total de productos controlados.</mat-error>
+                                </div>
+                        </ng-container>
+                      
+                    </tr>
+                  </div>
+                </div>
+              </div>
+
+        <div class="justify-center mt-3">
+            <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" matStepperPrevious>Anterior</button>
+            <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 rounded" (click)="save()">Guardar</button>
+        </div>
+      
+  </mat-step>
+
+
+  </mat-stepper>

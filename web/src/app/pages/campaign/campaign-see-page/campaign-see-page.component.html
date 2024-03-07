@@ -10,129 +10,173 @@
       icon="visibility">
       
       <div section-content>
-        <div class="flex justify-right mt-4 mr-3 space-x-4">
+        <div class="px-10 mb-3 sm:px-5 sm:grid sm:grid-cols-5">
+          <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500 centered-element">{{'text.campaign.inspection' | translate}}</h1>
+          <h3 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900 centered-element text-color-red" >{{ form.get('phaseCampaign')?.value?.description }}</h3>
+          <!-- <button  class="upload-btn ml-2 mat-button mat-button-base mat-primary col-span-1"
+                   loadingSpinnerColor="primary"
+                   tswConfirmAction
+                   (confirmed)="changePhaseCampaign()">
+            <mat-icon>arrow_forward</mat-icon>
+          </button> -->
 
-          <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteIpr()"
-                  class="text-white font-bold py-2 px-4 rounded">
-            I.P.R
-          </button>
+          <div class="flex mr-3 space-x-4 col-span-1">
 
-          <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)"
-                  class="text-white font-bold py-2 px-4 rounded">
-            Cumplimentación resultados CCAA
-          </button>
+            <button type="button" mat-raised-button color="primary" class="text-white font-bold py-2 px-4 rounded"
+              loadingSpinnerColor="primary"
+              tswConfirmAction
+              (confirmed)="changePhaseCampaign()">
+              Siguiente fase
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
 
+          </div>
+
+          
+        
+          <div class="flex justify-right mr-3 space-x-4 col-span-2">
+
+            <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteIpr()"
+                    class="text-white font-bold py-2 px-4 rounded">
+              I.P.R
+            </button>
+
+            <button type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)"
+                    class="text-white font-bold py-2 px-4 rounded">
+              Cumplimentación resultados CCAA
+            </button>
+
+          </div>
         </div>
-        <div class="px-10 sm:px-5">
-          <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.title' | translate}}</p>
-          <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('nameCampaign')?.value }}</h3>
-        </div>
+        <mat-card>
+          <mat-card-content>
 
-        <div class="mt-6 border-t border-gray-100">
-          <dl class="divide-y divide-gray-100">
-            <div class="px-4 py-6 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-5">
+            <div class="px-10 sm:px-5">
+              <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.title' | translate}}</p>
+              <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('nameCampaign')?.value }}</h3>
+              <hr>
+            </div>
+
+            <div class="py-6 sm:grid sm:grid-cols-4 sm:gap-4">
               <div class="px-10 sm:px-5">
                 <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.year' | translate}}</p>
                 <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('year')?.value }}</h3>
+                <h3 *ngIf="!form.get('year')?.value">-</h3>
+                <hr>
+              </div>
+              
+              <div class="px-10 sm:px-5">
+                <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.code' | translate}}</p>
+                <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('codeCpa')?.value }}</h3>
+                <h3 *ngIf="!form.get('codeCpa')?.value">-</h3>
+                <hr>
               </div>
               <div class="px-10 sm:px-5">
-                <p class="text-sm leading-6 text-gray-450">{{'fields.code' | translate}}</p>
-                <h3 class="mt-1 text-sm font-semibold leading-6 text-gray-350 sm:col-span-1 sm:mt-0">{{ form.get('codeCpa')?.value }}</h3>
+                <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.campaignType' | translate}}</p>
+                <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('campaignType')?.value?.name }}</h3>
+                <h3 *ngIf="!form.get('campaignType')?.value">-</h3>
+                <hr>
               </div>
               <div class="px-10 sm:px-5">
-                <p class="text-sm leading-6 text-gray-450">{{'fields.campaign.campaignType' | translate}}</p>
-                <h3 class="mt-1 text-sm font-semibold leading-6 text-gray-350 sm:col-span-2 sm:mt-0">{{ form.get('campaignType')?.value?.name }}</h3>
-              </div>
-              <div class="px-10 sm:px-5">
-                <p class="text-sm leading-6 text-gray-450">{{'fields.ambit' | translate}}</p>
-                <h3 class="mt-1 text-sm font-semibold leading-6 text-gray-350 sm:col-span-1 sm:mt-0">{{ form.get('ambit')?.value?.name }}</h3>
+                <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.ambit' | translate}}</p>
+                <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('ambit')?.value?.name }}</h3>
+                <h3 *ngIf="!form.get('ambit')?.value">-</h3>
+                <hr>
               </div>
             </div>
 
-            <div class="px-10 sm:px-5 py-5">
+            <div class="px-10 sm:px-5">
               <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.responsible' | translate}}</p>
               <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('autonomousCommunityResponsible')?.value?.name }}</h3>
+              <h3 *ngIf="!form.get('autonomousCommunityResponsible')?.value">-</h3>
+              <hr>
             </div>
 
             <div class="px-10 sm:px-5 py-5" >
               <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.participants' | translate}}</p>
               <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ participantsDispaly }}</h3>
+              <h3 *ngIf="!participantsDispaly">-</h3>
+              <hr>
             </div>
 
             <div class="px-10 sm:px-5 py-5" >
               <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.proponents' | translate}}</p>
               <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ proponentsDisplay }}</h3>
+              <h3 *ngIf="!proponentsDisplay">-</h3>
+              <hr>
             </div>
 
             <div class="px-10 sm:px-5 mb-10" >
               <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.specialist' | translate}}</p>
               <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ specialistsDisplay }}</h3>
+              <h3 *ngIf="!specialistsDisplay">-</h3>
+              <hr>
             </div>
 
-            <div class="grid grid-cols-2 gap-1.5 px-10 sm:px-10 max-w-screen-lg mx-auto p-4 border border-solid border-gray-500 bg-gray-400 rounded-md mb-8">
-            <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900 justify-items-start" >{{'text.campaign.library' | translate}}</h3>
-              <div class="file-upload text-right">
-                    <button mat-mini-fab color="primary" (click)="openDialog()">
-                      <mat-icon>attach_file</mat-icon>
-                    </button>
-              </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mt-6">
+          <mat-card-content>
+
+            <div class="grid grid-cols-2 gap-1.5 px-10 sm:px-10 max-w-screen-lg mx-auto p-4 rounded-md mb-8 color-grey">
+              <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900 justify-items-start" >{{'text.campaign.library' | translate}}</h3>
+                <div class="file-upload text-right">
+                      <button mat-mini-fab color="primary" (click)="openDialog()">
+                        <mat-icon>attach_file</mat-icon>
+                      </button>
+                </div>
             </div>
+
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mt-6">
+          <mat-card-content>
 
             <!-- Productos / Servicios -->
 
-            <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;">
+           <!--  <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;"> -->
 
-            <div class="px-10 sm:px-5 sm:grid sm:grid-cols-3">
-                <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.products' | translate}}</h1>
-            </div>
-            
-            <div class="flex justify-center mt-4">
-              <button type="button" mat-raised-button color="primary" (click)="agregarProducto()"
-                      class="text-white font-bold py-2 px-4 rounded">
-                Añadir Producto
-              </button>
-            </div>
+            <div class="w-3/4 mx-auto p-4 rounded-md color-grey">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-semibold text-gray-900">{{'text.campaign.products' | translate}}</h3>
+                <button mat-button (click)="agregarProducto()">
+                <mat-icon>create</mat-icon>
+                </button>
+              </div>
+              <hr>
 
-            <div class="w-3/4 mx-auto mt-4" *ngIf="productsDisplay && productsDisplay.length > 0">
-              <div class="table w-full border-collapse">
-                <div class="table-header-group bg-gray-200">
-                  <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12">Clase del producto / servicio</div>
-                  <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12">Nombre concreto del producto / servicio</div>
-                  <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12"></div>
-                </div>
-    
-                <!-- Filas de la tabla -->
-                <div class="table-row-group">
-                  <tr *ngFor="let prod of productsDisplay">
-                    <td>{{ prod['codeProductService'] }}</td>
-                    <td>{{ prod['productName'] }}</td>
-                    <button type="button" tswConfirmAction (confirmed)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
-                      <span class="material-icons">delete_forever</span>
-                    </button>
-                  </tr>
+              <div class="mx-auto mt-4" *ngIf="productsDisplay && productsDisplay.length > 0">
+                <div class="table w-full border-collapse">
+                  <div class="table-header-group bg-gray-200">
+                    <div class="table-cell font-semibold p-2 border border-gray-300 w-3/12">Clase del producto / servicio</div>
+                    <div class="table-cell font-semibold p-2 border border-gray-300 w-9/12">Nombre concreto del producto / servicio</div>
+                    <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12"></div>
+                  </div>
+      
+                  <!-- Filas de la tabla -->
+                  <div class="table-row-group">
+                    <tr *ngFor="let prod of productsDisplay; let y = index" [ngClass]="{'bg-gray-200': y % 2 !== 0, 'bg-white': y % 2 === 0}">
+                      <td>{{ prod['codeProductService'] }}</td>
+                      <td>{{ prod['productName'] }}</td>
+                      <button type="button" tswConfirmAction (confirmed)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
+                        <span class="material-icons">delete_forever</span>
+                      </button>
+                    </tr>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div *ngIf="!productsDisplay || productsDisplay.length == 0"></div>
+          </mat-card-content>
+        </mat-card>
+        
 
-            <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;">
+        <mat-card class="mt-6">
+          <mat-card-content>
 
-            <div class="px-10 sm:px-5 sm:grid sm:grid-cols-3">
-                <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.inspection' | translate}}</h1>
-                <h3 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900" >{{ form.get('phaseCampaign')?.value?.description }}</h3>
-                <button  class="upload-btn ml-2 mat-button mat-button-base mat-primary"
-                         loadingSpinnerColor="primary"
-                         tswConfirmAction
-                         (confirmed)="changePhaseCampaign()"       >
-                  <mat-icon>arrow_forward</mat-icon>
-                </button>
-            </div>
-
-            <hr class="border-gray-400 mb-8 mx-auto" style="border-top-width: 1px; max-width: 90%;">
-
-
-            <div class="max-w-screen-lg mx-auto p-4 border border-solid border-gray-500 bg-gray-400 rounded-md mb-8">
+            <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">Protocolo</h3>
                 <button mat-button (click)="navegarAComponenteProtocol()">
@@ -159,15 +203,20 @@
               </div>
             </div>
 
+          </mat-card-content>
+        </mat-card>
+
             <!-- RESULTADOS CCAA -->
 
-            <div class="px-10 sm:px-5 sm:grid sm:grid-cols-3">
-              <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500">{{'text.campaign.resultados' | translate}}</h1>
-            </div>
+        <mat-card class="mt-6">
+          <mat-card-content>
 
-            <div class="max-w-screen-lg mx-auto p-4 border border-solid border-gray-500 bg-gray-400 rounded-md mb-8">
+            <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">Resultados</h3>
+                <button mat-button (click)="navegarAComponenteResultados(undefined)">
+                  <mat-icon>create</mat-icon>
+                </button>
               </div>
               <div class="border-b border-gray-300 mb-4"></div>
               <div class="space-y-4">
@@ -198,9 +247,8 @@
               </div>
               </div>
 
-            </dl>
-
-        </div>
+          </mat-card-content>
+        </mat-card>
 
 
         </div>

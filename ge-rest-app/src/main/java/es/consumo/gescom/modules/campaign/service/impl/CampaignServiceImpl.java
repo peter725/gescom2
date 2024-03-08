@@ -31,8 +31,10 @@ import es.consumo.gescom.modules.campaignProductService.repository.CampaignProdu
 import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
 import es.consumo.gescom.modules.campaignType.model.converter.CampaingnTypeConverter;
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
+import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
 import es.consumo.gescom.modules.ipr.model.dto.IprResponseDTO;
 import es.consumo.gescom.modules.ipr.repository.IprRepository;
+import es.consumo.gescom.modules.ipr.service.IprService;
 import es.consumo.gescom.modules.phase.model.converter.PhaseConverter;
 import es.consumo.gescom.modules.phase.model.dto.PhaseDTO;
 import es.consumo.gescom.modules.phase.model.entity.PhaseEntity;
@@ -93,7 +95,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                                   ProponentConverter proponentConverter,
                                   SpecialistConverter specialistConverter,
                                   ProtocolService protocolService,
-                                  AutonomousCommunityService autonomousCommunityService, CampaignProductServiceService campaignProductServiceService,
+                                  AutonomousCommunityService autonomousCommunityService, CampaignProductServiceService campaignProductServiceService, IprService iprService,
                                   AutonomousCommunityParticipantsService autonomousCommunityParticipantsService,
                                   AutonomousCommunityProponentRepository autonomousCommunityProponentRepository, ProtocolService protocolService1,
                                   AutonomousCommunityProponentService autonomousCommunityProponentService, ProtocolResultsService protocolResultsService,
@@ -108,6 +110,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         this.proponentConverter = proponentConverter;
         this.autonomousCommunityService = autonomousCommunityService;
         this.campaignProductServiceService = campaignProductServiceService;
+        this.iprService = iprService;
         this.autonomousCommunityParticipantsService = autonomousCommunityParticipantsService;
         this.autonomousCommunityProponentRepository = autonomousCommunityProponentRepository;
         this.specialistConverter = specialistConverter;
@@ -169,6 +172,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     private final AutonomousCommunityService autonomousCommunityService;
 
     private final CampaignProductServiceService campaignProductServiceService;
+
+    @Autowired
+    private final IprService iprService;
 
     private final AutonomousCommunityParticipantsRepository autonomousCommunityParticipantsRepository;
 
@@ -356,6 +362,12 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                 if(protocolDTO1.getId().equals(protocolResultsDTO.getProtocolDTO().getId())){
                     protocolResultsDTO.getProtocolDTO().setQuestion(protocolDTO1.getQuestion());
                 }
+                if (protocolDTO1.getCode() != null) {
+                    protocolDTO1.setIprDTOS(iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO1.getCode()));
+                }else {
+                    /*protocolDTO1.setIprDTOS(iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO1.getId()));*/
+                }
+
             });
         });
 
@@ -413,7 +425,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         return repository.save(entity);
     }
 
-    @Override
+   /* @Override
     public ResultsResponseDTO getResults(SearchDTO searchDTO) {
         ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
         List<QuestionsResponseDTO> questionsResponseDTOS = new ArrayList<>();
@@ -640,7 +652,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             }
         }
 
-    }
+    }*/
 
 
 }

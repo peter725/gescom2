@@ -3,6 +3,8 @@ package es.consumo.gescom.modules.protocol.model.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +23,6 @@ public class ProtocolDTO implements Serializable{
     private Long campaignId;
     private LocalDateTime createdAt;
     private List<QuestionsDTO> question;
+    private List<IprDTO> iprDTOS;
     private String nameCampaign;
 }

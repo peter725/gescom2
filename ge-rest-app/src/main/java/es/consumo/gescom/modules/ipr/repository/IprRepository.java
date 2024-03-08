@@ -63,6 +63,9 @@ public interface IprRepository extends GESCOMRepository<IprEntity, Long> {
         """)
     List<IprResponseDTO> findAllIprByCampaignIdAndProtocolCode(@Param("campaignId") Long campaignId, @Param("protocolCode") String protocolCode, @Param("iprcode") String iprCode);
 
+    @Query(value = "SELECT ipr FROM IprEntity ipr WHERE ipr.campaignId =:campaignId AND ipr.protocolCode =:protocolCode")
+    List<IprEntity> findAllByCampaignAndProtocolCode(@Param("campaignId") Long campaignId, @Param("protocolCode") String protocolCode);
+
 
     @Query(value = "SELECT ipr, iq FROM IprEntity AS ipr JOIN IprQuestionEntity AS iq ON ipr.id = iq.iprId.id WHERE ipr.campaignId =:campaignId AND ipr.protocolId =:protocolId")
     List<IprResponseDTO> findAllIprByCampaignIdAndProtocolId(@Param("campaignId") Long campaignId, @Param("protocolId") Long protocolId);

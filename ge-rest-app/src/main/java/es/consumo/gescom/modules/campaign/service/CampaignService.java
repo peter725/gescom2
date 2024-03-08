@@ -20,7 +20,7 @@ public interface CampaignService extends CrudService<CampaignEntity, Long>{
 
     CampaignEntity switchStatus(ChangeStatusDTO changeStatus, Long id);
 
-    ResultsResponseDTO getResults(SearchDTO searchDTO);
+    /*ResultsResponseDTO getResults(SearchDTO searchDTO);*/
 
     CampaignEntity switchPhase(PhaseDTO changeStatus, Long id);
 }

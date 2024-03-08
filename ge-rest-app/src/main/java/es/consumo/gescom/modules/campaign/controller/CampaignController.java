@@ -68,8 +68,8 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/results")
+    /*@PostMapping("/results")
     public ResponseEntity<ResultsResponseDTO> getResults(@RequestBody SearchDTO searchDTO) {
         return ResponseEntity.ok(((CampaignService) service).getResults(searchDTO));
-    }
+    }*/
 }

@@ -4,8 +4,16 @@ import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.model.entity.AutonomousCommunityParticipantsEntity;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.repository.AutonomousCommunityParticipantsRepository;
 import es.consumo.gescom.modules.campaign.model.converter.CampaignConverter;
+import es.consumo.gescom.modules.campaign.model.dto.ResultsResponseDTO;
+import es.consumo.gescom.modules.campaign.model.dto.SearchDTO;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.repository.CampaignRepository;
+import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
+import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
+import es.consumo.gescom.modules.campaignProductService.repository.CampaignProductServiceRepository;
+import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
+import es.consumo.gescom.modules.ipr.repository.IprRepository;
+import es.consumo.gescom.modules.ipr.service.IprService;
 import es.consumo.gescom.modules.protocol.model.converter.ProtocolConverter;
 import es.consumo.gescom.modules.protocol.model.criteria.ProtocolCriteria;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
@@ -50,6 +58,9 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     private QuestionsRepository questionsRepository;
 
     @Autowired
+    private IprRepository iprRepository;
+
+    @Autowired
     private AutonomousCommunityParticipantsRepository autonomousCommunityParticipantsRepository;
 
 
@@ -59,6 +70,12 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
     @Autowired
     private ProtocolRepository protocolRepository;
+
+    @Autowired
+    private CampaignProductServiceRepository campaignProductServiceRepository;
+
+    @Autowired
+    private IprService iprService;
 
     @Override
     public Page<ProtocolEntity> getProtocolByNameOrCode(CriteriaWrapper<ProtocolCriteria> wrapper, String protocol, String code) {
@@ -71,18 +88,24 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
         List<ProtocolEntity> protocolEntity = protocolRepository.findProtocolByCampaignId(idCampaign);
         List<ProtocolDTO> listProtocolDTO = protocolConverter.convertToModel(protocolEntity);
+        List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(idCampaign);
+
 
         for (ProtocolDTO protocolDTO : listProtocolDTO) {
             if (protocolDTO.getCode() == null) {
+                /*List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());*/
                 List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
                 List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
+                //ResultsResponseDTO resultsResponseDTO = iprService.getResults()
                 protocolDTO.setQuestion(listQuestionsDTOS);
+
             }else {
+                List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());
                 List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolCode(protocolDTO.getCode());
                 List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
                 protocolDTO.setQuestion(listQuestionsDTOS);
+                protocolDTO.setIprDTOS(iprDTOS);
             }
-
         }
         return (listProtocolDTO);
     }

@@ -117,6 +117,7 @@ export class ResultadosSeeComponent implements OnInit{
     this.productoSelected = resultadoSelected?.productServiceDTO;
     this.caSelected = resultadoSelected?.autonomousCommunityCountryDTO;
     this.preguntasProtocolo = this.protocoloSelected?.question;
+    this.sortQuestionsByOrder();
 
     this.editForm1.patchValue({
       protocolo: this.protocoloSelected,
@@ -147,6 +148,20 @@ export class ResultadosSeeComponent implements OnInit{
             }
           }
         });
+      }
+    });
+  }
+
+  sortQuestionsByOrder() {
+    this.preguntasProtocolo.sort((a, b) => {
+      if (a.orderQuestion === null && b.orderQuestion === null) {
+        return 0; // Both null, keep order as is
+      } else if (a.orderQuestion === null) {
+        return 1; // a is null, put it after b
+      } else if (b.orderQuestion === null) {
+        return -1; // b is null, put it before a
+      } else {
+        return a.orderQuestion - b.orderQuestion; // Sort by orderQuestion
       }
     });
   }

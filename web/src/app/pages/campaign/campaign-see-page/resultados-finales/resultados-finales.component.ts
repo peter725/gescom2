@@ -15,6 +15,8 @@ import { CampaignProductServiceDTO } from '@libs/sdk/productService';
 import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults';
 import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
 import { NotificationService } from '@base/shared/notification';
+import { IprDTO } from '@libs/sdk/ipr';
+import { ExcelService } from '@base/shared/utilsExcel/excel.service';
 
 
 @Component({
@@ -44,16 +46,31 @@ export class ResultadosFinalesComponent implements OnInit{
   campaign: CampaignForm | any;
   protocolosList: Protocol[] = [];
   productosList: CampaignProductServiceDTO[] = [];
-  caList: AutonomousCommunity[] = [];
+  iprList: IprDTO[] = []; 
   totalProductosControlados: any;
 
   protocoloSelected: any;
   productoSelected: any;
-  caSelected: any;
+  iprSelected: any;
 
   preguntasProtocolo: Question [] = [];
+  preguntasIpr: any;
 
   resultadoSelected: ProtocolResults | undefined = undefined;
+  iprResultadosProtocoloName = 'Resultados segun plantilla de protocolo';
+
+  iprResultadosProtocolo: IprDTO = {
+    id: 0,
+    code: '',
+    name: this.iprResultadosProtocoloName,
+    campaignId: 0,
+    protocolCode: '',
+    protocolId: 0,
+    nameCampaign: '',
+    iprQuestionDTOList: []
+  };
+
+  isTablaProtocolo: boolean = false; // Para mostrar la tabla de resultados por protocolo o la tabla de ipr
 
   editForm1 = this.fb.group({
     id: [],
@@ -77,7 +94,7 @@ export class ResultadosFinalesComponent implements OnInit{
     }),
     protocolo: [],
     producto: [],
-    ca: [],
+    ipr: []
     // producto: [null, [Validators.required, Validators.maxLength(50)]],
   });
 
@@ -85,6 +102,7 @@ export class ResultadosFinalesComponent implements OnInit{
     protected fb: FormBuilder,
     private router: Router,
     private protocolResultsService: ProtocolResultsService,
+    private excelService: ExcelService,
     protected notification: NotificationService) {
       const navigation = this.router.getCurrentNavigation();
       let state = undefined;
@@ -119,16 +137,10 @@ export class ResultadosFinalesComponent implements OnInit{
     if (campania && campania.protocols) {
       this.protocolosList = campania.protocols;
     }
-    if (campania && campania.participants) {
-      this.caList = campania.participants;
-    }
     if (campania && campania.campaignProductServiceDTOS) {
       this.productosList = campania.campaignProductServiceDTOS;
     }
-  }
 
-  getAutonomousCommunity(code: any): any {
-    return this.caList?.find(participant => participant.id === code);
   }
 
   getProductService(id: any): any {
@@ -152,57 +164,95 @@ export class ResultadosFinalesComponent implements OnInit{
     return sumaMayor;
   }
 
-  save() {
-    let respuestasInvalid = false;
-    this.preguntasProtocolo.forEach((preg) => {
-      if (preg.response === 'S' && preg.numResponseSi !== null && preg.numResponseNo !== null && preg.numResponseNoProcede !== null && 
-        preg.numResponseSi !== undefined && preg.numResponseNo !== undefined && preg.numResponseNoProcede !== undefined) {
-        if (preg.numResponseSi + preg.numResponseNo + preg.numResponseNoProcede !== this.totalProductosControlados) {
-          respuestasInvalid = true;
-        }
-      }
-    });
+  protocolOnChange() {
+    if (this.editForm1.get('protocolo')?.value) {
+      this.protocoloSelected = this.editForm1.get('protocolo')?.value!;
+      this.iprList = this.protocoloSelected.iprDTOS;
+    }
+  }
 
-    if (respuestasInvalid) {
-      this.notification.show({ message: 'text.other.pleaseReview' });
-    } else {
-      let preguntas: TotalProtocolResults[] = [];
-      let totalProtocoloResults: TotalProtocolResults;
-      this.preguntasProtocolo.forEach(preg => {
-          totalProtocoloResults = {
-            id: undefined,
-            ccaaRen: preg.numResponseNo,
-            ccaaRep: preg.numResponseNoProcede,
-            ccaaRes: preg.numResponseSi,
-            code: null, 
-            protocolResultsCode: null,
-            codeQuestion: preg.orderQuestion?.toString(), // poner el numero de pregunta
-            productServiceId: this.productoSelected?.id
-          };
-          preguntas.push(totalProtocoloResults);
+  iprOnChange() {
+    if (this.editForm1.get('ipr')?.value) {
+      this.iprSelected = this.editForm1.get('ipr')?.value!;
+      this.preguntasIpr = this.iprSelected.resultsResponseDTO?.questionsResponseDTOS
+      this.isTablaProtocolo = this.iprSelected == this.iprResultadosProtocolo ? true : false;
+      this.sortQuestionsByOrder();
+    }
+  }
+
+  sortQuestionsByOrder() {
+    if (this.preguntasProtocolo) {
+      this.preguntasProtocolo.sort((a, b) => {
+        if (a.orderQuestion === null && b.orderQuestion === null) {
+          return 0; // Both null, keep order as is
+        } else if (a.orderQuestion === null) {
+          return 1; // a is null, put it after b
+        } else if (b.orderQuestion === null) {
+          return -1; // b is null, put it before a
+        } else {
+          return a.orderQuestion - b.orderQuestion; // Sort by orderQuestion
+        }
       });
-  
-  
-      let protocolResults: ProtocolResults = {
-        id: undefined,
-        autonomousCommunityCountryCode: undefined,
-        name: this.protocoloSelected?.name,
-        productServiceCode: this.productoSelected?.codeProductService,
-        protocolCode: this.protocoloSelected?.code,
-        campaignId: this.protocoloSelected?.campaignId,
-        productServiceId: this.productoSelected?.id,
-        protocolId: this.protocoloSelected?.id,
-        totalProtocolResultsDTOS: preguntas,
-        protocolDTO: this.protocoloSelected,
-        productServiceDTO: this.productoSelected,
-        autonomousCommunityCountryDTO: this.caSelected
-      };
-  
-      this.protocolResultsService.saveResults(protocolResults).subscribe((result: any) => {
-        this.router.navigate([`app/campanas/${this.campaign.id}/ver`]);
+    }
+    if (this.preguntasIpr) {
+      this.preguntasIpr.sort((a: { orderQuestion: number | null; }, b: { orderQuestion: number | null; }) => {
+        if (a.orderQuestion === null && b.orderQuestion === null) {
+          return 0; // Both null, keep order as is
+        } else if (a.orderQuestion === null) {
+          return 1; // a is null, put it after b
+        } else if (b.orderQuestion === null) {
+          return -1; // b is null, put it before a
+        } else {
+          return a.orderQuestion - b.orderQuestion; // Sort by orderQuestion
+        }
       });
     }
   }
+
+  exportExcel(): void {
+
+    if (this.isTablaProtocolo) {
+      this.excelService.exportExcelResultadosProtocolo(this.protocoloSelected).subscribe(
+        (res: Blob | MediaSource) => {
+          const fileName = 'resultados_finales.xlsx';
+          const objectUrl = URL.createObjectURL(res);
+          const a: HTMLAnchorElement = document.createElement('a');
+  
+          a.href = objectUrl;
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+  
+          document.body.removeChild(a);
+          URL.revokeObjectURL(objectUrl);
+        },
+        (error: any) => {
+          console.log('Error download {}', error);
+        }
+      );
+    } else {
+        this.excelService.exportExcelResultadosIpr(this.iprSelected).subscribe(
+          (res: Blob | MediaSource) => {
+            const fileName = 'resultados_finales.xlsx';
+            const objectUrl = URL.createObjectURL(res);
+            const a: HTMLAnchorElement = document.createElement('a');
+    
+            a.href = objectUrl;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+    
+            document.body.removeChild(a);
+            URL.revokeObjectURL(objectUrl);
+          },
+          (error: any) => {
+            console.log('Error download {}', error);
+          }
+        );
+      }
+  }
+  
+  
 
   buildResultsTotales(numTotal: number, codigo: string): TotalProtocolResults {
     let result: TotalProtocolResults;
@@ -225,9 +275,6 @@ export class ResultadosFinalesComponent implements OnInit{
     }
     if (this.editForm1.get('producto')?.value) {
       this.productoSelected = this.editForm1.get('producto')?.value!;
-    }
-    if (this.editForm1.get('ca')?.value) {
-      this.caSelected = this.editForm1.get('ca')?.value!;
     }
     if (this.protocoloSelected) {
       if (!this.preguntasProtocolo || this.preguntasProtocolo.length == 0) {

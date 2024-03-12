@@ -1,21 +1,17 @@
 package es.consumo.gescom.modules.document.service.impl;
 
 
-import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.commons.db.entity.StatefulEntity;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
-import es.consumo.gescom.modules.document.model.criteria.DocumentCriteria;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.commons.service.ReadService;
 import es.consumo.gescom.modules.document.repository.DocumentRepository;
 import es.consumo.gescom.modules.document.service.DocumentService;
-import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -120,4 +116,11 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
         }
         return optional;
     }
+
+    @Override
+    protected void performDelete(DocumentEntity data) {
+        data.setState(2);
+        repository.save(data);
+    }
+
 }

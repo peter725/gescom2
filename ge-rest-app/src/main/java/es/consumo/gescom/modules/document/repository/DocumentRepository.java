@@ -10,6 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface DocumentRepository extends GESCOMRepository<DocumentEntity, Long>,
         QueryByCriteria<DocumentEntity, DocumentCriteria> {
@@ -21,5 +24,5 @@ public interface DocumentRepository extends GESCOMRepository<DocumentEntity, Lon
     Page<DocumentEntity> findAllByCriteria(DocumentCriteria criteria, Pageable pageable);
 
     @Query(value = "SELECT t FROM DocumentEntity t WHERE t.campaignId = :idCampaign " )
-    Page<DocumentEntity> findDocumentByCampaignId(Pageable pageable,@Param("idCampaign") Long idCampaign);
+    List<DocumentEntity> findDocumentByCampaignId(@Param("idCampaign") Long idCampaign);
 }

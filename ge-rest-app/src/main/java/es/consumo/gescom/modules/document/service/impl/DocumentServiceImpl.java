@@ -15,6 +15,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,10 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     @Value("${path.documentos}")
     private String repoPath;
     private final ReadService<CampaignEntity, Long> campaingService;
+
+    @Autowired
+    private DocumentRepository documentRepository;
+
 
     @Autowired
     public DocumentServiceImpl(GESCOMRepository<DocumentEntity, Long> repository,
@@ -100,7 +106,18 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     }
 
     @Override
-    public Page<DocumentEntity> findDocumentByCampaignId(CriteriaWrapper<DocumentCriteria> wrapper, Long idCampaign) {
-        return ((DocumentRepository) repository).findDocumentByCampaignId(wrapper.getCriteria().toPageable(), idCampaign);
+    public List<DocumentEntity> findDocumentByCampaignId(Long idCampaign) {
+        List<DocumentEntity> optional = documentRepository.findDocumentByCampaignId(idCampaign);
+        if (!optional.isEmpty()) {
+            optional.forEach( documentEntity -> {
+                try {
+                    documentEntity.setBase64(getFile(documentEntity));
+                } catch (Exception ex) {
+                    logger.error(ex.getMessage(), ex);
+                }
+
+            });
+        }
+        return optional;
     }
 }

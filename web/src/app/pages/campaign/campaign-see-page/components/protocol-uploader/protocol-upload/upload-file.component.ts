@@ -5,7 +5,7 @@ import {
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { fileToB64 } from '@libs/file';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+// import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,7 +15,26 @@ import { TswSelectModule } from '@base/shared/select';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { FileData } from '@libs/sdk/file-data';
-import { CrudImplService } from '@libs/crud-api';
+import { CrudImplService, RequestConfig } from '@libs/crud-api';
+import { firstValueFrom } from 'rxjs';
+import {CommonsModule} from "@base/shared/pages/commons.module";
+import {CommonModule} from "@angular/common";
+import { ActivatedRoute } from '@angular/router';
+
+interface DocumentResponse {
+  id: number;
+  campaignId: number;
+  createAt: string;
+  documentType: {
+    id: number;
+    name: string;
+    required: boolean;
+    state: number;
+  };
+  name: string;
+  extension: string;
+  base64: string;
+}
 
 const ELEMENT_DATA: FileData[] = [];
 
@@ -24,7 +43,6 @@ const ELEMENT_DATA: FileData[] = [];
   templateUrl: "./upload-file.component.html",
   standalone: true,
   imports: [
-    MatDialogModule,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
@@ -34,25 +52,35 @@ const ELEMENT_DATA: FileData[] = [];
     MatTableModule,
     ReactiveFormsModule,
     MatIconModule,
-    DatePipe
+    DatePipe,
+    CommonsModule,
+    CommonModule
   ]
 })
-export class UploadFileComponent<T=any> {
+
+
+export class UploadFileComponent <T=any> {
 
   private url = '';
 
   private contadorId = 1;
+  documents: any;
 
-  displayedColumns: string[] = ['date','size','type','description','openFile','delete'];
+
+  displayedColumns: string[] = ['name'];
   dataSource = [...ELEMENT_DATA];
   form: FormGroup;
   selectedFile : File | undefined;
   @ViewChild(MatTable) table: MatTable<FileData> | undefined;
 
+  documentsArray: { id: number, name: string }[] = [];
+
+  idCampaign: any;
+
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<UploadFileComponent>,
-    private crudService: CrudImplService) {
+    private crudService: CrudImplService,
+    private route: ActivatedRoute) {
 
     this.form = this.fb.group({
       description : this.fb.control(null),
@@ -61,35 +89,101 @@ export class UploadFileComponent<T=any> {
     });
   }
 
+
+  ngOnInit(): void {
+
+    this.idCampaign = this.route.snapshot.paramMap.get('id');
+    console.log('ID de la URL:', this.idCampaign);
+
+    this.loadDocuments();
+  }
+
+
+
+
+
+  //CARGAR DOCUMENTOS
+  private async loadDocuments(): Promise<void> {
+
+    console.log('actualizo');
+
+    this.documentsArray = [];
+  
+    const id = this.idCampaign;
+    this.documents = await firstValueFrom(this.crudService.findById(id, {
+      resourceName: 'documentCampaignList',
+      pathParams: { id },
+    }));
+  
+  
+    if (this.documents.content && this.documents.content.length > 0) {
+      // Itera sobre los documentos y guarda el nombre y el ID de cada uno en el array
+      this.documents.content.forEach((document: { id: number, name: string, state: number }) => {
+        if (document && document.state === 1) {
+          this.documentsArray.push({ id: document.id, name: document.name });
+        }
+      });
+  
+      // Ordena el array por el ID de más nuevo a más viejo
+      this.documentsArray.sort((a, b) => b.id - a.id);
+  
+      // Muestra el array con los nombres e IDs de los documentos
+      console.log('Documents Array:', this.documentsArray);
+    } else {
+      console.log('No documents found.');
+    }
+  }
+
+
+  // AGREGAR DOCUMENTO
+
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     console.log("Archivo="+this.selectedFile?.name)
   }
 
-  addFile(): void {
+  getExtensionFromFileName(fileName: string): string {
+    const parts = fileName.split('.');
+    return parts[parts.length - 1];
+  }
+
+  async addFile() {
     if (this.selectedFile) {
       fileToB64(this.selectedFile).then(result => {
         // Obtener la extensión del archivo seleccionado
         const fileExtension = this.getExtensionFromFileName(this.selectedFile!.name);
-
-        // Crear el registro incluyendo la extensión del archivo
-        let nuevoRegistro: FileData = {
-          ...this.form.value,
-          b64: result.data, // Asumiendo que result.data contiene el contenido base64 del archivo
-          id: this.contadorId++,
-          /*campaignId: ,*/ // Asumiendo que esta variable contiene el ID de la campaña
-          date: new Date().toISOString(),
-          name: result.name, // Asumiendo que este es el nombre del archivo
-          extension: fileExtension, // Almacenar la extensión del archivo
-          size: this.formatBytesToKB(result.size), // Usamos la función de conversión aquíextension:  // Almacenar la extensión del archivo
+  
+        // Crear el objeto para enviar a la API
+        let nuevoDocumento: any = {
+          campaignId: this.idCampaign,
+          createAt: new Date().toISOString(),
+          documentType: {
+            id: 1, 
+            name: "Nombre del tipo de documento",
+            state: 1 
+          },
+          name: result.name,
+          extension: fileExtension,
+          base64: result.data, 
+          sign: "" 
         };
-
-        this.dataSource.push(nuevoRegistro);
-        console.log("DATASET=", this.dataSource);
-        this.table?.renderRows();
-
-        this.form.reset();
-        console.log("Registro agregado:", nuevoRegistro);
+  
+        const config = {
+          resourceName: 'document',
+          pathParams: {}, 
+        };
+  
+        // Enviar el nuevo documento a la API utilizando el servicio CRUD
+        this.crudService.create(nuevoDocumento, config).subscribe(
+          (response: any) => {
+            console.log("Documento agregado:", response);
+            this.loadDocuments();
+          },
+          (error: any) => {
+            console.error("Error al agregar el documento:", error);
+          }
+        );
+  
       }).catch(error => {
         console.error("Error al convertir archivo a base64:", error);
       });
@@ -98,79 +192,62 @@ export class UploadFileComponent<T=any> {
     }
   }
 
-  formatBytesToKB(bytes: number): string {
-    return (bytes / 1024).toFixed(2) + ' KB';
-  }
-
-  getExtensionFromFileName(fileName: string): string {
-    const parts = fileName.split('.');
-    return parts[parts.length - 1];
-  }
-
-  deleteFile(id : number) : void {
-    console.log("registro a eliminar:"+id);
-    this.dataSource = this.dataSource.filter(register=>register.id !== id);
-    this.table?.renderRows();
-    this.form?.reset();
-  }
-
-  downloadFile(id : number) {
-
-    const register = this.dataSource.find(item=>item.id==id);
-    const reader = new FileReader();
-
-    if(register?.b64.data!=undefined){
-      const file = this.base64AFile(register?.b64.data, register?.b64.name);
-
-      if(file!=undefined) {
-        const url = URL.createObjectURL(file);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = file.name; // Esto le dará al archivo el mismo nombre que tenía originalmente
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
-      }
-
+  //BORRADO DEL DOCUMENTO
+  async deleteFile(idDocument: number) {
+    console.log('id a borrar: ' + idDocument);
+    try {
+      await this.crudService.deleteId(idDocument, { 
+        resourceName: 'document', 
+        pathParams: { id: idDocument } // Pasamos el ID del documento aquí
+      }).toPromise();
+      console.log('Documento eliminado correctamente');
+      this.loadDocuments();
+      // Realiza alguna acción después de eliminar el documento, si es necesario
+    } catch (error) {
+      console.error('Hubo un error al eliminar el documento:', error);
     }
   }
 
-  base64AFile(base64: string, name : string) : File {
-
-    // Elimina el prefijo de la cadena Base64 si existe
-    const base64SinPrefijo = base64.split(';base64,').pop();
-
-    // Convierte la cadena Base64 a un array de bytes
-    const contenido = base64SinPrefijo ? atob(base64SinPrefijo) : '';
-    const arrayBytes = new Uint8Array(contenido.length);
-
-    for (let i = 0; i < contenido.length; i++) {
-      arrayBytes[i] = contenido.charCodeAt(i);
-    }
-
-    // Crea el blob a partir del array de bytes
-    const blob = new Blob([arrayBytes], { type: 'tipo/mime' }); // Reemplaza 'tipo/mime' con el tipo MIME real del archivo
-
-    // Crea y retorna el objeto File
-    return new File([blob], name, { type: 'tipo/mime' });
-
-  }
-
-  async saveFile() {
-    const payload = {
-      file: this.selectedFile,
-      description: this.form.get('description')?.value,
-      typeDocument: this.form.get('typeDocument')?.value,
-      date: this.form.get('date')?.value
+  // DESCARGA DEL DOCUMENTO
+  async downloadFile(documentID: string | number) {
+    const config: RequestConfig = {
+      resourceName: 'documentList',
+      pathParams: {
+        id: documentID,
+      },
     };
-    console.log("PAYLOAD=",payload);
-    const request = this.crudService.create<void>(payload, {
-      resourceName: 'document',
-    });
-    this.dialogRef.close(this.dataSource);
-    await request;
+    const operation = this.crudService.findById(documentID as number, config);
+    const res = await firstValueFrom(operation);
+  
+    if ('base64' in res && 'name' in res) {
+      const documentData = res as unknown as DocumentResponse;
+      this.downloadBase64File(documentData.base64, documentData.name);
+
+    } else {
+      console.error('Error: Invalid response format');
+    }
   }
+  
+  downloadBase64File(base64Data: string, fileName: string) {
+    const blob = this.base64ToBlob(base64Data);
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  private base64ToBlob(base64Data: string) {
+    const byteString = atob(base64Data);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: 'application/pdf' });
+  }
+
 }
 
 

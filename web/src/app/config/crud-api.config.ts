@@ -6,6 +6,8 @@ import { gescoAppAPI, gescoAuthAPI } from './app';
 export const crudOperationsStorageFactory = () => {
   const apiOperations: OperationsDefSrc = {
     document: { type: HttpOperationType.CRUD, path: `/document` },
+    documentList: { type: HttpOperationType.READ, path: `/document` },
+    documentCampaignList: { type: HttpOperationType.READ, path: `/document/campaign` },
     health: { type: HttpOperationType.SIMPLE, path: `/health` },
     provinces: { type: HttpOperationType.READ, path: `/provinces` },
     campaignProposal: { type: HttpOperationType.CRUD, path: `/campaign_proposal` },

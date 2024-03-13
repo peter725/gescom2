@@ -444,6 +444,10 @@
     "validation": {
       "disallowedName": "El valor introduction solo puede contener letras",
       "email": "Email incorrecto",
+      "number": "El valor debe ser numérico",
+      "zeroErrorMessage": "Debe ser mayor que 0",
+      "onlyIntegerValues": "El valor debe ser entero",
+      "maxValue": "El valor debe ser menor o igual que ",
       "generic": "Por favor revisa los datos",
       "invalidNif": "El NIF es incorrecto",
       "invalidFileFormat": "El formato de fichero es incorrecto",
@@ -452,7 +456,9 @@
       "maxlength": "El campo no puede tener más de {{ requiredLength }} caracteres",
       "min": "El valor debe ser al menos {{ min }}",
       "minlength": "El campo debe tener al menos {{ requiredLength }} caracteres",
-      "required": "El campo es obligatorio"
+      "required": "El campo es obligatorio",
+      "endDateLessThanStartDate": "Por favor, elige una fecha posterior a la de inicio.",
+      "matDatepickerMin": "La fecha no se corresponde con el año del ejercicio"
     }
   },
   "pages": {

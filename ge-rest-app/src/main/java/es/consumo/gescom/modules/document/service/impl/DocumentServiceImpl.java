@@ -1,20 +1,17 @@
 package es.consumo.gescom.modules.document.service.impl;
 
 
-import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.commons.db.entity.StatefulEntity;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
-import es.consumo.gescom.modules.document.model.criteria.DocumentCriteria;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.commons.service.ReadService;
 import es.consumo.gescom.modules.document.repository.DocumentRepository;
 import es.consumo.gescom.modules.document.service.DocumentService;
-import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -22,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,6 +31,10 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     @Value("${path.documentos}")
     private String repoPath;
     private final ReadService<CampaignEntity, Long> campaingService;
+
+    @Autowired
+    private DocumentRepository documentRepository;
+
 
     @Autowired
     public DocumentServiceImpl(GESCOMRepository<DocumentEntity, Long> repository,
@@ -100,7 +102,25 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     }
 
     @Override
-    public Page<DocumentEntity> findDocumentByCampaignId(CriteriaWrapper<DocumentCriteria> wrapper, Long idCampaign) {
-        return ((DocumentRepository) repository).findDocumentByCampaignId(wrapper.getCriteria().toPageable(), idCampaign);
+    public List<DocumentEntity> findDocumentByCampaignId(Long idCampaign) {
+        List<DocumentEntity> optional = documentRepository.findDocumentByCampaignId(idCampaign);
+        if (!optional.isEmpty()) {
+            optional.forEach( documentEntity -> {
+                try {
+                    documentEntity.setBase64(getFile(documentEntity));
+                } catch (Exception ex) {
+                    logger.error(ex.getMessage(), ex);
+                }
+
+            });
+        }
+        return optional;
     }
+
+    @Override
+    protected void performDelete(DocumentEntity data) {
+        data.setState(2);
+        repository.save(data);
+    }
+
 }

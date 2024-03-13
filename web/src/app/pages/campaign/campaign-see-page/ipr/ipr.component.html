@@ -14,6 +14,7 @@
             <mat-form-field class="w-full">
               <mat-label>Campaña</mat-label>
               <input matInput formControlName="nameCampaign" readonly>
+              <mat-error>{{ form.controls.nameCampaign.errors | extractValidationError }}</mat-error>
             </mat-form-field>
           </div>
           <div>
@@ -28,42 +29,24 @@
             <input matInput formControlName="iprName">
           </mat-form-field>
 
-            <mat-form-field> 
+          <mat-form-field> 
+            <mat-label>Protocolo</mat-label>
+            <mat-select formControlName="protocols"  (selectionChange)="onProtocolSelectionChange($event.value)" matNativeControl >
+              <mat-option *ngFor="let protocol of protocolArray" [value]="protocol.id + '-' + protocol.code">                  
+                {{protocol.name}}
+              </mat-option>
+            </mat-select>   
+          </mat-form-field>  
 
-              <mat-label>Protocolo</mat-label>
-                <mat-select formControlName="protocols"  (selectionChange)="onProtocolSelectionChange($event.value)" matNativeControl >
-                    <mat-option *ngFor="let protocol of protocolArray" [value]="protocol.id + '-' + protocol.code">                  
-                        {{protocol.name}}
-                    </mat-option>
-                </mat-select> 
-                
-            </mat-form-field>  
-
-          <div>
-            <!-- Input de name -->
-            <!-- <div class="mb-4"> 
-              <mat-form-field class="w-full">
-                <mat-label>{{ 'fields.name' | translate }}</mat-label>
-                <input matInput formControlName="name">
-              </mat-form-field>
-            </div> -->
-
-            <!-- Input de campaignName -->
-            <!-- <div>
-              <mat-form-field class="w-full">
-                <input matInput [value]="name" readonly>
-              </mat-form-field>
-            </div> -->
-          </div>
         </div>
 
         <div class="w-3/4 mx-auto ">
           <div class="table w-full border-collapse">
             <div class="table-header-group bg-gray-200">
               <div class="table-cell p-2 border border-gray-300 w-1/12">Nº</div>
-              <div class="table-cell p-2 border border-gray-300 w-2/12">Pregunta</div>
-              <div class="table-cell p-2 border border-gray-300 w-6/12">Fórmula</div>
-              <div class="table-cell p-2 border border-gray-300 w-2/12">% respecto al</div>
+              <div class="table-cell p-2 border border-gray-300 w-8/12">Pregunta</div>
+              <div class="table-cell p-2 border border-gray-300 w-2/12">Fórmula</div>
+              <div class="table-cell p-2 border border-gray-300 w-1/12">% respecto al</div>
             </div>
 
             <!-- Filas de la tabla -->
@@ -74,26 +57,32 @@
                 </div>
 
                 <div class="table-cell p-2 border border-gray-300">
-                  <input formControlName="question"  class="w-full">
+                  <mat-form-field class="w-full" appearance="outline" subscriptSizing="dynamic">
+                    <input formControlName="question" matInput class="w-full" style="white-space: pre-wrap;">
+                    <!-- <mat-error>{{ form.controls.question.errors | extractValidationError }}</mat-error> -->
+                  </mat-form-field>
                 </div>
-
+                
                 <!-- Input de fórmula con un identificador único -->
                 <div class="table-cell p-2 border border-gray-300" style="position: relative;">
-                  <input [id]="'formulaInput_' + i" formControlName="formula" class="w-full">
-                  <a (click)="protocolSelectedId && openDialog(i)" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
-                    <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
-                  </a>
+                  <mat-form-field class="w-full" appearance="outline" subscriptSizing="dynamic">  
+                    <input [id]="'formulaInput_' + i" formControlName="formula" matInput class="w-full">
+                    <a (click)="protocolSelectedId && openDialog(i)" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
+                      <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
+                    </a>
+                    <!-- <mat-error>{{ form.controls.formula.errors | extractValidationError }}</mat-error> -->
+                  </mat-form-field>
                 </div>
+
 
                 <div class="table-cell p-2 border border-gray-300" >
-                  <input type="number" formControlName="porcentaje" style="background: transparent; border: none; width: 100%;">
-                </div>
 
-                <!-- <div class="table-cell p-2 border border-gray-300">
-                  <button type="button" (click)="toggleResp(i)" class="w-full">
-                    {{ fila.get('response')?.value }}
-                  </button>
-                </div> -->
+                  <mat-form-field appearance="outline" subscriptSizing="dynamic">  
+                      <input formControlName="porcentaje" matInput style="background: transparent; border: none; width: 100%;" >
+                      <!-- <mat-error>{{ form.controls.porcentaje.errors | extractValidationError }}</mat-error> -->
+                </mat-form-field> 
+
+                </div>
 
 
                 <!-- Agrega los demás campos aquí -->

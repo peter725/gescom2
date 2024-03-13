@@ -79,6 +79,15 @@ export class CrudImplService<T = BaseModel, ID = number> implements CrudService<
     return this.http.post<void>(operation.path, {}, { params });
   }
 
+  deleteId(id: ID, config: RequestConfig): Observable<void> {
+    const def = this.operations.get(config.resourceName);
+    const operation = def.delete(config.pathParams); // Quitamos el spread operator aquí
+    const params = this.buildHttpParams(config);
+    const url = `${operation.path}/${id}`; // Agregamos el ID del documento a la URL
+    return this.http.post<void>(url, { params }); // Usamos el método HTTP DELETE en lugar de POST
+  }
+
+
   private buildHttpParams(config: RequestConfig) {
     const { queryParams, pageReq } = config;
     const fromObject: Record<string, HttpParamsSrc> = {};

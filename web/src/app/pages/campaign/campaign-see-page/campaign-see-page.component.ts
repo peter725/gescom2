@@ -16,6 +16,7 @@ import { CampaignProductServiceDTO, ProductService } from '@libs/sdk/productServ
 import { CampaignProductService } from '@base/shared/utilsService/campaignProduct.service';
 import { NavigationExtras } from '@angular/router';
 import { ProtocolResults } from '@libs/sdk/protocolResults';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -49,6 +50,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   override ngOnInit(): void {
     super.ngOnInit();
     this.loadPhases();
+
   }
 
   private loadPhases(): void {
@@ -63,6 +65,8 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
         }
       });
   }
+
+
 
   protected buildForm(){
     return this.fb.group<ControlsOf<CampaignForm>>({

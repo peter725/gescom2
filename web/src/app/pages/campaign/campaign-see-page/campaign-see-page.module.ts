@@ -24,6 +24,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { TableModule } from '@base/shared/components/table';
 import { ProtocolListComponent } from '@base/pages/campaign/campaign-see-page/components';
 import { MatGridListModule } from '@angular/material/grid-list';  
+import { UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components/protocol-uploader/protocol-upload/upload-file.component';
+
+
+
 
 @NgModule({
   imports: [
@@ -51,7 +55,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatTableModule,
     MatSortModule,
     TableModule,
-    MatGridListModule
+    MatGridListModule,
+    UploadFileComponent 
   ],
     declarations: [
         CampaignSeePageComponent,

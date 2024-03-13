@@ -45,6 +45,7 @@ public class CampaignDTO implements Serializable {
     private List<CampaignProductServiceDTO> campaignProductServiceDTOS;
     private List<ProtocolResultsDTO> protocolResultsDTOS;
     private Integer state = EntityState.ON.getValue();
+    private ResultsResponseDTO resultsResponseDTO;
 
     //lista de productos
 }

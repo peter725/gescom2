@@ -6,6 +6,7 @@ import { AutonomousCommunity } from '@libs/sdk/autonomousCommunity';
 import { Proponent } from '@libs/sdk/proponent';
 import { Specialist } from '@libs/sdk/specialist';
 import { AbstractControl } from '@angular/forms';
+import { IprDTO } from './ipr';
 
 export interface Protocol extends SimpleModel, StatefulAltModel {
   id: number;
@@ -16,6 +17,7 @@ export interface Protocol extends SimpleModel, StatefulAltModel {
   Questions: Question[];
   nameCampaign: string;
   question: Question[];
+  iprDTOS: IprDTO[];
 }
 
 export interface FilaProtocol {

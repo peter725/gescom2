@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/document")
 @Tag(name = "Document controller")
@@ -30,9 +33,9 @@ public class DocumentController extends AbstractCrudController<DocumentEntity, D
     }
 
     @GetMapping("/campaign/{id}")
-    public ResponseEntity<Page<DocumentEntity>> findListByCriteria(DocumentCriteria protocolCriteria, @PathVariable  Long id) {
-        Page<DocumentEntity> result =
-                ((DocumentService) service).findDocumentByCampaignId(new CriteriaWrapper<>(protocolCriteria), id);
+    public ResponseEntity<List<DocumentEntity>> findListByCriteria(@PathVariable  Long id) {
+        List<DocumentEntity> result =
+                ((DocumentService) service).findDocumentByCampaignId(id);
         return ResponseEntity.ok(result);
     }
 }

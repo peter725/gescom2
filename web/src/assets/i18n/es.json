@@ -303,8 +303,8 @@
         "year": "Año",
         "inspection": "INSPECCIÓN: FASE ACTUAL",
         "protocol": "Alta de protocolo",
-        "products": "PRODUCTOS",
-        "resultados": "CUMPLIMENTACIÓN DE RESULTADOS DE CCAA"
+        "products": "Productos",
+        "resultados": "Resultados CCAA"
     },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},
@@ -391,6 +391,8 @@
       "pleaseReview": "Por favor revisa los datos introducidos",
       "pleaseWait": "Por favor espera",
       "redirectToClave": "Redireccionando al servicio de cl@ve",
+      "finalPhase": "La campaña ya está en la fase final",
+      "errorPhase": "No se ha encontrado la fase actual",
       "sample": {
         "add": "Añadir una nueva muestra",
         "addAtLeastOne": "Añade al menos una entrada para completar el boletín analítico",

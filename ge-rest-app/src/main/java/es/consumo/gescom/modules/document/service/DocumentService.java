@@ -6,7 +6,10 @@ import es.consumo.gescom.modules.document.model.criteria.DocumentCriteria;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface DocumentService extends CrudService<DocumentEntity, Long>{
-    Page<DocumentEntity> findDocumentByCampaignId(CriteriaWrapper<DocumentCriteria> documentCriteriaCriteriaWrapper, Long idCampaign);
+    List<DocumentEntity> findDocumentByCampaignId(Long idCampaign);
 
 }

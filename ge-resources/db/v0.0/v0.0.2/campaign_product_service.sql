@@ -1,5 +1,5 @@
 create sequence dbo.seq_campaign_product_service
-    start with 100;
+    start with 1898;
 
 alter sequence dbo.seq_campaign_product_service owner to gesco;
 

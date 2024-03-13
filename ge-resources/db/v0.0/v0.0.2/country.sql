@@ -1,5 +1,5 @@
 create sequence dbo.seq_country
-    start with 100;
+    start with 337;
 
 alter sequence dbo.seq_country owner to gesco;
 

@@ -1,6 +1,6 @@
 create sequence dbo.seq_ipr
     as integer
-    start with 100;
+    start with 580;
 
 create table ipr
 (

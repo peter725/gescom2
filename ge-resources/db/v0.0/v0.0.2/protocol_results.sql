@@ -1,6 +1,6 @@
 create sequence seq_sum_protocol
     as integer
-    minvalue 100;
+    minvalue 10995;
 
 alter sequence seq_sum_protocol owner to gesco;
 

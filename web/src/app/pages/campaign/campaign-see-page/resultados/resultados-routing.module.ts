@@ -6,13 +6,13 @@ import { ResultadosSeeComponent } from './resultados-see.component';
 const routes: Routes = [{
   path: '',
   component: ResultadosComponent,
-  title: 'pages.user.add',
+  title: 'pages.campaign.finalResults',
   data: {breadcrumb: 'pages.results.title'}
 },
 {
   path: 'ver',
   component: ResultadosSeeComponent,
-  title: 'pages.user.add',
+  title: 'pages.campaign.finalResults',
   data: {breadcrumb: 'pages.results.title'}
 },
 ];

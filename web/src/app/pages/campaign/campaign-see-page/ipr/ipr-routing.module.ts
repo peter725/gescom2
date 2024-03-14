@@ -5,7 +5,7 @@ import { IprComponent } from './ipr.component';
 const routes: Routes = [{
   path: '',
   component: IprComponent,
-  title: 'pages.user.add',
+  title: 'pages.campaign.ipr',
   data: { },
 }];
 

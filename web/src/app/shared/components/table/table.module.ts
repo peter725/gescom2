@@ -23,6 +23,7 @@ import {
 import {FullScreenElementModule} from "@base/shared/full-screen-element";
 import { FileDownloaderImplService } from '../../export-file/file-downloader-impl.service';
 import {MatTableModule} from "@angular/material/table";
+import { PAGINATOR_INTL_PROVIDER, PaginatorConfig } from '@base/config/paginator.config';
 
 
 const EXPORTED_DECLARATIONS = [
@@ -53,7 +54,7 @@ const EXPORTED_DECLARATIONS = [
         FullScreenElementModule,
     ],
     declarations: EXPORTED_DECLARATIONS,
-    providers: [FileDownloaderImplService],
+    providers: [FileDownloaderImplService, PAGINATOR_INTL_PROVIDER],
     exports: [
         MatTableModule,
         MatPaginatorModule,

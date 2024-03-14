@@ -379,7 +379,8 @@
         "itemsPerPageLabel": "Elm. por página",
         "lastPageLabel": "Última página",
         "nextPageLabel": "Siguiente página",
-        "previousPageLabel": "Página anterior"
+        "previousPageLabel": "Página anterior",
+        "rangeLabel": "de"
       },
       "plan": {
         "authority": "Consulta Plan Authority",

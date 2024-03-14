@@ -29,7 +29,7 @@ export class BreadcrumbsService {
     // Construct the breadcrumb hierarchy
     const root = this.router.routerState.snapshot.root;
     const breadcrumbs: Breadcrumb[] = [
-      { path: '/', title: 'Inicio', active: false },
+      { path: '/', title: 'Inicio', active: this.router.routerState.snapshot.url === '/app/inicio' ? true : false },
     ];
     this.addBreadcrumb(root, [], breadcrumbs);
 

@@ -41,7 +41,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
   responseUser: any;
   respuestasUsuarioCombined: any[] = [];
   iprQuestionDTOList: any[] = []; // Declaración de la propiedad iprQuestionDTOList
-  cancelRedirectPath = '../../campanas/consulta';
+  cancelRedirectPath = '../ver';
 
   override async ngOnInit(): Promise<void> {
     super.ngOnInit();

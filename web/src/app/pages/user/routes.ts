@@ -20,7 +20,7 @@ export const USER_PAGE_ROUTES: Routes = [
     data: {
       breadcrumb,
     },
-    loadChildren: () => import('./').then(m => m.UserEditPageModule),
+    loadChildren: () => import('./').then(m => m.UserAddPageModule),
   },
   {
     path: ':id',

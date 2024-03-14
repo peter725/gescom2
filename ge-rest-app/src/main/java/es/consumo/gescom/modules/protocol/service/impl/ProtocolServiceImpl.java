@@ -93,11 +93,18 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
         for (ProtocolDTO protocolDTO : listProtocolDTO) {
             if (protocolDTO.getCode() == null) {
-                /*List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());*/
+                SearchDTO searchDTO = new SearchDTO();
+                searchDTO.setCampaignId(idCampaign);
+                searchDTO.setProtocolId(protocolDTO.getId());
+                searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
+                List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO.getId());
                 List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
                 List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
-                //ResultsResponseDTO resultsResponseDTO = iprService.getResults()
+
+                ResultsResponseDTO resultsResponseDTO = iprService.getResults(searchDTO);
                 protocolDTO.setQuestion(listQuestionsDTOS);
+                protocolDTO.setResultsResponseDTO(resultsResponseDTO);
+                protocolDTO.setIprDTOS(iprDTOS);
 
             }else {
                 List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());
@@ -174,6 +181,10 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     public List<QuestionsDTO> findProtocolByIdOrCode(ProtocolDTO protocolDTO) {
 
         List<QuestionsDTO> questionDetailDTOList = new ArrayList<>();
+        if (protocolDTO.getCode().equals("undefined")){
+            protocolDTO.setCode(null);
+        }
+
         if(protocolDTO.getCode() == null){
             List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
             questionsEntities.forEach( questionsEntity -> {

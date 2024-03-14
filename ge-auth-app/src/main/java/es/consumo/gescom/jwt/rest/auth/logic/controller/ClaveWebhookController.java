@@ -6,6 +6,7 @@ import es.consumo.gescom.jwt.rest.auth.clave.service.ClaveService;
 import es.consumo.gescom.jwt.rest.auth.logic.constant.AuthResultParams;
 import es.consumo.gescom.jwt.rest.auth.logic.service.UserAuthService;
 import es.consumo.gescom.jwt.rest.user.db.entity.LoginEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@Slf4j
 @RequestMapping(ApiEndpoints.V1_API+ApiEndpoints.HOOKS + "/clave")
 public class ClaveWebhookController {
 
@@ -37,7 +39,8 @@ public class ClaveWebhookController {
     public String processLoginResponse(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String returnUrl = env.getProperty("gescom.front.app.url");
         try {
-
+            log.info("Processing login response");
+            log.info(returnUrl);
             // Descodificación y validación de la respuesta de clave y emisión del JWT
             ClaveAuthResponseData claveResponse = this.claveService.processResponse(request);
             LoginEntity login = this.userAuthService.createUserIfNotExits(claveResponse);
@@ -47,6 +50,7 @@ public class ClaveWebhookController {
             redirectAttributes.addAttribute(AuthResultParams.AUTH_STATUS_PARAM, AuthResultParams.RESULT_OK);
             redirectAttributes.addAttribute(AuthResultParams.AUTH_CODE_PARAM, code);
             redirectAttributes.addAttribute(AuthResultParams.AUTH_MESSAGE_PARAM, "Authentication process completed");
+            log.info("Redirecting to: " + returnUrl);
             return "redirect:" + returnUrl;
         } catch (Exception e) {
             // Si la descodificación de clave falla, devuelve un error personalizado. Debemos gestionarlo con un mensaje nuestro.
@@ -54,6 +58,7 @@ public class ClaveWebhookController {
             redirectAttributes.addAttribute(AuthResultParams.AUTH_ACTION_PARAM, AuthResultParams.ACTION_SIGN_IN);
             redirectAttributes.addAttribute(AuthResultParams.AUTH_STATUS_PARAM, AuthResultParams.RESULT_KO);
             redirectAttributes.addAttribute(AuthResultParams.AUTH_MESSAGE_PARAM, e.getMessage());
+            log.error("Error processing login response", e);
             return "redirect:" + returnUrl;
         }
     }
@@ -66,10 +71,13 @@ public class ClaveWebhookController {
         // Ignoramos cualquier respuesta de clave y redirigimos a la web para completar el proceso
         String returnUrl = env.getProperty("gescom.front.app.url");
         try {
+            log.info("Processing logout response");
+            log.info(returnUrl);
             redirectAttributes.addAttribute(AuthResultParams.AUTH_ACTION_PARAM, AuthResultParams.ACTION_SIGN_OUT);
             return "redirect:" + returnUrl;
         } catch (RuntimeException e) {
             redirectAttributes.addAttribute(AuthResultParams.AUTH_ACTION_PARAM, AuthResultParams.ACTION_SIGN_OUT);
+            log.error("Error processing logout response", e);
             return "redirect:" + returnUrl;
         }
     }

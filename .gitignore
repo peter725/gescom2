@@ -50,3 +50,4 @@ ge-auth-app/src/main/resources/config/application-local.properties
 ge-rest-app/src/main/resources/config/application-local.properties
 web/src/environments/environment.ts
 web/src/environments/environment.dev.ts
+web/src/environments/environment.ts

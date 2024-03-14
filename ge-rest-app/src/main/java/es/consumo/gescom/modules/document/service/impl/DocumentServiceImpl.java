@@ -2,7 +2,9 @@ package es.consumo.gescom.modules.document.service.impl;
 
 
 import es.consumo.gescom.commons.db.entity.StatefulEntity;
+import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
+import es.consumo.gescom.modules.document.model.criteria.DocumentCriteria;
 import es.consumo.gescom.modules.document.model.entity.DocumentEntity;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
@@ -12,6 +14,7 @@ import es.consumo.gescom.modules.document.service.DocumentService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -102,19 +105,9 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     }
 
     @Override
-    public List<DocumentEntity> findDocumentByCampaignId(Long idCampaign) {
-        List<DocumentEntity> optional = documentRepository.findDocumentByCampaignId(idCampaign);
-        if (!optional.isEmpty()) {
-            optional.forEach( documentEntity -> {
-                try {
-                    documentEntity.setBase64(getFile(documentEntity));
-                } catch (Exception ex) {
-                    logger.error(ex.getMessage(), ex);
-                }
+    public Page<DocumentEntity> findDocumentByCampaignId(CriteriaWrapper<DocumentCriteria> wrapper, Long idCampaign) {
+        return ((DocumentRepository) repository).findDocumentByCampaignId(wrapper.getCriteria().toPageable(), idCampaign);
 
-            });
-        }
-        return optional;
     }
 
     @Override
@@ -122,5 +115,4 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
         data.setState(2);
         repository.save(data);
     }
-
 }

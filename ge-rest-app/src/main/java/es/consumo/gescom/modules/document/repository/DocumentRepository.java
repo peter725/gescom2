@@ -24,5 +24,5 @@ public interface DocumentRepository extends GESCOMRepository<DocumentEntity, Lon
     Page<DocumentEntity> findAllByCriteria(DocumentCriteria criteria, Pageable pageable);
 
     @Query(value = "SELECT t FROM DocumentEntity t WHERE t.campaignId = :idCampaign " )
-    List<DocumentEntity> findDocumentByCampaignId(@Param("idCampaign") Long idCampaign);
+    Page<DocumentEntity> findDocumentByCampaignId(Pageable pageable,@Param("idCampaign") Long idCampaign);
 }

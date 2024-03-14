@@ -5,7 +5,7 @@ import { ResultadosFinalesComponent } from './resultados-finales.component';
 const routes: Routes = [{
   path: '',
   component: ResultadosFinalesComponent,
-  title: 'pages.user.add',
+  title: 'pages.campaign.finalResults',
   data: {breadcrumb: 'pages.results.title'}
 },
 ];

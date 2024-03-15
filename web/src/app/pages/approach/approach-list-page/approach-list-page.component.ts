@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterService } from '@base/shared/filter';
 import { BaseListPageComponent } from '@base/shared/pages/list';
-// import { AuthSubject } from '@base/shared/security';
 import { CrudImplService, RequestConfig } from "@libs/crud-api";
-// import { ContextService } from '@libs/security';
-import { Observable } from 'rxjs';
-import {MatTableModule} from "@angular/material/table";
 import { Approach } from "@libs/sdk/approach";
 import { ExportFileType } from "@base/shared/export-file";
 import { ColumnSrc } from "@base/shared/collections";
@@ -51,7 +47,7 @@ export class ApproachListPageComponent extends BaseListPageComponent<Approach> i
   }
 
   protected getColumns(): ColumnSrc[] {
-    return ['year', 'autonomusCommunity', 'approach', 'type', 'actions'];
+    return ['year', 'type', 'autonomusCommunity', 'approach', 'actions'];
   }
 
 

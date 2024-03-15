@@ -1,61 +1,58 @@
 <form [formGroup]="form">
     <tsw-form-container>
         <tsw-tab-panel></tsw-tab-panel>
-        <tsw-section-wrapper
-                class="mb-2"
-                headerLabel="{{'text.approach.campaign-proposal.title' | translate}}"
-                icon="edit_note">
+        <tsw-section-wrapper class="mb-2" headerLabel="{{'pages.approach.add' | translate}}" icon="edit_note">
             <div section-content>
                 <fieldset>
-                    <tsw-section-label class="w-full"
-                                       label="{{ 'text.approach.campaign-proposal.title' | translate}}"></tsw-section-label>
-                    <div class="grid grid-cols-1">
-                        <mat-radio-group class="approach-type" aria-label="Select an option" formControlName="campaignTypeId">
-                            <mat-radio-button
-                                    value=1>{{ 'fields.approach.campaign-proposal.campaign-type.key1' | translate }}</mat-radio-button>
-                            <mat-radio-button
-                                    value=2>{{ 'fields.approach.campaign-proposal.campaign-type.key2' | translate }}</mat-radio-button>
-                            <mat-radio-button
-                                    value=3>{{ 'fields.approach.campaign-proposal.campaign-type.key3' | translate }}</mat-radio-button>
+                    <div class="grid grid-cols-1 mb-2">
+                        <mat-radio-group aria-label="Select an option"
+                            formControlName="campaignTypeId">
+                            <mat-radio-button [value]=1>{{ 'fields.approachFields.campaign-proposal.campaign-type.key1' |
+                                translate }}</mat-radio-button>
+                            <mat-radio-button [value]=2>{{ 'fields.approachFields.campaign-proposal.campaign-type.key2' |
+                                translate }}</mat-radio-button>
+                            <mat-radio-button [value]=3>{{ 'fields.approachFields.campaign-proposal.campaign-type.key3' |
+                                translate }}</mat-radio-button>
+                            <!-- <mat-error [ngStyle]="{'visibility': form.controls.campaignTypeId.touched ? 'visible' : 'hidden'}">{{ form.controls.campaignTypeId.errors | extractValidationError }}</mat-error> -->
                         </mat-radio-group>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-1.5">
-
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
                         <mat-form-field>
-                            <mat-label>{{ 'fields.approach.campaign-proposal.title' | translate }}</mat-label>
+                            <mat-label>{{ 'fields.approachFields.campaign-proposal.title' | translate }}</mat-label>
                             <textarea matInput formControlName="approach" rows="3"></textarea>
+                            <mat-error>{{ form.controls.approach.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-1.5">
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
                         <mat-form-field>
-                            <mat-label>{{ 'fields.approach.justification' | translate }}</mat-label>
+                            <mat-label>{{ 'fields.approachFields.justification' | translate }}</mat-label>
                             <textarea matInput formControlName="justification" rows="3"></textarea>
+                            <mat-error>{{ form.controls.justification.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-1.5">
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
                         <mat-form-field>
-                            <mat-label>{{ 'fields.approach.objectives' | translate }}</mat-label>
+                            <mat-label>{{ 'fields.approachFields.objectives' | translate }}</mat-label>
                             <textarea matInput formControlName="objective" rows="3"></textarea>
+                            <mat-error>{{ form.controls.objective.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-1.5">
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
                         <mat-form-field>
-                            <mat-label>{{ 'fields.approach.technical-legal-viability' | translate }}</mat-label>
+                            <mat-label>{{ 'fields.approachFields.technical-legal-viability' | translate }}</mat-label>
                             <textarea matInput formControlName="viability" rows="3"></textarea>
+                            <mat-error>{{ form.controls.viability.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
                     </div>
                 </fieldset>
             </div>
 
         </tsw-section-wrapper>
-        <tsw-form-actions
-                [saveBtnSkipConfirmation]="skipSaveConfirmation"
-                (reset)="resetForm()"
-                (save)="submitForm()"
-        ></tsw-form-actions>
+        <tsw-form-actions [saveBtnSkipConfirmation]="form.invalid"
+            (reset)="resetForm()" (save)="submitForm()"></tsw-form-actions>
     </tsw-form-container>
 </form>

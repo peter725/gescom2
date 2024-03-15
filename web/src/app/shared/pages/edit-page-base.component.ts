@@ -120,10 +120,10 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
   }
 
   submitForm() {
-    //if (this.form.invalid) {
-      //this.notification.show({ message: 'text.other.pleaseReview' });
-      //return;
-    //}
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.save();
   }
 

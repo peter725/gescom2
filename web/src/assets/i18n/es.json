@@ -80,10 +80,12 @@
     "affectedProgrammesCode": "Programas afectados",
     "ambit": "Ámbito",
     "amendmentInterval": "Intervalo de revisión EFSA",
-    "approach": {
+    "approach": "Propuesta",
+    "approachFields": {
       "approach": "Propuesta",
       "type": "Tipo de propuesta",
       "year": "Año",
+      "autonomousCommunity": "Comunidad autónoma",
       "campaign-proposal": {
         "title": "Propuesta de campaña",
         "campaign-type": {
@@ -102,6 +104,7 @@
     "attributeName": "Nombre del atributo",
     "authorityOEU": "Autoridad de la ficina de enlace unico",
     "authorityDGC": "autoridad de la dirección general de consumo",
+    "autonomusCommunity": "Comunidad autónoma",
     "baseTerm": "Término base",
     "behaviour": "Comportamiento",
     "body": "Cuerpo",
@@ -178,6 +181,8 @@
     "multiLanguage": "Multi-idioma",
     "multiple": "Múltiple",
     "name": "Nombre",
+    "nameApproach": "Propuesta",
+    "nameCampaign": "Nombre",
     "number": "Número",
     "nif": "NIF",
     "numberOfResults": "Nº de resultados",
@@ -278,6 +283,7 @@
       "title": "Campaña",
       "name": "Nombre",
       "year": "Año",
+      "type": "Tipo de campaña",
       "code": "Código/s CPA",
       "campaignType": "Tipo de campaña",
       "ambit": "Ámbito",

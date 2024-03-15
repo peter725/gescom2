@@ -82,7 +82,7 @@
         </tsw-section-wrapper>
 
     <tsw-form-actions
-            [saveBtnSkipConfirmation]="skipSaveConfirmation"
+            [saveBtnSkipConfirmation]="form.invalid"
             (reset)="resetForm()"
             (save)="submitForm()"
     ></tsw-form-actions>

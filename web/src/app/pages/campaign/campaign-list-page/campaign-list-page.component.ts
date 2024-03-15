@@ -18,8 +18,6 @@ export class CampaignListPageComponent  extends BaseListPageComponent<Campaign> 
     override exportFormats = [ExportFileType.CSV];
     override downloadFileName = 'pages.campaign.title';
 
-
-
     constructor(
       crudService: CrudImplService<Campaign>,
       filterService: FilterService,
@@ -47,10 +45,10 @@ export class CampaignListPageComponent  extends BaseListPageComponent<Campaign> 
     protected getColumns(): ColumnSrc[] {
       return [
         'year',
-        'ambit',
         'campaignType',
-        'nameCampaign',
+        'ambit',
         'phaseCampaign',
+        'nameCampaign',
         'actions',
       ];
     }

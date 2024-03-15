@@ -1,18 +1,14 @@
 <!-- <h2 mat-dialog-title>Documentos</h2> -->
-<form [formGroup]="form" style="margin-top: 30px; margin-bottom: 30px">
-  <div class="flex flex-row gap-1.5">
-
+<form [formGroup]="form" class="my-7 justify-between flex">
     <!-- Sección personalizada para el input de tipo archivo -->
     <div class="basis-2/4 flex items-center">
       <input type="file" id="fileInput" (change)="onFileSelected($event)">
     </div>
     
     <!-- Botón para añadir archivo -->
-    <div class="basis-1/4">
+    <div>
       <button mat-raised-button color="primary" (click)="addFile()">Añadir</button>
     </div>
-
-  </div>
 </form>
 
       

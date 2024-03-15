@@ -5,7 +5,7 @@ import { ProtocolAddPageComponent } from './protocol-add-page.component';
 const routes: Routes = [{
   path: '',
   component: ProtocolAddPageComponent,
-  title: 'pages.user.add',
+  title: 'pages.protocol.add',
   data: { breadcrumb: 'generic.actions.add' },
 }];
 

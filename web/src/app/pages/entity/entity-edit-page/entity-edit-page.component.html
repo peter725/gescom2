@@ -1,13 +1,12 @@
-<tsw-breadcrumbs></tsw-breadcrumbs>
-
 <form [formGroup]="form">
     <tsw-form-container>
         <tsw-section-wrapper class="mb-5" [headerLabel]="headerTitle" icon="edit_note">
             <div section-content>
-                <div class="grid grid-cols-3 gap-1.5">
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
                     <mat-form-field>
                         <mat-label>{{ 'fields.name' | translate }}</mat-label>
                         <input matInput formControlName="name">
+                        <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
@@ -15,39 +14,42 @@
                         <tsw-custom-select
                             formControlName="entityType"
                             resourceName="entityTypes"
-                            [showNoneValue]="false">
+                            [showNoneValue]="false"
+                            [required]="true">
                         </tsw-custom-select>
+                        <mat-error>{{ form.controls.entityType.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>{{ 'fields.code' | translate }}</mat-label>
                         <input matInput formControlName="code">
+                        <mat-error>{{ form.controls.code.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
                 </div>
 
-                <div class="grid grid-cols-2 gap-1.5">
-
-                    <mat-form-field>
-                        <mat-label>{{ 'fields.description' | translate }}</mat-label>
-                        <input matInput formControlName="description">
-                    </mat-form-field>
-
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
                     <ng-container *ngIf="!srcData?.rootEntity">
                         <mat-form-field>
                             <mat-label>{{ 'fields.parent' | translate }}</mat-label>
                             <tsw-custom-select
                                 formControlName="parent"
                                 resourceName="entities"
-                                [showNoneValue]="false">
+                                [showNoneValue]="false"
+                                [required]="true">
                             </tsw-custom-select>
+                            <mat-error>{{ form.controls.parent.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
                     </ng-container>
-
+                    <mat-form-field class="col-span-2">
+                        <mat-label>{{ 'fields.description' | translate }}</mat-label>
+                        <input matInput formControlName="description">
+                    </mat-form-field>
                 </div>
 
-                <tsw-section-label label="text.other.contactDetails"></tsw-section-label>
+                <h3 class="text-lg mt-4 mb-2 font-semibold">{{ 'text.other.contactDetails' | translate }}</h3>
+                <!-- <tsw-section-label label="text.other.contactDetails"></tsw-section-label> -->
 
-                <div class="grid grid-cols-3 gap-1.5">
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
                     <mat-form-field>
                         <mat-label>{{ 'fields.contactPerson' | translate }}</mat-label>
                         <input matInput formControlName="contactPerson">
@@ -61,16 +63,17 @@
                     <mat-form-field>
                         <mat-label>{{ 'fields.email' | translate }}</mat-label>
                         <input matInput formControlName="email">
+                        <mat-error>{{ form.controls.email.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
                 </div>
 
-                <div class="grid grid-cols-4 gap-1.5">
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
                     <mat-form-field>
                         <mat-label>{{ 'fields.postalCode' | translate }}</mat-label>
                         <input matInput formControlName="postalCode">
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field class="col-span-2">
                         <mat-label>{{ 'fields.address' | translate }}</mat-label>
                         <input matInput formControlName="address">
                     </mat-form-field>
@@ -79,7 +82,7 @@
             </div>
         </tsw-section-wrapper>
 
-        <tsw-form-actions [saveBtnSkipConfirmation]="skipSaveConfirmation" (reset)="resetForm()"
+        <tsw-form-actions [saveBtnSkipConfirmation]="form.invalid" (reset)="resetForm()"
                           (save)="submitForm()"></tsw-form-actions>
     </tsw-form-container>
 </form>

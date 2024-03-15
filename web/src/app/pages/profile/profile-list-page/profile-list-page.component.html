@@ -1,5 +1,3 @@
-<tsw-breadcrumbs></tsw-breadcrumbs>
-
 <tsw-filters-container class="pt-3">
 </tsw-filters-container>
 
@@ -18,7 +16,7 @@
     <tr *matNoDataRow tsw-table-empty-row [loading]="loading" [columns]="columns"></tr>
 
     <ng-container matColumnDef="select" [sticky]="true">
-      <th mat-header-cell *matHeaderCellDef>
+      <th mat-header-cell *matHeaderCellDef style="width: 7%">
         <mat-checkbox
           (click)="$event.stopPropagation()"
           (change)="selectAll($event)"
@@ -36,7 +34,7 @@
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <th mat-header-cell *matHeaderCellDef style="width: 73%">Nombre</th>
       <td mat-cell *matCellDef="let element">
         {{ element.name }}
       </td>

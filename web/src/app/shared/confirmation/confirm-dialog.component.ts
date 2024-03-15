@@ -9,7 +9,7 @@ import { ConfirmationPrompt } from '@base/shared/confirmation/models';
   template: `
     <mat-dialog-content>
       <div class="text-8xl px-2 py-6 flex justify-center items-center">
-        <mat-icon inline color="warn">error_outline</mat-icon>
+        <mat-icon inline color="primary">help</mat-icon>
       </div>
 
       <div class="px-2">

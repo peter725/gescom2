@@ -1,0 +1,19 @@
+.blockCheck {
+    display: flex;
+    margin-top: 20px;
+}
+  
+.blockCheck label input[type="checkbox"] {
+margin-left: 5px; 
+}
+
+.blockCheck label{
+    margin-right: 20px; 
+
+}
+
+.centeredChecks{
+    display: flex; /* Utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+}

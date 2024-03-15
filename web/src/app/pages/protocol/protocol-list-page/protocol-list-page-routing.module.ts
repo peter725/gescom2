@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ApproachListPageComponent } from './approach-list-page.component';
+import { ProtocolListPageComponent } from './protocol-list-page.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ApproachListPageComponent,
-    title: 'pages.approach.list',
+    component: ProtocolListPageComponent,
+    title: 'pages.protocol.list',
     data: { breadcrumb: 'generic.actions.list' }
   }
 ];
@@ -16,5 +16,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ApproachListPageRoutingModule {
+export class ProtocolListPageRoutingModule {
 }

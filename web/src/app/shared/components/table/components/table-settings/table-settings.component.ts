@@ -61,8 +61,8 @@ export class TableSettingsComponent implements OnInit {
   }
 
   private translateText(text: string): string {
-    const src = LABEL_TRANSLATION_PREFIX + text;
-    const translation = this.translate.instant(src);
-    return translation !== src ? translation : text;
+    console.log(text)
+    const translation = this.translate.instant(text);
+    return translation !== text ? translation : text;
   }
 }

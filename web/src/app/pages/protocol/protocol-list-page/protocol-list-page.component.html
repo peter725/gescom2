@@ -1,11 +1,8 @@
 <tsw-filters-container class="pt-3">
+    <tsw-protocol-list-page-filter *tswCustomFilter="'advanced'"></tsw-protocol-list-page-filter>
 </tsw-filters-container>
 
 <tsw-table-container
-        [resourceName]="resourceName"
-        [exportFormats]="exportFormats"
-        [downloadFileName]="downloadFileName | translate"
-        [queryParams]="previousRequestConfig?.queryParams"
         class="pt-3"
         [loading]="loading"
         [paginator]="paginator"
@@ -14,8 +11,8 @@
         (page)="navigatePage($event)"
 >
     <table tsw-table [dataSource]="source">
-        <tr mat-header-row *matHeaderRowDef="(columns.columns | async) ?? []; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: (columns.columns | async) ?? [];"></tr>
+        <tr mat-header-row *matHeaderRowDef="(columns.columns | async) ?? []"></tr>
+        <tr mat-row *matRowDef="let row; columns: (columns.columns | async) ?? []"></tr>
 
         <tr *matNoDataRow tsw-table-empty-row [loading]="loading" [columns]="columns"></tr>
 
@@ -37,24 +34,52 @@
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="code">
+            <th *matHeaderCellDef mat-header-cell style="width: 7%" >{{ "fields.protocolFields.code" | translate }}</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.code }}
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ 'fields.name' | translate }}</th>
+            <th mat-header-cell style="width: 15%;" *matHeaderCellDef>
+              {{ 'fields.protocolFields.name'| translate }}</th>
             <td mat-cell *matCellDef="let element">
                 {{ element.name }}
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="actions" [stickyEnd]="true">
-            <th mat-header-cell *matHeaderCellDef class="opacity-0"></th>
+        <ng-container matColumnDef="nameCampaign">
+            <th mat-header-cell style="width: 25%;" *matHeaderCellDef>{{ "fields.protocolFields.nameCampaign" | translate }}</th>
+            <td *matCellDef="let element" mat-cell>
+                {{ element.nameCampaign }}
+            </td>
+        </ng-container>
+
+        <ng-container
+                matColumnDef="actions"
+                [stickyEnd]="true"
+        >
+            <th *matHeaderCellDef mat-header-cell ></th>
             <td mat-cell *matCellDef="let element" class="text-right">
                 <ng-container>
                     <div class="additional-actions">
-                        <a
-                                mat-button
-                                [routerLink]="'autonomousCommunityManagementEdit' | namedRoute: { id: element.id }"
+                        <a mat-button
+                           [routerLink]="'approachManagementSee' | namedRoute: { id: element.id }"
+                           matTooltip="Ver"
+                           matTooltipPosition="above"
                         >
-                            <mat-icon>edit</mat-icon>
+                          <mat-icon>visibility</mat-icon>
                         </a>
+                      <a
+                        mat-button
+                        [routerLink]="'approachManagementEdit' | namedRoute: { id: element.id }"
+                        matTooltip="Editar"
+                        matTooltipPosition="above"
+                      >
+                        <mat-icon>edit</mat-icon>
+
+                      </a>
                     </div>
                     <tsw-state-toggle
                             [data]="element"
@@ -63,5 +88,6 @@
                 </ng-container>
             </td>
         </ng-container>
+
     </table>
 </tsw-table-container>

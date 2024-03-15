@@ -2,20 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FilterService } from '@base/shared/filter';
 import { BaseListPageComponent } from '@base/shared/pages/list';
 import { CrudImplService, RequestConfig } from "@libs/crud-api";
-import { Approach } from "@libs/sdk/approach";
 import { ExportFileType } from "@base/shared/export-file";
 import { ColumnSrc } from "@base/shared/collections";
+import { Protocol } from '@libs/sdk/protocol';
 
 
 @Component({
-  selector: 'tsw-approach-list-page',
-  templateUrl: './approach-list-page.component.html',
-  styleUrls: ['./approach-list-page.component.scss'],
+  selector: 'tsw-protocol-list-page',
+  templateUrl: './protocol-list-page.component.html',
+  styleUrls: ['./protocol-list-page.component.scss'],
 })
-export class ApproachListPageComponent extends BaseListPageComponent<Approach> implements OnInit {
+export class ProtocolListPageComponent extends BaseListPageComponent<Protocol> implements OnInit {
 
-  readonly resourceName = 'campaignProposal';
-  // subject$: Observable<AuthSubject>;
+  readonly resourceName = 'protocol';
 
   override exportFormats = [ExportFileType.CSV];
   override downloadFileName = 'pages.user.title';
@@ -23,31 +22,26 @@ export class ApproachListPageComponent extends BaseListPageComponent<Approach> i
   constructor(
     crudService: CrudImplService<any>,
     filterService: FilterService,
-    // private authContext: AuthContextService<AuthSubject>,
   ) {
     super(crudService, filterService);
-    // this.subject$ = authContext.get();
   }
 
   override async ngOnInit() {
     await super.ngOnInit();
     console.log('entro');
-    //this.monitorCtxChanges();
   }
 
   protected override async getRequestConfig(): Promise<RequestConfig> {
     const config = await super.getRequestConfig();
-    //const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
 
     config.queryParams = {
       ...config.queryParams
-      //scope,
     };
     return config;
   }
 
   protected getColumns(): ColumnSrc[] {
-    return ['year', 'type', 'autonomusCommunity', 'approach', 'actions'];
+    return ['code', 'name', 'nameCampaign', 'actions'];
   }
 
 

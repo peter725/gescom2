@@ -80,10 +80,12 @@
     "affectedProgrammesCode": "Programas afectados",
     "ambit": "Ámbito",
     "amendmentInterval": "Intervalo de revisión EFSA",
-    "approach": {
+    "approach": "Propuesta",
+    "approachFields": {
       "approach": "Propuesta",
       "type": "Tipo de propuesta",
       "year": "Año",
+      "autonomousCommunity": "Comunidad autónoma",
       "campaign-proposal": {
         "title": "Propuesta de campaña",
         "campaign-type": {
@@ -102,6 +104,7 @@
     "attributeName": "Nombre del atributo",
     "authorityOEU": "Autoridad de la ficina de enlace unico",
     "authorityDGC": "autoridad de la dirección general de consumo",
+    "autonomusCommunity": "Comunidad autónoma",
     "baseTerm": "Término base",
     "behaviour": "Comportamiento",
     "body": "Cuerpo",
@@ -166,6 +169,7 @@
     "implYear": "Año de implantación",
     "infoMessage": "Mensaje informativo",
     "infoType": "Tipo de mensaje",
+    "infringement": "Nombre de infracción",
     "insertionDate": "Fecha de inserción",
     "label": "Etiqueta",
     "lastUpdate": "Ultima actualización",
@@ -178,6 +182,8 @@
     "multiLanguage": "Multi-idioma",
     "multiple": "Múltiple",
     "name": "Nombre",
+    "nameApproach": "Propuesta",
+    "nameCampaign": "Nombre de campaña",
     "number": "Número",
     "nif": "NIF",
     "numberOfResults": "Nº de resultados",
@@ -206,6 +212,11 @@
     "profile": "Perfil",
     "profiles": "Perfiles",
     "properties": "Propiedades",
+    "protocolFields": {
+      "code": "Código",
+      "name": "Nombre",
+      "nameCampaign": "Nombre de campaña"
+    },
     "providerEntity": "Autoridad competente",
     "province": "Provincia",
     "pubCode": "Código de identificación",
@@ -278,6 +289,7 @@
       "title": "Campaña",
       "name": "Nombre",
       "year": "Año",
+      "type": "Tipo de campaña",
       "code": "Código/s CPA",
       "campaignType": "Tipo de campaña",
       "ambit": "Ámbito",
@@ -304,7 +316,8 @@
         "inspection": "INSPECCIÓN: FASE ACTUAL",
         "protocol": "Alta de protocolo",
         "products": "Productos",
-        "resultados": "Resultados CCAA"
+        "resultados": "Resultados CCAA",
+        "trasparencySheet": "Ficha de transparencia"
     },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},
@@ -379,7 +392,8 @@
         "itemsPerPageLabel": "Elm. por página",
         "lastPageLabel": "Última página",
         "nextPageLabel": "Siguiente página",
-        "previousPageLabel": "Página anterior"
+        "previousPageLabel": "Página anterior",
+        "rangeLabel": "de"
       },
       "plan": {
         "authority": "Consulta Plan Authority",
@@ -465,7 +479,8 @@
     "approach": {
       "title": "Propuestas",
       "add": "Alta de propuesta",
-      "list": "Mis propuestas",
+      "list": "Consulta de propuestas",
+      "edit":"Modificar propuesta",
       "see": "Ver propuesta"
     },
     "businessRule": {
@@ -575,10 +590,13 @@
     },
     "campaign": {
       "title": "Campañas",
-      "add": "Alta de Campaña",
-      "list": "Consulta de Campañas",
-      "edit": "Modificar Campaña",
-      "protocol": "Alta de protocolo"
+      "add": "Alta de campaña",
+      "list": "Consulta de campañas",
+      "edit": "Modificar campaña",
+      "see": "Ver campaña",
+      "protocol": "Alta de protocolo",
+      "finalResults": "Resultados finales",
+      "ipr": "IPR"
     },
     "protocol": {
       "title": "Protocolo",

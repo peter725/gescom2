@@ -11,6 +11,9 @@ import {
     CampaignAddPageRountingModule
 } from "@base/pages/campaign/campaign-add-page/campaign-add-page-routing.module";
 
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 @NgModule({
 imports: [
     CommonModule,
@@ -19,6 +22,7 @@ imports: [
     EditPageModule,
     MatRadioModule,
     TabPanelModule,
+    ReactiveFormsModule
 ],
     declarations: [
         CampaignAddPageComponent],

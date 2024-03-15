@@ -16,18 +16,21 @@ import { Campaign, CreateCampaign } from '@libs/sdk/campaign';
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' }},
   ]
 })
+
 export class CampaignAddPageComponent extends EditPageBaseComponent<Campaign, CreateCampaign> {
 
   readonly resourceName = 'campaign';
   protected override _createResourceTitle = 'pages.campaign.add';
   protected override _editResourceTitle = 'pages.campaign.edit';
 
+  override redirectAfterSave = false;
+
   protected buildForm(){
     return this.fb.group<ControlsOf<CreateCampaign>>({
       id: this.fb.control(null),
       year: this.fb.control(null, [Validators.required]),
       codeCpa: this.fb.control(null, [Validators.required]),
-      nameCampaign: this.fb.control(null, []),
+      nameCampaign: this.fb.control(null, [Validators.required]),
       campaignType: this.fb.control(null, [Validators.required]),
       participants: this.fb.control([], [Validators.required]),
       ambit: this.fb.control(null, [Validators.required]),
@@ -37,4 +40,28 @@ export class CampaignAddPageComponent extends EditPageBaseComponent<Campaign, Cr
       protocols: this.fb.control([]),
     });
   }
+
+  protected async enviarFormulario(){
+
+    if(this.form.valid){
+      await this.save();
+      this.resetForm();
+      
+    }
+
+
+  }
+
+  override resetForm() {
+    Object.keys(this.form.controls).forEach(controlName => {
+      const control = this.form.get(controlName);
+      control?.setValue(null); // Establecer el valor del control en null
+      control?.markAsPristine(); // Marcar el control como "prístino"
+      control?.markAsUntouched(); // Marcar el control como "no tocado"
+      control?.setErrors(null); // Limpiar cualquier error en el control
+    });
+  }
+
+
+
 }

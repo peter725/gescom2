@@ -26,36 +26,36 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
     {
         path: ':id',
         data: {
-        breadcrumb,
-    },
+            breadcrumb,
+        },
         loadChildren: () => import('./').then(m => m.CampaignEditPageModule),
     },
     {
         path: ':id/ver',
         data: {
-        breadcrumb,
-    },
+            breadcrumb,
+        },
         loadChildren: () => import('./').then(m => m.CampaignSeePageModule),
     },
     {
         path: ':id/resultados',
         data: {
-        breadcrumb,
-    },
+            breadcrumb,
+        },
         loadChildren: () => import('./').then(m => m.ResultadosModule),
     },
     {
         path: ':id/resultadosFinales',
         data: {
-        breadcrumb,
-    },
+            breadcrumb,
+        },
         loadChildren: () => import('./').then(m => m.ResultadosFinalesModule),
     },
     {
         path: ':id/ipr',
         data: {
-        breadcrumb,
-    },
+            breadcrumb,
+        },
         loadChildren: () => import('./').then(m => m.IprModule),
     },
 ]

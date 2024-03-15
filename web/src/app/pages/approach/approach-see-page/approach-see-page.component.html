@@ -1,5 +1,3 @@
-<tsw-breadcrumbs></tsw-breadcrumbs>
-
 <form [formGroup]="form">
     <tsw-form-container>
         <tsw-tab-panel></tsw-tab-panel>
@@ -9,32 +7,43 @@
                 icon="preview">
             <div section-content>
 
-                    <div class="p-5 grid grid-cols-2 gap-1.5">
-                      <mat-label class="uppercase font-bold">
-                        COMUNIDAD AUTÓNOMA:
-                        <input class="bg-gray-100 rounded-md" matInput formControlName="autonomousCommunityName" readonly>
-                      </mat-label>
-                      <mat-label class="uppercase font-bold">
-                        Año:
-                        <input class="bg-gray-100 rounded-md" matInput formControlName="year" readonly>
-                      </mat-label>
+                    <div class="grid grid-cols-3 gap-1.5">
+                        <mat-form-field class="col-span-2">
+                                <mat-label>{{ 'fields.approachFields.autonomousCommunity' | translate }}</mat-label>
+                                <input matInput formControlName="autonomousCommunityName" readonly>
+                        </mat-form-field>
+                        <mat-form-field>
+                                <mat-label>{{ 'fields.approachFields.year' | translate }}</mat-label>
+                                <input matInput formControlName="year" readonly>
+                        </mat-form-field>
                     </div>
 
-                    <div class="p-5 grid grid-cols-1 gap-1.5">
-                            <mat-label class="uppercase font-bold ">{{ 'fields.approach.campaign-proposal.title' | translate }}</mat-label>
-                            <textarea class="mx-2 bg-gray-100 rounded-md" matInput formControlName="approach" readonly></textarea>
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approachFields.campaign-proposal.title' | translate }}</mat-label>
+                            <textarea matInput formControlName="approach" rows="3" readonly></textarea>
+                        </mat-form-field>
                     </div>
-                    <div class="p-5 grid grid-cols-1 gap-1.5">
-                            <mat-label class="uppercase  font-bold">{{ 'fields.approach.justification' | translate }}</mat-label>
-                            <textarea class="mx-2 bg-gray-100 rounded-md" matInput formControlName="justification" rows="3" readonly></textarea>
+
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approachFields.justification' | translate }}</mat-label>
+                            <textarea matInput formControlName="justification" rows="3"></textarea>
+                        </mat-form-field>
                     </div>
-                    <div class="p-5 grid grid-cols-1 gap-1.5">
-                            <mat-label class="uppercase font-bold">{{ 'fields.approach.objectives' | translate }}</mat-label>
-                            <textarea class="mx-2 bg-gray-100 rounded-md" matInput formControlName="objective" rows="3" readonly></textarea>
+
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approachFields.objectives' | translate }}</mat-label>
+                            <textarea matInput formControlName="objective" rows="3"></textarea>
+                        </mat-form-field>
                     </div>
-                    <div class="p-5 grid grid-cols-1 gap-1.5">
-                            <mat-label class="uppercase font-bold">{{ 'fields.approach.technical-legal-viability' | translate }}</mat-label>
-                            <textarea class="mx-2 bg-gray-100 rounded-md" matInput formControlName="viability" rows="6" readonly></textarea>
+
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approachFields.technical-legal-viability' | translate }}</mat-label>
+                            <textarea matInput formControlName="viability" rows="3"></textarea>
+                        </mat-form-field>
                     </div>
 
             </div>

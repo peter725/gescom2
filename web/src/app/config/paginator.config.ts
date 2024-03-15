@@ -13,13 +13,29 @@ export const PAGINATOR_OPTS: MatPaginatorDefaultOptions = {
   formFieldAppearance: 'fill' ,
 };
 
+export const spanishRangeLabel = (page: number, pageSize: number, length: number) => {
+  if (length == 0 || pageSize == 0) { return `0 de ${length}`; }
+  
+  length = Math.max(length, 0);
+
+  const startIndex = page * pageSize;
+
+  // If the start index exceeds the list length, do not try and fix the end index to the end.
+  const endIndex = startIndex < length ?
+      Math.min(startIndex + pageSize, length) :
+      startIndex + pageSize;
+
+  return `${startIndex + 1} - ${endIndex} de ${length}`;
+}
+
 export const PaginatorIntlProviderFactory = (translate: TranslateService): MatPaginatorIntl => {
   const paginator = new MatPaginatorIntl();
-  paginator.itemsPerPageLabel = 'Elm. por página' // translate.instant('texts.other.pagination.nextPageLabel');
-  paginator.nextPageLabel = 'Siguiente página'; // translate.instant('texts.other.pagination.nextPageLabel');
-  paginator.previousPageLabel = 'Página anterior'; // translate.instant('texts.other.pagination.previousPageLabel');
-  paginator.firstPageLabel = 'Primera página'; // translate.instant('texts.other.pagination.firstPageLabel');
-  paginator.lastPageLabel = 'Última página'; // translate.instant('texts.other.pagination.lastPageLabel');
+  paginator.itemsPerPageLabel = translate.instant('text.other.pagination.itemsPerPageLabel');
+  paginator.nextPageLabel = translate.instant('text.other.pagination.nextPageLabel');
+  paginator.previousPageLabel = translate.instant('text.other.pagination.previousPageLabel');
+  paginator.firstPageLabel = translate.instant('text.other.pagination.firstPageLabel');
+  paginator.lastPageLabel = translate.instant('text.other.pagination.lastPageLabel');
+  paginator.getRangeLabel = spanishRangeLabel;
   return paginator;
 };
 

@@ -122,7 +122,10 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     this.sharedDataService.updateSharedData(protocolData);
 
     const dialogRef = this.dialog.open(ProtocolQuestionDialogComponent, {
-      width: '75%',
+      width: '95%',
+      height: '95%',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -147,6 +150,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
 
 
   protected createCombinedFormula(respuestas: any[], rowIndex: number){
+    
     this.respuestasUsuarioCombined = respuestas;
     let stringCombinado = '';
 
@@ -156,7 +160,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
       const respuestaValue = respuesta.respuesta ?? ''; // Si respuesta.respuesta es undefined, se asigna un espacio en blanco
       const preguntaValue = respuesta.pregunta ?? ''; // Si respuesta.pregunta es undefined, se asigna un espacio en blanco
       
-      stringCombinado += respuestaValue + preguntaValue;
+      stringCombinado += respuestaValue;
       
       if (index < this.respuestasUsuarioCombined.length - 1) {
         stringCombinado += ' + ';
@@ -175,7 +179,9 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
         const control = question.at(rowIndex)?.get('formula');
         
         if (control) {
-          control.setValue(stringCombinado);
+          const truncatedString = stringCombinado.length > 5 ? stringCombinado.substring(0, 10) + '...' : stringCombinado;
+          control.setValue(truncatedString);
+          formulaInputElement.title = stringCombinado;
         } else {
           console.error('FormControl "formula" no encontrado en el control:', control);
         }
@@ -217,11 +223,11 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     // Elimina la fila en el índice dado
     this.question.removeAt(index);
 
-    // Recorre todas las filas restantes para actualizar el campo 'orden'
+    // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
     this.question.controls.forEach((control, i) => {
-      console.log('control', control);
-      control.get('order')?.setValue(i + 1);
+      control.get('orderQuestion')?.setValue(i + 1);
     });
+
   }
 
 

@@ -40,3 +40,8 @@ testem.log
 Thumbs.db
 
 .angular
+
+
+# environments
+
+/src/environments/*.ts

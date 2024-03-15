@@ -41,7 +41,6 @@ export class NotificationService {
       color: this.getNotificationColor(src),
       type: src.type,
       details: src.details || [],
-
       expanded: false,
     };
   }

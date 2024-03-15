@@ -1,3 +1,10 @@
+<!-- Agrega botones o checkboxes para seleccionar todos los elementos de la columna "Si", "No" y "No Procede" -->
+<div>
+  <mat-checkbox (change)="selectAllChecks('si')" [checked]="allSelected('si')">Seleccionar Todos Si</mat-checkbox>
+  <mat-checkbox (change)="selectAllChecks('no')" [checked]="allSelected('no')">Seleccionar Todos No</mat-checkbox>
+  <mat-checkbox (change)="selectAllChecks('noProcede')" [checked]="allSelected('noProcede')">Seleccionar Todos No Procede</mat-checkbox>
+</div>
+
 <tsw-table-container
   [resourceName]="resourceName"
   [queryParams]="previousRequestConfig?.queryParams"
@@ -8,6 +15,9 @@
   [showRefresh]="false"
   [showSettings]="false"
 >
+
+
+
   <table
     tsw-table
     [dataSource]="questionsArray"
@@ -45,35 +55,62 @@
     
 
     <ng-container matColumnDef="si">
-      <th *matHeaderCellDef mat-header-cell style="width: 10%">Si</th>
-      <!-- <td *matCellDef="let element" mat-cell>
-        <mat-checkbox [(ngModel)]="element.si"></mat-checkbox>
-      </td> -->
+      <th *matHeaderCellDef mat-header-cell style="width: 10%">
+        <div style="display: flex; align-items: center;">
+          <span>Si</span>
+          <mat-checkbox style="margin-left: 8px;" (change)="selectAllChecks('si')" [checked]="allSelected('si')"></mat-checkbox>
+        </div>
+      </th>
       <td *matCellDef="let element" mat-cell>
-        <mat-checkbox [(ngModel)]="element.si" (change)="checkboxChanged($event, element, 'si')"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="element.si"></mat-checkbox>
       </td>
     </ng-container>
     
     <ng-container matColumnDef="no">
-      <th *matHeaderCellDef mat-header-cell style="width: 10%">No</th>
-      <!-- <td *matCellDef="let element" mat-cell>
-        <mat-checkbox [(ngModel)]="element.no"></mat-checkbox>
-      </td> -->
+      <th *matHeaderCellDef mat-header-cell style="width: 10%">
+        <div style="display: flex; align-items: center;">
+          <span>No</span>
+          <mat-checkbox style="margin-left: 8px;" (change)="selectAllChecks('no')" [checked]="allSelected('no')"></mat-checkbox>
+        </div>
+      </th>
       <td *matCellDef="let element" mat-cell>
-        <mat-checkbox [(ngModel)]="element.no" (change)="checkboxChanged($event, element, 'no')"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="element.no"></mat-checkbox>
       </td>
     </ng-container>
     
     <ng-container matColumnDef="noProcede">
-      <th *matHeaderCellDef mat-header-cell style="width: 15%">No procede</th>
-      <!-- <td *matCellDef="let element" mat-cell>
-        <mat-checkbox [(ngModel)]="element.noProcede"></mat-checkbox>
-      </td> -->
+      <th *matHeaderCellDef mat-header-cell style="width: 15%">
+        <div style="display: flex; align-items: center;">
+          <span>No procede</span>
+          <mat-checkbox style="margin-left: 8px;" (change)="selectAllChecks('noProcede')" [checked]="allSelected('noProcede')"></mat-checkbox>
+        </div>
+      </th>
       <td *matCellDef="let element" mat-cell>
-        <mat-checkbox [(ngModel)]="element.noProcede" (change)="checkboxChanged($event, element, 'noProcede')"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="element.noProcede"></mat-checkbox>
       </td>
     </ng-container>
 
     
   </table>
+
 </tsw-table-container>
+
+
+<div class="blockCheck">
+  <label for="DC1">Nº de establecimientos existentes<input type="checkbox" id="DC1"></label>
+  <label for="DC8">Nº de establecimientos controlados<input type="checkbox" id="DC8"></label>
+</div>
+
+
+
+<div class="blockCheck">
+  <h3 style="margin-right: 40px;">Total de productos/servicios:</h3>
+  <label for="Controlados">Controlados<input type="checkbox" id="DC9"></label>
+  <label for="Correctos">Correctos<input type="checkbox" id="DC10"></label>
+  <label for="Incorrectos">Incorrectos<input type="checkbox" id="DC11"></label>
+</div>
+<!-- 
+<div class="blockCheck centeredChecks">
+  <label for="Suma">Suma<input type="checkbox"></label>
+  <label for="Resta">Resta<input type="checkbox"></label>
+</div> -->

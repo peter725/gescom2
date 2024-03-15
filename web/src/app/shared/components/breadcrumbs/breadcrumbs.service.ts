@@ -47,7 +47,7 @@ export class BreadcrumbsService {
         const label = this.getLabel(route.data);
         this.translate.get(label).subscribe(title => breadcrumbs.push({
           title,
-          path: '/' + routeUrl.join('/'),
+          path: '/' + parentUrl.join('/'),
           active: !route.firstChild,
         }));
       }

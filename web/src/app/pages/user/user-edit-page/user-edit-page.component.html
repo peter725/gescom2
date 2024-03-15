@@ -2,12 +2,12 @@
     <tsw-form-container>
         <tsw-section-wrapper
                 class="mb-5"
-                headerLabel="Datos del Usuario"
+                headerLabel="{{'pages.user.edit' | translate}}"
                 icon="edit_note"
         >
 
             <div section-content>
-                <div class="grid grid-cols-3 gap-1.5">
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
                     <mat-form-field>
                         <mat-label>{{ 'fields.name' | translate }}</mat-label>
                         <input matInput formControlName="name">
@@ -28,12 +28,7 @@
 
                 </div>
 
-                <div class="grid grid-cols-3 gap-1.5">
-                  <!--<mat-form-field>
-                    <mat-label>{{ 'fields.password' | translate }}</mat-label>
-                    <input matInput formControlName="password">
-                  </mat-form-field>-->
-
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
                     <mat-form-field>
                         <mat-label>{{ 'fields.nif' | translate }}</mat-label>
                         <input matInput formControlName="dni">
@@ -53,12 +48,13 @@
                     </mat-form-field>
                 </div>
 
-                <div class="grid grid-cols-3 gap-1.5">
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
                     <mat-form-field>
                         <mat-label>{{ 'fields.ccaa' | translate }}</mat-label>
                         <tsw-custom-select
                                 resourceName="autonomousCommunity"
                                 formControlName="autonomousCommunity"
+                                [showNoneValue]="false"
                         ></tsw-custom-select>
                         <mat-error>{{ form.controls.autonomousCommunity.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
@@ -68,6 +64,7 @@
                         <tsw-custom-select
                                 resourceName="profiles"
                                 formControlName="profile"
+                                [showNoneValue]="false"
                         ></tsw-custom-select>
                         <mat-error>{{ form.controls.profile.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
@@ -77,25 +74,17 @@
                       <tsw-custom-select
                         resourceName="userType"
                         formControlName="userType"
+                        [showNoneValue]="false"
                       ></tsw-custom-select>
                       <mat-error>{{ form.controls.userType.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
-
-                  <!--<mat-form-field class="col-span-2">
-                      <mat-label>{{ 'fields.modules' | translate }}</mat-label>
-                      <tsw-custom-select
-                              resourceName="modules"
-                              formControlName="modules"
-                              multiple
-                      ></tsw-custom-select>
-                  </mat-form-field>-->
                 </div>
             </div>
 
         </tsw-section-wrapper>
 
         <tsw-form-actions
-                [saveBtnSkipConfirmation]="skipSaveConfirmation"
+                [saveBtnSkipConfirmation]="form.invalid"
                 (reset)="resetForm()"
                 (save)="submitForm()"
         ></tsw-form-actions>

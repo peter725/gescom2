@@ -16,7 +16,7 @@ interface TableRow {
   si: boolean;
   no: boolean;
   noProcede: boolean;
-  // Agrega aquí otras propiedades si las tienes
+  [key: string]: number | string | boolean; // Índice de tipo para aceptar cualquier propiedad adicional
 }
 
 @Component({
@@ -68,19 +68,19 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
   }
 
   checkboxChanged(event: MatCheckboxChange, row: any, column: string): void {
-    if (event.checked) {
-      // Si el checkbox actual está siendo marcado, desmarca los otros checkboxes de la misma fila
-      if (column === 'si') {
-        row.no = false;
-        row.noProcede = false;
-      } else if (column === 'no') {
-        row.si = false;
-        row.noProcede = false;
-      } else if (column === 'noProcede') {
-        row.si = false;
-        row.no = false;
-      }
-    }
+    // if (event.checked) {
+    //   // Si el checkbox actual está siendo marcado, desmarca los otros checkboxes de la misma fila
+    //   if (column === 'si') {
+    //     row.no = false;
+    //     row.noProcede = false;
+    //   } else if (column === 'no') {
+    //     row.si = false;
+    //     row.noProcede = false;
+    //   } else if (column === 'noProcede') {
+    //     row.si = false;
+    //     row.no = false;
+    //   }
+    // }
   }
 
  
@@ -100,16 +100,7 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
     console.log(this.dataSourceQuestion);
     this.questionsArray = this.dataSourceQuestion;
   
-  //   // Verifica si protocolData tiene la propiedad 'questions' antes de acceder a ella
-  // if ('questions' in this.dataSourceQuestion) {
-  //   this.questionsArray = this.dataSourceQuestion.questions;
-  //   console.log('array question: ' + JSON.stringify(this.questionsArray))
-  // } else {
-  //   console.error('El objeto no tiene la propiedad "questions"');
-  // }
   }
-
-
 
 
   override select(ev: MatCheckboxChange, row: any): void {
@@ -131,32 +122,84 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
     return config;
   }
   
-  //para guardar las respuestas
-    public guardarRespuestas() {
-      this.respuestasUsuario = this.questionsArray.map((element: TableRow, index: number) => {
-        let respuesta = '';
-        if (element.si) {
-          respuesta = 'S';
-        } else if (element.no) {
-          respuesta = 'N';
-        } else if (element.noProcede) {
-          respuesta = 'NP';
-        }
-        return {
+
+  public guardarRespuestas() {
+    // Inicializa la lista de respuestas
+    this.respuestasUsuario = [];
+  
+    // Itera sobre cada fila en questionsArray
+    this.questionsArray.forEach((element: TableRow, index: number) => {
+      // Inicializa la respuesta para esta fila
+      let respuestasFila = '';
+  
+      // Verifica si se ha seleccionado cada opción de la fila y construye la respuesta
+      if (element.si) {
+        respuestasFila += 'S' + (element.codeQuestion || '') + '+';
+      }
+      if (element.no) {
+        respuestasFila += 'N' + (element.codeQuestion || '') + '+';
+      }
+      if (element.noProcede) {
+        respuestasFila += 'NP' + (element.codeQuestion || '') + '+';
+      }
+  
+      // Elimina el último '+' si hay alguna respuesta
+      if (respuestasFila) {
+        respuestasFila = respuestasFila.slice(0, -1);
+      }
+  
+      // Verifica si al menos una opción de la fila ha sido seleccionada
+      if (respuestasFila) {
+        // Agrega la respuesta al arreglo de respuestas
+        this.respuestasUsuario.push({
           index: index + 1,
-          pregunta: element.codeQuestion,
-          respuesta: respuesta
-        };
+          pregunta: element.codeQuestion || '', // Usa una cadena vacía si codeQuestion es undefined
+          respuesta: respuestasFila
+        });
+      }
+    });
+  
+    // Verifica los checkboxes generales y agrega las respuestas correspondientes
+    const checkboxValues = [
+      { id: 'DC1', pregunta: 'Nº de establecimientos existentes' },
+      { id: 'DC8', pregunta: 'Nº de establecimientos controlados' },
+      { id: 'DC9', pregunta: 'Controlados' },
+      { id: 'DC10', pregunta: 'Correctos' },
+      { id: 'DC11', pregunta: 'Incorrectos' }
+    ];
+  
+    const checkboxRespuestas: string[] = [];
+    checkboxValues.forEach(checkbox => {
+      const checkboxElement = document.getElementById(checkbox.id) as HTMLInputElement;
+      if (checkboxElement.checked) {
+        checkboxRespuestas.push(checkbox.id);
+      }
+    });
+  
+    // Agrega las respuestas de los checkboxes generales seleccionados a la lista respuestasUsuario
+    if (checkboxRespuestas.length > 0) {
+      const checkboxRespuestasStr = checkboxRespuestas.join(' + ');
+      this.respuestasUsuario.push({
+        index: this.respuestasUsuario.length + 1,
+        respuesta: checkboxRespuestasStr,
       });
-    
-      console.log(this.respuestasUsuario);
-      this.sharedDataService.updateSharedData(this.respuestasUsuario);
-
-      // this.respuestasUsuarioChanged.emit(this.respuestasUsuario);
-      
     }
+  
+    console.log(this.respuestasUsuario);
+    this.sharedDataService.updateSharedData(this.respuestasUsuario);
+  }
 
+  // Método para seleccionar todos los elementos de una columna específica en la tabla
+selectAllChecks(column: string): void {
+  this.questionsArray.forEach((element: TableRow) => {
+    element[column] = true;
+  });
+}
 
+// Método para verificar si todos los elementos de una columna específica están seleccionados
+allSelected(column: string): boolean {
+  return this.questionsArray.every((element: TableRow) => element[column]);
+}
 
   protected getColumns(): ColumnSrc[] {
     return [
@@ -169,7 +212,4 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
     ];
   }
 
-  //private monitorCtxChanges() {
-  // this.sampleCtx.scope$.pipe(takeUntil(this.destroyed$), skip(1)).subscribe(() => this.reloadData());
-  //}
 }

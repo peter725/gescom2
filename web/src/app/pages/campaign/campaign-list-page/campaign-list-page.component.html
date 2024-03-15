@@ -60,39 +60,39 @@
       <td *matCellDef="let element" mat-cell>{{ element.year }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="campaignType">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 15%">
+        {{ "fields.campaignType" | translate }}
+      </th>
+      <td *matCellDef="let element" mat-cell>{{ element.campaignType.name }}</td>
+    </ng-container>   
+
     <ng-container matColumnDef="ambit">
       <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 8%">
         {{ "fields.ambit" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.ambit.name }}</td>
     </ng-container>
-
-    <ng-container matColumnDef="campaignType">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 15%">
-        {{ "fields.campaignType" | translate }}
-      </th>
-      <td *matCellDef="let element" mat-cell>{{ element.campaignType.name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="nameCampaign">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 35%">
-        {{ "fields.name" | translate }}
-      </th>
-      <td *matCellDef="let element" mat-cell>{{ element.nameCampaign }}</td>
-    </ng-container>
-
+    
     <ng-container matColumnDef="phaseCampaign">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 15%">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 20%">
         {{ "fields.phaseCampaign" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.phaseCampaign.description }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nameCampaign">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 33%">
+        {{ "fields.name" | translate }}
+      </th>
+      <td *matCellDef="let element" mat-cell>{{ element.nameCampaign }}</td>
     </ng-container>
 
     <ng-container
       matColumnDef="actions"
       [stickyEnd]="true"
     >
-      <th *matHeaderCellDef mat-header-cell style="width: 20%"></th>
+      <th *matHeaderCellDef mat-header-cell></th>
       <td *matCellDef="let element" mat-cell class="text-right">
         <ng-container >
           <div class="additional-actions">

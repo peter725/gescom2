@@ -10,13 +10,11 @@ import { ProtocolDetailComponent, UploadFileComponent } from '@base/pages/campai
 import { DataSharingService } from '@base/services/dataSharingService';
 import { Protocol } from '@libs/sdk/protocol';
 import { ExcelService } from '@base/shared/utilsExcel/excel.service';
-import { InfringementDialogComponent } from '@base/pages/infringement-dialog/infringement-dialog.component';
 import { ProductsDialogComponent } from './products-dialog/products-dialog.component';
 import { CampaignProductServiceDTO, ProductService } from '@libs/sdk/productService';
 import { CampaignService } from '@base/shared/utilsService/campaign.service';
 import { NavigationExtras } from '@angular/router';
 import { ProtocolResults } from '@libs/sdk/protocolResults';
-import { firstValueFrom } from 'rxjs';
 import { PHASE_BORRADOR_RESULTADOS, PHASE_DATOS_INICIALES, PHASE_DOC_INSPECCION, PHASE_FICHA_TRANSPARENCIA, PHASE_IMPRESO_DEFINITIVO, PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE } from '@base/shared/utils/constants';
 
 @Component({
@@ -28,7 +26,6 @@ import { PHASE_BORRADOR_RESULTADOS, PHASE_DATOS_INICIALES, PHASE_DOC_INSPECCION,
   ]
 })
 export class CampaignSeePageComponent extends EditPageBaseComponent<any , CampaignForm>  {
-
 
   @ViewChild("fileUpload", {read: ElementRef})
   fileUpload!: ElementRef;
@@ -51,7 +48,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   override ngOnInit(): void {
     super.ngOnInit();
     this.loadPhases();
-
   }
 
   private loadPhases(): void {
@@ -66,8 +62,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
         }
       });
   }
-
-
 
   protected buildForm(){
     return this.fb.group<ControlsOf<CampaignForm>>({

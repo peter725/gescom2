@@ -27,13 +27,13 @@ export class ApproachSeePageComponent extends EditPageBaseComponent<Approach, Cr
         return this.fb.group<ControlsOf<CreateApproach>>({
             id: this.fb.control(null),
             campaignTypeId: this.fb.control(null, [Validators.required]),
-            approach: this.fb.control(null, [Validators.required]),
-            justification: this.fb.control(null, [Validators.required]),
-            objective: this.fb.control(null, [Validators.required]),
-            viability: this.fb.control(null, [Validators.required]),
-            autonomousCommunityName: this.fb.control(null),
+            approach: this.fb.control({value: null, disabled: true}),
+            justification: this.fb.control({value: null, disabled: true}),
+            objective: this.fb.control({value: null, disabled: true}),
+            viability: this.fb.control({value: null, disabled: true}),
+            autonomousCommunityName: this.fb.control({value: null, disabled: true}),
             campaignTypeName: this.fb.control(null),
-            year: this.fb.control(null),
+            year: this.fb.control({value: null, disabled: true}),
             date: this.fb.control(null),
 
         });

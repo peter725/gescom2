@@ -22,12 +22,43 @@ public class QuestionsResponseDTO implements Serializable, LongIdModel {
     private Float percentage;
     private Integer percentageRespectTo;
 
+    private Long numResponseSi = 0L;
+    private Long numResponseNo = 0L;
+    private Long numResponseNoProcede = 0L;
+
     // Método para acumular valores en el total
     public void addToTotal(Long value) {
         if (value != null){
             this.total += value;
         }else{
             this.total += 0;
+        }
+    }
+
+    // Método para acumular valores en numResponseSi
+    public void addToNumResponseSi(Long value) {
+        if (value != null){
+            this.numResponseSi += value;
+        }else{
+            this.numResponseSi += 0;
+        }
+    }
+
+    // Método para acumular valores en numResponseNo
+    public void addToNumResponseNo(Long value) {
+        if (value != null){
+            this.numResponseNo += value;
+        }else{
+            this.numResponseNo += 0;
+        }
+    }
+
+    // Método para acumular valores en numResponseNoProcede
+    public void addToNumResponseNoProcede(Long value) {
+        if (value != null){
+            this.numResponseNoProcede += value;
+        }else{
+            this.numResponseNoProcede += 0;
         }
     }
 }

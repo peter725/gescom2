@@ -6,6 +6,7 @@ export interface IprDTO {
   protocolCode: string;
   protocolId: number;
   nameCampaign: string;
+  product: string;
   iprQuestionDTOList: IprQuestionDTO[];
 }
 
@@ -19,5 +20,30 @@ export interface IprQuestionDTO {
   question: string;
   iprId: number;
 }
+
+export interface ResultsResponseDTO {
+  id: number;
+  campaignName: string;
+  protocolName: string;
+  productName: string;
+
+  questionsResponseDTOS: QuestionsResponseDTO[];
+
+}
+
+export interface QuestionsResponseDTO {
+  id: number;
+  codeQuestion: string;
+  orderQuestion: number;
+  question: string;
+  total: number;
+  percentage: number;
+  percentageRespectTo: number;
+  numResponseSi: number;
+  numResponseNo: number;
+  numResponseNoProcede: number;
+}
+
+
 
 

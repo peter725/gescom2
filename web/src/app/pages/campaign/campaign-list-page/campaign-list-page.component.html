@@ -1,12 +1,9 @@
-<tsw-breadcrumbs></tsw-breadcrumbs>
-
 <tsw-filters-container class="pt-3">
   <tsw-campaign-list-page-filter *tswCustomFilter="'advanced'"></tsw-campaign-list-page-filter>
 </tsw-filters-container>
 
 <tsw-table-container
   [resourceName]="resourceName"
-  [exportFormats]="exportFormats"
   [downloadFileName]="downloadFileName | translate"
   [queryParams]="previousRequestConfig?.queryParams"
   class="pt-3"

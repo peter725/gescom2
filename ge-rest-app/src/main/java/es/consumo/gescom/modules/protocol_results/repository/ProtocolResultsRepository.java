@@ -47,11 +47,27 @@ public interface ProtocolResultsRepository extends GESCOMRepository<ProtocolResu
     List<ProtocolResultsResponseDTO> findProtocolResultsByCampaignIdAndProtocolCode(@Param("campaignId") Long campaignId, @Param("protocolCode") String protocolCode, @Param("productServiceCode") String productServiceCode);
 
     @Query(value = """
-            SELECT pr, tpr FROM ProtocolResultsEntity AS pr
-            JOIN TotalProtocolResultsEntity AS tpr ON pr.id = tpr.protocolResultsId
-            WHERE pr.campaignId =: campaignId
-            AND pr.protocolId =: protocolId
-            AND pr.productServiceId =: productServiceId""")
-    List<ProtocolResultsResponseDTO> findProtocolResultsByCampaignIdAndProtocolId(@Param("campaignId") Long campaignId, @Param("protocolId") Long protocolId, @Param("productServiceId") Long productServiceId);
+            SELECT new es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsResponseDTO(
+            pr.id,
+            pr.autonomousCommunityCountryCode,
+            pr.productServiceCode,
+            pr.campaignId,
+            pr.protocolCode,
+            pr.productServiceId,
+            pr.protocolId,
+            pr.autonomousCommunityCountryId,
+            pr.code,
+            tpr.ccaaRen,
+            tpr.ccaaRep,
+            tpr.ccaaRes,
+            tpr.codeQuestion,
+            tpr.protocolResultsId
+            )
+            FROM ProtocolResultsEntity AS pr
+            JOIN TotalProtocolResultsEntity tpr ON pr.id = tpr.protocolResultsId
+            WHERE pr.campaignId =:campaignId
+            AND pr.protocolId =:protocolId
+            AND pr.productServiceCode =:productServiceCode""")
+    List<ProtocolResultsResponseDTO> findProtocolResultsByCampaignIdAndProtocolId(@Param("campaignId") Long campaignId, @Param("protocolId") Long protocolId, @Param("productServiceCode") String productServiceCode);
 
 }

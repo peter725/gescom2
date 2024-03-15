@@ -1,5 +1,3 @@
-<tsw-breadcrumbs></tsw-breadcrumbs> 
-
 <!-- <form [formGroup]="form">
   
 </form> -->
@@ -110,7 +108,7 @@
         
                     <!-- Filas de la tabla -->
                     <div class="table-row-group">
-                        <tr *ngFor="let preg of preguntasProtocolo">
+                        <tr *ngFor="let preg of preguntasIpr">
                             <ng-container *ngIf="preg.response == 'N'">
                                 <!-- Pregunta con respuesta 'N' -->                        
                                     <td class="p-4 bg-gray-200">
@@ -177,10 +175,10 @@
                                         <input class="input-con-borde" type="number" [(ngModel)]="preg.total" readonly/>
                                     </td>
                                     <td class="p-4">
-                                        <input class="input-con-borde" type="number" [(ngModel)]="preg.porcentaje" readonly/>
+                                        <input class="input-con-borde" type="number" [(ngModel)]="preg.percentage" readonly/>
                                     </td>
                                     <td class="p-4">
-                                        <input class="input-con-borde" type="number" [(ngModel)]="preg.porcentajeRespectoAl" readonly/>
+                                        <input class="input-con-borde" type="number" [(ngModel)]="preg.percentageRespectTo" readonly/>
                                     </td>
                             </ng-container>
                           

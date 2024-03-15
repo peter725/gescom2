@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import es.consumo.gescom.modules.campaign.model.dto.ResultsResponseDTO;
 import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import lombok.AllArgsConstructor;
@@ -24,5 +25,6 @@ public class ProtocolDTO implements Serializable{
     private LocalDateTime createdAt;
     private List<QuestionsDTO> question;
     private List<IprDTO> iprDTOS;
+    private ResultsResponseDTO resultsResponseDTO;
     private String nameCampaign;
 }

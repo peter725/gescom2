@@ -100,10 +100,10 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
         byte[] excel = null;
         boolean falloCreacion = false;
 
-        // excel = ExcelUtils.getInstance().createExportExcelTablas(ipr);
+        excel = ExcelUtils.getInstance().createExportExcelResults(ipr);
 
         if (null == excel || falloCreacion) {
-//            throw new BadRequestAlertException("Fallo en la creacion del export Excel");
+              //throw new BadRequestAlertException("Fallo en la creacion del export Excel");
         }
         return excel;
     }

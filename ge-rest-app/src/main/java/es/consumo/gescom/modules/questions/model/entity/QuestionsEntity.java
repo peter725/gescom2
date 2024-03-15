@@ -32,7 +32,7 @@ public class QuestionsEntity extends SimpleEntity {
     private ProtocolEntity protocolCampaingId;
 
     @Column(name = "ORDER_QUESTION")
-    private Long orderQuestion;
+    private Integer orderQuestion;
 
     @Column(name = "CODE_QUESTION")
     private String codeQuestion;

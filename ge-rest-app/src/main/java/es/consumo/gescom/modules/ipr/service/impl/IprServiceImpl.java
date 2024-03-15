@@ -22,10 +22,16 @@ import es.consumo.gescom.modules.iprQuestion.model.entity.IprQuestionEntity;
 import es.consumo.gescom.modules.iprQuestion.repository.IprQuestionRepository;
 import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEntity;
 import es.consumo.gescom.modules.productServices.repository.ProductServiceRepository;
+import es.consumo.gescom.modules.protocol.model.converter.ProtocolConverter;
+import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
+import es.consumo.gescom.modules.protocol.service.ProtocolService;
 import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsResponseDTO;
 import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
+import es.consumo.gescom.modules.questions.model.converter.QuestionsConverter;
+import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
+import es.consumo.gescom.modules.questions.repository.QuestionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -63,6 +69,9 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
     private ProtocolRepository protocolRepository;
 
     @Autowired
+    private QuestionsRepository questionsRepository;
+
+    @Autowired
     private CampaignProductServiceRepository campaignProductServiceRepository;
 
     @Autowired
@@ -70,6 +79,12 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
     @Autowired
     private IprQuestionRepository iprQuestionRepository;
+
+    @Autowired
+    private ProtocolConverter protocolConverter;
+
+    @Autowired
+    private QuestionsConverter questionsConverter;
 
 
     @Override
@@ -128,32 +143,67 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         return iprDTOS;
     }
 
+    @Override
+    public List<IprDTO> findAllIprByCampaignIdAndProtocolId(Long campaignId, Long protocolId) {
+        ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
+        SearchDTO searchDTO = new SearchDTO();
+        List<IprDTO> iprDTOS = iprConverter.convertToModel(iprRepository.findAllByCampaignAndProtocolId(campaignId, protocolId));
+        List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(campaignId);
+        searchDTO.setCampaignId(campaignId);
+        searchDTO.setProtocolId(protocolId);
+
+
+
+        for (IprDTO iprDTO : iprDTOS) {
+
+            for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntities) {
+
+                searchDTO.setProductServiceId(campaignProductServiceEntity.getProductServiceId());
+                searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
+                searchDTO.setIprCode(iprDTO.getCode());
+                resultsResponseDTO = getResults(searchDTO);
+                iprDTO.setResultsResponseDTO(resultsResponseDTO);
+
+            }
+        }
+        return iprDTOS;
+    }
+
 
 
     @Override
     public ResultsResponseDTO getResults(SearchDTO searchDTO) {
         ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
         List<QuestionsResponseDTO> questionsResponseDTOS = new ArrayList<>();
+        List<QuestionsDTO> questionsDTOS = new ArrayList<>();
         List<IprResponseDTO> iprResponseDTOS = new ArrayList<>();
         List<ProtocolResultsResponseDTO> protocolResultsResponseDTOS = new ArrayList<>();
-        /*ProductServiceEntity productServiceEntity = new ProductServiceEntity();*/
-        ProtocolEntity protocolEntity = new ProtocolEntity();
-
-        if (searchDTO.getProtocolCode() != null) {
-            iprResponseDTOS = iprRepository.findAllIprByCampaignIdAndProtocolCode(searchDTO.getCampaignId(), searchDTO.getProtocolCode(), searchDTO.getIprCode());
-            protocolResultsResponseDTOS = protocolResultsRepository.findProtocolResultsByCampaignIdAndProtocolCode(searchDTO.getCampaignId(), searchDTO.getProtocolCode(), searchDTO.getProductServiceCode());
-        }else {
-            iprResponseDTOS = iprRepository.findAllIprByCampaignIdAndProtocolId(searchDTO.getCampaignId(), searchDTO.getProtocolId());
-            protocolResultsResponseDTOS = protocolResultsRepository.findProtocolResultsByCampaignIdAndProtocolId(searchDTO.getCampaignId(), searchDTO.getProtocolId(), searchDTO.getProductServiceId());
-
-        }
+        ProductServiceEntity productServiceEntity = new ProductServiceEntity();
+        ProtocolDTO  protocolDTO = new ProtocolDTO();
 
         CampaignEntity campaignEntity = campaignRepository.findById(searchDTO.getCampaignId()).orElseThrow();
         if (searchDTO.getProtocolCode() != null) {
-            protocolEntity = protocolRepository.findProtocolNameByCode(searchDTO.getProtocolCode());
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameByCode(searchDTO.getProtocolCode()));
         }else {
-            protocolEntity = protocolRepository.findById(searchDTO.getProtocolId()).orElseThrow();
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameById(searchDTO.getProtocolId()));
         }
+
+        if (searchDTO.getProtocolCode() != null) {
+            iprResponseDTOS = iprRepository.findAllIprByCampaignIdAndProtocolCode(searchDTO.getCampaignId(), searchDTO.getProtocolCode(), searchDTO.getIprCode());
+            if ( iprResponseDTOS.size() == 0){
+                questionsDTOS = questionsConverter.convertToModel(questionsRepository.findAllQuestionsByProtocolCode(searchDTO.getProtocolCode()));
+            }
+            protocolResultsResponseDTOS = protocolResultsRepository.findProtocolResultsByCampaignIdAndProtocolCode(searchDTO.getCampaignId(), searchDTO.getProtocolCode(), searchDTO.getProductServiceCode());
+        }else {
+            iprResponseDTOS = iprRepository.findAllIprByCampaignIdAndProtocolId(searchDTO.getCampaignId(), searchDTO.getProtocolId(), searchDTO.getIprId());
+            if ( iprResponseDTOS.size() == 0){
+                questionsDTOS = questionsConverter.convertToModel(questionsRepository.findAllQuestionsByProtocolId(searchDTO.getProtocolId()));
+            }
+            protocolResultsResponseDTOS = protocolResultsRepository.findProtocolResultsByCampaignIdAndProtocolId(searchDTO.getCampaignId(), searchDTO.getProtocolId(), searchDTO.getProductServiceCode());
+
+        }
+
+
 
         /*if (searchDTO.getProductServiceCode() != null) {
             productServiceEntity = productServiceRepository.findProductServiceByCode(searchDTO.getProductServiceCode());
@@ -162,98 +212,142 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         }*/
 
         resultsResponseDTO.setCampaignName(campaignEntity.getNameCampaign());
-        resultsResponseDTO.setProtocolName(protocolEntity.getName());
+        resultsResponseDTO.setProtocolName(protocolDTO.getName());
        //resultsResponseDTO.setProductName(productServiceEntity.getCode().concat(" - ").concat(productServiceEntity.getName()));
-
-        for (IprResponseDTO iprResponseDTO : iprResponseDTOS ){
-
-
-            QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
-            String question = iprResponseDTO.getQuestion();
-            String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
-            questionsResponseDTO.setQuestion(questionText);
-            questionsResponseDTO.setOrderQuestion(iprResponseDTO.getOrderQuestion());
+        if (iprResponseDTOS.size() == 0){
 
 
-            if (Objects.equals(iprResponseDTO.getFormula(), "DC0")) {
-                for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                    if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC0")) {
-                        questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                        if (iprResponseDTO.getPercentageRespectTo() != null)
-                            questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                    }
+            /*for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
+                if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC1")) {
+                    questionsResponseDTO.setQuestion("DC1- Nro. de establecimientos existentes");
+                    questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+                    questionsResponseDTOS.add(questionsResponseDTO);
                 }
-                questionsResponseDTOS.add(questionsResponseDTO);
-                continue;
-            }
-            if (Objects.equals(iprResponseDTO.getFormula(), "DC8")){
-                for ( ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                    if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC8")){
-                        questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                        if (iprResponseDTO.getPercentageRespectTo() != null)
-                            questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                    }
-                }
-                questionsResponseDTOS.add(questionsResponseDTO);
-                continue;
-            }
-            if (Objects.equals(iprResponseDTO.getFormula(), "DC9")) {
-                for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                    if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC9")) {
-                        questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                        if (iprResponseDTO.getPercentageRespectTo() != null)
-                            questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                    }
-                }
-                questionsResponseDTOS.add(questionsResponseDTO);
-                continue;
-            }
-            if (Objects.equals(iprResponseDTO.getFormula(), "DC10")) {
-                for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                    if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC10")) {
-                        questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                        if (iprResponseDTO.getPercentageRespectTo() != null)
-                            questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                    }
-                }
-                questionsResponseDTOS.add(questionsResponseDTO);
-                continue;
+            }*/
 
-            }
-            if (Objects.equals(iprResponseDTO.getFormula(), "DC11")) {
-                for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                    if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC11")) {
-                        questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                        if (iprResponseDTO.getPercentageRespectTo() != null)
-                            questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                    }
-                }
-                questionsResponseDTOS.add(questionsResponseDTO);
-                continue;
-            }
+            for (QuestionsDTO questionsDTO : questionsDTOS){
 
-            if ( iprResponseDTO.getFormula() == null) {
-                questionsResponseDTOS.add(questionsResponseDTO);
-                continue;
-            }else {
+                QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
+                String question = questionsDTO.getQuestion();
+                String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
+                questionsResponseDTO.setQuestion(questionText);
+                questionsResponseDTO.setOrderQuestion(questionsDTO.getOrderQuestion());
 
                 for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-
-                    if (iprResponseDTO.getPercentageRespectTo() != null)
-                        questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-
-                    if (iprResponseDTO.getFormula() != null && !protocolResultsResponseDTO.getCodeQuestion().startsWith("DC")){
-                        List<String> componentes = descomponerFormula(iprResponseDTO.getFormula());
-                        interpretarYProcesarComponentes(componentes, protocolResultsResponseDTO, questionsResponseDTO);
-                    }else{
-                        continue;
+                    if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), questionsDTO.getOrderQuestion().toString())) {
+                        if (protocolResultsResponseDTO.getCcaaRes() != null) {
+                            questionsResponseDTO.addToNumResponseSi(protocolResultsResponseDTO.getCcaaRes());
+                        }
+                        if (protocolResultsResponseDTO.getCcaaRen() != null) {
+                            questionsResponseDTO.addToNumResponseNo(protocolResultsResponseDTO.getCcaaRen());
+                        }
+                        if (protocolResultsResponseDTO.getCcaaRep() != null) {
+                            questionsResponseDTO.addToNumResponseNoProcede(protocolResultsResponseDTO.getCcaaRep());
+                        }
                     }
+                }
+                questionsResponseDTOS.add(questionsResponseDTO);
+
+
+            }
+            resultsResponseDTO.setQuestionsResponseDTOS(questionsResponseDTOS);
+            return resultsResponseDTO;
+
+        }else {
+
+            for (IprResponseDTO iprResponseDTO : iprResponseDTOS) {
+
+
+                QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
+                String question = iprResponseDTO.getQuestion();
+                String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
+                questionsResponseDTO.setQuestion(questionText);
+                questionsResponseDTO.setOrderQuestion(iprResponseDTO.getOrderQuestion());
+
+
+                if (Objects.equals(iprResponseDTO.getFormula(), "DC0")) {
+                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC0")) {
+                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+                            if (iprResponseDTO.getPercentageRespectTo() != null)
+                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+                        }
+                    }
+                    questionsResponseDTOS.add(questionsResponseDTO);
+                    continue;
+                }
+                if (Objects.equals(iprResponseDTO.getFormula(), "DC8")) {
+                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC8")) {
+                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+                            if (iprResponseDTO.getPercentageRespectTo() != null)
+                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+                        }
+                    }
+                    questionsResponseDTOS.add(questionsResponseDTO);
+                    continue;
+                }
+                if (Objects.equals(iprResponseDTO.getFormula(), "DC9")) {
+                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC9")) {
+                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+                            if (iprResponseDTO.getPercentageRespectTo() != null)
+                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+                        }
+                    }
+                    questionsResponseDTOS.add(questionsResponseDTO);
+                    continue;
+                }
+                if (Objects.equals(iprResponseDTO.getFormula(), "DC10")) {
+                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC10")) {
+                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+                            if (iprResponseDTO.getPercentageRespectTo() != null)
+                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+                        }
+                    }
+                    questionsResponseDTOS.add(questionsResponseDTO);
+                    continue;
 
                 }
+                if (Objects.equals(iprResponseDTO.getFormula(), "DC11")) {
+                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC11")) {
+                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+                            if (iprResponseDTO.getPercentageRespectTo() != null)
+                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+                        }
+                    }
+                    questionsResponseDTOS.add(questionsResponseDTO);
+                    continue;
+                }
+
+                if (iprResponseDTO.getFormula() == null) {
+                    questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+                    questionsResponseDTOS.add(questionsResponseDTO);
+
+                    continue;
+                } else {
+
+                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+
+                        if (iprResponseDTO.getPercentageRespectTo() != null)
+                            questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+
+                        if (iprResponseDTO.getFormula() != null && !protocolResultsResponseDTO.getCodeQuestion().startsWith("DC")) {
+                            List<String> componentes = descomponerFormula(iprResponseDTO.getFormula());
+                            interpretarYProcesarComponentes(componentes, protocolResultsResponseDTO, questionsResponseDTO);
+                        } else {
+                            continue;
+                        }
+
+                    }
+                }
+
+
+                questionsResponseDTOS.add(questionsResponseDTO);
             }
-
-
-            questionsResponseDTOS.add(questionsResponseDTO);
         }
 
         setPercentage(questionsResponseDTOS);
@@ -349,7 +443,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
             if (questionsResponseDTO.getPercentageRespectTo() != null) {
 
                 for (QuestionsResponseDTO item : questionsResponseDTOS) {
-                    if (questionsResponseDTO.getPercentageRespectTo().equals(item.getOrderQuestion())) {
+                    if (questionsResponseDTO.getPercentageRespectTo().equals(item.getOrderQuestion()) && item.getTotal() != 0) {
                         Float value = questionsResponseDTO.getTotal().floatValue() / item.getTotal() * 100;
                         BigDecimal bd = new BigDecimal(value);
                         bd = bd.setScale(2, RoundingMode.HALF_UP); // Redondeo a 2 decimales

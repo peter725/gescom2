@@ -379,7 +379,8 @@
         "itemsPerPageLabel": "Elm. por página",
         "lastPageLabel": "Última página",
         "nextPageLabel": "Siguiente página",
-        "previousPageLabel": "Página anterior"
+        "previousPageLabel": "Página anterior",
+        "rangeLabel": "de"
       },
       "plan": {
         "authority": "Consulta Plan Authority",
@@ -465,7 +466,8 @@
     "approach": {
       "title": "Propuestas",
       "add": "Alta de propuesta",
-      "list": "Mis propuestas",
+      "list": "Consulta de propuestas",
+      "edit":"Modificar propuesta",
       "see": "Ver propuesta"
     },
     "businessRule": {
@@ -575,10 +577,13 @@
     },
     "campaign": {
       "title": "Campañas",
-      "add": "Alta de Campaña",
-      "list": "Consulta de Campañas",
-      "edit": "Modificar Campaña",
-      "protocol": "Alta de protocolo"
+      "add": "Alta de campaña",
+      "list": "Consulta de campañas",
+      "edit": "Modificar campaña",
+      "see": "Ver campaña",
+      "protocol": "Alta de protocolo",
+      "finalResults": "Resultados finales",
+      "ipr": "IPR"
     },
     "protocol": {
       "title": "Protocolo",
@@ -616,6 +621,7 @@
       "title": "Resultados",
       "protocolo": "Protocolo",
       "producto": "Producto",
+      "ipr": "IPR",
       "ca": "C.A.",
       "ano": "Año",
       "numEstablecimientos": "Nº de establecimientos",

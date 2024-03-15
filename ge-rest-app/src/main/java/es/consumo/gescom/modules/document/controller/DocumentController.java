@@ -33,9 +33,8 @@ public class DocumentController extends AbstractCrudController<DocumentEntity, D
     }
 
     @GetMapping("/campaign/{id}")
-    public ResponseEntity<List<DocumentEntity>> findListByCriteria(@PathVariable  Long id) {
-        List<DocumentEntity> result =
-                ((DocumentService) service).findDocumentByCampaignId(id);
-        return ResponseEntity.ok(result);
-    }
+    public ResponseEntity<Page<DocumentEntity>> findListByCriteria(DocumentCriteria protocolCriteria, @PathVariable  Long id) {
+        Page<DocumentEntity> result =
+                ((DocumentService) service).findDocumentByCampaignId(new CriteriaWrapper<>(protocolCriteria), id);
+        return ResponseEntity.ok(result);    }
 }

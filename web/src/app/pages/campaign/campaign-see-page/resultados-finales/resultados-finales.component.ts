@@ -15,7 +15,7 @@ import { CampaignProductServiceDTO } from '@libs/sdk/productService';
 import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults';
 import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
 import { NotificationService } from '@base/shared/notification';
-import { IprDTO } from '@libs/sdk/ipr';
+import { IprDTO, ResultsResponseDTO } from '@libs/sdk/ipr';
 import { ExcelService } from '@base/shared/utilsExcel/excel.service';
 
 
@@ -55,6 +55,7 @@ export class ResultadosFinalesComponent implements OnInit{
 
   preguntasProtocolo: Question [] = [];
   preguntasIpr: any;
+  protocoloResultados: ResultsResponseDTO[] = [];
 
   resultadoSelected: ProtocolResults | undefined = undefined;
   iprResultadosProtocoloName = 'Resultados segun plantilla de protocolo';
@@ -63,6 +64,7 @@ export class ResultadosFinalesComponent implements OnInit{
     id: 0,
     code: '',
     name: this.iprResultadosProtocoloName,
+    product: '',
     campaignId: 0,
     protocolCode: '',
     protocolId: 0,
@@ -113,6 +115,7 @@ export class ResultadosFinalesComponent implements OnInit{
         }
         this.campaign = state.campaign;
         this.resultadoSelected = state.resultadoSelected;
+        this.productoSelected = state.campaign.productoSelected;
       } else {
         this.router.navigate([`app/campanas/consulta`]);
       }
@@ -167,7 +170,10 @@ export class ResultadosFinalesComponent implements OnInit{
   protocolOnChange() {
     if (this.editForm1.get('protocolo')?.value) {
       this.protocoloSelected = this.editForm1.get('protocolo')?.value!;
+      this.preguntasIpr = this.protocoloSelected.resultsResponseDTO?.questionsResponseDTOS;
+      console.log(this.preguntasIpr);
       this.iprList = this.protocoloSelected.iprDTOS;
+      this.protocoloResultados = this.protocoloSelected.resultsResponseDTO;
     }
   }
 

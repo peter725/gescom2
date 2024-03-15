@@ -365,7 +365,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
                 if (protocolDTO1.getCode() != null) {
                     protocolDTO1.setIprDTOS(iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO1.getCode()));
                 }else {
-                    /*protocolDTO1.setIprDTOS(iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO1.getId()));*/
+                    protocolDTO1.setIprDTOS(iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO1.getId()));
                 }
 
             });

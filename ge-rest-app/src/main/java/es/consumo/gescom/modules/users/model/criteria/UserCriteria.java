@@ -20,6 +20,8 @@ public class UserCriteria extends FilterCriteria {
     private String name;
     private String surname;
     private String dni;
+    private String email;
+    private String phone;
     private String lastSurname;
     private String createdAtLTE;
     private String createdAtGTE;

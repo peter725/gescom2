@@ -18,18 +18,22 @@ public interface UserRepository extends GESCOMRepository<UserEntity, Long> , Que
     
         @Query(value = "SELECT a FROM UserEntity a "
         + "WHERE "
-        + "(:#{#criteria.name} is null OR a.name LIKE :#{#criteria.name}) "
-        + "AND (:#{#criteria.surname} is null OR a.surname LIKE :#{#criteria.surname}) "
-        + "AND (:#{#criteria.lastSurname} is null OR a.lastSurname LIKE :#{#criteria.lastSurname}) "
-        + "AND (:#{#criteria.dni} is null OR a.dni LIKE :#{#criteria.dni}) "
-        + "AND (:#{#criteria.createdAtLTE} is null OR a.createAt <= :#{#criteria.createdAtLTEConvert}) "
-        + "AND (:#{#criteria.createdAtGTE} is null OR a.createAt >= :#{#criteria.createdAtGTEConvert}) "
-        + "AND (:#{#criteria.updatedAtLTE} is null OR a.updateAt <= :#{#criteria.updatedAtLTEConvert}) "
-        + "AND (:#{#criteria.updatedAtGTE} is null OR a.updateAt >= :#{#criteria.updatedAtGTEConvert}) "
-        + "AND (:#{#criteria.search} is null OR a.name like :#{#criteria.search} OR a.surname like :#{#criteria.search} OR a.dni like :#{#criteria.search} "
-        + "OR a.lastSurname like :#{#criteria.search})"
-    )
-    Page<UserEntity.SimpleProjection> findAllByCriteria(UserCriteria criteria, Pageable pageable);
+        + "(:#{#criteria.name} is null OR UPPER(a.name) LIKE :#{#criteria.name}) "
+        + "AND (:#{#criteria.surname} is null OR UPPER(a.surname) LIKE :#{#criteria.surname}) "
+        + "AND (:#{#criteria.lastSurname} is null OR UPPER(a.lastSurname) LIKE :#{#criteria.lastSurname}) "
+        + "AND (:#{#criteria.dni} is null OR UPPER(a.dni) LIKE :#{#criteria.dni}) "
+        + "AND (:#{#criteria.email} is null OR UPPER(a.email) LIKE :#{#criteria.email}) "
+        + "AND (:#{#criteria.phone} is null OR UPPER(a.phone) LIKE :#{#criteria.phone}) "
+        + "AND ("
+        + ":#{#criteria.search} is null "
+        + "OR UPPER(a.name) like :#{#criteria.search} )"
+        + "OR UPPER(a.surname) LIKE :#{#criteria.search} "
+        + "OR UPPER(a.lastSurname) LIKE :#{#criteria.search} "
+        + "OR UPPER(a.dni) LIKE :#{#criteria.search} "
+        + "OR UPPER(a.email) LIKE :#{#criteria.search} "
+        + "OR UPPER(a.phone) LIKE :#{#criteria.search} "
+        )
+        public Page<UserEntity.SimpleProjection> findAllByCriteria(UserCriteria criteria, Pageable pageable);
 
 
 }

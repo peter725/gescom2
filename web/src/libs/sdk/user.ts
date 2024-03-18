@@ -72,7 +72,7 @@ export interface CreateUser {
 
 export interface UserFilterForm extends AppQuerySource {
   name?: string;
-  Surname?: string;
+  surname?: string;
   lastSurname?: string;
   dni?: string;
   email?: string;

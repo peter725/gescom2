@@ -23,7 +23,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
 
   readonly resourceName = 'protocol';
   protected override _createResourceTitle = 'pages.protocol.add';
-  cancelRedirectPath = '../../campanas/consulta';
+  cancelRedirectPath = '../../protocol/consulta';
 
   private dataSharingService: DataSharingService = inject(DataSharingService);
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
@@ -38,7 +38,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
 
   ngAfterViewInit(): void {
     let campaignId = this.form.get('campaignId')?.value;
-    this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../campanas/consulta';
+    this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../protocol/consulta';
   }
 
   override getRedirectAfterSaveRoute(){
@@ -94,7 +94,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   protected buildForm(): FormGroup {
     const form = this.fb.group({
       name: [null, Validators.required],
-      code: [null, ],
+      code: [{ value: null, disabled: true }, ],
       campaignId: [ null, Validators.required],
       question: this.fb.array([])
     });

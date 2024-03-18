@@ -89,8 +89,8 @@
       "campaign-proposal": {
         "title": "Propuesta de campaña",
         "campaign-type": {
-          "key1": "Alimenticios",
-          "key2": "No alimenticios",
+          "key1": "Productos Alimenticios",
+          "key2": "Productos No alimenticios",
           "key3": "Servicios"
         }
       },
@@ -169,6 +169,7 @@
     "implYear": "Año de implantación",
     "infoMessage": "Mensaje informativo",
     "infoType": "Tipo de mensaje",
+    "infringement": "Nombre de infracción",
     "insertionDate": "Fecha de inserción",
     "label": "Etiqueta",
     "lastUpdate": "Ultima actualización",
@@ -182,7 +183,7 @@
     "multiple": "Múltiple",
     "name": "Nombre",
     "nameApproach": "Propuesta",
-    "nameCampaign": "Nombre",
+    "nameCampaign": "Nombre de campaña",
     "number": "Número",
     "nif": "NIF",
     "numberOfResults": "Nº de resultados",
@@ -211,6 +212,11 @@
     "profile": "Perfil",
     "profiles": "Perfiles",
     "properties": "Propiedades",
+    "protocolFields": {
+      "code": "Código",
+      "name": "Nombre de protocolo",
+      "nameCampaign": "Nombre de campaña"
+    },
     "providerEntity": "Autoridad competente",
     "province": "Provincia",
     "pubCode": "Código de identificación",
@@ -310,7 +316,8 @@
         "inspection": "INSPECCIÓN: FASE ACTUAL",
         "protocol": "Alta de protocolo",
         "products": "Productos",
-        "resultados": "Resultados CCAA"
+        "resultados": "Resultados CCAA",
+        "trasparencySheet": "Ficha de transparencia"
     },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},
@@ -595,7 +602,8 @@
       "title": "Protocolo",
       "add": "Alta de protocolo",
       "list": "Consulta de protocolo",
-      "edit": "Modificar protocolo"
+      "edit": "Modificar protocolo",
+      "see": "Ver protocolo"
     },
     "sampleProgramming": {
       "title": "Programación de muestras",

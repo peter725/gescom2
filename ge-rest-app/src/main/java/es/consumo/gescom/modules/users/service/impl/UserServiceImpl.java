@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import es.consumo.gescom.commons.db.repository.QueryByCriteria;
+import es.consumo.gescom.commons.dto.FilterCriteria;
+import es.consumo.gescom.modules.arbiter.repository.ArbiterRepository;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.autonomousCommunity.service.AutonomousCommunityService;
@@ -67,6 +70,38 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         Page<UserDTO> response = repository.findAll(criteriaWrapper.getCriteria().toPageable())
                 .map(userEntity -> modelMapper.map(userEntity, UserDTO.class));
         return response;
+    }
+
+
+    @Override
+    protected Page<UserEntity.SimpleProjection>  findAllFromCriteria(FilterCriteria criteria) {
+
+        UserCriteria userCriteria = (UserCriteria) criteria;
+        if (userCriteria.getSearch() != null) {
+            userCriteria.setSearch(userCriteria.getSearch().toUpperCase());
+        }
+        if (userCriteria.getName() != null) {
+            userCriteria.setName(userCriteria.getName().toUpperCase());
+        }
+        if (userCriteria.getSurname() != null) {
+            userCriteria.setSurname(userCriteria.getSurname().toUpperCase());
+        }
+        if (userCriteria.getLastSurname() != null) {
+            userCriteria.setLastSurname(userCriteria.getLastSurname().toUpperCase());
+        }
+        if (userCriteria.getDni() != null) {
+            userCriteria.setDni(userCriteria.getDni().toUpperCase());
+        }
+        if (userCriteria.getPhone() != null) {
+            userCriteria.setPhone(userCriteria.getPhone().toUpperCase());
+        }
+        if (userCriteria.getEmail() != null) {
+            userCriteria.setEmail(userCriteria.getEmail().toUpperCase());
+        }
+        userCriteria.setSort(new String[]{"id;asc"});
+        Page<UserEntity.SimpleProjection>  userSimpleProjections = ((UserRepository) repository).findAllByCriteria(userCriteria, userCriteria.toPageable());
+
+        return userSimpleProjections;
     }
 
     @Override

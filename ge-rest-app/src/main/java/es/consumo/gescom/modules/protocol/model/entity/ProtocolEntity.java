@@ -75,6 +75,7 @@ public class ProtocolEntity extends SimpleEntity {
             Long getId();
             String getCode();
             String getName();
+            Integer getState();
 
         }
 }

@@ -30,7 +30,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/campaign")
 @Tag(name = "Campaign controller")
-public class CampaignController extends AbstractCrudController<CampaignEntity, CampaignDTO, Long, FilterCriteria> {
+public class CampaignController extends AbstractCrudController<CampaignEntity, CampaignDTO, Long, CampaignCriteria> {
 
     @Autowired
     public CampaignController(CampaignService service, DataConverter<CampaignEntity, CampaignDTO> dataConverter) {
@@ -55,11 +55,6 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
         );
     }
 
-
-    @Override
-    protected Page<?> performFindAll(CriteriaWrapper<?> criteriaWrapper) {
-        return ((CampaignService) service).performFindAllCampaing(criteriaWrapper);
-    }
 
     @PostMapping("/{id}/switch")
     public ResponseEntity<CampaignEntity> switchStatus(@RequestBody ChangeStatusDTO changeStatus, @PathVariable  Long id) {

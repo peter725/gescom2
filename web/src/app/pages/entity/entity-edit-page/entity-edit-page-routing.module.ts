@@ -7,8 +7,8 @@ const routes: Routes = [
     {
         path: '',
         component: EntityEditPageComponent,
-        title: 'pages.entity.edit',
-        data: { breadcrumb: 'generic.actions.edit' },
+        title: 'pages.entity.add',
+        data: { breadcrumb: 'generic.actions.add' },
     }
 ];
 

@@ -135,7 +135,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
                 searchDTO.setProductServiceId(campaignProductServiceEntity.getProductServiceId());
                 searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
                 searchDTO.setIprCode(iprDTO.getCode());
-                resultsResponseDTO = getResults(searchDTO);
+                resultsResponseDTO = getResultsIpr(searchDTO);
                 iprDTO.setResultsResponseDTO(resultsResponseDTO);
 
             }
@@ -161,7 +161,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
                 searchDTO.setProductServiceId(campaignProductServiceEntity.getProductServiceId());
                 searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
                 searchDTO.setIprCode(iprDTO.getCode());
-                resultsResponseDTO = getResults(searchDTO);
+                resultsResponseDTO = getResultsIpr(searchDTO);
                 iprDTO.setResultsResponseDTO(resultsResponseDTO);
 
             }
@@ -169,10 +169,74 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         return iprDTOS;
     }
 
+    @Override
+    public List<ResultsResponseDTO> getResultProtocol(SearchDTO searchDTO) {
+        List<ResultsResponseDTO> resultsResponseDTOS = new ArrayList<>();
+        List<QuestionsResponseDTO> questionsResponseDTOS = new ArrayList<>();
+        List<QuestionsDTO> questionsDTOS = new ArrayList<>();
+        List<IprResponseDTO> iprResponseDTOS = new ArrayList<>();
+        List<ProtocolResultsResponseDTO> protocolResultsResponseDTOS = new ArrayList<>();
+        ProductServiceEntity productServiceEntity = new ProductServiceEntity();
+        ProtocolDTO  protocolDTO = new ProtocolDTO();
+
+        CampaignEntity campaignEntity = campaignRepository.findById(searchDTO.getCampaignId()).orElseThrow();
+        if (searchDTO.getProtocolCode() != null) {
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameByCode(searchDTO.getProtocolCode()));
+        }else {
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameById(searchDTO.getProtocolId()));
+        }
+
+        if (searchDTO.getProtocolCode() != null) {
+            questionsDTOS = questionsConverter.convertToModel(questionsRepository.findAllQuestionsByProtocolCode(searchDTO.getProtocolCode()));
+            protocolResultsResponseDTOS = protocolResultsRepository.findProtocolResultsByCampaignIdAndProtocolCode(searchDTO.getCampaignId(), searchDTO.getProtocolCode(), searchDTO.getProductServiceCode());
+        }else {
+            questionsDTOS = questionsConverter.convertToModel(questionsRepository.findAllQuestionsByProtocolId(searchDTO.getProtocolId()));
+            protocolResultsResponseDTOS = protocolResultsRepository.findProtocolResultsByCampaignIdAndProtocolId(searchDTO.getCampaignId(), searchDTO.getProtocolId(), searchDTO.getProductServiceCode());
+
+        }
+
+        /*for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+            QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
+            if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC1")) {
+                questionsResponseDTO.setQuestion("DC1- Nro. de establecimientos existentes");
+                questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+                questionsResponseDTOS.add(questionsResponseDTO);
+            }
+        }*/
+
+        for (QuestionsDTO questionsDTO : questionsDTOS){
+
+            QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
+            String question = questionsDTO.getQuestion();
+            String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
+            questionsResponseDTO.setQuestion(questionText);
+            questionsResponseDTO.setOrderQuestion(questionsDTO.getOrderQuestion());
+
+            for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), questionsDTO.getOrderQuestion().toString())) {
+                    if (protocolResultsResponseDTO.getCcaaRes() != null) {
+                        questionsResponseDTO.addToNumResponseSi(protocolResultsResponseDTO.getCcaaRes());
+                    }
+                    if (protocolResultsResponseDTO.getCcaaRen() != null) {
+                        questionsResponseDTO.addToNumResponseNo(protocolResultsResponseDTO.getCcaaRen());
+                    }
+                    if (protocolResultsResponseDTO.getCcaaRep() != null) {
+                        questionsResponseDTO.addToNumResponseNoProcede(protocolResultsResponseDTO.getCcaaRep());
+                    }
+                }
+            }
+            questionsResponseDTOS.add(questionsResponseDTO);
+
+
+        }
+
+        return resultsResponseDTOS;
+    }
+
 
 
     @Override
-    public ResultsResponseDTO getResults(SearchDTO searchDTO) {
+    public ResultsResponseDTO getResultsIpr(SearchDTO searchDTO) {
         ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
         List<QuestionsResponseDTO> questionsResponseDTOS = new ArrayList<>();
         List<QuestionsDTO> questionsDTOS = new ArrayList<>();

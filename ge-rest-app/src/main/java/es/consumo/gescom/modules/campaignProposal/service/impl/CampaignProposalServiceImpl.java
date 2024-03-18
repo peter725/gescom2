@@ -1,5 +1,6 @@
 package es.consumo.gescom.modules.campaignProposal.service.impl;
 
+import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
@@ -60,7 +61,7 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         return campaignProposalConverter.convertToModel(campaignProposal);
     }
 
-    @Override
+    /*@Override
     public Page<CampaignProposalDTO> findAllCampaignProposal(CriteriaWrapper<?> wrapper) {
         Page<CampaignProposalEntity> campaignProposalEntityPage = repository.findAll(wrapper.getCriteria().toPageable());
         Page<CampaignProposalDTO> campaignProposalDTOPage = campaignProposalEntityPage.map(campaignProposalConverter::convertToModel);
@@ -73,7 +74,7 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
 
 
         return campaignProposalDTOPage;
-    }
+    }*/
 
     @Override
     public CampaignProposalDTO findCampaignProposalById(Long id) {
@@ -126,4 +127,16 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         return campaignProposalEntity;
     }
 
+    @Override
+    protected Page<CampaignProposalEntity.SimpleProjection> findAllFromCriteria(FilterCriteria criteria) {
+
+        CampaignProposalCriteria campaignProposalCriteria = (CampaignProposalCriteria) criteria;
+        if (campaignProposalCriteria.getSearch() != null) {
+            campaignProposalCriteria.setSearch(campaignProposalCriteria.getSearch().toUpperCase());
+        }
+        campaignProposalCriteria.setSort(new String[]{"id;asc"});
+        Page<CampaignProposalEntity.SimpleProjection> campaignProposalSimpleProjections = ((CampaignProposalRepository) repository).findAllByCriteria(campaignProposalCriteria, campaignProposalCriteria.toPageable());
+
+        return campaignProposalSimpleProjections;
+    }
 }

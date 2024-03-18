@@ -46,13 +46,6 @@ public class ProtocolController extends AbstractCrudController<ProtocolEntity, P
         return ResponseEntity.ok(result);
     }
 
-//    @GetMapping("/protocolo/{id}")
-//    public ResponseEntity<List<ProtocolDetailDTO>> findListByProtocol(@PathVariable  Long id) {
-//        List<ProtocolDetailDTO> result =
-//                ((ProtocolService) service).findProtocolById(id);
-//        return ResponseEntity.ok(result);
-//    }
-
     @Override
     protected ProtocolDTO performCreate(ProtocolDTO payload) {
         return ((ProtocolService) service).createProtocol(payload);

@@ -5,6 +5,8 @@ import es.consumo.gescom.modules.ambit.model.criteria.AmbitCriteria;
 import es.consumo.gescom.modules.ambit.model.entity.AmbitEntity;
 import es.consumo.gescom.modules.campaignProposal.model.criteria.CampaignProposalCriteria;
 import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
+import es.consumo.gescom.modules.users.model.criteria.UserCriteria;
+import es.consumo.gescom.modules.users.model.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +19,12 @@ import java.time.LocalDate;
 
 @Repository
 public interface CampaignProposalRepository extends GESCOMRepository<CampaignProposalEntity, Long> {
+
+    @Query(value = "SELECT a FROM CampaignProposalEntity a "
+            + "WHERE "
+            + "(:#{#criteria.search} is null OR UPPER(a.approach) LIKE :#{#criteria.search}) "
+    )
+    public Page<CampaignProposalEntity.SimpleProjection> findAllByCriteria(CampaignProposalCriteria criteria, Pageable pageable);
 
     @Query(value = "SELECT h FROM CampaignProposalEntity h where h.id = :id ")
     Page<CampaignProposalEntity.SimpleProjection> findAllCampaignProposalById(Pageable pageable, @Param("id") Long id);

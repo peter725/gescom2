@@ -23,5 +23,7 @@ public interface IprService extends CrudService<IprEntity, Long>{
 
     List<IprDTO> findAllIprByCampaignIdAndProtocolId(Long campaignId, Long protocolId);
 
-    ResultsResponseDTO getResults(SearchDTO searchDTO);
+    ResultsResponseDTO getResultsIpr(SearchDTO searchDTO);
+
+    List<ResultsResponseDTO> getResultProtocol(SearchDTO searchDTO);
 }

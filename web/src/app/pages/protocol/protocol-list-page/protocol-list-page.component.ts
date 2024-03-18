@@ -41,7 +41,7 @@ export class ProtocolListPageComponent extends BaseListPageComponent<Protocol> i
   }
 
   protected getColumns(): ColumnSrc[] {
-    return ['code', 'name', 'nameCampaign', 'actions'];
+    return ['code', 'name', 'actions'];
   }
 
 

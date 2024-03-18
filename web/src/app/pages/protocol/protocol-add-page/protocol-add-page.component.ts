@@ -94,7 +94,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   protected buildForm(): FormGroup {
     const form = this.fb.group({
       name: [null, Validators.required],
-      code: [null, ],
+      code: [{ value: null, disabled: true }],
       campaignId: [ null, Validators.required],
       question: this.fb.array([])
     });

@@ -1,6 +1,4 @@
-<tsw-filters-container class="pt-3">
-    <tsw-protocol-list-page-filter *tswCustomFilter="'advanced'"></tsw-protocol-list-page-filter>
-</tsw-filters-container>
+<tsw-filters-container class="pt-3"></tsw-filters-container>
 
 <tsw-table-container
         class="pt-3"
@@ -35,24 +33,17 @@
         </ng-container>
 
         <ng-container matColumnDef="code">
-            <th *matHeaderCellDef mat-header-cell style="width: 7%" >{{ "fields.protocolFields.code" | translate }}</th>
+            <th *matHeaderCellDef mat-header-cell style="width: 12%" >{{ "fields.protocolFields.code" | translate }}</th>
             <td mat-cell *matCellDef="let element">
                 {{ element.code }}
             </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell style="width: 50%;" *matHeaderCellDef>
+            <th mat-header-cell style="width: 35%;" *matHeaderCellDef>
               {{ 'fields.protocolFields.name'| translate }}</th>
             <td mat-cell *matCellDef="let element">
                 {{ element.name }}
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="nameCampaign">
-            <th mat-header-cell style="width: 25%;" *matHeaderCellDef>{{ "fields.protocolFields.nameCampaign" | translate }}</th>
-            <td *matCellDef="let element" mat-cell>
-                {{ element.nameCampaign }}
             </td>
         </ng-container>
 

@@ -2,7 +2,7 @@
   <tsw-form-container>
     <tsw-section-wrapper
             class="mb-5"
-            headerLabel="{{'pages.protocol.add' | translate}}"
+            headerLabel="{{'pages.protocol.edit' | translate}}"
             icon="edit_note"
     >
 
@@ -23,8 +23,7 @@
         <div class="grid grid-cols-4 gap-1.5 mb-2">
           <mat-form-field class="col-span-3 col-start-2">
             <mat-label>{{ 'fields.nameCampaign' | translate }}</mat-label>
-            <input matInput [value]="name" disabled="true" readonly>
-            <!-- <mat-error>{{ form.controls.campaignType.errors | extractValidationError }}</mat-error> -->
+            <input matInput formControlName="nameCampaign" readonly>
           </mat-form-field>
         </div>
 
@@ -86,10 +85,9 @@
     </tsw-section-wrapper>
 
     <tsw-form-actions
-            [saveBtnSkipConfirmation]="form.invalid"
-            [cancelRedirectPath]="cancelRedirectPath"
-            (reset)="resetForm()"
-            (save)="saveForm()"
+      [saveBtnSkipConfirmation]="form.invalid"
+      (reset)="resetForm()"
+      (save)="submitForm()"
     ></tsw-form-actions>
 
   </tsw-form-container>

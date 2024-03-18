@@ -22,5 +22,19 @@ export const PROTOCOL_PAGE_ROUTES: Routes = [
     },
     loadChildren: () => import('./').then(m => m.ProtocolAddPageModule),
   },
+  {
+    path: ':id/ver',
+    data: {
+        breadcrumb,
+    },
+    loadChildren: () => import('./').then(m => m.ProtocolSeePageModule),
+  },
+  {
+    path: ':id',
+    data: {
+        breadcrumb,
+    },
+    loadChildren: () => import('./').then(m => m.ProtocolEditPageModule),
+  },
 
 ];

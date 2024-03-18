@@ -214,7 +214,7 @@
     "properties": "Propiedades",
     "protocolFields": {
       "code": "Código",
-      "name": "Nombre",
+      "name": "Nombre de protocolo",
       "nameCampaign": "Nombre de campaña"
     },
     "providerEntity": "Autoridad competente",
@@ -602,7 +602,8 @@
       "title": "Protocolo",
       "add": "Alta de protocolo",
       "list": "Consulta de protocolo",
-      "edit": "Modificar protocolo"
+      "edit": "Modificar protocolo",
+      "see": "Ver protocolo"
     },
     "sampleProgramming": {
       "title": "Programación de muestras",

@@ -33,14 +33,14 @@
         </ng-container>
 
         <ng-container matColumnDef="code">
-            <th *matHeaderCellDef mat-header-cell style="width: 12%" >{{ "fields.protocolFields.code" | translate }}</th>
+            <th *matHeaderCellDef mat-header-cell style="width: 15%" >{{ "fields.protocolFields.code" | translate }}</th>
             <td mat-cell *matCellDef="let element">
                 {{ element.code }}
             </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell style="width: 35%;" *matHeaderCellDef>
+            <th mat-header-cell style="width: 65%;" *matHeaderCellDef>
               {{ 'fields.protocolFields.name'| translate }}</th>
             <td mat-cell *matCellDef="let element">
                 {{ element.name }}
@@ -56,7 +56,7 @@
                 <ng-container>
                     <div class="additional-actions">
                         <a mat-button
-                           [routerLink]="'approachManagementSee' | namedRoute: { id: element.id }"
+                           [routerLink]="'protocolManagementSee' | namedRoute: { id: element.id }"
                            matTooltip="Ver"
                            matTooltipPosition="above"
                         >
@@ -64,7 +64,7 @@
                         </a>
                       <a
                         mat-button
-                        [routerLink]="'approachManagementEdit' | namedRoute: { id: element.id }"
+                        [routerLink]="'protocolManagementEdit' | namedRoute: { id: element.id }"
                         matTooltip="Editar"
                         matTooltipPosition="above"
                       >

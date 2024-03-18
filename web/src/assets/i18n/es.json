@@ -89,8 +89,8 @@
       "campaign-proposal": {
         "title": "Propuesta de campaña",
         "campaign-type": {
-          "key1": "Alimenticios",
-          "key2": "No alimenticios",
+          "key1": "Productos Alimenticios",
+          "key2": "Productos No alimenticios",
           "key3": "Servicios"
         }
       },

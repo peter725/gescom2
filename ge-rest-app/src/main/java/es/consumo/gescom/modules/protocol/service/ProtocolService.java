@@ -19,7 +19,7 @@ public interface ProtocolService extends CrudService<ProtocolEntity, Long>{
 
     ProtocolDTO createProtocol(ProtocolDTO payload);
 
-    ProtocolDetailDTO findProtocolById(Long id);
+    ProtocolDetailDTO findProtocolDetailById(Long id);
 
     List<QuestionsDTO> findProtocolByIdOrCode(ProtocolDTO protocolDTO);
 

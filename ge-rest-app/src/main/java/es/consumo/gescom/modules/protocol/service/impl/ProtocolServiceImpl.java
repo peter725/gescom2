@@ -162,7 +162,7 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     }
 
     @Override
-    public ProtocolDetailDTO findProtocolById(Long id) {
+    public ProtocolDetailDTO findProtocolDetailById(Long id) {
         Optional<ProtocolEntity> protocol = protocolRepository.findById(id);
         CampaignEntity campaignEntity = protocol.get().getCampaignId();
         List<QuestionDetailDTO> questionDetailDTOList = new ArrayList<>();
@@ -213,7 +213,19 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
     @Override
     public ProtocolDTO findProtocolDTOById(Long id) {
-        return protocolConverter.convertToModel(protocolRepository.findProtocolNameById(id));
+        ProtocolEntity protocolEntity = protocolRepository.findById(id).orElseThrow();
+        ProtocolDTO protocolDTO = protocolConverter.convertToModel(protocolEntity);
+        List<QuestionsEntity> questionsEntities = new ArrayList<>();
+        if (protocolDTO.getCode() == null){
+            questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
+        }else{
+            questionsEntities = questionsRepository.findAllQuestionsByProtocolCode(protocolDTO.getCode());
+        }
+        List<QuestionsDTO> questionsDTOS = questionsConverter.convertToModel(questionsEntities);
+        protocolDTO.setQuestion(questionsDTOS);
+
+
+        return protocolDTO;
     }
 
     @Override

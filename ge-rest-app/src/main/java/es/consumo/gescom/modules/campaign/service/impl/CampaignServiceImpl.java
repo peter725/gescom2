@@ -1,5 +1,6 @@
 package es.consumo.gescom.modules.campaign.service.impl;
 
+import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.ambit.model.converter.AmbitConverter;
 import es.consumo.gescom.modules.ambit.model.entity.AmbitEntity;
@@ -20,6 +21,7 @@ import es.consumo.gescom.modules.autonomousCommunitySpecialist.model.entity.Auto
 import es.consumo.gescom.modules.autonomousCommunitySpecialist.repository.AutonomousCommunitySpecialistRepository;
 import es.consumo.gescom.modules.autonomousCommunitySpecialist.service.AutonomousCommunitySpecialistService;
 import es.consumo.gescom.modules.campaign.model.converter.CampaignConverter;
+import es.consumo.gescom.modules.campaign.model.criteria.CampaignCriteria;
 import es.consumo.gescom.modules.campaign.model.dto.*;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.repository.CampaignRepository;
@@ -62,6 +64,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -204,6 +207,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
         return super.performCreate(payload);
     }
+
+
+
 
     @Override
     public CampaignDTO createCampaign(CampaignDTO campaignDTO) {
@@ -389,8 +395,22 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     }
 
     @Override
+    protected Page<CampaignEntity> findAllFromCriteria(FilterCriteria criteria) {
+
+        CampaignCriteria campaignCriteria = (CampaignCriteria) criteria;
+        if (campaignCriteria.getSearch() != null) {
+            campaignCriteria.setSearch(criteria.getSearch().toUpperCase());
+        }
+        campaignCriteria.setSort(new String[]{"id;desc"});
+        Page<CampaignEntity> campaignEntities = campaignRepository.findAllByCriteria(campaignCriteria, criteria.toPageable());
+
+        return campaignEntities;
+    }
+
+    @Override
     public Page<CampaignDTO> performFindAllCampaing(CriteriaWrapper<?> wrapper) {
-        Page<CampaignEntity> listCampaign = repository.findAll(wrapper.getCriteria().toPageable());
+        Page<CampaignEntity> listCampaign = findAllFromCriteria(wrapper.getCriteria());
+        /*Page<CampaignEntity> listCampaign = repository.findAll(wrapper.getCriteria().toPageable());*/
         List<CampaignDTO> listCampaingDTO = new ArrayList<>();
         for (CampaignEntity campaign : listCampaign) {
             CampaignDTO campaignDTO = campaingnConverter.convertToModel(campaign);
@@ -406,6 +426,11 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
 
         }
         
+    }
+
+    @Override
+    protected Page<?> findAllFromPageable(Pageable pageable) {
+        return super.findAllFromPageable(pageable);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package es.consumo.gescom.modules.protocol.service.impl;
 
+import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.model.entity.AutonomousCommunityParticipantsEntity;
 import es.consumo.gescom.modules.autonomousCommunityParticipants.repository.AutonomousCommunityParticipantsRepository;
@@ -86,6 +87,8 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     @Override
     public List<ProtocolDTO> findProtocolByCampaignId(Long idCampaign) {
 
+
+        SearchDTO searchDTO = new SearchDTO();
         List<ProtocolEntity> protocolEntity = protocolRepository.findProtocolByCampaignId(idCampaign);
         List<ProtocolDTO> listProtocolDTO = protocolConverter.convertToModel(protocolEntity);
         List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(idCampaign);
@@ -93,7 +96,6 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
         for (ProtocolDTO protocolDTO : listProtocolDTO) {
             if (protocolDTO.getCode() == null) {
-                SearchDTO searchDTO = new SearchDTO();
                 searchDTO.setCampaignId(idCampaign);
                 searchDTO.setProtocolId(protocolDTO.getId());
                 searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
@@ -101,13 +103,17 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                 List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
                 List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
 
-                ResultsResponseDTO resultsResponseDTO = iprService.getResults(searchDTO);
+                ResultsResponseDTO resultsResponseDTO = iprService.getResultsIpr( searchDTO);
                 protocolDTO.setQuestion(listQuestionsDTOS);
                 protocolDTO.setResultsResponseDTO(resultsResponseDTO);
                 protocolDTO.setIprDTOS(iprDTOS);
 
             }else {
+                searchDTO.setCampaignId(idCampaign);
+                searchDTO.setProtocolCode(protocolDTO.getCode());
+                searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
                 List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());
+                List<ResultsResponseDTO> resultsResponseDTOS = iprService.getResultProtocol(searchDTO);
                 List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolCode(protocolDTO.getCode());
                 List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
                 protocolDTO.setQuestion(listQuestionsDTOS);
@@ -231,5 +237,17 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         return result;
     }
 
+    @Override
+    protected Page<ProtocolEntity.SimpleProjection> findAllFromCriteria(FilterCriteria criteria) {
 
+        ProtocolCriteria protocolCriteria = (ProtocolCriteria) criteria;
+        if (protocolCriteria.getSearch() != null) {
+            protocolCriteria.setSearch(protocolCriteria.getSearch().toUpperCase());
+        }
+        protocolCriteria.setSort(new String[]{"id;asc"});
+        Page<ProtocolEntity.SimpleProjection> protocolSimpleProjections = ((ProtocolRepository) repository).findAllByCriteria(protocolCriteria, protocolCriteria.toPageable());
+
+        return protocolSimpleProjections;
+
+    }
 }

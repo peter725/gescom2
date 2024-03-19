@@ -150,12 +150,12 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
   }
 
-  saveForm() {
+  async saveForm() {
     if (this.form.invalid) {
       this.notification.show({ message: 'text.other.pleaseReview' });
     } else {
       super.setRedirectAfterSave(false);
-      this.submitForm();
+      await this.save();
 
       this.location.back();
     }

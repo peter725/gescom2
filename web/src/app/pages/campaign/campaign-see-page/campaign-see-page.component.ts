@@ -16,6 +16,7 @@ import { CampaignService } from '@base/shared/utilsService/campaign.service';
 import { NavigationExtras } from '@angular/router';
 import { ProtocolResults } from '@libs/sdk/protocolResults';
 import { PHASE_BORRADOR_RESULTADOS, PHASE_DATOS_INICIALES, PHASE_DOC_INSPECCION, PHASE_FICHA_TRANSPARENCIA, PHASE_IMPRESO_DEFINITIVO, PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE } from '@base/shared/utils/constants';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -48,6 +49,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   override ngOnInit(): void {
     super.ngOnInit();
     this.loadPhases();
+    this.loadDocuments();
   }
 
   private loadPhases(): void {
@@ -61,6 +63,23 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
           // Manejar el error (mostrar mensaje al usuario, por ejemplo)
         }
       });
+  }
+
+  documents: any;
+  documentsLibrary: any;
+  documentsPlanification: any;
+  documentsTrasparencySheet: any;
+  private async loadDocuments(): Promise<void> {
+    const id : any = this.route.snapshot.paramMap.get('id');
+    this.documents = await firstValueFrom(this.crudService.findById(id, {
+      resourceName: 'documentCampaignList',
+      pathParams: { id },
+    }));
+
+    this.documentsLibrary = this.documents.content.filter((document: any) => !document.documentType || document.documentType.id === 1);
+    this.documentsPlanification = this.documents.content.filter((document: any) => document.documentType && document.documentType.id === 2);
+    this.documentsTrasparencySheet = this.documents.content.filter((document: any) => document.documentType && document.documentType.id === 3);
+  
   }
 
   protected buildForm(){

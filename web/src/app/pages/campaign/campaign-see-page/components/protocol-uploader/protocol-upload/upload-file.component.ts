@@ -1,11 +1,11 @@
 import {
-  Component, Output,
+  Component, Input,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { fileToB64 } from '@libs/file';
-// import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -57,16 +57,9 @@ const ELEMENT_DATA: FileData[] = [];
     CommonModule
   ]
 })
-
-
 export class UploadFileComponent <T=any> {
 
-  private url = '';
-
-  private contadorId = 1;
-  documents: any;
-
-
+  @Input() documents: any;
   displayedColumns: string[] = ['name'];
   dataSource = [...ELEMENT_DATA];
   form: FormGroup;
@@ -89,36 +82,25 @@ export class UploadFileComponent <T=any> {
     });
   }
 
-
   ngOnInit(): void {
-
     this.idCampaign = this.route.snapshot.paramMap.get('id');
     console.log('ID de la URL:', this.idCampaign);
-
-    this.loadDocuments();
   }
 
-
-
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['documents'].currentValue) this.loadDocuments();
+  }
 
   //CARGAR DOCUMENTOS
   private async loadDocuments(): Promise<void> {
-
     console.log('actualizo');
 
     this.documentsArray = [];
-  
     const id = this.idCampaign;
-    this.documents = await firstValueFrom(this.crudService.findById(id, {
-      resourceName: 'documentCampaignList',
-      pathParams: { id },
-    }));
   
-  
-    if (this.documents.content && this.documents.content.length > 0) {
+    if (this.documents && this.documents.length > 0) {
       // Itera sobre los documentos y guarda el nombre y el ID de cada uno en el array
-      this.documents.content.forEach((document: { id: number, name: string, state: number }) => {
+      this.documents.forEach((document: { id: number, name: string, state: number }) => {
         if (document && document.state === 1) {
           this.documentsArray.push({ id: document.id, name: document.name });
         }
@@ -134,9 +116,7 @@ export class UploadFileComponent <T=any> {
     }
   }
 
-
   // AGREGAR DOCUMENTO
-
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     console.log("Archivo="+this.selectedFile?.name)

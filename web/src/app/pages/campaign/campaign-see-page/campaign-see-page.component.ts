@@ -3,7 +3,7 @@ import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
 import { CampaignForm } from '@libs/sdk/campaign';
-import { Validators, ɵFormGroupRawValue, ɵGetProperty, ɵTypedOrUntyped } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
 import { Page } from '@libs/crud-api';
 import { ProtocolDetailComponent, UploadFileComponent } from '@base/pages/campaign/campaign-see-page/components';
@@ -36,7 +36,13 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   readonly protocolFileUpload = 'protocolFileUpload';
   protected override _createResourceTitle = 'pages.campaign.add';
   protected override _editResourceTitle = 'pages.campaign.see';
+
   phases: any[] = [];
+  canSeeDocumentoplanificacionProtocoloIPR = [ PHASE_DOC_INSPECCION, PHASE_BORRADOR_RESULTADOS, PHASE_IMPRESO_DEFINITIVO, PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE, PHASE_FICHA_TRANSPARENCIA ]
+  canSeeResultadosCCAA = [ PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE, PHASE_FICHA_TRANSPARENCIA ]
+  canSeeResultadosFinales = [ PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE, PHASE_FICHA_TRANSPARENCIA ]
+  canSeeFichaTransparencia = [ PHASE_FICHA_TRANSPARENCIA ]
+
   campaignProducts: ProductService[] | null | undefined = [];
   campaignResults: ProtocolResults[] | null | undefined = [];
 

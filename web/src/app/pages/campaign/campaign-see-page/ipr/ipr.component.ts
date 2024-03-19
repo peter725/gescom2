@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
@@ -114,8 +114,6 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     return ['../consulta'];
   }
 
-
-
   openDialog(rowIndex: number): void {
 
     const protocolData = { id: this.protocolSelectedId, code: this.protocolSelectedCode };
@@ -219,9 +217,24 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     questionsControl.push(this.crearFila(nuevoOrden));
   }
 
+  agregarFilaDespuesDe(index: number) {
+    const questionsControl = this.form.get('question') as FormArray;
+    const nuevoOrden = questionsControl.length + 1;
+    questionsControl.insert(index + 1, this.crearFila(nuevoOrden));
+    
+    this.refreshOrder();
+  }
+
   eliminarFila(index: number) {
     // Elimina la fila en el índice dado
     this.question.removeAt(index);
+
+    //actualizar orden 
+    this.refreshOrder();
+
+  }
+
+  refreshOrder(){
 
     // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
     this.question.controls.forEach((control, i) => {

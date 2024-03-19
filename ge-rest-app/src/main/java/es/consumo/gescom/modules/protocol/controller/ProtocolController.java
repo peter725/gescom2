@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/protocol")
@@ -53,12 +54,18 @@ public class ProtocolController extends AbstractCrudController<ProtocolEntity, P
 
     @GetMapping("/protocolo/{id}")
     protected ProtocolDetailDTO findListByProtocol(@PathVariable Long id) {
-        return ((ProtocolService) service).findProtocolById(id);
+        return ((ProtocolService) service).findProtocolDetailById(id);
     }
 
     @GetMapping("/code")
     protected List<QuestionsDTO> findListByProtocol(ProtocolDTO protocolDTO) {
         return ((ProtocolService) service).findProtocolByIdOrCode(protocolDTO);
+    }
+
+    @Override
+    public Optional<?> performFindById(Long id) {
+        ProtocolDTO result = ((ProtocolService) service).findProtocolDTOById(id);
+        return Optional.of(ResponseEntity.ok(result));
     }
 
 

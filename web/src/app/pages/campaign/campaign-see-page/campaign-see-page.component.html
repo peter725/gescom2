@@ -183,6 +183,10 @@
                     {{protocol.name}}
                   </p>
                   <div>
+                    <button mat-button  [routerLink]="'protocolManagementEdit' | namedRoute: { id: protocol.id}">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    
                     <button mat-button (click)="verDetallesProtocol(protocol)" >
                       <mat-icon>visibility</mat-icon>
                     </button>

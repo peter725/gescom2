@@ -84,6 +84,9 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       protocolResultsDTOS: this.fb.control([])
     });
   }
+  openProtocolEditPage(protocolId: string) {
+    this.router.navigate(['app/protocol', protocolId]);
+  }
 
   get participantsDispaly(){
     return this.form.get('participants')?.value?.map((item: any) => item.name).join(', ');

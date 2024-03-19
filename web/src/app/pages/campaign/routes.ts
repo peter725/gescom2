@@ -1,4 +1,5 @@
 import {Routes} from "@angular/router";
+import { ProtocolEditPageComponent } from "../protocol/protocol-edit-page/protocol-edit-page.component";
 
 const breadcrumb = 'pages.campaign.title';
 
@@ -58,4 +59,12 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         },
         loadChildren: () => import('./').then(m => m.IprModule),
     },
+    {
+        path: ':id',
+        data: {
+            breadcrumb,
+        },
+        loadChildren: () => import('../protocol/').then(m => m.ProtocolEditPageModule),
+    },
+
 ]

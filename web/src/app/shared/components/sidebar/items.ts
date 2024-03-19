@@ -35,18 +35,18 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     ]
   },
   // Protocolos
-  {
-    text: 'pages.protocol.title',
-    icon: 'assignment',
-    expanded: false,
-    children: [{
-      text: 'pages.protocol.add', path:'protocolManagementCreate'
-    },
-    {
-      text: 'pages.protocol.list', path:'protocolManagementList'
-    }
-    ]
-  },
+  // {
+  //   text: 'pages.protocol.title',
+  //   icon: 'assignment',
+  //   expanded: false,
+  //   children: [{
+  //     text: 'pages.protocol.add', path:'protocolManagementCreate'
+  //   },
+  //   {
+  //     text: 'pages.protocol.list', path:'protocolManagementList'
+  //   }
+  //   ]
+  // },
   //infracciones
   {
     text: 'pages.infringement.title',

@@ -60,6 +60,7 @@ const ELEMENT_DATA: FileData[] = [];
 export class UploadFileComponent <T=any> {
 
   @Input() documents: any;
+  @Input() documentTypeId: any;
   displayedColumns: string[] = ['name'];
   dataSource = [...ELEMENT_DATA];
   form: FormGroup;
@@ -138,7 +139,7 @@ export class UploadFileComponent <T=any> {
           campaignId: this.idCampaign,
           createAt: new Date().toISOString(),
           documentType: {
-            id: 1, 
+            id: this.documentTypeId ? this.documentTypeId : 0, 
             name: "Nombre del tipo de documento",
             state: 1 
           },
@@ -157,7 +158,8 @@ export class UploadFileComponent <T=any> {
         this.crudService.create(nuevoDocumento, config).subscribe(
           (response: any) => {
             console.log("Documento agregado:", response);
-            this.loadDocuments();
+            location.reload();
+            // this.loadDocuments();
           },
           (error: any) => {
             console.error("Error al agregar el documento:", error);
@@ -181,7 +183,8 @@ export class UploadFileComponent <T=any> {
         pathParams: { id: idDocument } // Pasamos el ID del documento aquí
       }).toPromise();
       console.log('Documento eliminado correctamente');
-      this.loadDocuments();
+      location.reload();
+      // this.loadDocuments();
       // Realiza alguna acción después de eliminar el documento, si es necesario
     } catch (error) {
       console.error('Hubo un error al eliminar el documento:', error);

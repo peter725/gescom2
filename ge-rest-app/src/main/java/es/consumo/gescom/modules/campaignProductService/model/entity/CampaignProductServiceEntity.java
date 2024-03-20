@@ -2,6 +2,7 @@ package es.consumo.gescom.modules.campaignProductService.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -22,12 +23,15 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "campaign_product_service")
 public class CampaignProductServiceEntity extends SimpleEntity {
 
+    @EqualsAndHashCode.Include
     @Column(name = "CAMPAIGN_ID")
     private Long campaignId;
 
+    @EqualsAndHashCode.Include
     @Column(name = "CODE_PRODUCT_SERVICE")
     private String codeProductService;
 
@@ -63,19 +67,6 @@ public class CampaignProductServiceEntity extends SimpleEntity {
     @Column(name = "ID_STATE", nullable = false)
     private Integer state = 1;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        CampaignProductServiceEntity that = (CampaignProductServiceEntity) o;
-        return Objects.equals(getId(), that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getId());
-    }
 
     public interface SimpleProjection {
 

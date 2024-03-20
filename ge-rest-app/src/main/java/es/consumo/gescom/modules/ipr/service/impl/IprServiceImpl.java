@@ -170,8 +170,8 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
     }
 
     @Override
-    public List<ResultsResponseDTO> getResultProtocol(SearchDTO searchDTO) {
-        List<ResultsResponseDTO> resultsResponseDTOS = new ArrayList<>();
+    public ResultsResponseDTO getResultProtocol(SearchDTO searchDTO) {
+        ResultsResponseDTO resultsResponseDTOS = new ResultsResponseDTO();
         List<QuestionsResponseDTO> questionsResponseDTOS = new ArrayList<>();
         List<QuestionsDTO> questionsDTOS = new ArrayList<>();
         List<IprResponseDTO> iprResponseDTOS = new ArrayList<>();
@@ -227,8 +227,9 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
             }
             questionsResponseDTOS.add(questionsResponseDTO);
 
-
         }
+        resultsResponseDTOS.setQuestionsResponseDTOS(questionsResponseDTOS);
+
 
         return resultsResponseDTOS;
     }

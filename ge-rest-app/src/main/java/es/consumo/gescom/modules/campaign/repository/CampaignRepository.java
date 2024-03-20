@@ -19,10 +19,7 @@ public interface CampaignRepository extends GESCOMRepository<CampaignEntity, Lon
     @Override
     @Query(value = "SELECT a FROM CampaignEntity a "
             + "WHERE "
-            + "(:#{#criteria.search} is null OR UPPER(a.nameCampaign) LIKE :#{#criteria.nameCampaign}) "
-            + "AND ("
-            + ":#{#criteria.search} is null "
-            + "OR UPPER(a.nameCampaign) like :#{#criteria.search} )"
+            + "(:#{#criteria.search} is null OR UPPER(a.nameCampaign) LIKE :#{#criteria.search}) "
     )
     Page<CampaignEntity> findAllByCriteria(CampaignCriteria criteria, Pageable pageable);
 

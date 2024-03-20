@@ -35,9 +35,7 @@ import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -87,37 +85,52 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     @Override
     public List<ProtocolDTO> findProtocolByCampaignId(Long idCampaign) {
 
-
+        ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
         SearchDTO searchDTO = new SearchDTO();
         List<ProtocolEntity> protocolEntity = protocolRepository.findProtocolByCampaignId(idCampaign);
         List<ProtocolDTO> listProtocolDTO = protocolConverter.convertToModel(protocolEntity);
         List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(idCampaign);
-
+        Set<CampaignProductServiceEntity> campaignProductServiceEntitySet = new HashSet<>(campaignProductServiceEntities);
 
         for (ProtocolDTO protocolDTO : listProtocolDTO) {
+
             if (protocolDTO.getCode() == null) {
                 searchDTO.setCampaignId(idCampaign);
                 searchDTO.setProtocolId(protocolDTO.getId());
-                searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
-                List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO.getId());
-                List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
-                List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
+                if (campaignProductServiceEntitySet.size() > 0) {
 
-                ResultsResponseDTO resultsResponseDTO = iprService.getResultsIpr( searchDTO);
-                protocolDTO.setQuestion(listQuestionsDTOS);
-                protocolDTO.setResultsResponseDTO(resultsResponseDTO);
-                protocolDTO.setIprDTOS(iprDTOS);
+                    for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntitySet) {
+                        searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
+
+                        searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
+                        List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO.getId());
+                        List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
+                        List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
+                        resultsResponseDTO = iprService.getResultProtocol(searchDTO);
+                        protocolDTO.setQuestion(listQuestionsDTOS);
+                        protocolDTO.setResultsResponseDTO(resultsResponseDTO);
+                        protocolDTO.setIprDTOS(iprDTOS);
+                    }
+                }
 
             }else {
                 searchDTO.setCampaignId(idCampaign);
                 searchDTO.setProtocolCode(protocolDTO.getCode());
-                searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
-                List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());
-                List<ResultsResponseDTO> resultsResponseDTOS = iprService.getResultProtocol(searchDTO);
-                List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolCode(protocolDTO.getCode());
-                List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
-                protocolDTO.setQuestion(listQuestionsDTOS);
-                protocolDTO.setIprDTOS(iprDTOS);
+                if (campaignProductServiceEntitySet.size() > 0) {
+
+                    for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntitySet) {
+                        searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
+                        List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());
+                        resultsResponseDTO = iprService.getResultProtocol(searchDTO);
+                        List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolCode(protocolDTO.getCode());
+                        List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
+                        protocolDTO.setQuestion(listQuestionsDTOS);
+                        protocolDTO.setIprDTOS(iprDTOS);
+                        protocolDTO.setResultsResponseDTO(resultsResponseDTO);
+
+
+                    }
+                }
             }
         }
         return (listProtocolDTO);

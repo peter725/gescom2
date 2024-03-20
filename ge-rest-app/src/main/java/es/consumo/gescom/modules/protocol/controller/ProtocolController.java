@@ -4,6 +4,7 @@ import es.consumo.gescom.commons.constants.ApiEndpoints;
 import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
+import es.consumo.gescom.modules.campaign.service.CampaignService;
 import es.consumo.gescom.modules.protocol.model.criteria.ProtocolCriteria;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDetailDTO;
@@ -64,8 +65,9 @@ public class ProtocolController extends AbstractCrudController<ProtocolEntity, P
 
     @Override
     public Optional<?> performFindById(Long id) {
-        ProtocolDTO result = ((ProtocolService) service).findProtocolDTOById(id);
-        return Optional.of(ResponseEntity.ok(result));
+        return Optional.of(
+                ((ProtocolService) service).findProtocolDTOById(id)
+        );
     }
 
 

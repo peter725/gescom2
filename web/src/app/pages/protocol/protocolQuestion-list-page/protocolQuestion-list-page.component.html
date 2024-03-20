@@ -1,3 +1,4 @@
+<div class="blockTable">
 <tsw-table-container
   [resourceName]="resourceName"
   [queryParams]="previousRequestConfig?.queryParams"
@@ -8,8 +9,6 @@
   [showRefresh]="false"
   [showSettings]="false"
 >
-
-
 
   <table
     tsw-table
@@ -87,23 +86,23 @@
   </table>
 
 </tsw-table-container>
-
-
-<div class="blockCheck">
-  <label for="DC1">Nº de establecimientos existentes<input type="checkbox" id="DC1"></label>
-  <label for="DC8">Nº de establecimientos controlados<input type="checkbox" id="DC8"></label>
 </div>
 
 
+<div class="blockChecks">
 
-<div class="blockCheck">
-  <h3 style="margin-right: 40px;">Total de productos/servicios:</h3>
-  <label for="Controlados">Controlados<input type="checkbox" id="DC9"></label>
-  <label for="Correctos">Correctos<input type="checkbox" id="DC10"></label>
-  <label for="Incorrectos">Incorrectos<input type="checkbox" id="DC11"></label>
+  <div class="blockCheck">
+    <label for="DC1">Nº de establecimientos existentes<input type="checkbox" id="DC1"></label>
+    <label for="DC8">Nº de establecimientos controlados<input type="checkbox" id="DC8"></label>
+  </div>
+
+
+
+  <div class="blockCheck">
+    <h3 style="margin-right: 40px;">Total de productos/servicios:</h3>
+    <label for="Controlados">Controlados<input type="checkbox" id="DC9"></label>
+    <label for="Correctos">Correctos<input type="checkbox" id="DC10"></label>
+    <label for="Incorrectos">Incorrectos<input type="checkbox" id="DC11"></label>
+  </div>
+
 </div>
-<!-- 
-<div class="blockCheck centeredChecks">
-  <label for="Suma">Suma<input type="checkbox"></label>
-  <label for="Resta">Resta<input type="checkbox"></label>
-</div> -->

@@ -53,14 +53,14 @@ export const dashboardRoutes: Routes = [
   //   },
   //   children: MODULE_PAGE_ROUTES,
   // },
-  {
-    path: 'entity',
-    data: {
-      requireAccess: 'entity',
-      requireScope: 'rr'
-    },
-    children: ENTITY_PAGE_ROUTES,
-  },
+  // {
+  //   path: 'entity',
+  //   data: {
+  //     requireAccess: 'entity',
+  //     requireScope: 'rr'
+  //   },
+  //   children: ENTITY_PAGE_ROUTES,
+  // },
   // {
   //   path: 'protocol',
   //   data: {
@@ -68,13 +68,13 @@ export const dashboardRoutes: Routes = [
   //   },
   //   children: PROTOCOL_PAGE_ROUTES,
   // },
-  {
-    path: 'infracciones',
-    data: {
-      // requireAccess: 'RFieldMod'
-    },
-    children: INFRINGEMENT_PAGE_ROUTES,
-  },
+  // {
+  //   path: 'infracciones',
+  //   data: {
+  //     // requireAccess: 'RFieldMod'
+  //   },
+  //   children: INFRINGEMENT_PAGE_ROUTES,
+  // },
 
 
 ];

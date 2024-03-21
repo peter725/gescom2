@@ -50,16 +50,16 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
   //   ]
   // },
   //infracciones
-  {
-    text: 'pages.infringement.title',
-    icon: 'report_problem',
-    expanded: false,
-    children: [
-    {
-      text: 'pages.infringement.list', path:'infringementManagementList'
-    }
-    ]
-  },
+  // {
+  //   text: 'pages.infringement.title',
+  //   icon: 'report_problem',
+  //   expanded: false,
+  //   children: [
+  //   {
+  //     text: 'pages.infringement.list', path:'infringementManagementList'
+  //   }
+  //   ]
+  // },
   // Perfiles
   {
     text: 'Gestion de Perfiles',
@@ -83,27 +83,27 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
     ]
   },
   // Entidades
-  {
-    text: 'Gestion de Entidades',
-    icon: 'library_books',
-    expanded:false,
-    requireAccess: 'entity',
-    children: [
-      {
-        text: 'Alta de Entidades',
-        expanded:false,
-        requireAccess: 'entity',
-        requireScope: 'ww',
-        path:'entityManagementCreate'
-      },{
-        text: 'Lista de Entidades',
-        expanded:false,
-        requireAccess: 'entity',
-        requireScope: 'rr',
-        path:'entityManagementList'
-      }
-    ]
-  },
+  // {
+  //   text: 'Gestion de Entidades',
+  //   icon: 'library_books',
+  //   expanded:false,
+  //   requireAccess: 'entity',
+  //   children: [
+  //     {
+  //       text: 'Alta de Entidades',
+  //       expanded:false,
+  //       requireAccess: 'entity',
+  //       requireScope: 'ww',
+  //       path:'entityManagementCreate'
+  //     },{
+  //       text: 'Lista de Entidades',
+  //       expanded:false,
+  //       requireAccess: 'entity',
+  //       requireScope: 'rr',
+  //       path:'entityManagementList'
+  //     }
+  //   ]
+  // },
   // Usuarios
   {
     text: 'pages.user.title',

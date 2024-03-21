@@ -2,7 +2,7 @@
   <tsw-form-container>
     <tsw-section-wrapper
             class="mb-5"
-            headerLabel="{{'pages.protocol.edit' | translate}}"
+            headerLabel="{{'pages.protocol.copy' | translate}}"
             icon="edit_note"
     >
 
@@ -87,7 +87,7 @@
     <tsw-form-actions
       [saveBtnSkipConfirmation]="form.invalid"
       (reset)="resetForm()"
-      (save)="submitForm()"
+      (save)="saveCopyProtocol()"
     ></tsw-form-actions>
 
   </tsw-form-container>

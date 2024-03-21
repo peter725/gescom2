@@ -19,6 +19,8 @@ const routes: NamedRouteSource[] = [
   {key: 'protocolManagementList', value: '/app/protocol/consulta'},
   {key: 'protocolManagementEdit', value: '/app/protocol/:id'},
   {key: 'protocolManagementSee', value: '/app/protocol/:id/ver'},
+  {key: 'protocolManagementCopy', value: '/app/protocol/:id/copy'},
+  
 
   { key: 'approachManagementCreate', value: '/app/propuestas/0' },
   { key: 'approachManagementList', value: '/app/propuestas/consulta' },

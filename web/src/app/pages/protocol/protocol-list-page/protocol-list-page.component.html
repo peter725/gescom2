@@ -56,6 +56,15 @@
                 <ng-container>
                     <div class="additional-actions">
                         <a mat-button
+                        (click)="close()"
+                        [routerLink]="'protocolManagementCopy' | namedRoute: { id: element.id }"
+                        matTooltip="Copiar"
+                        matTooltipPosition="above"
+                        >
+                            <mat-icon>content_copy</mat-icon>
+                        </a>
+
+                        <!-- <a mat-button
                            [routerLink]="'protocolManagementSee' | namedRoute: { id: element.id }"
                            matTooltip="Ver"
                            matTooltipPosition="above"
@@ -70,12 +79,12 @@
                       >
                         <mat-icon>edit</mat-icon>
 
-                      </a>
+                      </a> -->
                     </div>
-                    <tsw-state-toggle
+                    <!-- <tsw-state-toggle
                             [data]="element"
                             [resource]="resourceName"
-                    ></tsw-state-toggle>
+                    ></tsw-state-toggle> -->
                 </ng-container>
             </td>
         </ng-container>

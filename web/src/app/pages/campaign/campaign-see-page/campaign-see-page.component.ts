@@ -17,6 +17,7 @@ import { NavigationExtras } from '@angular/router';
 import { ProtocolResults } from '@libs/sdk/protocolResults';
 import { PHASE_BORRADOR_RESULTADOS, PHASE_BORRADOR_RESULTADOS_DEBATE, PHASE_DATOS_INICIALES, PHASE_DOC_INSPECCION, PHASE_DOC_INSPECCION_PLAN_DEBATE, PHASE_DOC_INSPECCION_PROTOCOLO_DEBATE, PHASE_DOC_INSPECCION_PROTOCOLO_DEFINITIVO, PHASE_FICHA_TRANSPARENCIA, PHASE_IMPRESO_DEBATE, PHASE_IMPRESO_DEFINITIVO, PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_DEFINITIVOS_PENDIENTES, PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE } from '@base/shared/utils/constants';
 import { firstValueFrom } from 'rxjs';
+import { ProtocolListPageComponent } from '@base/pages/protocol/protocol-list-page/protocol-list-page.component';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -273,18 +274,30 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     });
   }
 
-  openDialog() {
+  openDialogCopyProtocol() {
 
-    const dialogRef = this.dialog.open(UploadFileComponent,{
-      width: '75%'
+    
+    const campaignId = this.form.get('id')?.value;
+
+    this.console.log('id campaña' + campaignId);
+
+    this.sharedDataService.updateSharedData({ campaignId: campaignId });
+
+
+    const dialogRef = this.dialog.open(ProtocolListPageComponent,{
+      width: '90%',
+      height: '90%',
+      data: { campaignId: campaignId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('El diálogo se cerró');
       this.dataSourceDialog = result;
     });
+
   }
 
+  
   navegarAComponenteProtocol() {
     // Asumiendo que 'this.campaign' contiene los datos de la campaña actual
     this.campaign = this.form.value;

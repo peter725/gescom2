@@ -33,6 +33,10 @@ const routes: NamedRouteSource[] = [
   { key: 'profileManagementList', value: '/app/profile' },
   { key: 'profileManagementEdit', value: '/app/profile/:id' },
 
+  { key: 'roleManagementCreate', value: '/app/role/0' },
+  { key: 'roleManagementList', value: '/app/role' },
+  { key: 'roleManagementEdit', value: '/app/role/:id' },
+
   { key: 'entityManagementCreate', value: '/app/entity/0' },
   { key: 'entityManagementList', value: '/app/entity' },
   { key: 'entityManagementEdit', value: '/app/entity/:id' },

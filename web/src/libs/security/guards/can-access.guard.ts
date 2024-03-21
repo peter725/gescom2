@@ -45,9 +45,10 @@ export class CanAccessGuard implements CanActivate, CanActivateChild, CanLoad {
     if (!route.data) return true;
 
     const accessKey: ResourceAccessKey | undefined = route.data['requireAccess'];
+    const scopeAccess: ResourceAccessKey | undefined = route.data['requireScope'];
     if (!accessKey) return true;
 
-    const canAccess = this.context.instant().hasModule(accessKey);
+    const canAccess = this.context.instant().hasModule(accessKey) && (!scopeAccess || this.context.instant().hasScope(accessKey, scopeAccess));
 
     if (!canAccess) {
       const queryParams = route instanceof ActivatedRouteSnapshot ? route.queryParams : {};

@@ -8,6 +8,11 @@ export interface Role extends SimpleModel, StatefulModel {
 
 export interface RoleForm {
     id: number | null;
-    role: string | null;
+    name: string | null;
+    modules: RoleModule[] | null;
+}
+
+export interface RoleModule {
+    module: string | null;
     permissions: Permission[] | null;
 }

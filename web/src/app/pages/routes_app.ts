@@ -2,11 +2,7 @@ import {Routes} from '@angular/router';
 import { USER_PAGE_ROUTES } from './user/routes';
 import {APPROACH_PAGE_ROUTES} from "@base/pages/approach/routes";
 import { CAMPAIGN_PAGE_ROUTES } from './campaign/routes';
-import { PROFILE_PAGE_ROUTES } from '@base/pages/profile/routes';
-import { MODULE_PAGE_ROUTES } from '@base/pages/module/routes';
-import { ENTITY_PAGE_ROUTES } from '@base/pages/entity/routes';
-import { PROTOCOL_PAGE_ROUTES } from '@base/pages/protocol/routes';
-import { INFRINGEMENT_PAGE_ROUTES } from '@base/pages/infringement/routes';
+import { ROLE_PAGE_ROUTES } from './role/routes';
 
 
 export const dashboardRoutes: Routes = [
@@ -39,13 +35,21 @@ export const dashboardRoutes: Routes = [
     children: APPROACH_PAGE_ROUTES,
   },
   {
-    path: 'profile',
+    path: 'role',
     data: {
-      requireAccess: 'profile',
+      requireAccess: 'role',
       requireScope: 'rr'
     },
-    children: PROFILE_PAGE_ROUTES,
+    children: ROLE_PAGE_ROUTES,
   },
+  // {
+  //   path: 'profile',
+  //   data: {
+  //     requireAccess: 'profile',
+  //     requireScope: 'rr'
+  //   },
+  //   children: PROFILE_PAGE_ROUTES,
+  // },
   // {
   //   path: 'module',
   //   data: {

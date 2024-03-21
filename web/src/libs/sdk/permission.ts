@@ -8,8 +8,6 @@ export interface Permission extends SimpleModel, TranslatedModel, StatefulModel 
 
 export interface PermissionForm {
   id: number | null;
-  languageId: number | string | null;
   code: string | null;
   name: string | null;
-  description: string | null;
 }

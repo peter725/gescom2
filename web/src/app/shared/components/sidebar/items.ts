@@ -61,24 +61,46 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
   //   ]
   // },
   // Perfiles
+  // {
+  //   text: 'Gestion de Perfiles',
+  //   icon: 'library_books',
+  //   requireAccess: 'profile',
+  //   expanded:false,
+  //   children: [
+  //     {
+  //       text: 'Alta de Perfil',
+  //       expanded:false,
+  //       requireAccess: 'profile',
+  //       requireScope: 'ww',
+  //       path:'profileManagementCreate'
+  //     },{
+  //       text: 'Lista de Perfiles',
+  //       expanded:false,
+  //       requireAccess: 'profile',
+  //       requireScope: 'rr',
+  //       path:'profileManagementList'
+  //     }
+  //   ]
+  // },
+  // Roles
   {
-    text: 'Gestion de Perfiles',
+    text: 'Gestion de Roles',
     icon: 'library_books',
-    requireAccess: 'profile',
+    requireAccess: 'role',
     expanded:false,
     children: [
       {
-        text: 'Alta de Perfil',
+        text: 'Alta de Roles',
         expanded:false,
-        requireAccess: 'profile',
+        requireAccess: 'role',
         requireScope: 'ww',
-        path:'profileManagementCreate'
+        path:'roleManagementCreate'
       },{
         text: 'Lista de Perfiles',
         expanded:false,
-        requireAccess: 'profile',
+        requireAccess: 'role',
         requireScope: 'rr',
-        path:'profileManagementList'
+        path:'roleManagementList'
       }
     ]
   },

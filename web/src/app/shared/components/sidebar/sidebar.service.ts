@@ -5,6 +5,7 @@ import { PreferencesService } from '@base/shared/preferences';
 import { AsyncListFilter } from '@libs/utils/async-list-filter';
 import { BehaviorSubject } from 'rxjs';
 import { MenuItem, SidebarMode } from './model';
+import { AuthContextService } from '@libs/security';
 
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +16,7 @@ export class SidebarService {
 
   constructor(
     private preferenceService: PreferencesService,
-    // private authContext: AuthContextService,
+    private authContext: AuthContextService,
     // private aclService: AclService,
     private zone: NgZone
   ) {
@@ -43,13 +44,13 @@ export class SidebarService {
     this.updateMenuItems()
   }
 
-  private  updateMenuItems() {
-    // if (!this.authContext.instant().isAuthenticated()) {
-    //   return this.menuItems.next([]);
-    // }
+  private async updateMenuItems() {
+    if (!this.authContext.instant().isAuthenticated()) {
+      return this.menuItems.next([]);
+    }
 
-    // const items = await this.filterMenuItemAccess(SIDEBAR_ITEMS);
-    this.menuItems.next(SIDEBAR_ITEMS);
+    const items = await this.filterMenuItemAccess(SIDEBAR_ITEMS);
+    this.menuItems.next(items);
   }
 
   private async filterMenuItemAccess(list: MenuItem[]): Promise<MenuItem[]> {
@@ -57,7 +58,11 @@ export class SidebarService {
       let canAccess = true;
       if (item.requireAccess) {
         // Comprobamos el requisito de acceso al recurso
-        // canAccess = await this.aclService.canAccess(item.requireAccess);
+        canAccess = await this.authContext.instant().hasModule(item.requireAccess);
+      }
+      if (item.requireScope) {
+        // Comprobamos el requisito de permisos al recurso
+        canAccess = await this.authContext.instant().hasScope(item.requireAccess!, item.requireScope);
       }
       if (canAccess && item.children?.length) {
         item.children = await this.filterMenuItemAccess(item.children);

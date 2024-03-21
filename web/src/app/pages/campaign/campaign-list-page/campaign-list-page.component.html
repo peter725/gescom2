@@ -101,7 +101,7 @@
               [routerLink]="'campaignManagementSee' | namedRoute: { id: element.id }">
               <mat-icon>visibility</mat-icon>
             </a>
-            <a
+            <a *ngIf="canModify"
               mat-button
               [routerLink]="'campaignManagementEdit' | namedRoute: { id: element.id }">
               <mat-icon>edit</mat-icon>

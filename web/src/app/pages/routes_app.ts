@@ -17,52 +17,57 @@ export const dashboardRoutes: Routes = [
   {
     path: 'usuarios',
     data: {
-      //requireAccess: 'RUser'
+      requireAccess: 'user',
+      requireScope: 'rr'
     },
     children: USER_PAGE_ROUTES,
   },
   {
     path: 'campanas',
     data: {
-      //requireAccess: 'RUser'
+      requireAccess: 'campaign',
+      requireScope: 'rr'
     },
     children: CAMPAIGN_PAGE_ROUTES,
   },
   {
     path: 'propuestas',
     data: {
-      //requireAccess: 'RUser'
+      requireAccess: 'approach',
+      requireScope: 'rr'
     },
     children: APPROACH_PAGE_ROUTES,
   },
   {
     path: 'profile',
     data: {
-      // requireAccess: 'RFieldMod'
+      requireAccess: 'profile',
+      requireScope: 'rr'
     },
     children: PROFILE_PAGE_ROUTES,
   },
-  {
-    path: 'module',
-    data: {
-      // requireAccess: 'RFieldMod'
-    },
-    children: MODULE_PAGE_ROUTES,
-  },
+  // {
+  //   path: 'module',
+  //   data: {
+  //     // requireAccess: 'module'
+  //   },
+  //   children: MODULE_PAGE_ROUTES,
+  // },
   {
     path: 'entity',
     data: {
-      // requireAccess: 'RFieldMod'
+      requireAccess: 'entity',
+      requireScope: 'rr'
     },
     children: ENTITY_PAGE_ROUTES,
   },
-  {
-    path: 'protocol',
-    data: {
-      // requireAccess: 'RFieldMod'
-    },
-    children: PROTOCOL_PAGE_ROUTES,
-  },
+  // {
+  //   path: 'protocol',
+  //   data: {
+  //     // requireAccess: 'RFieldMod'
+  //   },
+  //   children: PROTOCOL_PAGE_ROUTES,
+  // },
   {
     path: 'infracciones',
     data: {

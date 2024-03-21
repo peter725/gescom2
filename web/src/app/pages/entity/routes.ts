@@ -11,14 +11,15 @@ export const ENTITY_PAGE_ROUTES: Routes = [
     },
     {
         path: 'consulta',
-        data: { breadcrumb },
+        data: { breadcrumb, requireAccess: 'entity', requireScope: 'rr' },
         loadChildren: () => import('./').then(m => m.EntityListPageModule),
     },
     {
         path: '0',
         data: {
             breadcrumb,
-            //requireAccess: 'WEntity'
+            requireAccess: 'entity',
+            requireScope: 'ww'
         },
         loadChildren: () => import('./').then(m => m.EntityEditPageModule),
     },
@@ -26,20 +27,22 @@ export const ENTITY_PAGE_ROUTES: Routes = [
         path: ':id',
         data: {
             breadcrumb,
-            //requireAccess: 'WEntity'
+            requireAccess: 'entity',
+            requireScope: 'ww'
         },
         loadChildren: () => import('./').then(m => m.EntityEditPageModule),
     },
     {
         path: 'tipo/consulta',
-        data: { breadcrumb: breadcrumbType },
+        data: { breadcrumb: breadcrumbType, requireAccess: 'entity', requireScope: 'rr' },
         loadChildren: () => import('./').then(m => m.EntityTypeListPageModule),
     },
     {
         path: 'tipo/alta',
         data: {
             breadcrumb: breadcrumbType,
-            //requireAccess: 'WEntity'
+            requireAccess: 'entity',
+            requireScope: 'ww'
         },
         loadChildren: () => import('./').then(m => m.EntityTypeEditPageModule),
     },
@@ -47,7 +50,8 @@ export const ENTITY_PAGE_ROUTES: Routes = [
         path: 'tipo/:id',
         data: {
             breadcrumb: breadcrumbType,
-            //requireAccess: 'WEntity'
+            requireAccess: 'entity',
+            requireScope: 'ww'
         },
         loadChildren: () => import('./').then(m => m.EntityTypeEditPageModule),
     },

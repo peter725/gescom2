@@ -13,6 +13,8 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         path: 'consulta',
         data: {
             breadcrumb,
+            requireAccess: 'campaign',
+            requireScope: 'rr'
         },
         loadChildren: () => import('./').then(m => m.CampaignListPageModule),
     },
@@ -20,7 +22,8 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         path: '0',
         data: {
             breadcrumb,
-            // requireAccess: 'WField'
+            requireAccess: 'campaign',
+            requireScope: 'ww'
         },
         loadChildren: () => import('./').then(m => m.CampaignAddPageModule),
     },
@@ -28,6 +31,8 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         path: ':id',
         data: {
             breadcrumb,
+            requireAccess: 'campaign',
+            requireScope: 'ww'
         },
         loadChildren: () => import('./').then(m => m.CampaignEditPageModule),
     },
@@ -35,6 +40,8 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         path: ':id/ver',
         data: {
             breadcrumb,
+            requireAccess: 'campaign',
+            requireScope: 'rr'
         },
         loadChildren: () => import('./').then(m => m.CampaignSeePageModule),
     },
@@ -42,6 +49,7 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         path: ':id/resultados',
         data: {
             breadcrumb,
+            requireAccess: 'campaign'
         },
         loadChildren: () => import('./').then(m => m.ResultadosModule),
     },
@@ -49,6 +57,7 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         path: ':id/resultadosFinales',
         data: {
             breadcrumb,
+            requireAccess: 'campaign'
         },
         loadChildren: () => import('./').then(m => m.ResultadosFinalesModule),
     },
@@ -56,6 +65,7 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         path: ':id/ipr',
         data: {
             breadcrumb,
+            requireAccess: 'campaign'
         },
         loadChildren: () => import('./').then(m => m.IprModule),
     },
@@ -63,6 +73,8 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         path: ':id',
         data: {
             breadcrumb,
+            requireAccess: 'campaign',
+            requireScope: 'ww'
         },
         loadChildren: () => import('../protocol/').then(m => m.ProtocolEditPageModule),
     },

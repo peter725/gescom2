@@ -4,12 +4,11 @@ import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
 import es.consumo.gescom.modules.module.model.entity.ModuleEntity;
 import es.consumo.gescom.modules.module.repository.ModuleRepository;
-import es.consumo.gescom.modules.permission.model.dto.PermissionDTO;
 import es.consumo.gescom.modules.permission.model.entity.PermissionEntity;
 import es.consumo.gescom.modules.permission.repository.PermissionRepository;
 import es.consumo.gescom.modules.role.model.constants.PermissionScope;
-import es.consumo.gescom.modules.role.model.dto.PermissionModuleDTO;
-import es.consumo.gescom.modules.role.model.dto.RoleDTO;
+import es.consumo.gescom.modules.role.model.dto.PermissionModuleNewDTO;
+import es.consumo.gescom.modules.role.model.dto.RoleNewDTO;
 import es.consumo.gescom.modules.role.model.entity.RoleEntity;
 import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
 import es.consumo.gescom.modules.role.repository.RoleHasModuleRepository;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +44,7 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public RoleEntity create(RoleDTO roleDTO) {
+    public RoleEntity create(RoleNewDTO roleDTO) {
         RoleEntity roleEntity = modelMapper.map(roleDTO, RoleEntity.class);
         roleEntity.setEnable(true);
         roleEntity.setVisible(true);
@@ -56,8 +54,8 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
         final Map<Long, List<PermissionEntity>> map = permissionRepository.findAll().stream()
                 .collect(Collectors.groupingBy(PermissionEntity::getId));
 
-        for (PermissionModuleDTO permissionModuleDTO : roleDTO.getModules()) {
-            final ModuleEntity module = moduleRepository.findById(permissionModuleDTO.getId()).orElseThrow();
+        for (PermissionModuleNewDTO permissionModuleDTO : roleDTO.getModules()) {
+            final ModuleEntity module = moduleRepository.findById(permissionModuleDTO.getModule().getId()).orElseThrow();
             iterateAndSaveRoleHasModuleEntity(permissionModuleDTO.getPermissions(), null, roleHasModules, map, roleEntity, module);
         }
         if (!roleHasModules.isEmpty())
@@ -67,15 +65,15 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public RoleEntity update(RoleDTO roleDTO) {
+    public RoleEntity update(RoleNewDTO roleDTO) {
         final RoleEntity entity = findById(roleDTO.getId()).orElseThrow();
         modelMapper.map(roleDTO, entity);
         final Map<Long, List<PermissionEntity>> map = permissionRepository.findAll().stream()
                 .collect(Collectors.groupingBy(PermissionEntity::getId));
         final List<RoleHasModuleEntity> toSave = new ArrayList<>();
         final List<Long> toDelete = new ArrayList<>();
-        for (PermissionModuleDTO permissionModuleDTO : roleDTO.getModules()) {
-            final ModuleEntity module = moduleRepository.findById(permissionModuleDTO.getId()).orElseThrow();
+        for (PermissionModuleNewDTO permissionModuleDTO : roleDTO.getModules()) {
+            final ModuleEntity module = moduleRepository.findById(permissionModuleDTO.getModule().getId()).orElseThrow();
             iterateAndSaveRoleHasModuleEntity(permissionModuleDTO.getPermissions(), toDelete, toSave, map, entity, module);
         }
         if (!toDelete.isEmpty())
@@ -84,27 +82,35 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
             roleHasModuleRepository.saveAll(toSave);
         return repository.save(entity);
     }
-
-    private void iterateAndSaveRoleHasModuleEntity(List<PermissionDTO> permissionDTOS, List<Long> toDelete, List<RoleHasModuleEntity> toSave,
-                                                   Map<Long, List<PermissionEntity>> map, RoleEntity entity, ModuleEntity module) {
-        for (PermissionDTO permissionDTO : permissionDTOS) {
-            if (permissionDTO.getId() != 0 && !permissionDTO.isCheck()) {
-                if (Objects.nonNull(toDelete))
-                    toDelete.add(permissionDTO.getId());
-            } else {
-                if (permissionDTO.getId() != 0 && permissionDTO.isCheck()) {
-                    RoleHasModuleEntity roleHasModule = roleHasModuleRepository.findById(permissionDTO.getId()).orElseThrow();
-                    roleHasModule.setScope(permissionDTO.getScope());
-                    toSave.add(roleHasModule);
-                } else if (permissionDTO.getId() == 0 && permissionDTO.isCheck()) {
-                    final PermissionEntity permission = map.get(permissionDTO.getPermission().getId()).get(0);
-                    toSave.add(createRoleHasModuleEntity(entity.getId(), module, permission, permissionDTO.getScope()));
-                } else {
-                    throw new RuntimeException("asd");
-                }
-            }
-        }
+    
+    private void iterateAndSaveRoleHasModuleEntity(List<PermissionEntity> permissionDTOS, List<Long> toDelete, List<RoleHasModuleEntity> toSave,
+            Map<Long, List<PermissionEntity>> map, RoleEntity entity, ModuleEntity module) {
+    	for (PermissionEntity permissionDTO : permissionDTOS) {
+    		final PermissionEntity permission = map.get(permissionDTO.getId()).get(0);
+    		toSave.add(createRoleHasModuleEntity(entity.getId(), module, permission, PermissionScope.ALL));
+    	}
     }
+
+//    private void iterateAndSaveRoleHasModuleEntity(List<PermissionEntity> permissionDTOS, List<Long> toDelete, List<RoleHasModuleEntity> toSave,
+//                                                   Map<Long, List<PermissionEntity>> map, RoleEntity entity, ModuleEntity module) {
+//        for (PermissionEntity permissionDTO : permissionDTOS) {
+//            if (permissionDTO.getId() != 0 && !permissionDTO.isCheck()) {
+//                if (Objects.nonNull(toDelete))
+//                    toDelete.add(permissionDTO.getId());
+//            } else {
+//                if (permissionDTO.getId() != 0 && permissionDTO.isCheck()) {
+//                    RoleHasModuleEntity roleHasModule = roleHasModuleRepository.findById(permissionDTO.getId()).orElseThrow();
+//                    roleHasModule.setScope(permissionDTO.getScope());
+//                    toSave.add(roleHasModule);
+//                } else if (permissionDTO.getId() == 0 && permissionDTO.isCheck()) {
+//                    final PermissionEntity permission = map.get(permissionDTO.getPermission().getId()).get(0);
+//                    toSave.add(createRoleHasModuleEntity(entity.getId(), module, permission, permissionDTO.getScope()));
+//                } else {
+//                    throw new RuntimeException("asd");
+//                }
+//            }
+//        }
+//    }
 
     private RoleHasModuleEntity createRoleHasModuleEntity(Long rolId, ModuleEntity module,
                                                           PermissionEntity permission, PermissionScope scope) {

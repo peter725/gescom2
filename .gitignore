@@ -58,3 +58,8 @@ web/src/environments/environment.ts
 ge-rest-app/src/main/resources/config/application-docker.properties
 ge-rest-app/src/main/resources/config/application-local.properties
 GESCO.log.2024-03-12.0.gz
+web/src/environments/environment.ts
+web/src/environments/environment.ts
+ge-rest-app/src/main/resources/config/application-local.properties
+ge-rest-app/src/main/resources/config/application-docker.properties
+ge-auth-app/src/main/resources/config/application-local.properties

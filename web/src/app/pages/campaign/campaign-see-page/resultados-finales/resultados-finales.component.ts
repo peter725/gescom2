@@ -284,7 +284,7 @@ export class ResultadosFinalesComponent implements OnInit{
     }
     if (this.protocoloSelected) {
       if (!this.preguntasProtocolo || this.preguntasProtocolo.length == 0) {
-        this.preguntasProtocolo = this.protocoloSelected.question;
+        this.preguntasProtocolo = this.protocoloSelected.resultsResponseDTO.questionsResponseDTOS;
       }
       
     }

@@ -34,10 +34,10 @@ public class CampaignProposalController extends AbstractCrudController<CampaignP
         return Optional.of(((CampaignProposalService) service).findCampaignProposalById(id));
     }
 
-    /*@Override
+    @Override
     protected Page<?> performFindAll(CriteriaWrapper<?> criteriaWrapper) {
         return ((CampaignProposalService) service).findAllCampaignProposal(criteriaWrapper);
-    }*/
+    }
 
     @Override
     public CampaignProposalDTO performCreate(CampaignProposalDTO payload) {

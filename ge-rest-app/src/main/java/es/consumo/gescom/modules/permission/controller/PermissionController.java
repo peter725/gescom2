@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping(ApiEndpoints.V1_API + "/permission")
+@RequestMapping(ApiEndpoints.V1_API + "/permissions")
 @Tag(name = "Permission controller")
 public class PermissionController extends AbstractCrudController<PermissionEntity, PermissionDTO, Long, PermissionCriteria> {
 

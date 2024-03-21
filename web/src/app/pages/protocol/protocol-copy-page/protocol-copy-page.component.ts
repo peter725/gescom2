@@ -6,22 +6,42 @@ import { ComponentStatus } from '@libs/commons';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 import { CreateProtocol, Protocol } from '@libs/sdk/protocol';
 import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infringement-dialog.component';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
-  selector: 'tsw-protocol-edit-page',
-  templateUrl: './protocol-edit-page.component.html',
-  styleUrls: ['./protocol-edit-page.component.scss'],
+  selector: 'tsw-protocol-copy-page',
+  templateUrl: './protocol-copy-page.component.html',
+  styleUrls: ['./protocol-copy-page.component.scss'],
   providers: [
     { provide: FORM_STATUS, useValue: new ComponentStatus('IDLE') },
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' } }
   ]
 })
-export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, CreateProtocol> implements OnInit{
+export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, CreateProtocol> implements OnInit{
 
   readonly resourceName = 'protocol';
   protected override _createResourceTitle = 'pages.protocol.add';
   protected override _editResourceTitle = 'pages.protocol.edit';
+
+  campaignIdShared = 0;
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+  
+    // Obtener el campaignIdShared del localStorage
+    const campaignIdSharedString = localStorage.getItem('campaignIdShared');
+    this.campaignIdShared = campaignIdSharedString ? parseInt(campaignIdSharedString, 10) : 0;
+  
+    // Suscribirse al evento sharedData$
+    this.sharedDataService.sharedData$.subscribe(data => {
+      this.campaignIdShared = data?.campaignId;
+      if(this.campaignIdShared != undefined){
+      localStorage.setItem('campaignIdShared', String(this.campaignIdShared));
+      }
+      console.log('Campaign ID shared service copy:', this.campaignIdShared);
+    });
+  }
 
   protected buildForm(): FormGroup {
     const form = this.fb.group({
@@ -36,38 +56,10 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     // setTimeout(() => {
     //   const questionsControl = form.get('question') as FormArray;
     //   questionsControl.push(this.crearFila(1));
+      
     // }, 0);
 
-  
-
     return form;
-  }
-
-  protected override async afterLoadDataSuccess(result: any) {
-
-    super.afterLoadDataSuccess(result);
-
-    const questions = this.form.get('question') as unknown as FormArray; 
-    if (this.srcData && this.srcData.question) {
-    this.srcData.question.forEach((q: any) => {
-
-      questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
-    });
-  }
-
-
-  }
-
-  loadRowQuestion(orden: number, codeQuestion: string, question: string, codeInfringement: string, response: string): FormGroup {
-    const formattedResponse = response === 'N' ? 'NO' : response === 'S' ? 'SI' : response;
-    return this.fb.group({
-      id: null,
-      orderQuestion: [{ value: orden, disabled: true }],
-      codeQuestion: codeQuestion,
-      question: [question, Validators.required],
-      codeInfringement: codeInfringement,
-      response: formattedResponse // Inicializar con 'SI'
-    });
   }
 
   openDialog(rowIndex: number): void {
@@ -77,7 +69,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.length > 0) {
-        const selectedItem = result[0]; // Si esperas un solo objeto, ajusta según sea necesario
+        const selectedItem = result[0]; 
         console.log('selectedItem', selectedItem);
         this.updateFormRowWithSelectedItem(rowIndex, selectedItem);
       }
@@ -134,6 +126,68 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     const fila = (this.form.get('question') as unknown as FormArray).at(filaIndex) as FormGroup;
     const currentValue = fila.get('response')?.value;
     fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
+  }
+  
+
+  // Sobrescribir el método isNew para siempre devolver true
+  override get isNew() {
+    return true; // Siempre considerar como nueva instancia
+  }
+
+  // Método para cargar los datos desde el endpoint
+  override  async loadData() {
+    try {
+      this.resetDataBeforeLoad();
+      let startValue: any;
+
+      this.srcData = await firstValueFrom(this.fetchExistingSrc());
+      startValue = await firstValueFrom(this.mapModelToForm(this.srcData));     
+      
+      this.afterLoadDataSuccess(startValue);
+
+
+    const questions = this.form.get('question') as unknown as FormArray; 
+    this.srcData.question.forEach((q: any) => {
+      questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
+    });
+
+
+    } catch (err: any) {
+      this.afterLoadDataError(err);
+    }
+  }
+
+  loadRowQuestion(orden: number, codeQuestion: string, question: string, codeInfringement: string, response: string): FormGroup {
+
+    const formattedResponse = response === 'N' ? 'NO' : response === 'S' ? 'SI' : response;
+
+    return this.fb.group({
+      id: null,
+      orderQuestion: [{ value: orden, disabled: true }],
+      codeQuestion: codeQuestion,
+      question: [question, Validators.required],
+      codeInfringement: codeInfringement,
+      response: formattedResponse
+    });
+  }
+
+  saveCopyProtocol(){
+    this.form.patchValue({
+      campaignId: this.campaignIdShared
+    });
+     this.save();
+  }
+
+
+  protected override async afterSaveSuccess(result: any) {
+
+
+    // Redirige a la página anterior
+    this.redirectAfterSavePath = ['/app/campanas', String(this.campaignIdShared), 'ver'];
+
+    await super.afterSaveSuccess(result); 
+
+   
   }
 
 

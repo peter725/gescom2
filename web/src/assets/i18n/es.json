@@ -611,6 +611,7 @@
       "add": "Alta de protocolo",
       "list": "Consulta de protocolo",
       "edit": "Modificar protocolo",
+      "copy": "Copiar protocolo",
       "see": "Ver protocolo"
     },
     "sampleProgramming": {

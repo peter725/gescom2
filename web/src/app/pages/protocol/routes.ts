@@ -36,5 +36,12 @@ export const PROTOCOL_PAGE_ROUTES: Routes = [
     },
     loadChildren: () => import('./').then(m => m.ProtocolEditPageModule),
   },
+  {
+    path: ':id/copy',
+    data: {
+        breadcrumb,
+    },
+    loadChildren: () => import('./').then(m => m.ProtocolCopyPageModule),
+  },
 
 ];

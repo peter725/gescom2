@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(ApiEndpoints.V1_API + "/role")
+@RequestMapping(ApiEndpoints.V1_API + "/roles")
 @Tag(name = "Role controller")
 public class RoleController extends AbstractCrudController<RoleEntity, RoleDTO, Long, RoleCriteria> {
 

@@ -37,5 +37,10 @@ public class ProfileController extends AbstractCrudController<ProfileEntity, Pro
         return ResponseEntity.ok(result);
     }
 
+    @Override
+    protected ProfileDTO performCreate(ProfileDTO payload) {
+        return ((ProfileService) service).createProfile(payload);
+    }
+
 
 }

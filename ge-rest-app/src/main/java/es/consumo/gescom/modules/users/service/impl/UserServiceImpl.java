@@ -72,6 +72,11 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         return response;
     }
 
+    @Override
+    public UserDTO findByUserId(Long id) {
+        return null;
+    }
+
 
     @Override
     protected Page<UserEntity.SimpleProjection>  findAllFromCriteria(FilterCriteria criteria) {
@@ -120,10 +125,10 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         loginEntity.setLastAccess(null);
         loginEntity.setEnable(true);
    //     loginEntity.setArbitrationBoard(null);
-        //RoleEntity roleEntity = roleRepository.findById(1L).orElseThrow();
-        //Set<RoleEntity> rolesSet = new HashSet<>();
-       // rolesSet.add(roleEntity);
-        //loginEntity.setRoles(rolesSet);
+        RoleEntity roleEntity = roleRepository.findById(userDTO.getRole().getId()).orElseThrow();
+        Set<RoleEntity> rolesSet = new HashSet<>();
+        rolesSet.add(roleEntity);
+        loginEntity.setRoles(rolesSet);
         loginRepository.save(loginEntity);
 
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
@@ -139,10 +144,10 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         //modelMapper.map(userDTO, userEntity);
         AutonomousCommunityEntity autonomousCommunityEntity = autonomousCommunityService.findById(userDTO.getAutonomousCommunity().getId()).orElseThrow();
         UserTypeEntity userTypeEntity = userTypeService.findById(userDTO.getUserType().getId()).orElseThrow();
-        ProfileEntity profileEntity = profileService.findById(userDTO.getProfile().getId()).orElseThrow();
+        //ProfileEntity profileEntity = profileService.findById(userDTO.getProfile().getId()).orElseThrow();
         userEntity.setAutonomousCommunity(autonomousCommunityEntity);
         userEntity.setUserType(userTypeEntity);
-        userEntity.setProfile(profileEntity);
+        //userEntity.setProfile(profileEntity);
         userEntity.setLogin(userEntity.getLogin());
         userEntity.setState(userDTO.getState());
         userEntity.setDni(userDTO.getDni());
@@ -155,7 +160,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         return userEntity;
     }
 
-    public UserDTO findByUserId(Long id) {
+    /*public UserDTO findByUserId(Long id) {
         UserEntity userEntity = repository.findById(id).orElseThrow();
         UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
         List<LoginEntity> loginEntityList = loginRepository.findByLoginId(id);
@@ -164,7 +169,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         .collect(Collectors.toList());
         //userDTO.setRoles(roleList);
         return userDTO;
-    }
+    }*/
 
     @Override
     @Transactional

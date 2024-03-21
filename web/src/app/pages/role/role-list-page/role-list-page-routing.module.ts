@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: RoleListPageComponent,
-    title: 'pages.roles.list',
+    title: 'pages.role.list',
     data: { breadcrumb: 'generic.actions.list' }
   }
 ];

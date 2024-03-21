@@ -12,6 +12,7 @@ export const PROTOCOL_PAGE_ROUTES: Routes = [
     path: 'consulta',
     data: {
         breadcrumb,
+        requireAccess: 'campaign'
     },
     loadChildren: () => import('./').then(m => m.ProtocolListPageModule),
   },
@@ -19,6 +20,7 @@ export const PROTOCOL_PAGE_ROUTES: Routes = [
     path: '0',
     data: {
       breadcrumb,
+      requireAccess: 'campaign'
     },
     loadChildren: () => import('./').then(m => m.ProtocolAddPageModule),
   },
@@ -26,6 +28,7 @@ export const PROTOCOL_PAGE_ROUTES: Routes = [
     path: ':id/ver',
     data: {
         breadcrumb,
+        requireAccess: 'campaign'
     },
     loadChildren: () => import('./').then(m => m.ProtocolSeePageModule),
   },
@@ -33,6 +36,7 @@ export const PROTOCOL_PAGE_ROUTES: Routes = [
     path: ':id',
     data: {
         breadcrumb,
+        requireAccess: 'campaign'
     },
     loadChildren: () => import('./').then(m => m.ProtocolEditPageModule),
   },
@@ -40,6 +44,7 @@ export const PROTOCOL_PAGE_ROUTES: Routes = [
     path: ':id/copy',
     data: {
         breadcrumb,
+        requireAccess: 'campaign'
     },
     loadChildren: () => import('./').then(m => m.ProtocolCopyPageModule),
   },

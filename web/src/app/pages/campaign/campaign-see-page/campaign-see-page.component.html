@@ -180,7 +180,7 @@
                   <button mat-button (click)="openDialogCopyProtocol()">
                     <mat-icon>redo</mat-icon>
                   </button>
-                  <button mat-button (click)="navegarAComponenteProtocol()">
+                  <button mat-button (click)="navegarAComponenteProtocol(0)">
                     <mat-icon>add_circle</mat-icon>
                   </button>
                 </div>
@@ -194,7 +194,7 @@
                     {{protocol.name}}
                   </p>
                   <div>
-                    <button mat-button  [routerLink]="'protocolManagementEdit' | namedRoute: { id: protocol.id}">
+                    <button mat-button (click)="navegarAComponenteProtocol(protocol.id)">
                       <mat-icon>edit</mat-icon>
                     </button>
                     

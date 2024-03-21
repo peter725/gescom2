@@ -95,8 +95,10 @@ public class CampaignProposalEntity extends SimpleEntity {
             Long getId();
             Boolean getSent();
             Long getAutonomousCommunityId();
+            String getAutonomousCommunityName();
             Long getUserId();
             Long getCampaignTypeId();
+            String getCampaignTypeName();
             LocalDate getDate();
             String getApproach();
             String getJustification();

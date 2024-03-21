@@ -48,7 +48,7 @@ export interface Infriengement extends SimpleModel, StatefulAltModel {
 export interface Question {
   id: number | null;
   orderQuestion: number | null;
-  codeQuestion: number | null;
+  code: number | null;
   question: string | null;
   codeInfringement: string | null;
   bkTrinti: string | null;

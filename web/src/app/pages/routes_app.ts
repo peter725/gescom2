@@ -3,6 +3,7 @@ import { USER_PAGE_ROUTES } from './user/routes';
 import {APPROACH_PAGE_ROUTES} from "@base/pages/approach/routes";
 import { CAMPAIGN_PAGE_ROUTES } from './campaign/routes';
 import { ROLE_PAGE_ROUTES } from './role/routes';
+import { PROTOCOL_PAGE_ROUTES } from './protocol/routes';
 
 
 export const dashboardRoutes: Routes = [
@@ -65,13 +66,13 @@ export const dashboardRoutes: Routes = [
   //   },
   //   children: ENTITY_PAGE_ROUTES,
   // },
-  // {
-  //   path: 'protocol',
-  //   data: {
-  //     // requireAccess: 'RFieldMod'
-  //   },
-  //   children: PROTOCOL_PAGE_ROUTES,
-  // },
+  {
+    path: 'protocol',
+    data: {
+      requireAccess: 'campaign',
+    },
+    children: PROTOCOL_PAGE_ROUTES,
+  },
   // {
   //   path: 'infracciones',
   //   data: {

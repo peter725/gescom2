@@ -61,13 +61,13 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label>{{ 'fields.profile' | translate }}</mat-label>
+                        <mat-label>{{ 'fields.role' | translate }}</mat-label>
                         <tsw-custom-select
                                 resourceName="roles"
-                                formControlName="profile"
+                                formControlName="role"
                                 [showNoneValue]="false"
                         ></tsw-custom-select>
-                        <mat-error>{{ form.controls.profile.errors | extractValidationError }}</mat-error>
+                        <mat-error>{{ form.controls.role.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>

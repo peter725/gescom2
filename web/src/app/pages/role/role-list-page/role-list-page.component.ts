@@ -30,7 +30,7 @@ export class RoleListPageComponent extends BaseListPageComponent implements OnIn
   }
 
   protected getColumns() {
-    return ['select', 'role', 'actions'];
+    return ['name', 'actions'];
   }
 
 }

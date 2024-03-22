@@ -37,7 +37,7 @@ public class RoleHasModuleEntity extends SimpleEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "scope", nullable = false)
 //    @Type(type = PostgreSQLEnumType.class)
-    @ColumnTransformer(write = "?::permission_scope_type")
+    @ColumnTransformer(write = "?::dbo.permission_scope_type")
     private PermissionScope scope;
 
     public interface FullAuthoritiesProjection {

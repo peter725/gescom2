@@ -3,6 +3,7 @@ import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
+import { Permission } from '@libs/sdk/permission';
 import { Role, RoleForm, RoleModule } from '@libs/sdk/role';
 
 @Component({
@@ -24,6 +25,24 @@ export class RoleEditPageComponent extends EditPageBaseComponent<Role, RoleForm>
       id: this.fb.control(null),
       name: this.fb.control(null, [Validators.required, Validators.maxLength(100)]),
       modules: this.fb.array([this.crearFilaModule(1)], [Validators.required, Validators.min(1)])
+    });
+  }
+
+  protected override async afterLoadDataSuccess(result: any) {
+    super.afterLoadDataSuccess(result);
+
+    const modules = this.form.get('modules') as unknown as FormArray; 
+    if (result && result.modules) {
+      result.modules.forEach((q: any, index: number) => {
+        if(index > 0) modules.push(this.loadRowModule(q.module, q.permissions));
+      });
+    }
+  }
+
+  loadRowModule(module: string, permissions: Permission[]): FormGroup {
+    return this.fb.group({
+      module: this.fb.control(module, [Validators.required]),
+      permissions: this.fb.control(permissions, [Validators.required, Validators.min(1)]),
     });
   }
 

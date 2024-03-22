@@ -105,6 +105,23 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
     return this.form.get('question') as unknown as FormArray;
   }
 
+  agregarFilaDespuesDe(index: number) {
+    const questionsControl = this.form.get('question') as unknown as FormArray;
+    const nuevoOrden = questionsControl.length + 1;
+    questionsControl.insert(index + 1, this.crearFila(nuevoOrden));
+    
+    this.refreshOrder();
+  }
+
+  refreshOrder(){
+
+    // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
+    this.question.controls.forEach((control, i) => {
+      control.get('orderQuestion')?.setValue(i + 1);
+    });
+
+  }
+
   agregarFila() {
     const questionsControl = this.form.get('question') as unknown as FormArray;
     const nuevoOrden = questionsControl.length + 1;
@@ -120,6 +137,9 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
       console.log('control', control);
       control.get('order')?.setValue(i + 1);
     });
+
+    //actualizar orden 
+    this.refreshOrder();
   }
 
   toggleResp(filaIndex: number) {
@@ -135,23 +155,21 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
   }
 
   // Método para cargar los datos desde el endpoint
-  override  async loadData() {
+  override async loadData() {
     try {
       this.resetDataBeforeLoad();
-      let startValue: any;
-
+  
+      // Cargar datos
       this.srcData = await firstValueFrom(this.fetchExistingSrc());
-      startValue = await firstValueFrom(this.mapModelToForm(this.srcData));     
-      
+      const startValue = await firstValueFrom(this.mapModelToForm(this.srcData));
       this.afterLoadDataSuccess(startValue);
-
-
-    const questions = this.form.get('question') as unknown as FormArray; 
-    this.srcData.question.forEach((q: any) => {
-      questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
-    });
-
-
+  
+      // Ordenar las preguntas según orderQuestion
+      const questions = this.form.get('question') as unknown as FormArray;
+      this.srcData.question.sort((a: any, b: any) => a.orderQuestion - b.orderQuestion);
+      this.srcData.question.forEach((q: any) => {
+        questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
+      });
     } catch (err: any) {
       this.afterLoadDataError(err);
     }

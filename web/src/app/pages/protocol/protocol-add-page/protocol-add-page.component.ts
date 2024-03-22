@@ -78,6 +78,24 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     });
   }
 
+  agregarFilaDespuesDe(index: number) {
+    const questionsControl = this.form.get('question') as unknown as FormArray;
+    const nuevoOrden = questionsControl.length + 1;
+    questionsControl.insert(index + 1, this.crearFila(nuevoOrden));
+    
+    this.refreshOrder();
+  }
+
+  
+  refreshOrder(){
+
+    // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
+    this.question.controls.forEach((control, i) => {
+      control.get('orderQuestion')?.setValue(i + 1);
+    });
+
+  }
+
   updateFormRowWithSelectedItem(rowIndex: number, selectedItem: any) {
     const questions = this.form.get('question') as unknown as FormArray;
     if (questions.at(rowIndex)) {
@@ -94,7 +112,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   protected buildForm(): FormGroup {
     const form = this.fb.group({
       name: [null, Validators.required],
-      code: [{ value: null, disabled: true }, ],
+      // code: [{ value: null, disabled: true }, ],
       campaignId: [ null, Validators.required],
       question: this.fb.array([])
     });
@@ -141,6 +159,9 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
       console.log('control', control);
       control.get('order')?.setValue(i + 1);
     });
+
+    //actualizar orden 
+    this.refreshOrder();
   }
 
 

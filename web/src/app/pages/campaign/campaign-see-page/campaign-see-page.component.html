@@ -137,9 +137,7 @@
             <div class="w-3/4 mx-auto p-4 rounded-md color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">{{'text.campaign.products' | translate}}</h3>
-                <button mat-button (click)="agregarProducto()">
-                <mat-icon>add_circle</mat-icon>
-                </button>
+                <button mat-raised-button color="primary"  (click)="agregarProducto()">Añadir</button>
               </div>
               <hr>
 
@@ -156,7 +154,7 @@
                     <tr *ngFor="let prod of productsDisplay; let y = index" [ngClass]="{'bg-gray-200': y % 2 !== 0, 'bg-white': y % 2 === 0}">
                       <td>{{ prod['codeProductService'] }}</td>
                       <td>{{ prod['productName'] }}</td>
-                      <button type="button" tswConfirmAction (confirmed)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
+                      <button type="button" matTooltip="Eliminar" tswConfirmAction (confirmed)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
                         <span class="material-icons">delete_forever</span>
                       </button>
                     </tr>
@@ -177,12 +175,10 @@
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">Protocolo</h3>
                 <div>
-                  <button mat-button (click)="openDialogCopyProtocol()">
-                    <mat-icon>redo</mat-icon>
-                  </button>
-                  <button mat-button (click)="navegarAComponenteProtocol()">
-                    <mat-icon>add_circle</mat-icon>
-                  </button>
+
+                  <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="openDialogCopyProtocol()">Copiar protocolo</button>
+                  <button mat-raised-button color="primary"  (click)="navegarAComponenteProtocol()">Añadir</button>
+                  
                 </div>
               </div>
               <div class="border-b border-gray-300 mb-4"></div>
@@ -194,14 +190,14 @@
                     {{protocol.name}}
                   </p>
                   <div>
-                    <button mat-button  [routerLink]="'protocolManagementEdit' | namedRoute: { id: protocol.id}">
+                    <button mat-button matTooltip="Editar" [routerLink]="'protocolManagementEdit' | namedRoute: { id: protocol.id}">
                       <mat-icon>edit</mat-icon>
                     </button>
                     
-                    <button mat-button (click)="verDetallesProtocol(protocol)" >
+                    <button mat-button matTooltip="Visualizar" (click)="verDetallesProtocol(protocol)" >
                       <mat-icon>visibility</mat-icon>
                     </button>
-                    <button mat-button (click)="clickExportExcel(protocol)">
+                    <button mat-button matTooltip="Descargar" (click)="clickExportExcel(protocol)">
                       <mat-icon>download</mat-icon>
                     </button>
                   </div>
@@ -232,9 +228,7 @@
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">Resultados</h3>
-                <button mat-button (click)="navegarAComponenteResultados(undefined)">
-                  <mat-icon>add_circle</mat-icon>
-                </button>
+                <button mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)">Añadir</button>
               </div>
               <div class="border-b border-gray-300 mb-4"></div>
               <div class="space-y-4">
@@ -247,7 +241,7 @@
                       [ {{ resultado.autonomousCommunityCountryDTO?.name }} ]
                     </p>
                     <div>
-                      <button mat-button (click)="navegarAComponenteVerResultados(resultado)" >
+                      <button mat-button matTooltip="Visualizar" (click)="navegarAComponenteVerResultados(resultado)" >
                         <mat-icon>visibility</mat-icon>
                       </button>
                     </div>

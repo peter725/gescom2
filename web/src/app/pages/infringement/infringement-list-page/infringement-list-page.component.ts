@@ -33,12 +33,26 @@ export class InfringementListPageComponent extends BaseListPageComponent<Infring
     //this.monitorCtxChanges();
   }
 
+  // override select(ev: MatCheckboxChange, row: any): void {
+  //   if (ev) {
+  //     this.selection.toggle(row);
+  //     // Emite el evento con el objeto de la fila y el estado de selección
+  //     this.selectionChanged.emit({row: row, selected: this.selection.isSelected(row)});
+  //   }
+  // }
+
   override select(ev: MatCheckboxChange, row: any): void {
-    if (ev) {
-      this.selection.toggle(row);
-      // Emite el evento con el objeto de la fila y el estado de selección
-      this.selectionChanged.emit({row: row, selected: this.selection.isSelected(row)});
+    if (ev && ev.checked) {
+      // Deseleccionar cualquier otro elemento seleccionado previamente
+      this.selection.clear();
+      // Seleccionar el nuevo elemento
+      this.selection.select(row);
+    } else {
+      // Desseleccionar el elemento si se hace clic en el checkbox para deseleccionarlo
+      this.selection.deselect(row);
     }
+    // Emitir el evento con el objeto de la fila y el estado de selección
+    this.selectionChanged.emit({ row: row, selected: this.selection.isSelected(row) });
   }
 
   protected override async getRequestConfig(): Promise<RequestConfig> {

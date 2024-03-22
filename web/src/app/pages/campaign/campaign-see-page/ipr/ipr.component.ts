@@ -105,7 +105,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
       orderQuestion: [{ value: orden, disabled: true }],
       question: this.fb.control(null,[Validators.required]),
       formula: this.fb.control(null,[Validators.required]),
-      porcentaje: this.fb.control(null,[Validators.required, Validator.validateNumber()]),
+      porcentaje: this.fb.control(null, Validator.validateNumber()),
     });
   }
 

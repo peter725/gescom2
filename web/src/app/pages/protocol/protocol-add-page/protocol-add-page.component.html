@@ -8,12 +8,12 @@
 
       <div section-content>
         <div class="grid grid-cols-4 gap-1.5 mb-2">
-          <mat-form-field class="col-span-1">
+          <!-- <mat-form-field class="col-span-1">
             <mat-label>{{ 'fields.code' | translate }}</mat-label>
             <input matInput formControlName="code" readonly>
-          </mat-form-field>
+          </mat-form-field> -->
 
-          <mat-form-field class="col-span-3">
+          <mat-form-field class="col-span-4">
             <mat-label>{{ 'fields.protocolFields.name' | translate }}</mat-label>
             <input matInput formControlName="name">
             <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="grid grid-cols-4 gap-1.5 mb-2">
-          <mat-form-field class="col-span-3 col-start-2">
+          <mat-form-field class="col-span-4">
             <mat-label>{{ 'fields.nameCampaign' | translate }}</mat-label>
             <input matInput [value]="name" disabled="true" readonly>
             <!-- <mat-error>{{ form.controls.campaignType.errors | extractValidationError }}</mat-error> -->
@@ -68,7 +68,10 @@
 
                 <!-- Agrega los demás campos aquí -->
                 <button type="button" (click)="eliminarFila(i)" class="text-red-500 hover:text-red-700">
-                  <span class="material-icons">cancel</span>
+                  <span class="material-icons">delete_forever</span>
+                </button>
+                <button type="button" (click)="agregarFilaDespuesDe(i)" class="text-blue-500 hover:text-blue-700">
+                  <span class="material-icons">add_circle</span>
                 </button>
               </div>
             </div>

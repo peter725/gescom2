@@ -6,6 +6,7 @@ import { ComponentStatus } from '@libs/commons';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 import { CreateProtocol, Protocol } from '@libs/sdk/protocol';
 import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infringement-dialog.component';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -43,20 +44,43 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     return form;
   }
 
-  protected override async afterLoadDataSuccess(result: any) {
+  // protected override async afterLoadDataSuccess(result: any) {
 
-    super.afterLoadDataSuccess(result);
+  //   super.afterLoadDataSuccess(result);
 
-    const questions = this.form.get('question') as unknown as FormArray; 
-    if (this.srcData && this.srcData.question) {
-    this.srcData.question.forEach((q: any) => {
+  //   const questions = this.form.get('question') as unknown as FormArray; 
+  //   if (this.srcData && this.srcData.question) {
+  //   this.srcData.question.forEach((q: any) => {
 
-      questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
-    });
-  }
+  //     questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
+  //   });
+  // }
 
 
-  }
+  // }
+
+    // Método para cargar los datos desde el endpoint
+    override async loadData() {
+
+
+      try {
+        this.resetDataBeforeLoad();
+    
+        // Cargar datos
+        this.srcData = await firstValueFrom(this.fetchExistingSrc());
+        const startValue = await firstValueFrom(this.mapModelToForm(this.srcData));
+        this.afterLoadDataSuccess(startValue);
+    
+        // Ordenar las preguntas según orderQuestion
+        const questions = this.form.get('question') as unknown as FormArray;
+        this.srcData.question.sort((a: any, b: any) => a.orderQuestion - b.orderQuestion);
+        this.srcData.question.forEach((q: any) => {
+          questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
+        });
+      } catch (err: any) {
+        this.afterLoadDataError(err);
+      }
+    }
 
   loadRowQuestion(orden: number, codeQuestion: string, question: string, codeInfringement: string, response: string): FormGroup {
     const formattedResponse = response === 'N' ? 'NO' : response === 'S' ? 'SI' : response;
@@ -113,6 +137,23 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     return this.form.get('question') as unknown as FormArray;
   }
 
+  agregarFilaDespuesDe(index: number) {
+    const questionsControl = this.form.get('question') as unknown as FormArray;
+    const nuevoOrden = questionsControl.length + 1;
+    questionsControl.insert(index + 1, this.crearFila(nuevoOrden));
+    
+    this.refreshOrder();
+  }
+
+  refreshOrder(){
+
+    // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
+    this.question.controls.forEach((control, i) => {
+      control.get('orderQuestion')?.setValue(i + 1);
+    });
+
+  }
+
   agregarFila() {
     const questionsControl = this.form.get('question') as unknown as FormArray;
     const nuevoOrden = questionsControl.length + 1;
@@ -128,6 +169,9 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
       console.log('control', control);
       control.get('order')?.setValue(i + 1);
     });
+
+    //actualizar orden 
+    this.refreshOrder();
   }
 
   toggleResp(filaIndex: number) {

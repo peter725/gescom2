@@ -27,12 +27,15 @@ import es.consumo.gescom.modules.questions.model.dto.QuestionDetailDTO;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import es.consumo.gescom.modules.questions.model.entity.QuestionsEntity;
 import es.consumo.gescom.modules.questions.repository.QuestionsRepository;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -249,14 +252,31 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     @Override
     public ProtocolDTO updateProtocol(Long id, ProtocolDTO payload) {
         ProtocolEntity protocol = protocolConverter.convertToEntity(payload);
+
+        final List<Long> toDelete = new ArrayList<>();
+
+        if (ObjectUtils.isEmpty(protocol.getId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
+        if (protocol.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
+
         protocol.setId(payload.getId());
         protocol.setCode(payload.getCode());
         protocol.setName(payload.getName());
+
         CampaignEntity campaignEntity =  campaignRepository.findById(payload.getCampaignId()).orElseThrow();
         protocol.setCampaignId(campaignEntity);
         protocol.setCreatedAt(LocalDateTime.now());
         protocol.setUpdatedAt(LocalDateTime.now());
         ProtocolEntity protocolSave = protocolRepository.save(protocol);
+
+        List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolSave.getId());
+        iterateAndDeletedQuestions(questionsEntities, toDelete);
+
+        if (!toDelete.isEmpty())
+            questionsRepository.deleteAllById(toDelete);
 
         List<QuestionsDTO> questions = payload.getQuestion();
         questions.forEach(question -> {
@@ -282,6 +302,17 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         });
 
         return protocolConverter.convertToModel(protocolSave);
+    }
+
+    private void iterateAndDeletedQuestions(List<QuestionsEntity> questionsEntities, List<Long> toDelete) {
+
+        for(QuestionsEntity questionsEntity : questionsEntities){
+            if(questionsEntity.getId() != (0)){
+                if(Objects.nonNull(toDelete)){
+                    toDelete.add(questionsEntity.getId());
+                }
+            }
+        }
     }
 
     private static ProtocolDetailDTO getProtocolDetailDTO(List<QuestionDetailDTO> questionDetailDTOList, Optional<ProtocolEntity> protocol, CampaignEntity campaignEntity, String participants) {

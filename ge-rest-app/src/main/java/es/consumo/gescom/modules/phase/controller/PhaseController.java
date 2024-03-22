@@ -51,8 +51,9 @@ public class PhaseController extends AbstractCrudController<PhaseEntity, PhaseDT
         throws URISyntaxException, IOException {
         byte[] excel = null;
         boolean falloCreacion = false;
+        boolean result = false;
 
-        excel = ExcelUtils.getInstance().createExportExcelTablas(datosExport);
+        excel = ExcelUtils.getInstance().createExportExcelTablas(datosExport, result);
 
         if (null == excel || falloCreacion) {
 //            throw new BadRequestAlertException("Fallo en la creacion del export Excel");

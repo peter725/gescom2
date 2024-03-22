@@ -31,7 +31,7 @@ public class ExcelUtils {
         return instance;
     }
 
-    public <E> byte[] createExportExcelTablas(ProtocolDTO protocolo) {
+    public <E> byte[] createExportExcelTablas(ProtocolDTO protocolo, boolean result) {
         log.debug("ExcelUtils.createExportExcelTablas.init()-----");
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -172,7 +172,11 @@ public class ExcelUtils {
         row = sheet.createRow(rowNum++);
         row.setHeightInPoints(25);
         cell = row.createCell(colHeader);
-        cell.setCellValue((String) "PREGUNTAS PROTOCOLO");
+        if ( result ) {
+            cell.setCellValue((String) "RESULTADOS A NIVEL ESTATAL");
+        } else {
+            cell.setCellValue((String) "PREGUNTAS PROTOCOLO");
+        }
         cell.setCellStyle(styleProtocolo);
         sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
         
@@ -192,7 +196,12 @@ public class ExcelUtils {
         row = sheet.createRow(rowNum++);
         row.setHeightInPoints(25);
         cell = row.createCell(colHeader);
-        cell.setCellStyle(styleProtocolo);
+        if ( result ) {
+            cell.setCellValue(protocolo.getResultsResponseDTO().getProductName());
+            cell.setCellStyle(styleProtocolo);
+        } else {
+            cell.setCellStyle(styleProtocolo);
+        }
         sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
         
 	        // Celda B
@@ -232,56 +241,110 @@ public class ExcelUtils {
         cell.setCellStyle(styleTituloPreguntas);
         
         // Preguntas
-        if (null != protocolo.getQuestion()) {
-        	int numPregunta = 0;
+        if (result){
+            if (null != protocolo.getResultsResponseDTO().getQuestionsResponseDTOS()) {
+                int numPregunta = 0;
 
-        	for (QuestionsDTO pregunta : protocolo.getQuestion()) {
-        		colHeader = 0;
-        		numPregunta++;
-                if(pregunta.getResponse().equals("N")){
-                    row = sheet.createRow(rowNum++);
-                    row.setHeightInPoints(5);
-                    cell = row.createCell(colHeader);
-                    sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+                for (QuestionsResponseDTO pregunta : protocolo.getResultsResponseDTO().getQuestionsResponseDTOS()) {
+                    colHeader = 0;
+                    numPregunta++;
+                    if (pregunta.getNumResponseSi() == 0 && pregunta.getNumResponseNo() == 0 && pregunta.getNumResponseNoProcede() == 0) {
+                        row = sheet.createRow(rowNum++);
+                        row.setHeightInPoints(5);
+                        cell = row.createCell(colHeader);
+                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
-                    row = sheet.createRow(rowNum++);
-                    cell = row.createCell(colHeader++);
-                    cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
-                    cell.setCellStyle(stylePreguntas);
+                        row = sheet.createRow(rowNum++);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
+                        cell.setCellStyle(styleTituloPreguntas);
 
-                    cell = row.createCell(colHeader++);
-                    cell.setCellStyle(stylePreguntas);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(stylePreguntas);
 
-                    cell = row.createCell(colHeader++);
-                    cell.setCellStyle(stylePreguntas);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(stylePreguntas);
 
-                    cell = row.createCell(colHeader++);
-                    cell.setCellStyle(stylePreguntas);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(stylePreguntas);
 
-                    row = sheet.createRow(rowNum++);
-                    row.setHeightInPoints(5);
-                    cell = row.createCell(colHeader);
-                    sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+                        row = sheet.createRow(rowNum++);
+                        row.setHeightInPoints(5);
+                        cell = row.createCell(colHeader);
+                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
-                }else {
-                    row = sheet.createRow(rowNum++);
-                    cell = row.createCell(colHeader++);
-                    cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
-                    cell.setCellStyle(stylePreguntas);
+                    } else {
+                        row = sheet.createRow(rowNum++);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
+                        cell.setCellStyle(stylePreguntas);
 
-                    cell = row.createCell(colHeader++);
-                    cell.setCellStyle(styleRespuestas);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(styleRespuestas);
+                        cell.setCellValue(pregunta.getNumResponseSi());
 
-                    cell = row.createCell(colHeader++);
-                    cell.setCellStyle(styleRespuestas);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(styleRespuestas);
+                        cell.setCellValue(pregunta.getNumResponseNo());
 
-                    cell = row.createCell(colHeader++);
-                    cell.setCellStyle(styleRespuestas);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(styleRespuestas);
+                        cell.setCellValue(pregunta.getNumResponseNoProcede());
+                    }
                 }
-        	}
-        	
-        }
 
+            }
+        }else {
+            if (null != protocolo.getQuestion()) {
+                int numPregunta = 0;
+
+                for (QuestionsDTO pregunta : protocolo.getQuestion()) {
+                    colHeader = 0;
+                    numPregunta++;
+                    if (pregunta.getResponse().equals("N")) {
+                        row = sheet.createRow(rowNum++);
+                        row.setHeightInPoints(5);
+                        cell = row.createCell(colHeader);
+                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+
+                        row = sheet.createRow(rowNum++);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
+                        cell.setCellStyle(stylePreguntas);
+
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(stylePreguntas);
+
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(stylePreguntas);
+
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(stylePreguntas);
+
+                        row = sheet.createRow(rowNum++);
+                        row.setHeightInPoints(5);
+                        cell = row.createCell(colHeader);
+                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+
+                    } else {
+                        row = sheet.createRow(rowNum++);
+                        cell = row.createCell(colHeader++);
+                        cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
+                        cell.setCellStyle(stylePreguntas);
+
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(styleRespuestas);
+
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(styleRespuestas);
+
+                        cell = row.createCell(colHeader++);
+                        cell.setCellStyle(styleRespuestas);
+                    }
+                }
+
+            }
+        }
         try {
             workbook.write(bos);
             workbook.close();

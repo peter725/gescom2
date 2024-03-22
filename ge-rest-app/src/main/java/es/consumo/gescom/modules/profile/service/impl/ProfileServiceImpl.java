@@ -1,6 +1,7 @@
 package es.consumo.gescom.modules.profile.service.impl;
 
 import es.consumo.gescom.modules.profile.model.criteria.ProfileCriteria;
+import es.consumo.gescom.modules.profile.model.dto.ProfileDTO;
 import es.consumo.gescom.modules.profile.model.entity.ProfileEntity;
 import es.consumo.gescom.modules.profile.repository.ProfileRepository;
 import es.consumo.gescom.modules.profile.service.ProfileService;
@@ -23,5 +24,10 @@ public class ProfileServiceImpl extends EntityCrudService<ProfileEntity, Long> i
     public Page<ProfileEntity.SimpleProjection> findAllSimpleEntity(CriteriaWrapper<ProfileCriteria> wrapper) {
         return ((ProfileRepository) repository).findAllByCriteria(wrapper.getCriteria(), wrapper.getCriteria().toPageable());
     }
-    
+
+    @Override
+    public ProfileDTO createProfile(ProfileDTO payload) {
+        return null;
+    }
+
 }

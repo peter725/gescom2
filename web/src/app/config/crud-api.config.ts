@@ -28,7 +28,7 @@ export const crudOperationsStorageFactory = () => {
     authority: { type: HttpOperationType.READ, path: '/authority_dgc', },
     origins: { type: HttpOperationType.READ, path: '/origins', },
     moduleTypes: { type: HttpOperationType.CRUD, path: '/module_types' },
-    modules: { type: HttpOperationType.CRUD, path: '/modules' },
+    modules: { type: HttpOperationType.CRUD, path: '/module' },
     fieldTypes: { type: HttpOperationType.READ, path: '/field-types' },
     fields: { type: HttpOperationType.CRUD, path: '/fields' },
     entities: { type: HttpOperationType.CRUD, path: '/autonomous_community' },

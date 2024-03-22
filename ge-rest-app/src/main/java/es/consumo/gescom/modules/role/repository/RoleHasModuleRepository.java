@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -15,6 +16,24 @@ public interface RoleHasModuleRepository extends GESCOMRepository<RoleHasModuleE
             "join re.module m " +
             "where re.roleId=:roleId and p.visible=true and m.visible=true")
     List<RoleHasModuleEntity> findByRoleId(Long roleId);
+    
+    @Query("select re from RoleHasModuleEntity re " +
+            "join re.permission p " +
+            "join re.module m " +
+            "where re.roleId=:roleId and p.id=:permissionId and m.id=:moduleId and p.visible=true and m.visible=true")
+    Optional<RoleHasModuleEntity> findByRoleIdAndPermissionIdAndModuleId(Long roleId, Long permissionId, Long moduleId);
+    
+    @Query("select re.id from RoleHasModuleEntity re " +
+            "join re.permission p " +
+            "join re.module m " +
+            "where re.roleId=:roleId and m.id=:moduleId and p.id not in (:permissionId) and p.visible=true and m.visible=true")
+    List<Long> findIdByRoleIdAndModuleIdAndPermissionIdNotIn(Long roleId, List<Long> permissionId, Long moduleId);
+    
+    @Query("select re.id from RoleHasModuleEntity re " +
+            "join re.permission p " +
+            "join re.module m " +
+            "where re.roleId=:roleId and m.id not in (:moduleId) and p.visible=true and m.visible=true")
+    List<Long> findIdByRoleIdAndModuleIdNotIn(Long roleId, List<Long> moduleId);
 
     @Query("select m.code as moduleCode , p.code as permissionCode from LoginEntity l  " +
             "JOIN l.roles r " +

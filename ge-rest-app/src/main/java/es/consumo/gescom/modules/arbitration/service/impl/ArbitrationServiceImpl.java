@@ -111,10 +111,15 @@ public class ArbitrationServiceImpl extends EntityCrudService<ArbitrationEntity,
 
     @Override
     public Page<ArbitrationEntity.SimpleProjection> findAllSimpleEntityAndArbitrationBoard(CriteriaWrapper<ArbitrationCriteria> wrapper, LoginEntity login) {
-        /* Condición si solo es Solicitante */
+        return null;
+    }
+
+    /*@Override
+    public Page<ArbitrationEntity.SimpleProjection> findAllSimpleEntityAndArbitrationBoard(CriteriaWrapper<ArbitrationCriteria> wrapper, LoginEntity login) {
+        *//* Condición si solo es Solicitante *//*
         ArbitrationBoardEntity  arbitrationBoardEntity = arbitrationBoardRepository.findById(null).orElseThrow();
         LoginEntity loginEntity = loginRepository.findById(login.getId()).orElseThrow();
-        Set<RoleEntity> roles = loginEntity.getRoles();
+        //Set<RoleEntity> roles = loginEntity.getRoles();
         if(roles.size() == 1 && roles.stream().anyMatch(role -> role.getId() == 2)){
             return arbitrationRepository.findAllByCriteriaAndArbitrationBoard(wrapper.getCriteria(), wrapper.getCriteria().toPageable(), arbitrationBoardEntity, login.getUsername());
         }else if(roles.stream().anyMatch(role -> role.getId() == 1)) {
@@ -124,7 +129,7 @@ public class ArbitrationServiceImpl extends EntityCrudService<ArbitrationEntity,
         }else{
             return null;
         }
-    }
+    }*/
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)

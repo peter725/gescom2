@@ -298,7 +298,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   
-  navegarAComponenteProtocol() {
+  navegarAComponenteProtocol(protocolId: number) {
     // Asumiendo que 'this.campaign' contiene los datos de la campaña actual
     this.campaign = this.form.value;
     const minimalCampaignData = {
@@ -307,7 +307,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     };
 
     this.dataSharingService.changeCampaign(minimalCampaignData);
-    this.router.navigate(['/app/protocol/0']);
+    this.router.navigate([`/app/protocol/${protocolId}`]);
   }
 
   navegarAComponenteResultados(resultado: ProtocolResults | undefined) {

@@ -28,6 +28,6 @@ public class UserDTO implements Serializable {
     private ProfileDTO profile;
     private AutonomousCommunityDTO autonomousCommunity;
     private UserTypeDTO userType;
-    //private List<RoleEntity> roles;
+    private RoleEntity role;
     private Integer state = EntityState.ON.getValue();
 }

@@ -403,6 +403,7 @@
         "procedure": "Consulta Document Procedure",
         "legal": "Consulta Legal Regulation"
       },
+      "permissionsPerRole": "Establecer permisos",
       "pleaseReview": "Por favor revisa los datos introducidos",
       "pleaseWait": "Por favor espera",
       "redirectToClave": "Redireccionando al servicio de cl@ve",
@@ -579,6 +580,12 @@
       "add": "Alta de perfil",
       "edit": "Modificar perfil",
       "list": "Consulta de perfiles"
+    },
+    "role": {
+      "title": "Roles",
+      "add": "Alta de rol",
+      "edit": "Modificar rol",
+      "list": "Consulta de roles"
     },
     "sample": {
       "title": "Muestras",

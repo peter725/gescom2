@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
 import { AUTHENTICATION_PAGE_ROUTES } from '@base/pages/login';
-import { IsAuthenticatedGuard } from '@libs/security';
+import { CanAccessGuard, IsAuthenticatedGuard } from '@libs/security';
 // import { CanAccessGuard, IsAuthenticatedGuard } from '@libs/security';
 
 export const routes: Routes = [
@@ -13,9 +13,9 @@ export const routes: Routes = [
   {
     path: 'app',
     loadChildren: () => import('./dashboard-wrapper-page').then(m => m.DashboardWrapperPageModule),
-    canActivate: [IsAuthenticatedGuard],
-    canActivateChild: [IsAuthenticatedGuard,],
-    canLoad: [IsAuthenticatedGuard,],
+    canActivate: [IsAuthenticatedGuard, CanAccessGuard],
+    canActivateChild: [IsAuthenticatedGuard, CanAccessGuard],
+    canLoad: [IsAuthenticatedGuard, CanAccessGuard],
   },
   {
     path: 'auth',

@@ -5,6 +5,7 @@ import { ExportFileType } from '@base/shared/export-file';
 import { CrudImplService, RequestConfig } from '@libs/crud-api';
 import { FilterService } from '@base/shared/filter';
 import { ColumnSrc } from '@base/shared/collections';
+import { AuthContextService } from '@libs/security';
 
 @Component({
   selector: 'tsw-campaign-list-page',
@@ -18,12 +19,16 @@ export class CampaignListPageComponent  extends BaseListPageComponent<Campaign> 
     override exportFormats = [ExportFileType.CSV];
     override downloadFileName = 'pages.campaign.title';
 
+    canModify = false;
+
     constructor(
       crudService: CrudImplService<Campaign>,
       filterService: FilterService,
+      authContext: AuthContextService,
       //private sampleCtx: AppContextService,
     ) {
       super(crudService, filterService);
+      this.canModify = authContext.instant().canWrite('campaign');
     }
 
     override async ngOnInit() {

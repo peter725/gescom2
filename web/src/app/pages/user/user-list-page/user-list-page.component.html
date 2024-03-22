@@ -126,7 +126,7 @@
       <td *matCellDef="let element" mat-cell class="text-right">
         <ng-container >
           <div class="additional-actions">
-            <a
+            <a *ngIf="canModify"
                     mat-button
                     [routerLink]="'userManagementEdit' | namedRoute: { id: element.id }"
                     matTooltip="Editar"

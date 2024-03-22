@@ -24,6 +24,14 @@ export abstract class AuthSubject<T> {
     return this.hasScope(moduleCode,"rr");
   }
 
+  canWrite(moduleCode: string) {
+    return this.hasScope(moduleCode,"ww");
+  }
+
+  canDelete(moduleCode: string) {
+    return this.hasScope(moduleCode,"dd");
+  }
+
   abstract isAuthenticated(): boolean;
 
   abstract getModules(): GEModule[];

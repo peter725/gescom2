@@ -25,7 +25,7 @@ export interface User extends SimpleModel, StatefulModel {
   phone: string;
 
   modules: Module[];
-  profile: Profile;
+  role: Role;
 
   multiScope: false;
   scopes: string[];
@@ -60,7 +60,7 @@ export interface CreateUser {
   phone: string | null;
 
   userType: UserType[] | null;
-  profile: Profile[] | null;
+  role: Role[] | null;
   modules: Module[] | null;
   autonomousCommunity: AutonomousCommunity | null;
 

@@ -79,8 +79,9 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
         throws URISyntaxException, IOException {
         byte[] excel = null;
         boolean falloCreacion = false;
+        boolean result = true;
 
-        excel = ExcelUtils.getInstance().createExportExcelTablas(protocolo);
+        excel = ExcelUtils.getInstance().createExportExcelTablas(protocolo, result);
 
         if (null == excel || falloCreacion) {
 //            throw new BadRequestAlertException("Fallo en la creacion del export Excel");

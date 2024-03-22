@@ -12,6 +12,8 @@ export const APPROACH_PAGE_ROUTES: Routes = [
         path: 'consulta',
         data: {
             breadcrumb,
+            requireAccess: 'approach',
+            requireScope: 'rr'
         },
         loadChildren: () => import('./').then(m => m.ApproachListPageModule),
     },
@@ -19,7 +21,8 @@ export const APPROACH_PAGE_ROUTES: Routes = [
         path: '0',
         data: {
             breadcrumb,
-            // requireAccess: 'WField'
+            requireAccess: 'approach',
+            requireScope: 'ww'
         },
         loadChildren: () => import('./').then(m => m.ApproachCampaignProposalModule),
     },
@@ -27,6 +30,8 @@ export const APPROACH_PAGE_ROUTES: Routes = [
         path: ':id/ver',
         data: {
             breadcrumb,
+            requireAccess: 'approach',
+            requireScope: 'rr'
         },
         loadChildren: () => import('./').then(m => m.ApproachSeePageModule),
     },
@@ -34,6 +39,8 @@ export const APPROACH_PAGE_ROUTES: Routes = [
         path: ':id',
         data: {
             breadcrumb,
+            requireAccess: 'approach',
+            requireScope: 'ww'
         },
         loadChildren: () => import('./').then(m => m.ApproachEditPageModule),
     },

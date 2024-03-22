@@ -8,6 +8,7 @@ import { CrudImplService, RequestConfig, RequestParams } from '@libs/crud-api';
 import { User } from '@libs/sdk/user';
 import { firstValueFrom, Observable } from 'rxjs';
 import { takeUntil, skip } from 'rxjs/operators';
+import { AuthContextService } from '@libs/security';
 
 
 @Component({
@@ -22,12 +23,16 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
   override exportFormats = [ExportFileType.CSV];
   override downloadFileName = 'pages.user.title';
 
+  canModify = false;
+
   constructor(
       crudService: CrudImplService<User>,
       filterService: FilterService,
+      authContext: AuthContextService
       //private sampleCtx: AppContextService,
   ) {
     super(crudService, filterService);
+    this.canModify = authContext.instant().canWrite('campaign');
   }
 
   override async ngOnInit() {

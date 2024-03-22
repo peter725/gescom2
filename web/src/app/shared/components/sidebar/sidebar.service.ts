@@ -39,6 +39,10 @@ export class SidebarService {
     this.preferenceService.update({ sidebar: next });
   }
 
+  refresh() {
+    this.updateMenuItems()
+  }
+
   private  monitorAuthContext() {
     this.authContext.get().subscribe(() => this.updateMenuItems());
     // this.updateMenuItems()
@@ -48,8 +52,8 @@ export class SidebarService {
     if (!this.authContext.instant().isAuthenticated()) {
       return this.menuItems.next([]);
     }
-
-    const items = await this.filterMenuItemAccess(SIDEBAR_ITEMS);
+    const newSidebarItems: MenuItem[] = SIDEBAR_ITEMS.map(obj => ({...obj}));
+    const items = await this.filterMenuItemAccess(newSidebarItems);
     this.menuItems.next(items);
   }
 
@@ -59,10 +63,9 @@ export class SidebarService {
       if (item.requireAccess) {
         // Comprobamos el requisito de acceso al recurso
         canAccess = await this.authContext.instant().hasModule(item.requireAccess);
-      }
-      if (item.requireScope) {
-        // Comprobamos el requisito de permisos al recurso
-        canAccess = await this.authContext.instant().hasScope(item.requireAccess!, item.requireScope);
+        if (canAccess && item.requireScope) {
+          canAccess = await this.authContext.instant().hasScope(item.requireAccess, item.requireScope);
+        }
       }
       if (canAccess && item.children?.length) {
         item.children = await this.filterMenuItemAccess(item.children);

@@ -5,6 +5,7 @@ import { CrudImplService, RequestConfig } from "@libs/crud-api";
 import { Approach } from "@libs/sdk/approach";
 import { ExportFileType } from "@base/shared/export-file";
 import { ColumnSrc } from "@base/shared/collections";
+import { AuthContextService } from '@libs/security';
 
 
 @Component({
@@ -20,12 +21,18 @@ export class ApproachListPageComponent extends BaseListPageComponent<Approach> i
   override exportFormats = [ExportFileType.CSV];
   override downloadFileName = 'pages.user.title';
 
+  canModify = false;
+  canDelete = false;
+
   constructor(
     crudService: CrudImplService<any>,
     filterService: FilterService,
+    authContext: AuthContextService,
     // private authContext: AuthContextService<AuthSubject>,
   ) {
     super(crudService, filterService);
+    this.canModify = authContext.instant().canWrite('approach');
+    this.canDelete = authContext.instant().canDelete('approach');
     // this.subject$ = authContext.get();
   }
 

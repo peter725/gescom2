@@ -20,6 +20,7 @@ export class CampaignListPageComponent  extends BaseListPageComponent<Campaign> 
     override downloadFileName = 'pages.campaign.title';
 
     canModify = false;
+    canDelete = false;
 
     constructor(
       crudService: CrudImplService<Campaign>,
@@ -29,6 +30,7 @@ export class CampaignListPageComponent  extends BaseListPageComponent<Campaign> 
     ) {
       super(crudService, filterService);
       this.canModify = authContext.instant().canWrite('campaign');
+      this.canDelete = authContext.instant().canDelete('campaign');
     }
 
     override async ngOnInit() {

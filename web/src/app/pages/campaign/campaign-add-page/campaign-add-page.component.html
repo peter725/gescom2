@@ -63,7 +63,7 @@
         <div class="grid grid-cols-1 gap-1.5 mb-2">
           <mat-form-field>
             <mat-label>{{ 'fields.ccaaSpecialist' | translate}}</mat-label>
-            <tsw-custom-select [multiple]="true" resourceName="specialists" formControlName="specialists" [required]="true">
+            <tsw-custom-select [multiple]="true" resourceName="specialists" formControlName="specialists">
             </tsw-custom-select>
             <mat-error>{{ form.controls.specialists.errors | extractValidationError }}</mat-error>
           </mat-form-field>

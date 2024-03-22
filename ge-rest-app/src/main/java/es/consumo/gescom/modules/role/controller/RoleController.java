@@ -31,7 +31,6 @@ public class RoleController extends AbstractCrudController<RoleEntity, RoleNewDT
     
     @Override
     protected Optional<?> performFindById(Long id) {
-
         return Optional.of(
                 ((RoleService) service).findRoleById(id)
         );

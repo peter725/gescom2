@@ -8,8 +8,6 @@ import java.time.format.DateTimeFormatter;
 import javax.validation.Valid;
 
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
-import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
-import es.consumo.gescom.modules.campaignProposal.service.CampaignProposalService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +21,7 @@ import es.consumo.gescom.modules.users.model.criteria.UserCriteria;
 import es.consumo.gescom.modules.users.model.dto.UserDTO;
 import es.consumo.gescom.modules.users.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/users")
 @Tag(name = "User Controller")

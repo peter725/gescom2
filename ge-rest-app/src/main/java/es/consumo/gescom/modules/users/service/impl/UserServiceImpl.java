@@ -1,18 +1,12 @@
 package es.consumo.gescom.modules.users.service.impl;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import es.consumo.gescom.commons.db.repository.QueryByCriteria;
 import es.consumo.gescom.commons.dto.FilterCriteria;
-import es.consumo.gescom.modules.arbiter.repository.ArbiterRepository;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.autonomousCommunity.service.AutonomousCommunityService;
-import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
-import es.consumo.gescom.modules.profile.model.entity.ProfileEntity;
 import es.consumo.gescom.modules.profile.service.ProfileService;
 import es.consumo.gescom.modules.userType.model.entity.UserTypeEntity;
 import es.consumo.gescom.modules.userType.service.UserTypeService;
@@ -133,6 +127,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
 
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
         userEntity.setLogin(loginEntity);
+        userEntity.setRole(roleEntity);
         repository.save(userEntity);
         return userEntity;
     }

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -83,11 +84,19 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
 
         for (PermissionModuleNewDTO permissionModuleDTO : roleDTO.getModules()) {
             final ModuleEntity module = moduleRepository.findById(permissionModuleDTO.getModule().getId()).orElseThrow();
-            iterateAndSaveRoleHasModuleEntity(permissionModuleDTO.getPermissions(), null, roleHasModules, map, roleEntity, module);
+            iterateAndSaveRoleHasModuleEntityCreate(permissionModuleDTO.getPermissions(), roleHasModules, map, roleEntity, module);
         }
         if (!roleHasModules.isEmpty())
             roleHasModuleRepository.saveAll(roleHasModules);
         return roleEntity;
+    }
+    
+    private void iterateAndSaveRoleHasModuleEntityCreate(List<PermissionEntity> permissionDTOS, List<RoleHasModuleEntity> toSave,
+            Map<Long, List<PermissionEntity>> map, RoleEntity entity, ModuleEntity module) {
+    	for (PermissionEntity permissionDTO : permissionDTOS) {
+    		final PermissionEntity permission = map.get(permissionDTO.getId()).get(0);
+    		toSave.add(createRoleHasModuleEntity(entity.getId(), module, permission, PermissionScope.ALL));
+    	}
     }
 
     @Override
@@ -99,10 +108,13 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
                 .collect(Collectors.groupingBy(PermissionEntity::getId));
         final List<RoleHasModuleEntity> toSave = new ArrayList<>();
         final List<Long> toDelete = new ArrayList<>();
+        List<Long> moduleIDs = new ArrayList<Long>();
         for (PermissionModuleNewDTO permissionModuleDTO : roleDTO.getModules()) {
             final ModuleEntity module = moduleRepository.findById(permissionModuleDTO.getModule().getId()).orElseThrow();
-            iterateAndSaveRoleHasModuleEntity(permissionModuleDTO.getPermissions(), toDelete, toSave, map, entity, module);
+            moduleIDs.add(module.getId());
+            iterateAndSaveRoleHasModuleEntityUpdate(permissionModuleDTO.getPermissions(), toDelete, toSave, map, entity, module);
         }
+        toDelete.addAll(roleHasModuleRepository.findIdByRoleIdAndModuleIdNotIn(entity.getId(), moduleIDs));
         if (!toDelete.isEmpty())
             roleHasModuleRepository.deleteAllById(toDelete);
         if (!toSave.isEmpty())
@@ -110,12 +122,23 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
         return repository.save(entity);
     }
     
-    private void iterateAndSaveRoleHasModuleEntity(List<PermissionEntity> permissionDTOS, List<Long> toDelete, List<RoleHasModuleEntity> toSave,
+    private void iterateAndSaveRoleHasModuleEntityUpdate(List<PermissionEntity> permissionDTOS, List<Long> toDelete, List<RoleHasModuleEntity> toSave,
             Map<Long, List<PermissionEntity>> map, RoleEntity entity, ModuleEntity module) {
+    	
+    	List<Long> permissionIDs = new ArrayList<Long>();
     	for (PermissionEntity permissionDTO : permissionDTOS) {
-    		final PermissionEntity permission = map.get(permissionDTO.getId()).get(0);
-    		toSave.add(createRoleHasModuleEntity(entity.getId(), module, permission, PermissionScope.ALL));
+    		permissionIDs.add(permissionDTO.getId());
+    		Optional<RoleHasModuleEntity> roleHasModules = roleHasModuleRepository.findByRoleIdAndPermissionIdAndModuleId(entity.getId(), permissionDTO.getId(), module.getId());
+    		if (roleHasModules.isPresent()) {
+    			roleHasModules.get().setPermission(permissionDTO);
+    			toSave.add(roleHasModules.get());
+    		} else {
+    			final PermissionEntity permission = map.get(permissionDTO.getId()).get(0);
+    			toSave.add(createRoleHasModuleEntity(entity.getId(), module, permission, PermissionScope.ALL));
+    		}
     	}
+    	
+    	toDelete.addAll(roleHasModuleRepository.findIdByRoleIdAndModuleIdAndPermissionIdNotIn(entity.getId(), permissionIDs, module.getId()));
     }
 
 //    private void iterateAndSaveRoleHasModuleEntity(List<PermissionEntity> permissionDTOS, List<Long> toDelete, List<RoleHasModuleEntity> toSave,

@@ -246,6 +246,44 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
         return protocolConverter.convertToModel(protocolRepository.findProtocolNameByCode(code));
     }
 
+    @Override
+    public ProtocolDTO updateProtocol(Long id, ProtocolDTO payload) {
+        ProtocolEntity protocol = protocolConverter.convertToEntity(payload);
+        protocol.setId(payload.getId());
+        protocol.setCode(payload.getCode());
+        protocol.setName(payload.getName());
+        CampaignEntity campaignEntity =  campaignRepository.findById(payload.getCampaignId()).orElseThrow();
+        protocol.setCampaignId(campaignEntity);
+        protocol.setCreatedAt(LocalDateTime.now());
+        protocol.setUpdatedAt(LocalDateTime.now());
+        ProtocolEntity protocolSave = protocolRepository.save(protocol);
+
+        List<QuestionsDTO> questions = payload.getQuestion();
+        questions.forEach(question -> {
+            QuestionsEntity questionsEntity = new QuestionsEntity();
+            questionsEntity.setCode(question.getCode());
+            questionsEntity.setProtocolCampaingId(protocolSave);
+            questionsEntity.setQuestion(question.getQuestion());
+            questionsEntity.setCodeInfringement(question.getCodeInfringement());
+            questionsEntity.setOrderQuestion(question.getOrderQuestion());
+            questionsEntity.setCodeQuestion(question.getCodeQuestion());
+            questionsEntity.setBkTrinti(question.getBkTrinti());
+            if(question.getResponse().equals("SI")){
+                questionsEntity.setResponse("S");
+            }else if (question.getResponse().equals("NO")){
+                questionsEntity.setResponse("N");
+            }
+            questionsEntity.setBkTrrees(question.getBkTrrees());
+            questionsEntity.setProtocolCampaignCode(question.getProtocolCampaignCode());
+            questionsEntity.setCreatedAt(LocalDateTime.now());
+            questionsEntity.setUpdatedAt(LocalDateTime.now());
+
+            questionsRepository.save(questionsEntity);
+        });
+
+        return protocolConverter.convertToModel(protocolSave);
+    }
+
     private static ProtocolDetailDTO getProtocolDetailDTO(List<QuestionDetailDTO> questionDetailDTOList, Optional<ProtocolEntity> protocol, CampaignEntity campaignEntity, String participants) {
         ProtocolDetailDTO result = new ProtocolDetailDTO();
         result.setQuestions(questionDetailDTOList);

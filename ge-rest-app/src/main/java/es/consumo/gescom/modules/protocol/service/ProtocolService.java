@@ -26,4 +26,6 @@ public interface ProtocolService extends CrudService<ProtocolEntity, Long>{
     ProtocolDTO findProtocolDTOById(Long id);
 
     ProtocolDTO findProtocolByCode(String code);
+
+    ProtocolDTO updateProtocol(Long id, ProtocolDTO payload);
 }

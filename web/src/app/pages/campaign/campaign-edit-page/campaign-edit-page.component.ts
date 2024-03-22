@@ -29,7 +29,7 @@ export class CampaignEditPageComponent extends EditPageBaseComponent<Campaign, C
       campaignType: this.fb.control(null, [Validators.required]),
       participants: this.fb.control([], [Validators.required]),
       ambit: this.fb.control(null, [Validators.required]),
-      specialists: this.fb.control([], [Validators.required]),
+      specialists: this.fb.control([]),
       proponents: this.fb.control([], [Validators.required]),
       autonomousCommunityResponsible: this.fb.control(null, [Validators.required]),
       protocols: this.fb.control([]),

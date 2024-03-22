@@ -32,7 +32,7 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
       //private sampleCtx: AppContextService,
   ) {
     super(crudService, filterService);
-    this.canModify = authContext.instant().canWrite('campaign');
+    this.canModify = authContext.instant().canWrite('user');
   }
 
   override async ngOnInit() {

@@ -39,6 +39,10 @@ export class SidebarService {
     this.preferenceService.update({ sidebar: next });
   }
 
+  refresh() {
+    this.updateMenuItems()
+  }
+
   private  monitorAuthContext() {
     this.authContext.get().subscribe(() => this.updateMenuItems());
     // this.updateMenuItems()

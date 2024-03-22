@@ -78,7 +78,7 @@
                         >
                           <mat-icon>visibility</mat-icon>
                         </a>
-                      <a
+                      <a *ngIf="canModify"
                         mat-button
                         [routerLink]="'approachManagementEdit' | namedRoute: { id: element.id }"
                         matTooltip="Editar"
@@ -89,6 +89,7 @@
                       </a>
                     </div>
                     <tsw-state-toggle
+                            *ngIf="canDelete"
                             [data]="element"
                             [resource]="resourceName"
                     ></tsw-state-toggle>

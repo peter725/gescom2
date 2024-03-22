@@ -24,6 +24,7 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
   override downloadFileName = 'pages.user.title';
 
   canModify = false;
+  canDelete = false;
 
   constructor(
       crudService: CrudImplService<User>,
@@ -33,6 +34,7 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
   ) {
     super(crudService, filterService);
     this.canModify = authContext.instant().canWrite('user');
+    this.canDelete = authContext.instant().canDelete('user');
   }
 
   override async ngOnInit() {

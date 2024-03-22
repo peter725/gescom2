@@ -136,6 +136,12 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
     @Transactional(propagation = Propagation.REQUIRED)
     public UserEntity update(UserDTO userDTO) {
         UserEntity userEntity = repository.findById(userDTO.getId()).orElseThrow();
+        RoleEntity roleEntity = roleRepository.findById(userDTO.getRole().getId()).orElseThrow();
+        LoginEntity loginEntity = userEntity.getLogin();
+        Set<RoleEntity> rolesSet = new HashSet<>();
+        rolesSet.add(roleEntity);
+        loginEntity.setRoles(rolesSet);
+        loginRepository.save(loginEntity);
         //modelMapper.map(userDTO, userEntity);
         AutonomousCommunityEntity autonomousCommunityEntity = autonomousCommunityService.findById(userDTO.getAutonomousCommunity().getId()).orElseThrow();
         UserTypeEntity userTypeEntity = userTypeService.findById(userDTO.getUserType().getId()).orElseThrow();
@@ -151,6 +157,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         userEntity.setName(userDTO.getName());
         userEntity.setPhone(userDTO.getPhone());
         userEntity.setSurname(userDTO.getSurname());
+        userEntity.setRole(roleEntity);
         repository.save(userEntity);
         return userEntity;
     }

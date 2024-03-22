@@ -41,6 +41,33 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
         this.moduleRepository = moduleRepository;
         this.modelMapper = modelMapper;
     }
+    
+    public RoleNewDTO findRoleById(Long idRole) {
+    	RoleEntity roleEntity = findById(idRole).orElseThrow();
+    	List<RoleHasModuleEntity> roleHasModules = roleHasModuleRepository.findByRoleId(idRole);
+    	
+    	RoleNewDTO response = new RoleNewDTO();
+    	response.setId(idRole);
+    	response.setName(roleEntity.getName());
+    	
+    	List<PermissionModuleNewDTO> modules = new ArrayList<>();
+    	Map<ModuleEntity, List<RoleHasModuleEntity>> itemsByTeam = 
+    			roleHasModules.stream().collect(Collectors.groupingBy(item -> item.getModule()));
+    	
+    	for (Map.Entry<ModuleEntity, List<RoleHasModuleEntity>> entry : itemsByTeam.entrySet()) {
+    		PermissionModuleNewDTO permission = new PermissionModuleNewDTO();
+    		permission.setModule(entry.getKey());
+    		List<PermissionEntity> permissions = new ArrayList<>();
+    		for (RoleHasModuleEntity roleHasModule : entry.getValue()) {
+    			permissions.add(roleHasModule.getPermission());
+    		}
+    		permission.setPermissions(permissions);
+    		modules.add(permission);
+    	}
+    	
+    	response.setModules(modules);
+    	return response;
+    }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)

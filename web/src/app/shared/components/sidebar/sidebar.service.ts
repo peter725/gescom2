@@ -40,8 +40,8 @@ export class SidebarService {
   }
 
   private  monitorAuthContext() {
-    // this.authContext.get().subscribe(() => this.updateMenuItems());
-    this.updateMenuItems()
+    this.authContext.get().subscribe(() => this.updateMenuItems());
+    // this.updateMenuItems()
   }
 
   private async updateMenuItems() {

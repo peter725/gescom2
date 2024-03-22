@@ -62,7 +62,7 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
       { name: 'secondSurname', visible: false },
       'phone',
       'email',
-      { name: 'profile', isReportable: false },
+      { name: 'role', isReportable: false },
       'actions'
     ];
   }

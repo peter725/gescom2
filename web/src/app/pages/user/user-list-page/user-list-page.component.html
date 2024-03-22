@@ -86,11 +86,11 @@
       <td *matCellDef="let element" mat-cell>{{ element.lastSurname }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="profile">
+    <ng-container matColumnDef="role">
       <th *matHeaderCellDef mat-header-cell style="width: 10%; font-weight: bold">
-        {{ "fields.profile" | translate }}
+        {{ "fields.role" | translate }}
       </th>
-      <td *matCellDef="let element" mat-cell>{{ element.profile?.name }}</td>
+      <td *matCellDef="let element" mat-cell>{{ element.role?.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="userType">

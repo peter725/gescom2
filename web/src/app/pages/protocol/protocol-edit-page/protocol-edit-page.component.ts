@@ -25,7 +25,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   readonly resourceName = 'protocol';
   protected override _createResourceTitle = 'pages.protocol.add';
   protected override _editResourceTitle = 'pages.protocol.edit';
-  cancelRedirectPath = '../../protocol/consulta';
+  cancelRedirectPath = '../../campanas/consulta';
 
   private dataSharingService: DataSharingService = inject(DataSharingService);
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
@@ -40,7 +40,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   ngAfterViewInit(): void {
     console.log(this.form.value)
     let campaignId = this.form.get('campaignId')?.value;
-    this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../protocol/consulta';
+    this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../campanas/consulta';
   }
 
   private subscribeToCampaignData(): void {

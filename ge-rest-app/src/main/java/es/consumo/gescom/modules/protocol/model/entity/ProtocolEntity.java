@@ -34,12 +34,12 @@ public class ProtocolEntity extends SimpleEntity {
 
     @JsonIgnore
     @CreatedDate
-    @Column(name = "CREATED_AT", nullable = false)
+    @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
 
     @JsonIgnore
     @LastModifiedDate
-    @Column(name = "UPDATED_AT", nullable = false)
+    @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt;
 
     @JsonIgnore

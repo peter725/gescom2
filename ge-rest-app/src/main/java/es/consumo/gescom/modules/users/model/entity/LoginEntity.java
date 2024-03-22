@@ -39,6 +39,7 @@ public class LoginEntity extends SimpleEntity implements UserDetails {
     @Basic
     @Column(name = "enable", nullable = false)
     private Boolean enable;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "login_has_role",

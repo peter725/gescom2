@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.consumo.gescom.commons.db.entity.SimpleEntity;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.profile.model.entity.ProfileEntity;
+import es.consumo.gescom.modules.role.model.entity.RoleEntity;
 import es.consumo.gescom.modules.userType.model.entity.UserTypeEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,7 +62,7 @@ public class UserEntity extends SimpleEntity{
 
     @ManyToOne
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
-    private ProfileEntity profile;
+    private RoleEntity role;
 
     @ManyToOne
     @JoinColumn(name = "user_type_id", referencedColumnName = "id")
@@ -115,7 +116,7 @@ public class UserEntity extends SimpleEntity{
 
         AutonomousCommunityEntity getAutonomousCommunity();
 
-        ProfileEntity getProfile();
+        RoleEntity getRole();
 
         Integer getState();
 

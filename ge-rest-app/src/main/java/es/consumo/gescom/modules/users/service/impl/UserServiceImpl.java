@@ -97,7 +97,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         if (userCriteria.getEmail() != null) {
             userCriteria.setEmail(userCriteria.getEmail().toUpperCase());
         }
-        userCriteria.setSort(new String[]{"id;asc"});
+        userCriteria.setSort(new String[]{"id;desc"});
         Page<UserEntity.SimpleProjection>  userSimpleProjections = ((UserRepository) repository).findAllByCriteria(userCriteria, userCriteria.toPageable());
 
         return userSimpleProjections;

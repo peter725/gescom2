@@ -23,6 +23,8 @@ export class ApproachListPageComponent extends BaseListPageComponent<Approach> i
 
   canModify = false;
   canDelete = false;
+  userAutonomousCommunity: string;
+  userRole: string;
 
   constructor(
     crudService: CrudImplService<any>,
@@ -33,6 +35,8 @@ export class ApproachListPageComponent extends BaseListPageComponent<Approach> i
     super(crudService, filterService);
     this.canModify = authContext.instant().canWrite('approach');
     this.canDelete = authContext.instant().canDelete('approach');
+    this.userAutonomousCommunity = authContext.instant().getAutonomousCommunity();
+    this.userRole = authContext.instant().getRole();
     // this.subject$ = authContext.get();
   }
 

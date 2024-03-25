@@ -1,6 +1,7 @@
 package es.consumo.gescom.jwt.rest.user.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -46,6 +48,14 @@ public class UserEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "login_id", insertable = false, updatable = false)
     private LoginEntity login;
+    
+    @ManyToOne
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    private RoleEntity role;
+    
+    @ManyToOne
+    @JoinColumn(name = "ccaa_id", referencedColumnName = "id")
+    private AutonomousCommunityEntity autonomousCommunity;
 
 
     @Override

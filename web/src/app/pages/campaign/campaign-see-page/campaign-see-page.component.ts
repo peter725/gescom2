@@ -18,6 +18,7 @@ import { ProtocolResults } from '@libs/sdk/protocolResults';
 import { PHASE_BORRADOR_RESULTADOS, PHASE_BORRADOR_RESULTADOS_DEBATE, PHASE_DATOS_INICIALES, PHASE_DOC_INSPECCION, PHASE_DOC_INSPECCION_PLAN_DEBATE, PHASE_DOC_INSPECCION_PROTOCOLO_DEBATE, PHASE_DOC_INSPECCION_PROTOCOLO_DEFINITIVO, PHASE_FICHA_TRANSPARENCIA, PHASE_IMPRESO_DEBATE, PHASE_IMPRESO_DEFINITIVO, PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_DEFINITIVOS_PENDIENTES, PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE } from '@base/shared/utils/constants';
 import { firstValueFrom } from 'rxjs';
 import { ProtocolListPageComponent } from '@base/pages/protocol/protocol-list-page/protocol-list-page.component';
+import { AuthContextService } from '@libs/security';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -55,11 +56,22 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   private dataSharingService: DataSharingService = inject(DataSharingService);
   private excelService: ExcelService = inject(ExcelService);
   private campaignService: CampaignService = inject(CampaignService);
+  private authContextService: AuthContextService = inject(AuthContextService);
+  canModify = this.authContextService.instant().canWrite('campaign');
+  userAutonomousCommunity = this.authContextService.instant().getAutonomousCommunity();
 
   override ngOnInit(): void {
     super.ngOnInit();
     this.loadPhases();
     this.loadDocuments();
+  }
+
+  get autonomousCommunityResponsible() : string {
+    return this.form.controls.autonomousCommunityResponsible.value ? this.form.controls.autonomousCommunityResponsible.value.name : "";
+  }
+
+  get autonomousCommunityParticipants() : string[] {
+    return this.form.controls.participants.value ? this.form.controls.participants.value.map((p) => { return p.name }) : [];
   }
 
   private loadPhases(): void {
@@ -315,7 +327,8 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     const navigationExtras: NavigationExtras = {
       state: {
         campaign: this.campaign,
-        resultadoSelected: resultado ? resultado : undefined
+        resultadoSelected: resultado ? resultado : undefined,
+        userAutonomousCommunity: this.userAutonomousCommunity
       }
     };
     this.router.navigate([`app/campanas/${this.campaign.id}/resultados`], navigationExtras);

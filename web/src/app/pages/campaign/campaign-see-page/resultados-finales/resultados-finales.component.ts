@@ -116,8 +116,9 @@ export class ResultadosFinalesComponent implements OnInit{
         this.campaign = state.campaign;
         this.resultadoSelected = state.resultadoSelected;
         this.productoSelected = state.campaign.productoSelected;
+        this.cancelRedirectPath = `../../campanas/${this.campaign.id}/resultados`;
       } else {
-        this.router.navigate([`app/campanas/consulta`]);
+        this.goBack();
       }
       
     
@@ -128,6 +129,10 @@ export class ResultadosFinalesComponent implements OnInit{
     console.log("Prueba");
     this.updateForm1(this.campaign);
     this.loadOptions(this.campaign);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   protected updateForm1(campania: CampaignForm): void {

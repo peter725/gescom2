@@ -38,6 +38,10 @@ export abstract class AuthSubject<T> {
 
   abstract getProfile(): string;
 
+  abstract getRole(): string;
+
+  abstract getAutonomousCommunity(): string;
+
   abstract equals(value: unknown): boolean;
 
 }
@@ -56,6 +60,14 @@ export class UnauthenticatedSubject extends AuthSubject<Record<string, unknown>>
   }
 
   getProfile(): string {
+    return "";
+  }
+
+  getRole(): string {
+    return "";
+  }
+
+  getAutonomousCommunity(): string {
     return "";
   }
 

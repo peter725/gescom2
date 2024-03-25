@@ -15,6 +15,7 @@ import { CampaignProductServiceDTO } from '@libs/sdk/productService';
 import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults';
 import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
 import { NotificationService } from '@base/shared/notification';
+import { AuthContextService } from '@libs/security';
 
 
 @Component({
@@ -50,18 +51,21 @@ export class ResultadosComponent implements OnInit{
   protocoloSelected: any;
   productoSelected: any;
   caSelected: any;
+  canModify = true;
 
   preguntasProtocolo: Question [] = [];
 
   resultadoSelected: ProtocolResults | undefined = undefined;
 
+  userAutonomousCommunity: string = "";
+
   editForm1 = this.fb.group({
     id: [],
     campania: this.fb.group<ControlsOf<CampaignForm>>({
       id: this.fb.control(null),
-      year: this.fb.control(null),
+      year: this.fb.control({ value: null, disabled: true }),
       codeCpa: this.fb.control(null),
-      nameCampaign: this.fb.control(null, []),
+      nameCampaign: this.fb.control({ value: null, disabled: true }, []),
       campaignType: this.fb.control(null),
       participants: this.fb.control([]),
       ambit: this.fb.control(null),
@@ -77,7 +81,7 @@ export class ResultadosComponent implements OnInit{
     }),
     protocolo: [],
     producto: [],
-    ca: [],
+    ca: [] as AutonomousCommunity[],
     // producto: [null, [Validators.required, Validators.maxLength(50)]],
   });
 
@@ -98,18 +102,22 @@ export class ResultadosComponent implements OnInit{
     protected fb: FormBuilder,
     private router: Router,
     private protocolResultsService: ProtocolResultsService,
-    protected notification: NotificationService) {
+    protected notification: NotificationService,
+    authContext: AuthContextService) {
+      this.canModify = authContext.instant().canWrite('campaign');
+      this.userAutonomousCommunity = authContext.instant().getAutonomousCommunity();
       const navigation = this.router.getCurrentNavigation();
       let state = undefined;
       if (navigation) {
         state = navigation!.extras.state as {
-        campaign: any,
-        resultadoSelected: any
+          campaign: any,
+          resultadoSelected: any,
         }
         this.campaign = state.campaign;
         this.resultadoSelected = state.resultadoSelected;
+        this.cancelRedirectPath = `../../campanas/${this.campaign.id}/resultados`;
       } else {
-        this.router.navigate([`app/campanas/consulta`]);
+        this.location.back();
       }
       
     
@@ -133,6 +141,11 @@ export class ResultadosComponent implements OnInit{
     }
     if (campania && campania.participants) {
       this.caList = campania.participants;
+      if (!this.canModify && this.userAutonomousCommunity) {
+        this.editForm1.controls.ca.disable();
+        const a = this.caList.filter(value => value.name === this.userAutonomousCommunity);
+        this.editForm1.controls.ca.setValue(a[0]);
+      }
     }
     if (campania && campania.campaignProductServiceDTOS) {
       this.productosList = campania.campaignProductServiceDTOS;

@@ -26,4 +26,7 @@ public class AuthUserDetails {
 	private ArbitrationBoardEntity arbitrationBoard;
 
 	private Set<AuthModules> modules;
+	
+	private String role;
+	private String autonomousCommunity;
 }

@@ -61,6 +61,8 @@ export class UploadFileComponent <T=any> {
 
   @Input() documents: any;
   @Input() documentTypeId: any;
+  @Input() canUpload: boolean = true;
+  @Input() canDelete: boolean = true;
   displayedColumns: string[] = ['name'];
   dataSource = [...ELEMENT_DATA];
   form: FormGroup;

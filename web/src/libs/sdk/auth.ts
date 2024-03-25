@@ -34,4 +34,7 @@ export interface AuthUserDetails {
 
   profile: string;
   modules: GEModule[];
+
+  role: string;
+  autonomousCommunity: string;
 }

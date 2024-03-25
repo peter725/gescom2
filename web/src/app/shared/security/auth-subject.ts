@@ -32,6 +32,14 @@ export class AppAuthSubject extends AuthSubject<AuthUserDetails> {
     return this.getDetails().profile || "";
   }
 
+  getRole(): string {
+    return this.getDetails().role || "";
+  }
+
+  getAutonomousCommunity(): string {
+    return this.getDetails().autonomousCommunity || "";
+  }
+
   isAuthenticated(): boolean {
     return !!this.getDetails();
   }

@@ -1,5 +1,5 @@
 <!-- <h2 mat-dialog-title>Documentos</h2> -->
-<form [formGroup]="form" class="my-7 justify-between flex">
+<form *ngIf="canUpload" [formGroup]="form" class="mt-7 justify-between flex">
     <!-- Sección personalizada para el input de tipo archivo -->
     <div class="basis-2/4 flex items-center">
       <input type="file" id="fileInput" (change)="onFileSelected($event)">
@@ -12,7 +12,7 @@
 </form>
 
    
-      <div class="space-y-4">
+      <div class="space-y-4 mt-7">
         <div *ngFor="let document of documentsArray; let i = index"
              [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
              class="flex justify-between items-center p-4 shadow-md rounded-lg">
@@ -27,7 +27,7 @@
             <button mat-button (click)="downloadFile(document.id)">
               <mat-icon>download</mat-icon>
             </button>
-            <button mat-button (click)="deleteFile(document.id)">
+            <button *ngIf="canDelete" mat-button (click)="deleteFile(document.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>

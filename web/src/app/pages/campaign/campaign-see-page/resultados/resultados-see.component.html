@@ -27,12 +27,12 @@
                     <div class="grid grid-cols-6 gap-1.5">
                         <mat-form-field class="col-span-3">
                             <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
-                            <input matInput [value]="protocoloSelected?.name" readonly>
+                            <input matInput [value]="protocoloSelected?.name" disabled>
                         </mat-form-field>
         
                         <mat-form-field class="col-span-3">
                             <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
-                            <input matInput [value]="productoSelected?.name" readonly>
+                            <input matInput [value]="productoSelected?.name" disabled>
                         </mat-form-field>
                     </div>
         
@@ -40,7 +40,7 @@
                     <div class="grid grid-cols-6 gap-1.5">
                         <mat-form-field class="col-span-6">
                             <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
-                            <input matInput [value]="caSelected?.name" readonly>
+                            <input matInput [value]="caSelected?.name" disabled>
                         </mat-form-field>
                     </div>
         

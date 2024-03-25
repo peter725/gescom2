@@ -22,7 +22,7 @@
 
             <!-- {{ form.controls.phaseCampaign!.value!.phase }} -->
             <button 
-              *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && !canSeeFichaTransparencia.includes(form.controls.phaseCampaign.value.phase)"
+              *ngIf="canModify && form.controls.phaseCampaign && form.controls.phaseCampaign.value && !canSeeFichaTransparencia.includes(form.controls.phaseCampaign.value.phase)"
               type="button" 
               mat-raised-button color="primary" 
               class="text-white font-bold py-2 px-4 rounded"
@@ -34,24 +34,22 @@
             </button>
 
           </div>
-
-          
         
           <div class="flex justify-right mr-3 space-x-4 col-span-2">
 
-            <button *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosFinales.includes(form.controls.phaseCampaign.value.phase)"
+            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity || autonomousCommunityParticipants.includes(userAutonomousCommunity)) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosFinales.includes(form.controls.phaseCampaign.value.phase)"
                     type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultadosFinales()"
                     class="text-white font-bold py-2 px-4 rounded">
               Resultados finales
             </button>
 
-            <button *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)"
+            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)"
                     type="button" mat-raised-button color="primary" (click)="navegarAComponenteIpr()"
                     class="text-white font-bold py-2 px-4 rounded">
               I.P.R
             </button>
 
-            <button *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosCCAA.includes(form.controls.phaseCampaign.value.phase)"
+            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity || autonomousCommunityParticipants.includes(userAutonomousCommunity)) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosCCAA.includes(form.controls.phaseCampaign.value.phase)"
                     type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)"
                     class="text-white font-bold py-2 px-4 rounded">
               Cumplimentación resultados CCAA
@@ -128,7 +126,7 @@
             <!-- Biblioteca -->
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900" >{{'text.campaign.library' | translate}}</h3>
-              <tsw-file-upload [documentTypeId]="1" [documents]="documentsLibrary"></tsw-file-upload>
+              <tsw-file-upload [canUpload]="canModify || autonomousCommunityResponsible === userAutonomousCommunity" [canDelete]="canModify || autonomousCommunityResponsible === userAutonomousCommunity" [documentTypeId]="1" [documents]="documentsLibrary"></tsw-file-upload>
             </div>
 
             <!-- Productos / Servicios -->
@@ -137,7 +135,7 @@
             <div class="w-3/4 mx-auto p-4 rounded-md color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">{{'text.campaign.products' | translate}}</h3>
-                <button mat-raised-button color="primary"  (click)="agregarProducto()">Añadir</button>
+                <button *ngIf="canModify" mat-raised-button color="primary"  (click)="agregarProducto()">Añadir</button>
               </div>
               <hr>
 
@@ -146,7 +144,7 @@
                   <div class="table-header-group bg-gray-200">
                     <div class="table-cell font-semibold p-2 border border-gray-300 w-3/12">Clase del producto / servicio</div>
                     <div class="table-cell font-semibold p-2 border border-gray-300 w-9/12">Nombre concreto del producto / servicio</div>
-                    <div class="table-cell font-semibold p-2 border border-gray-300 w-6/12"></div>
+                    <div *ngIf="canModify" class="table-cell font-semibold p-2 border border-gray-300 w-6/12"></div>
                   </div>
       
                   <!-- Filas de la tabla -->
@@ -154,7 +152,7 @@
                     <tr *ngFor="let prod of productsDisplay; let y = index" [ngClass]="{'bg-gray-200': y % 2 !== 0, 'bg-white': y % 2 === 0}">
                       <td>{{ prod['codeProductService'] }}</td>
                       <td>{{ prod['productName'] }}</td>
-                      <button type="button" matTooltip="Eliminar" tswConfirmAction (confirmed)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
+                      <button *ngIf="canModify" type="button" matTooltip="Eliminar" tswConfirmAction (confirmed)="borrarProducto(prod['id'])" class="text-red-500 hover:text-red-700">
                         <span class="material-icons">delete_forever</span>
                       </button>
                     </tr>
@@ -174,7 +172,7 @@
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">Protocolo</h3>
-                <div>
+                <div *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity">
 
                   <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="openDialogCopyProtocol()">Copiar protocolo</button>
                   <button mat-raised-button color="primary" (click)="navegarAComponenteProtocol(0)">Añadir</button>
@@ -190,7 +188,7 @@
                     {{protocol.name}}
                   </p>
                   <div>
-                    <button mat-button (click)="navegarAComponenteProtocol(protocol.id)">
+                    <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="navegarAComponenteProtocol(protocol.id)">
                       <mat-icon>edit</mat-icon>
                     </button>
                     
@@ -214,7 +212,7 @@
           <mat-card-content>
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900" >{{'text.campaign.planificationDocument' | translate}}</h3>
-              <tsw-file-upload [documentTypeId]="2" [documents]="documentsPlanification"></tsw-file-upload>
+              <tsw-file-upload [canUpload]="canModify || autonomousCommunityResponsible === userAutonomousCommunity" [canDelete]="canModify || autonomousCommunityResponsible === userAutonomousCommunity" [documentTypeId]="2" [documents]="documentsPlanification"></tsw-file-upload>
             </div>
           </mat-card-content>
         </mat-card>
@@ -228,7 +226,7 @@
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">Resultados</h3>
-                <button mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)">Añadir</button>
+                <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity || autonomousCommunityParticipants.includes(userAutonomousCommunity)" mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)">Añadir</button>
               </div>
               <div class="border-b border-gray-300 mb-4"></div>
               <div class="space-y-4">
@@ -268,7 +266,7 @@
           <mat-card-content>
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900" >{{'text.campaign.trasparencySheet' | translate}}</h3>
-              <tsw-file-upload [documentTypeId]="3" [documents]="documentsTrasparencySheet"></tsw-file-upload>
+              <tsw-file-upload [canUpload]="canModify" [canDelete]="canModify" [documentTypeId]="3" [documents]="documentsTrasparencySheet"></tsw-file-upload>
             </div>
           </mat-card-content>
         </mat-card>

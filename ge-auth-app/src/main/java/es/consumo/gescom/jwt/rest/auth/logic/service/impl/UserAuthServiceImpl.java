@@ -153,7 +153,9 @@ public class UserAuthServiceImpl implements UserAuthService {
                 user.getSurname(),
                 user.getLastSurname(),
                 null,
-                modules
+                modules,
+                user.getRole() != null ? user.getRole().getName() : null,
+                user.getAutonomousCommunity() != null ? user.getAutonomousCommunity().getName(): null
         );
     }
 

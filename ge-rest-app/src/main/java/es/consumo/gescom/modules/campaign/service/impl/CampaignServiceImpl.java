@@ -33,26 +33,20 @@ import es.consumo.gescom.modules.campaignProductService.repository.CampaignProdu
 import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
 import es.consumo.gescom.modules.campaignType.model.converter.CampaingnTypeConverter;
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
-import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
-import es.consumo.gescom.modules.ipr.model.dto.IprResponseDTO;
 import es.consumo.gescom.modules.ipr.repository.IprRepository;
 import es.consumo.gescom.modules.ipr.service.IprService;
 import es.consumo.gescom.modules.phase.model.converter.PhaseConverter;
 import es.consumo.gescom.modules.phase.model.dto.PhaseDTO;
 import es.consumo.gescom.modules.phase.model.entity.PhaseEntity;
 import es.consumo.gescom.modules.phase.repository.PhaseRepository;
-import es.consumo.gescom.modules.productServices.model.dto.ProductServiceDTO;
-import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEntity;
 import es.consumo.gescom.modules.productServices.repository.ProductServiceRepository;
 import es.consumo.gescom.modules.proponent.model.converter.ProponentConverter;
 import es.consumo.gescom.modules.proponent.model.dto.ProponentDTO;
 import es.consumo.gescom.modules.proponent.model.entity.ProponentEntity;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
-import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
 import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsDTO;
-import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsResponseDTO;
 import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
 import es.consumo.gescom.modules.protocol_results.service.ProtocolResultsService;
 import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
@@ -75,15 +69,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 @Service
@@ -401,6 +390,22 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         if (campaignCriteria.getSearch() != null) {
             campaignCriteria.setSearch(criteria.getSearch().toUpperCase());
         }
+        if (campaignCriteria.getAmbit() != null) {
+            campaignCriteria.setAmbit(campaignCriteria.getAmbit().toUpperCase());
+        }
+        if (campaignCriteria.getCampaignType() != null) {
+            campaignCriteria.setCampaignType(campaignCriteria.getCampaignType().toUpperCase());
+        }
+        if (campaignCriteria.getPhaseCampaign() != null) {
+            campaignCriteria.setPhaseCampaign(campaignCriteria.getPhaseCampaign().toUpperCase());
+        }
+        if (campaignCriteria.getNameCampaign() != null) {
+            campaignCriteria.setNameCampaign(campaignCriteria.getNameCampaign().toUpperCase());
+        }
+//        if (campaignCriteria.getYear() != null) {
+//            campaignCriteria.setYear(campaignCriteria.getYear().replaceAll("%", ""));
+//            campaignCriteria.setYearLong(Long.parseLong(campaignCriteria.getYear().replaceAll("%", "")));
+//        }
         campaignCriteria.setSort(new String[]{"id;desc"});
         Page<CampaignEntity> campaignEntities = campaignRepository.findAllByCriteria(campaignCriteria, criteria.toPageable());
 

@@ -8,6 +8,7 @@ import { CreateProtocol, Protocol } from '@libs/sdk/protocol';
 import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infringement-dialog.component';
 import { firstValueFrom } from 'rxjs';
 import { DataSharingService } from '@base/services/dataSharingService';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -24,12 +25,12 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   readonly resourceName = 'protocol';
   protected override _createResourceTitle = 'pages.protocol.add';
   protected override _editResourceTitle = 'pages.protocol.edit';
-  cancelRedirectPath = '../../protocol/consulta';
+  cancelRedirectPath = '../../campanas/consulta';
 
   private dataSharingService: DataSharingService = inject(DataSharingService);
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
   campaignId: number | null = null; // Variable para almacenar el id de la campaña
-  // private location: Location = inject(Location);
+  private location: Location = inject(Location);
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -39,7 +40,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   ngAfterViewInit(): void {
     console.log(this.form.value)
     let campaignId = this.form.get('campaignId')?.value;
-    this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../protocol/consulta';
+    this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../campanas/consulta';
   }
 
   private subscribeToCampaignData(): void {
@@ -217,6 +218,17 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
   }
 
+  async saveForm() {
+    if (this.form.invalid) {
+      this.notification.show({ message: 'text.other.pleaseReview' });
+    } else {
+      super.setRedirectAfterSave(false);
+      await this.save();
+
+      this.location.back();
+    }
+    
+  }
 
 
 }

@@ -1,19 +1,25 @@
 package es.consumo.gescom.modules.role.service.impl;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
+import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.service.EntityCrudService;
+import es.consumo.gescom.modules.campaign.model.criteria.CampaignCriteria;
+import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.module.model.entity.ModuleEntity;
 import es.consumo.gescom.modules.module.repository.ModuleRepository;
 import es.consumo.gescom.modules.permission.model.entity.PermissionEntity;
 import es.consumo.gescom.modules.permission.repository.PermissionRepository;
 import es.consumo.gescom.modules.role.model.constants.PermissionScope;
+import es.consumo.gescom.modules.role.model.criteria.RoleCriteria;
 import es.consumo.gescom.modules.role.model.dto.PermissionModuleNewDTO;
 import es.consumo.gescom.modules.role.model.dto.RoleNewDTO;
 import es.consumo.gescom.modules.role.model.entity.RoleEntity;
 import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
 import es.consumo.gescom.modules.role.repository.RoleHasModuleRepository;
+import es.consumo.gescom.modules.role.repository.RoleRepository;
 import es.consumo.gescom.modules.role.service.RoleService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,16 +33,17 @@ import java.util.stream.Collectors;
 @Service
 public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> implements RoleService {
 
-
+	private final RoleRepository roleRepository;
     private final RoleHasModuleRepository roleHasModuleRepository;
     private final PermissionRepository permissionRepository;
     private final ModuleRepository moduleRepository;
     private final ModelMapper modelMapper;
 
-    public RoleServiceImpl(GESCOMRepository<RoleEntity, Long> repository, RoleHasModuleRepository roleHasModuleRepository,
+    public RoleServiceImpl(GESCOMRepository<RoleEntity, Long> repository, RoleRepository roleRepository, RoleHasModuleRepository roleHasModuleRepository,
                            PermissionRepository permissionRepository, ModuleRepository moduleRepository,
                            ModelMapper modelMapper) {
         super(repository);
+        this.roleRepository = roleRepository;
         this.roleHasModuleRepository = roleHasModuleRepository;
         this.permissionRepository = permissionRepository;
         this.moduleRepository = moduleRepository;
@@ -68,6 +75,20 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
     	
     	response.setModules(modules);
     	return response;
+    }
+    
+    @Override
+    protected Page<RoleEntity> findAllFromCriteria(FilterCriteria criteria) {
+
+    	RoleCriteria roleCriteria = (RoleCriteria) criteria;
+    	
+    	if (roleCriteria.getSearch() != null) {
+    		roleCriteria.setSearch(criteria.getSearch().toUpperCase());
+        }
+    	roleCriteria.setSort(new String[]{"id;desc"});
+        Page<RoleEntity> roleEntities = roleRepository.findAllByCriteria(roleCriteria, roleCriteria.toPageable());
+
+        return roleEntities;
     }
 
     @Override

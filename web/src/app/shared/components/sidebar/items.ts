@@ -96,7 +96,7 @@ export const SIDEBAR_ITEMS: MenuItem[] = [
         requireScope: 'ww',
         path:'roleManagementCreate'
       },{
-        text: 'Lista de Roles',
+        text: 'Consulta de Roles',
         expanded:false,
         requireAccess: 'role',
         requireScope: 'rr',

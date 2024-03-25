@@ -108,6 +108,7 @@
             </a>
           </div>
           <tsw-state-toggle
+            *ngIf="canDelete"
             [data]="element"
             [resource]="resourceName"
           ></tsw-state-toggle>

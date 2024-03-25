@@ -90,6 +90,10 @@ export class ResultadosComponent implements OnInit{
 
   });
 
+  goBack() {
+    this.location.back();
+  }
+
   constructor(protected activatedRoute: ActivatedRoute, 
     protected fb: FormBuilder,
     private router: Router,
@@ -113,7 +117,6 @@ export class ResultadosComponent implements OnInit{
 
   ngOnInit(): void {
     this.campaign;
-    console.log("Prueba");
     this.updateForm1(this.campaign);
     this.loadOptions(this.campaign);
   }

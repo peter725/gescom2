@@ -44,6 +44,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -85,6 +86,9 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
     @Autowired
     private QuestionsConverter questionsConverter;
+
+    @Autowired
+    private ProductServiceRepository productServiceRepository;
 
 
     @Override
@@ -176,7 +180,22 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         List<QuestionsDTO> questionsDTOS = new ArrayList<>();
         List<IprResponseDTO> iprResponseDTOS = new ArrayList<>();
         List<ProtocolResultsResponseDTO> protocolResultsResponseDTOS = new ArrayList<>();
-        ProductServiceEntity productServiceEntity = new ProductServiceEntity();
+        if (searchDTO.getProductServiceCode() != null) {
+            ProductServiceEntity productServiceEntity = productServiceRepository.findProductServiceByCode(searchDTO.getProductServiceCode());
+            if (searchDTO.getProductServiceCode() != null && productServiceEntity.getName() != null) {
+                resultsResponseDTOS.setProductName(productServiceEntity.getCode().concat(" - ").concat(productServiceEntity.getName()));
+            } else if (searchDTO.getProductServiceCode() != null) {
+                resultsResponseDTOS.setProductName(productServiceEntity.getCode());
+            }else {
+                resultsResponseDTOS.setProductName(productServiceEntity.getName());
+            }
+        }else {
+            ProductServiceEntity productServiceEntity = productServiceRepository.findProductServiceById(searchDTO.getProductServiceId());
+            if (searchDTO.getProductServiceId() != null && productServiceEntity.getName() != null) {
+                resultsResponseDTOS.setProductName(productServiceEntity.getCode().concat(" - ").concat(productServiceEntity.getName()));
+            }
+        }
+        ProductServiceEntity productServiceEntity = productServiceRepository.findProductServiceByCode(searchDTO.getProductServiceCode());
         ProtocolDTO  protocolDTO = new ProtocolDTO();
 
         CampaignEntity campaignEntity = campaignRepository.findById(searchDTO.getCampaignId()).orElseThrow();
@@ -195,14 +214,11 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         }
 
-        /*for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-            QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
-            if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC1")) {
-                questionsResponseDTO.setQuestion("DC1- Nro. de establecimientos existentes");
-                questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                questionsResponseDTOS.add(questionsResponseDTO);
-            }
-        }*/
+        resultsResponseDTOS.setCampaignName(campaignEntity.getNameCampaign());
+        resultsResponseDTOS.setProtocolName(protocolDTO.getName());
+
+
+
 
         for (QuestionsDTO questionsDTO : questionsDTOS){
 
@@ -223,13 +239,86 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
                     if (protocolResultsResponseDTO.getCcaaRep() != null) {
                         questionsResponseDTO.addToNumResponseNoProcede(protocolResultsResponseDTO.getCcaaRep());
                     }
+                    questionsResponseDTO.setCodeQuestion(questionsDTO.getCodeQuestion());
                 }
             }
             questionsResponseDTOS.add(questionsResponseDTO);
 
         }
-        resultsResponseDTOS.setQuestionsResponseDTOS(questionsResponseDTOS);
 
+        // Paso 1: Encontrar el valor máximo de orderQuestion en la lista actual
+        int maxOrderQuestion = questionsResponseDTOS.stream()
+                .mapToInt(QuestionsResponseDTO::getOrderQuestion)
+                .max()
+                .orElse(0); // Usamos orElse(0) para manejar el caso de una lista vacía
+
+        QuestionsResponseDTO questionsResponseDTODC1 = new QuestionsResponseDTO();
+        questionsResponseDTODC1.setQuestion("Nro. de establecimientos existentes");
+        questionsResponseDTODC1.setOrderQuestion(maxOrderQuestion+1);
+        questionsResponseDTODC1.setCodeQuestion("DC1");
+        for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+            if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC1")) {
+                questionsResponseDTODC1.addToNumResponseSi(protocolResultsResponseDTO.getCcaaRes());
+            }
+        }
+        questionsResponseDTOS.add(questionsResponseDTODC1);
+        maxOrderQuestion++;
+
+        QuestionsResponseDTO questionsResponseDTODC8 = new QuestionsResponseDTO();
+        questionsResponseDTODC8.setQuestion("Nro. de establecimientos controlados");
+        questionsResponseDTODC8.setOrderQuestion(maxOrderQuestion+1);
+        questionsResponseDTODC8.setCodeQuestion("DC8");
+        for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+            if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC8")) {
+                questionsResponseDTODC8.addToNumResponseSi(protocolResultsResponseDTO.getCcaaRes());
+            }
+        }
+        questionsResponseDTOS.add(questionsResponseDTODC8);
+        maxOrderQuestion++;
+
+        QuestionsResponseDTO questionsResponseDTODC9 = new QuestionsResponseDTO();
+        questionsResponseDTODC9.setQuestion("Total de productos/servicios controlados");
+        questionsResponseDTODC9.setOrderQuestion(maxOrderQuestion+1);
+        questionsResponseDTODC9.setCodeQuestion("DC9");
+        for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+            if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC9")) {
+                questionsResponseDTODC9.addToNumResponseSi(protocolResultsResponseDTO.getCcaaRes());
+            }
+        }
+        questionsResponseDTOS.add(questionsResponseDTODC9);
+        maxOrderQuestion++;
+
+        QuestionsResponseDTO questionsResponseDTODC10 = new QuestionsResponseDTO();
+        questionsResponseDTODC10.setQuestion("Total de productos/servicios correctos");
+        questionsResponseDTODC10.setOrderQuestion(maxOrderQuestion+1);
+        questionsResponseDTODC10.setCodeQuestion("DC10");
+        for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+            if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC10")) {
+                questionsResponseDTODC10.addToNumResponseSi(protocolResultsResponseDTO.getCcaaRes());
+            }
+        }
+        questionsResponseDTOS.add(questionsResponseDTODC10);
+        maxOrderQuestion++;
+
+        QuestionsResponseDTO questionsResponseDTODC11 = new QuestionsResponseDTO();
+        questionsResponseDTODC11.setQuestion("Total de productos/servicios incorrectos");
+        questionsResponseDTODC11.setOrderQuestion(maxOrderQuestion+1);
+        questionsResponseDTODC11.setCodeQuestion("DC11");
+        for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+            if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC11")) {
+                questionsResponseDTODC11.addToNumResponseSi(protocolResultsResponseDTO.getCcaaRes());
+            }
+        }
+        questionsResponseDTOS.add(questionsResponseDTODC11);
+
+
+
+
+        List<QuestionsResponseDTO> questionsResponseDTOSorted = questionsResponseDTOS.stream().sorted(Comparator.comparingInt(QuestionsResponseDTO::getOrderQuestion)).toList();
+
+
+
+        resultsResponseDTOS.setQuestionsResponseDTOS(questionsResponseDTOSorted);
 
         return resultsResponseDTOS;
     }

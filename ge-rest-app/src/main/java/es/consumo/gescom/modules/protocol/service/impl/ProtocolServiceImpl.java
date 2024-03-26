@@ -107,14 +107,15 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
                         searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
                         List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO.getId());
-                        List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
-                        List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
                         resultsResponseDTO = iprService.getResultProtocol(searchDTO);
-                        protocolDTO.setQuestion(listQuestionsDTOS);
                         protocolDTO.setResultsResponseDTO(resultsResponseDTO);
                         protocolDTO.setIprDTOS(iprDTOS);
                     }
                 }
+                List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolId(protocolDTO.getId());
+                List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
+                protocolDTO.setQuestion(listQuestionsDTOS);
+
 
             }else {
                 searchDTO.setCampaignId(idCampaign);
@@ -125,15 +126,16 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                         searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
                         List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());
                         resultsResponseDTO = iprService.getResultProtocol(searchDTO);
-                        List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolCode(protocolDTO.getCode());
-                        List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
-                        protocolDTO.setQuestion(listQuestionsDTOS);
                         protocolDTO.setIprDTOS(iprDTOS);
                         protocolDTO.setResultsResponseDTO(resultsResponseDTO);
 
 
                     }
                 }
+                List<QuestionsEntity> questionsEntities = questionsRepository.findAllQuestionsByProtocolCode(protocolDTO.getCode());
+                List<QuestionsDTO> listQuestionsDTOS = questionsConverter.convertToModel(questionsEntities);
+                protocolDTO.setQuestion(listQuestionsDTOS);
+
             }
         }
         return (listProtocolDTO);

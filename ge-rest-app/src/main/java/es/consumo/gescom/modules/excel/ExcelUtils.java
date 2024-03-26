@@ -3,6 +3,9 @@ package es.consumo.gescom.modules.excel;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import es.consumo.gescom.modules.campaign.model.dto.QuestionsResponseDTO;
 import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
@@ -239,16 +242,15 @@ public class ExcelUtils {
         cell = row.createCell(colHeader++);
         cell.setCellValue((String) "No procede");
         cell.setCellStyle(styleTituloPreguntas);
-        
+
         // Preguntas
         if (result){
+            List<QuestionsResponseDTO> preguntasOrder = protocolo.getResultsResponseDTO().getQuestionsResponseDTOS().stream().sorted(Comparator.comparingInt(QuestionsResponseDTO::getOrderQuestion)).collect(Collectors.toList());
             if (null != protocolo.getResultsResponseDTO().getQuestionsResponseDTOS()) {
-                int numPregunta = 0;
 
-                for (QuestionsResponseDTO pregunta : protocolo.getResultsResponseDTO().getQuestionsResponseDTOS()) {
+                for (QuestionsResponseDTO pregunta : preguntasOrder) {
                     colHeader = 0;
-                    numPregunta++;
-                    if (pregunta.getNumResponseSi() == 0 && pregunta.getNumResponseNo() == 0 && pregunta.getNumResponseNoProcede() == 0) {
+                    if (pregunta.getNumResponseSi() == 0 && pregunta.getNumResponseNo() == 0 && pregunta.getNumResponseNoProcede() == 0){
                         row = sheet.createRow(rowNum++);
                         row.setHeightInPoints(5);
                         cell = row.createCell(colHeader);
@@ -256,7 +258,7 @@ public class ExcelUtils {
 
                         row = sheet.createRow(rowNum++);
                         cell = row.createCell(colHeader++);
-                        cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
+                        cell.setCellValue(pregunta.getQuestion());
                         cell.setCellStyle(styleTituloPreguntas);
 
                         cell = row.createCell(colHeader++);
@@ -274,9 +276,23 @@ public class ExcelUtils {
                         sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
                     } else {
+                        if (pregunta.getCodeQuestion() != null){
+                            if (pregunta.getCodeQuestion().startsWith("DC")){
+                                row = sheet.createRow(rowNum++);
+                                row.setHeightInPoints(5);
+                                cell = row.createCell(colHeader);
+                                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+
+                                row = sheet.createRow(rowNum++);
+                                row.setHeightInPoints(5);
+                                cell = row.createCell(colHeader);
+                                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+                            }
+                        }
+
                         row = sheet.createRow(rowNum++);
                         cell = row.createCell(colHeader++);
-                        cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
+                        cell.setCellValue(pregunta.getCodeQuestion() + " - " + pregunta.getQuestion());
                         cell.setCellStyle(stylePreguntas);
 
                         cell = row.createCell(colHeader++);
@@ -297,8 +313,8 @@ public class ExcelUtils {
         }else {
             if (null != protocolo.getQuestion()) {
                 int numPregunta = 0;
-
-                for (QuestionsDTO pregunta : protocolo.getQuestion()) {
+                List<QuestionsDTO> preguntasOrder = protocolo.getQuestion().stream().sorted(Comparator.comparingInt(QuestionsDTO::getOrderQuestion)).toList();
+                for (QuestionsDTO pregunta : preguntasOrder) {
                     colHeader = 0;
                     numPregunta++;
                     if (pregunta.getResponse().equals("N")) {
@@ -310,7 +326,7 @@ public class ExcelUtils {
                         row = sheet.createRow(rowNum++);
                         cell = row.createCell(colHeader++);
                         cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
-                        cell.setCellStyle(stylePreguntas);
+                        cell.setCellStyle(styleTituloPreguntas);
 
                         cell = row.createCell(colHeader++);
                         cell.setCellStyle(stylePreguntas);

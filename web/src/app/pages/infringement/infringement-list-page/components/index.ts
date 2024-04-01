@@ -1,0 +1,1 @@
+export * from './infringement-list-page-filter/infringement-list-page-filter.component';

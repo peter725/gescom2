@@ -5,23 +5,39 @@ import { gescoAppAPI, gescoAuthAPI } from './app';
 
 export const crudOperationsStorageFactory = () => {
   const apiOperations: OperationsDefSrc = {
+    document: { type: HttpOperationType.CRUD, path: `/document` },
+    documentList: { type: HttpOperationType.READ, path: `/document` },
+    documentCampaignList: { type: HttpOperationType.READ, path: `/document/campaign` },
     health: { type: HttpOperationType.SIMPLE, path: `/health` },
     provinces: { type: HttpOperationType.READ, path: `/provinces` },
-    approach: { type: HttpOperationType.CRUD, path: `/approach` },
-    autonomousCommunity: { type: HttpOperationType.CRUD, path: '/autonomous_communitys', },
+    campaignProposal: { type: HttpOperationType.CRUD, path: `/campaign_proposal` },
+    protocol: { type: HttpOperationType.CRUD, path: `/protocol` },
+    protocolListCampaign: { type: HttpOperationType.READ, path: `/protocol/campaign` },
+    protocolQuestionsList: { type: HttpOperationType.READ, path: `/protocol/code` },
+    phaseCampaign: { type: HttpOperationType.CRUD, path: `/phase_campaign` },
+    campaign: { type: HttpOperationType.CRUD, path: `/campaign` },
+    protocolFileUpload: { type: HttpOperationType.SIMPLE, path: `/document/create` },
+    ambit: { type: HttpOperationType.CRUD, path: `/ambit` },
+    responsibleEntity: { type: HttpOperationType.CRUD, path: `/autonomous_community` },
+    campaignType: { type: HttpOperationType.CRUD, path: `/campaign_type` },
+    participants: { type: HttpOperationType.CRUD, path: `/autonomous_community` },
+    proponents: { type: HttpOperationType.CRUD, path: `/proponent` },
+    specialists: { type: HttpOperationType.CRUD, path: `/specialist` },
+    autonomousCommunity: { type: HttpOperationType.CRUD, path: '/autonomous_community', },
+    infringement: { type: HttpOperationType.CRUD, path: '/infringement', },
     authority: { type: HttpOperationType.READ, path: '/authority_dgc', },
     origins: { type: HttpOperationType.READ, path: '/origins', },
     moduleTypes: { type: HttpOperationType.CRUD, path: '/module_types' },
-    modules: { type: HttpOperationType.CRUD, path: '/modules' },
+    modules: { type: HttpOperationType.CRUD, path: '/module' },
     fieldTypes: { type: HttpOperationType.READ, path: '/field-types' },
     fields: { type: HttpOperationType.CRUD, path: '/fields' },
-    entities: { type: HttpOperationType.CRUD, path: '/entities' },
+    entities: { type: HttpOperationType.CRUD, path: '/autonomous_community' },
     entityTypes: { type: HttpOperationType.CRUD, path: '/entity_types' },
     elementFormats: { type: HttpOperationType.READ, path: `/element-formats` },
     users: { type: HttpOperationType.CRUD, path: '/users', },
     userType: { type: HttpOperationType.CRUD, path: '/user_type', },
     usersView: { type: HttpOperationType.READ, path: `/users/simple` },
-    profiles: { type: HttpOperationType.CRUD, path: '/profiles' },
+    profiles: { type: HttpOperationType.CRUD, path: '/profile' },
     roles: { type: HttpOperationType.CRUD, path: '/roles' },
     permissions: { type: HttpOperationType.READ, path: `/permissions` },
     fieldModules: { type: HttpOperationType.CRUD, path: '/field_modules' },
@@ -50,19 +66,27 @@ export const crudOperationsStorageFactory = () => {
     businessRuleDefinitions: { type: HttpOperationType.READ, path: `/business_rules/definitions` },
     infoTypes: { type: HttpOperationType.READ, path: `/info_types` },
     templateManagement: { type: HttpOperationType.CRUD, path: `/sample_templates` },
+    productServices: { type: HttpOperationType.CRUD, path: `/productServices` },
+    campaignProductService: { type: HttpOperationType.CRUD, path: `/campaignProductService` },
+    protocol_results: { type: HttpOperationType.CRUD, path: `/protocol_results` },
+    ipr: { type: HttpOperationType.CRUD, path: `/ipr` },
+  };
+
+  const userOperations: OperationsDefSrc = {
+    authRequest: {type: HttpOperationType.SIMPLE, path: `/auth/user/request`},
+    authLogIn: {type: HttpOperationType.SIMPLE, path: `/auth/user/sign_in`},
+    authLogOut: {type: HttpOperationType.SIMPLE, path: `/auth/user/sign_out`},
+    authDetails: {type: HttpOperationType.SIMPLE, path: `/auth/user/me`},
   };
 
   const authOperations: OperationsDefSrc = {
-    authRequest: { type: HttpOperationType.SIMPLE, path: `/auth/user/request` },
-    authLogIn: { type: HttpOperationType.SIMPLE, path: `/auth/user/sign_in` },
-    authLogOut: { type: HttpOperationType.SIMPLE, path: `/auth/user/sign_out` },
-    authDetails: { type: HttpOperationType.SIMPLE, path: `/auth/user/me` },
-    fakeLogIn: { type: HttpOperationType.SIMPLE, path: `/auth/user/fake-sign-in` },
+    manualLogIn: {type: HttpOperationType.SIMPLE, path: `/oauth/token`},
   };
 
   return CrudOperationStorage.from([
-    { baseUrl: gescoAppAPI.apiPath, operations: apiOperations },
-    { baseUrl: gescoAuthAPI.apiPath, operations: authOperations },
+    {baseUrl: gescoAppAPI.apiPath, operations: apiOperations},
+    {baseUrl: gescoAuthAPI.apiPath, operations: userOperations},
+    {baseUrl: gescoAuthAPI.srvPath, operations: authOperations},
   ]);
 };
 

@@ -10,7 +10,7 @@
 
 
 $typography-config: mat.define-typography-config(
-        $font-family: '"Lato"'
+        $font-family: '"Lato", sans-serif'
 );
 // Foreground Elements
 
@@ -217,7 +217,8 @@ $theme: mat.define-light-theme((
                 foreground: $mat-light-theme-foreground,
                 background: $mat-light-theme-background,
         ),
-        typography: $typography-config
+        typography: $typography-config,
+        density: -2
 ));
 
 $dark-theme: mat.define-dark-theme((
@@ -228,7 +229,8 @@ $dark-theme: mat.define-dark-theme((
                 foreground: $mat-dark-theme-foreground,
                 background: $mat-dark-theme-background,
         ),
-        typography: $typography-config
+        typography: $typography-config,
+        density: -2
 ));
 
 // Specific component overrides, pieces that are not in line with the general theming

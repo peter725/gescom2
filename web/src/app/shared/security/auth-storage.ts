@@ -1,38 +1,29 @@
-import { AuthDataResponse, UserSignInPetition } from '@libs/sdk/auth';
-import { TempAuthData } from './models';
-
+import {AuthDataResponse,} from '@libs/sdk/auth';
 
 export const USER_AUTH_KEY = 'auth';
-export const TEMP_AUTH_KEY = 'tmp_auth';
+export const USER_SESSION = 'user';
 
 export class AuthStorage {
 
-  static saveTempAuth(data: UserSignInPetition) {
-    this.saveItem(TEMP_AUTH_KEY, {
-      petitionId: data.petitionId,
-      relayId: data.relayId,
-      tempToken: data.tempToken,
-    });
-  }
-
-  static getTempAuth(): TempAuthData | undefined {
-    return this.getItem<TempAuthData>(TEMP_AUTH_KEY);
-  }
-
-  static clearTempAuth() {
-    localStorage.removeItem(TEMP_AUTH_KEY);
-  }
-
   static saveUserAuth(data: AuthDataResponse) {
     this.saveItem(USER_AUTH_KEY, { ...data });
+  }
+
+  static saveUserSession(data: any){
+    this.saveItem(USER_SESSION, { ...data });
   }
 
   static getUserAuth(): AuthDataResponse | undefined {
     return this.getItem<AuthDataResponse>(USER_AUTH_KEY);
   }
 
+  public static getUserSession(): any | undefined {
+    return this.getItem<any>(USER_SESSION);
+  }
+
   static clearUserAuth() {
     localStorage.removeItem(USER_AUTH_KEY);
+    localStorage.removeItem(USER_SESSION);
   }
 
   private static saveItem(key: string, data: Record<string, unknown>): void {

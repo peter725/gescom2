@@ -37,7 +37,7 @@ export class TableContainerComponent<T = any> implements OnInit {
 
   @Input() exportFormats: (string | BtnSrc)[] = [];
   @Input() resourceName = '';
-  @Input() downloadFilePrefix = 'GESCO';
+  @Input() downloadFilePrefix = 'GESCOM';
   @Input() downloadFileName = '';
   @Input() queryParams: RequestParams | undefined;
 

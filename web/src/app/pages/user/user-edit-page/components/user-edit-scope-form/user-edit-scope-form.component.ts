@@ -69,7 +69,6 @@ export class UserEditScopeFormComponent implements OnInit {
                 entity: { id: raw.entity.id },
             } as Scope;
 
-            console.log(payload)
 
             const config: RequestConfig = { resourceName: this.resourceName };
             if (this.activeOperation) {

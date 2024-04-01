@@ -18,7 +18,7 @@ export type AgencyInfo = {
   iconPositive: string;
 };
 
-export const appName = 'Gesco';
+export const appName = 'Gescom';
 
 export const version = new Version(getVersion());
 
@@ -32,30 +32,12 @@ export const government: AgencyInfo = {
   iconNegative: '',
 };
 
-export const aesan: AgencyInfo = {
-  fullName: 'Agencia española de seguridad alimentaria y nutrición',
-  shortName: 'AESAN',
-  webUrl: 'https://www.aesan.gob.es/AECOSAN/web/home/aecosan_inicio.htm',
-  iconColor: './assets/images/logos/logo_aesan_color.svg',
-  iconPositive: './assets/images/logos/logo_aesan_positive.svg',
-  iconNegative: './assets/images/logos/logo_aesan_negative.svg',
-};
-
 export const ministry: AgencyInfo = {
   fullName: 'Ministerio de Consumo',
   webUrl: 'https://www.consumo.gob.es/',
   iconColor: './assets/images/logos/logo-consumo.png',
   iconPositive: '',
   iconNegative: '',
-};
-
-export const PRTR: AgencyInfo = {
-  fullName: 'Plan de Recuperación, Transformación y Resiliencia',
-  shortName: 'PRTR',
-  webUrl: 'https://planderecuperacion.gob.es/',
-  iconColor: './assets/images/logos/logo_prtr_color.png',
-  iconPositive: './assets/images/logos/logo_prtr_negative.png',
-  iconNegative: './assets/images/logos/logo_prtr_positive.png',
 };
 
 export const dgc = {
@@ -67,13 +49,15 @@ export const dgc = {
 
 export const appOrigin = window.location.origin + environment.baseHref;
 
-const { auth, app } = environment.srv;
+const {auth, app} = environment.srv;
 export const gescoAppAPI = {
   srvPath: app.host,
   apiPath: app.host + app.api,
 };
 
 export const gescoAuthAPI = {
-  srvPath: 'auth.host',
-  apiPath: 'auth.host + auth.api',
+  srvPath: auth.host,
+  apiPath: auth.host + auth.api,
+  authorization: "Basic " + btoa(auth.username + ':' + auth.password)
 };
+

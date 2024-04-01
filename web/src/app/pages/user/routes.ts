@@ -11,6 +11,8 @@ export const USER_PAGE_ROUTES: Routes = [
   {
     path: 'consulta',
     data: {
+      requireAccess: 'user',
+      requireScope: 'rr',
       breadcrumb,
     },
     loadChildren: () => import('./').then(m => m.UserListPageModule),
@@ -18,13 +20,17 @@ export const USER_PAGE_ROUTES: Routes = [
   {
     path: '0',
     data: {
+      requireAccess: 'user',
+      requireScope: 'ww',
       breadcrumb,
     },
-    loadChildren: () => import('./').then(m => m.UserEditPageModule),
+    loadChildren: () => import('./').then(m => m.UserAddPageModule),
   },
   {
     path: ':id',
     data: {
+      requireAccess: 'user',
+      requireScope: 'ww',
       breadcrumb,
     },
     loadChildren: () => import('./').then(m => m.UserEditPageModule),

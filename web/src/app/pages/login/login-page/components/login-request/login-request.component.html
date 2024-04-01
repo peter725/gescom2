@@ -1,0 +1,64 @@
+<!-- Autenticación mientras cl@ve no funciona correctamente en producción -->
+<!-- Eliminar al poner en producción -->
+<!-- Gracias cl@ve -->
+<div *ngIf="(status.is$('INIT', 'ERROR') | async)  && !gcForm" class="text-center">
+  <tsw-raised-button
+    color="primary"
+    text="generic.actions.login"
+    loadingText="generic.actions.loggingIn"
+    errorText="text.err.loginFailed"
+    (click)="requestLogin()"
+  ></tsw-raised-button>
+</div>
+
+<div
+  class="flex flex-col justify-center items-center"
+>
+  <mat-form-field>
+    <mat-label>NIF</mat-label>
+    <input #nif matInput type="text" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Contraseña</mat-label>
+    <input #pass matInput type="password" required>
+  </mat-form-field>
+
+  <tsw-login-status
+
+    class="py-3.5 flex-1 flex flex-col justify-center"
+  ></tsw-login-status>
+
+  <div class="text-center">
+    <!--<tsw-stroked-button
+      text="Cancelar"
+      (click)="fakeLogin = false"
+    ></tsw-stroked-button>-->
+
+    <tsw-raised-button
+      text="Acceder"
+      color="primary"
+      class="ml-2"
+      (click)="doLogin(nif.value, pass.value)"
+    ></tsw-raised-button>
+  </div>
+</div>
+<!-- / Gracias cl@ve -->
+
+<!-- Habilitar cuando cl@ve funcione 100% seguro -->
+<!-- <div class="text-center">
+  <tsw-raised-button
+    color="primary"
+    text="generic.actions.login"
+    loadingText="generic.actions.loggingIn"
+    errorText="text.err.loginFailed"
+    (click)="requestLogin()"
+  ></tsw-raised-button>
+</div> -->
+
+<tsw-hidden-form
+  *ngIf="authForm"
+  [data]="authForm"
+  [autoSubmitAfter]="2000"
+></tsw-hidden-form>
+

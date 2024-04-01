@@ -7,7 +7,7 @@ import { ExportFileType, FileDownloaderImplService } from '@base/shared/export-f
 import { FilterService } from '@base/shared/filter';
 import { NotificationService } from '@base/shared/notification';
 import { BaseListPageComponent } from '@base/shared/pages/list';
-import { GAuthSubject } from '@base/shared/security';
+import { AppAuthSubject } from '@base/shared/security';
 import { BtnSrc } from '@libs/commons';
 import {
   CRUD_OPERATIONS,
@@ -45,7 +45,7 @@ export class SampleListPageComponent extends BaseListPageComponent<VSample> impl
     filterService: FilterService,
     private http: HttpClient,
     @Inject(CRUD_OPERATIONS) private operations: CrudOperationStorage,
-    private authContext: AuthContextService<GAuthSubject>,
+    private authContext: AuthContextService<AppAuthSubject>,
     private sampleCtx: AppContextService,
     protected notification: NotificationService,
     //private fileDownloader: FileDownloaderImplService,

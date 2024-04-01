@@ -14,10 +14,10 @@ export class UserListPageFilterComponent extends FilterComponent<UserFilterForm>
   protected buildQueryForm() {
     return this.fb.group<ControlsOf<UserFilterForm>>({
       name: this.fb.control(null),
-      firstSurname: this.fb.control(null),
-      secondSurname: this.fb.control(null),
+      surname: this.fb.control(null),
+      lastSurname: this.fb.control(null),
       email: this.fb.control(null),
-      nif: this.fb.control(null),
+      dni: this.fb.control(null),
       phone: this.fb.control(null),
       profile: this.fb.control(null),
       state: this.fb.control(null),

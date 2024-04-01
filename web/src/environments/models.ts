@@ -22,12 +22,13 @@ export type EnvironmentData = {
   srv: Services;
 };
 
+
 /**
  * Parámetros de configuración del servicio.
  */
 export type Services = {
   app: ServiceItem;
-  auth: ServiceItem;
+  auth: AuthItem;
 };
 
 /**
@@ -43,3 +44,22 @@ export type ServiceItem = {
    */
   api: string;
 };
+
+export type AuthItem = {
+  /**
+   * URL base del servicio definido.
+   */
+  host: string;
+  /**
+   * URL para la API pública del servicio.
+   */
+  api: string;
+  /**
+   * Username for Basic Auth
+   */
+  username: string;
+  /**
+   * Paswword for Basic Auth
+   */
+  password: string;
+}

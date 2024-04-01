@@ -5,7 +5,6 @@ import { BehaviorSubject, of, ReplaySubject, Subject } from 'rxjs';
 
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-form-container',
   templateUrl: './form-container.component.html',
   styleUrls: ['./form-container.component.scss'],

@@ -29,7 +29,7 @@ export class BreadcrumbsService {
     // Construct the breadcrumb hierarchy
     const root = this.router.routerState.snapshot.root;
     const breadcrumbs: Breadcrumb[] = [
-      { path: '/', title: 'Inicio', active: false },
+      { path: '/', title: 'Inicio', active: this.router.routerState.snapshot.url === '/app/inicio' ? true : false },
     ];
     this.addBreadcrumb(root, [], breadcrumbs);
 
@@ -47,7 +47,7 @@ export class BreadcrumbsService {
         const label = this.getLabel(route.data);
         this.translate.get(label).subscribe(title => breadcrumbs.push({
           title,
-          path: '/' + routeUrl.join('/'),
+          path: '/' + parentUrl.join('/'),
           active: !route.firstChild,
         }));
       }

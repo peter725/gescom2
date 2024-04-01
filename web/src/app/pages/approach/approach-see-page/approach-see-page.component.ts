@@ -1,4 +1,3 @@
-import {CreateUser, User} from "@libs/sdk/user";
 import {FORM_STATUS} from "@base/shared/components/form";
 import {ComponentStatus, ControlsOf} from "@libs/commons";
 import {EditPageBaseComponent} from "@base/shared/pages/edit-page-base.component";
@@ -18,7 +17,7 @@ import {Approach, CreateApproach} from "@libs/sdk/approach";
 
 export class ApproachSeePageComponent extends EditPageBaseComponent<Approach, CreateApproach> {
 
-    readonly resourceName = "approach";
+    readonly resourceName = "campaignProposal";
 
     protected override _createResourceTitle = "pages.approach.add";
     protected override _editResourceTitle = "pages.approach.see";
@@ -28,13 +27,16 @@ export class ApproachSeePageComponent extends EditPageBaseComponent<Approach, Cr
         return this.fb.group<ControlsOf<CreateApproach>>({
             id: this.fb.control(null),
             campaignTypeId: this.fb.control(null, [Validators.required]),
-            approach: this.fb.control(null, [Validators.required]),
-            justification: this.fb.control(null, [Validators.required]),
-            objective: this.fb.control(null, [Validators.required]),
-            viability: this.fb.control(null, [Validators.required]),
-            autonomousCommunity: this.fb.control(null),
+            approach: this.fb.control({value: null, disabled: true}),
+            justification: this.fb.control({value: null, disabled: true}),
+            objective: this.fb.control({value: null, disabled: true}),
+            viability: this.fb.control({value: null, disabled: true}),
+            autonomousCommunityName: this.fb.control({value: null, disabled: true}),
+            campaignTypeName: this.fb.control(null),
+            year: this.fb.control({value: null, disabled: true}),
+            date: this.fb.control(null),
+
         });
 
     }
-
 }

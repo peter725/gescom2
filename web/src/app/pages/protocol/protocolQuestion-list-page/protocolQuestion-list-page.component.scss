@@ -1,0 +1,54 @@
+.blockCheck {
+    display: flex;
+    margin-top: 20px;
+}
+  
+.blockCheck label input[type="checkbox"] {
+margin-left: 5px; 
+}
+
+.blockCheck label{
+    margin-right: 20px; 
+
+}
+
+.centeredChecks{
+    display: flex; /* Utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+}
+
+
+
+
+
+ .blockTable{
+    height: calc(80vh - 40px); /* Calcula la altura de los bloques restándole el espacio del margen entre ellos */
+  }
+
+  .blockChecks {
+
+    height: calc(10vh - 40px); /* Calcula la altura de los bloques restándole el espacio del margen entre ellos */
+  }
+  
+  .blockTable {
+    overflow-y: auto; /* Agrega un scrollbar vertical solo si es necesario */
+  }
+  
+  .blockCheck {
+    margin-top: 20px; /* Añade un espacio entre los bloques de checks */
+  }
+
+
+
+  
+//   .blockTable {
+//     flex: 1;
+//     overflow-y: auto; /* Agrega un scrollbar vertical solo a la tabla si es necesario */
+//   }
+  
+//   .blockChecks {
+//     padding-top: 20px; /* Espacio entre los bloques de checks */
+//   }
+
+

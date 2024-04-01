@@ -1,0 +1,98 @@
+<form [formGroup]="form">
+  <tsw-form-container>
+    <tsw-section-wrapper
+            class="mb-5"
+            headerLabel="{{'pages.protocol.edit' | translate}}"
+            icon="edit_note"
+    >
+
+      <div section-content>
+        <div class="grid grid-cols-4 gap-1.5 mb-2">
+          <!-- <mat-form-field class="col-span-1">
+            <mat-label>{{ 'fields.code' | translate }}</mat-label>
+            <input matInput formControlName="code" readonly>
+          </mat-form-field> -->
+
+          <mat-form-field class="col-span-4">
+            <mat-label>{{ 'fields.protocolFields.name' | translate }}</mat-label>
+            <input matInput formControlName="name">
+            <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="grid grid-cols-4 gap-1.5 mb-2">
+          <mat-form-field class="col-span-4">
+            <mat-label>{{ 'fields.nameCampaign' | translate }}</mat-label>
+            <input matInput formControlName="nameCampaign">
+          </mat-form-field>
+        </div>
+
+        <div class="mx-auto ">
+          <div class="table w-full border-collapse">
+            <div class="table-header-group bg-gray-200">
+              <div class="table-cell p-2 border border-gray-300 w-1/12">Orden</div>
+              <div class="table-cell p-2 border border-gray-300 w-2/12">Cod. Pregunta</div>
+              <div class="table-cell p-2 border border-gray-300 w-6/12">Pregunta *</div>
+              <div class="table-cell p-2 border border-gray-300 w-2/12">Infracción</div>
+              <div class="table-cell p-2 border border-gray-300 w-1/12">Resp</div>
+            </div>
+
+            <!-- Filas de la tabla -->
+            <div formArrayName="question" class="table-row-group">
+              <div *ngFor="let fila of question.controls; let i=index" [formGroupName]="i" class="table-row">
+                <div class="table-cell p-2 border border-gray-300">
+                  <input formControlName="orderQuestion" class="w-full" >
+                </div>
+
+                <div class="table-cell p-2 border border-gray-300">
+                  <input formControlName="codeQuestion" class="w-full">
+                </div>
+
+                <div class="table-cell p-2 border border-gray-300">
+                  <input formControlName="question" class="w-full">
+                </div>
+
+                <div class="table-cell p-2 border border-gray-300" style="position: relative;">
+                  <input formControlName="codeInfringement" readonly style="background: transparent; border: none; width: 100%;" onclick="this.blur();">
+                  <a (click)="openDialog(i)" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
+                    <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
+                  </a>
+                </div>
+
+                <div class="table-cell p-2 border border-gray-300">
+                  <button type="button" (click)="toggleResp(i)" class="w-full">
+                    {{ fila.get('response')?.value }}
+                  </button>
+                </div>
+
+                <!-- Agrega los demás campos aquí -->
+                <button type="button" (click)="eliminarFila(i)" class="text-red-500 hover:text-red-700">
+                  <span class="material-icons">delete_forever</span>
+                </button>
+                <button type="button" (click)="agregarFilaDespuesDe(i)" class="text-blue-500 hover:text-blue-700">
+                  <span class="material-icons">add_circle</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center mt-4"> <!-- Flex container para alinear a la derecha -->
+          <button type="button" mat-raised-button color="primary" (click)="agregarFila()"
+                  class="text-white font-bold py-2 px-4 rounded">
+            Añadir Fila
+          </button>
+        </div>
+
+      </div>
+
+    </tsw-section-wrapper>
+
+    <tsw-form-actions
+      [saveBtnSkipConfirmation]="form.invalid"
+      [cancelRedirectPath]="cancelRedirectPath"
+      (reset)="resetForm()"
+      (save)="saveForm()"
+    ></tsw-form-actions>
+
+  </tsw-form-container>
+</form>

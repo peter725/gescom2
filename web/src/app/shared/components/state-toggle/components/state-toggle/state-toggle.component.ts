@@ -126,7 +126,6 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
       this.btnIcon = '' + BTN_ON_ICON;
       this.btnColor = BTN_ON_COLOR;
     } else{
-      console.log("entra aqui 5");
       this.btnText = '' + BTN_ON_TEXT;
       this.btnIcon = '' + BTN_OFF_ICON;
       this.btnColor = BTN_OFF_COLOR;

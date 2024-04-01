@@ -1,0 +1,93 @@
+<div class="centered-title">
+  <h1>{{'fields.campaign.protocolDetails' | translate}}</h1>
+
+</div>
+<hr>
+<mat-dialog-content>
+  <div class="div-margin">
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.title' | translate}}</p>
+    <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.nameCampaign }}</h3>
+  </div>
+  
+  <div class="div-margin grid grid-cols-4 gap-1.5">
+    <div>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.year' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.year }}</h3>
+    </div>
+    <div>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.code' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.codeCpa }}</h3>
+    </div>
+    <div>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.campaignType' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.campaignType?.name }}</h3>
+    </div>
+    <div>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.ambit' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.ambit?.name }}</h3>
+    </div>
+  </div>
+  
+  <div class="div-margin">
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.responsible' | translate}}</p>
+    <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.autonomousCommunityResponsible?.name }}</h3>
+  </div>
+  
+  <div class="div-margin" >
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.participants' | translate}}</p>
+    <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ participantes }}</h3>
+  </div>
+
+  <hr>
+    <div class="centered-title nombre-protocolo">
+      <h2 class="text-base font-semibold leading-7">{{ protocol?.name }}</h2>
+    </div>
+  <hr class="mb-4">
+
+  <div class="flex flex-col gap-4">
+    <!-- Encabezados -->
+    <div class="flex border-b border-gray-200">
+      <div class="flex-grow header-titles p-4">
+        {{ 'fields.campaign.question' | translate }}
+      </div>
+      <div class="flex-none w-1/5 header-titles p-4">
+        {{ 'fields.campaign.codInfraction' | translate }}
+      </div>
+    </div>
+
+    <!-- Iteración sobre preguntas -->
+    <div class="flex flex-col">
+      <ng-container *ngFor="let pregunta of preguntas">
+        <ng-container *ngIf="pregunta.response == 'N'">
+          <!-- Pregunta con respuesta 'N' -->
+          <div class="flex border-b border-l border-gray-200 p-4 bg-gray-200">
+            {{ pregunta.question }}
+          </div>
+        </ng-container>
+        <ng-container *ngIf="pregunta.response == 'S'">
+          <!-- Pregunta con respuesta 'S' -->
+          <div class="flex border-b border-l border-gray-200 p-4">
+            <div class="flex-grow preguntas-blanco">
+              {{ pregunta.question }}
+            </div>
+            <div class="flex-none w-1/5 border-l border-gray-200 p-4">
+              {{ pregunta.codeInfringement }}
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="close()">Cerrar</button>
+  </div>
+  
+</mat-dialog-content>

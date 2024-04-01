@@ -1,7 +1,7 @@
 {
   "generic": {
     "actions": {
-      "add": "Añadir",
+      "add": "Alta",
       "addCondition": "Añadir expresión",
       "addField": "Añadir campo",
       "addScope": "Añadir ámbito",
@@ -78,16 +78,19 @@
     "actions": "Acciones",
     "address": "Dirección",
     "affectedProgrammesCode": "Programas afectados",
+    "ambit": "Ámbito",
     "amendmentInterval": "Intervalo de revisión EFSA",
-    "approach": {
+    "approach": "Propuesta",
+    "approachFields": {
       "approach": "Propuesta",
       "type": "Tipo de propuesta",
       "year": "Año",
+      "autonomousCommunity": "Comunidad autónoma",
       "campaign-proposal": {
         "title": "Propuesta de campaña",
         "campaign-type": {
-          "key1": "Alimenticios",
-          "key2": "No alimenticios",
+          "key1": "Productos Alimenticios",
+          "key2": "Productos No alimenticios",
           "key3": "Servicios"
         }
       },
@@ -101,11 +104,16 @@
     "attributeName": "Nombre del atributo",
     "authorityOEU": "Autoridad de la ficina de enlace unico",
     "authorityDGC": "autoridad de la dirección general de consumo",
+    "autonomusCommunity": "Comunidad autónoma",
     "baseTerm": "Término base",
     "behaviour": "Comportamiento",
     "body": "Cuerpo",
+    "campaignType": "Tipo de campaña",
     "catalogue": "Catálogo",
     "ccaa": "Comunidad autónoma",
+    "ccaaParticipants":"CCAA Participantes",
+    "ccaaProponents":"CCAA Proponentes",
+    "ccaaSpecialist":"CCAA Especialista",
     "code": "Código",
     "contactDetails": "Datos de contacto",
     "contactPerson": "Contacto",
@@ -161,6 +169,7 @@
     "implYear": "Año de implantación",
     "infoMessage": "Mensaje informativo",
     "infoType": "Tipo de mensaje",
+    "infringement": "Nombre de infracción",
     "insertionDate": "Fecha de inserción",
     "label": "Etiqueta",
     "lastUpdate": "Ultima actualización",
@@ -173,6 +182,8 @@
     "multiLanguage": "Multi-idioma",
     "multiple": "Múltiple",
     "name": "Nombre",
+    "nameApproach": "Propuesta",
+    "nameCampaign": "Nombre de campaña",
     "number": "Número",
     "nif": "NIF",
     "numberOfResults": "Nº de resultados",
@@ -185,10 +196,12 @@
     "operatorType":"Tipo de operador",
     "options": "Opciones",
     "order": "Orden",
+    "organism": "Organismo",
     "origin": "Origen",
     "parent": "Padre del ámbito",
     "password": "Contraseña",
     "permissions": "Permisos",
+    "phaseCampaign": "Fase/Estado",
     "phone": "Teléfono",
     "plan": "Plan",
     "planType":"Tipo de plan",
@@ -199,6 +212,11 @@
     "profile": "Perfil",
     "profiles": "Perfiles",
     "properties": "Propiedades",
+    "protocolFields": {
+      "code": "Código",
+      "name": "Nombre de protocolo",
+      "nameCampaign": "Nombre de campaña"
+    },
     "providerEntity": "Autoridad competente",
     "province": "Provincia",
     "pubCode": "Código de identificación",
@@ -209,6 +227,7 @@
     "role": "Rol",
     "registerInterval": "Intervalo de registro",
     "required": "Requerido",
+    "responsibleEntity": "C.A. Responsable",
     "sampleRegisterEnd": "Fin del período de registros",
     "sampleRegisterStart": "Inicio del período de registros",
     "sampleState": "Estado de la muestra",
@@ -266,11 +285,41 @@
     "year": "Año",
     "yearV0": "Año V0",
     "code_cpa": "Código/s CPA",
-    "campaign": "Campaña",
-    "responsable_entity": "Organismo/C.A. responsable",
-    "ccaa_participants":"CCAA participantes"
+    "campaign": {
+      "title": "Campaña",
+      "name": "Nombre",
+      "year": "Año",
+      "type": "Tipo de campaña",
+      "code": "Código/s CPA",
+      "campaignType": "Tipo de campaña",
+      "ambit": "Ámbito",
+      "phase": "Fase/Estado",
+      "responsible": "C.A. Responsable",
+      "participants": "CCAA Participantes",
+      "proponents": "CCAA Proponentes",
+      "specialist": "CCAA Especialista",
+      "requiredDoc": "Cargar los documentos",
+      "question": "Pregunta",
+      "codInfraction": "Cod. Infracción",
+      "protocolDetails": "Detalles del protocolo"
+    }
   },
   "text": {
+    "campaign": {
+        "library": "Biblioteca",
+        "title": "Campaña",
+        "add": "Alta de Campaña",
+        "list": "Consulta de Campañas",
+        "edit": "Modificar Campaña",
+        "name": "Nombre",
+        "year": "Año",
+        "inspection": "INSPECCIÓN: FASE ACTUAL",
+        "protocol": "Alta de protocolo",
+        "products": "Productos",
+        "resultados": "Resultados CCAA",
+        "planificationDocument": "Documento de planificación",
+        "trasparencySheet": "Ficha de transparencia"
+    },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},
       "justification": {"title": "2. JUSTIFICACIÓN"},
@@ -344,7 +393,8 @@
         "itemsPerPageLabel": "Elm. por página",
         "lastPageLabel": "Última página",
         "nextPageLabel": "Siguiente página",
-        "previousPageLabel": "Página anterior"
+        "previousPageLabel": "Página anterior",
+        "rangeLabel": "de"
       },
       "plan": {
         "authority": "Consulta Plan Authority",
@@ -353,9 +403,12 @@
         "procedure": "Consulta Document Procedure",
         "legal": "Consulta Legal Regulation"
       },
+      "permissionsPerRole": "Establecer permisos",
       "pleaseReview": "Por favor revisa los datos introducidos",
       "pleaseWait": "Por favor espera",
       "redirectToClave": "Redireccionando al servicio de cl@ve",
+      "finalPhase": "La campaña ya está en la fase final",
+      "errorPhase": "No se ha encontrado la fase actual",
       "sample": {
         "add": "Añadir una nueva muestra",
         "addAtLeastOne": "Añade al menos una entrada para completar el boletín analítico",
@@ -407,6 +460,10 @@
     "validation": {
       "disallowedName": "El valor introduction solo puede contener letras",
       "email": "Email incorrecto",
+      "number": "El valor debe ser numérico",
+      "zeroErrorMessage": "Debe ser mayor que 0",
+      "onlyIntegerValues": "El valor debe ser entero",
+      "maxValue": "El valor debe ser menor o igual que ",
       "generic": "Por favor revisa los datos",
       "invalidNif": "El NIF es incorrecto",
       "invalidFileFormat": "El formato de fichero es incorrecto",
@@ -415,14 +472,17 @@
       "maxlength": "El campo no puede tener más de {{ requiredLength }} caracteres",
       "min": "El valor debe ser al menos {{ min }}",
       "minlength": "El campo debe tener al menos {{ requiredLength }} caracteres",
-      "required": "El campo es obligatorio"
+      "required": "El campo es obligatorio",
+      "endDateLessThanStartDate": "Por favor, elige una fecha posterior a la de inicio.",
+      "matDatepickerMin": "La fecha no se corresponde con el año del ejercicio"
     }
   },
   "pages": {
     "approach": {
       "title": "Propuestas",
       "add": "Alta de propuesta",
-      "list": "Mis propuestas",
+      "list": "Consulta de propuestas",
+      "edit":"Modificar propuesta",
       "see": "Ver propuesta"
     },
     "businessRule": {
@@ -479,6 +539,12 @@
       "list": "Consulta tipos de campos"
     },
     "home": "Inicio",
+    "infringement": {
+      "title": "Infracciones",
+      "add": "Alta de infracción",
+      "edit": "Modificar infracción",
+      "list": "Consulta de infracciones"
+    },
     "login": {
       "title": "Conectarse"
     },
@@ -515,6 +581,12 @@
       "edit": "Modificar perfil",
       "list": "Consulta de perfiles"
     },
+    "role": {
+      "title": "Roles",
+      "add": "Alta de rol",
+      "edit": "Modificar rol",
+      "list": "Consulta de roles"
+    },
     "sample": {
       "title": "Muestras",
       "add": "Añadir muestra",
@@ -524,11 +596,23 @@
     "sampleForm": {
       "title": "Generador de formularios"
     },
-    "sampleSeason": {
+    "campaign": {
       "title": "Campañas",
-      "add": "Alta de Campaña",
-      "list": "Consulta de Campañas",
-      "edit": "Modificar Campaña"
+      "add": "Alta de campaña",
+      "list": "Consulta de campañas",
+      "edit": "Modificar campaña",
+      "see": "Ver campaña",
+      "protocol": "Alta de protocolo",
+      "finalResults": "Resultados finales",
+      "ipr": "IPR"
+    },
+    "protocol": {
+      "title": "Protocolo",
+      "add": "Alta de protocolo",
+      "list": "Consulta de protocolo",
+      "edit": "Modificar protocolo",
+      "copy": "Copiar protocolo",
+      "see": "Ver protocolo"
     },
     "sampleProgramming": {
       "title": "Programación de muestras",
@@ -555,6 +639,21 @@
     "helpModule": {
       "title": "Ayuda",
       "list": "Listado de ficheros"
+    },
+    "results": {
+      "title": "Resultados",
+      "protocolo": "Protocolo",
+      "producto": "Producto",
+      "ipr": "IPR",
+      "ca": "C.A.",
+      "ano": "Año",
+      "numEstablecimientos": "Nº de establecimientos",
+      "numExistentes": "Existentes",
+      "numControlados": "Controlados",
+      "tProductos": "Total de productos / servicios",
+      "tProdControlados": "Controlados",
+      "tProdCorrectos": "Correctos",
+      "tProdIncorrectos": "Incorrectos"
     }
   }
 }

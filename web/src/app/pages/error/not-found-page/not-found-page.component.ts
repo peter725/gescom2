@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { aesan, appName, version } from '../../../config/app';
+import { dgc, appName, version } from '@base/config/app';
 
 
 @Component({
@@ -10,5 +10,5 @@ import { aesan, appName, version } from '../../../config/app';
 export class NotFoundPageComponent {
   appName = appName;
   version = version.full;
-  aesan = aesan;
+  dgc = dgc;
 }

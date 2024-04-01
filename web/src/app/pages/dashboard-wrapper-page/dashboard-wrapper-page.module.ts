@@ -33,15 +33,18 @@ import {TswIconModule} from "@base/shared/components/icon";
     TranslateModule,
     TswSelectModule,
     FormExtensionModule,
-    TswIconModule,
+    TswIconModule
   ],
   declarations: [
     DashboardWrapperPageComponent,
     FooterComponent,
     HeaderComponent,
     LazyModuleLoadErrorComponent,
-    LazyModuleLoadingComponent,
+    LazyModuleLoadingComponent
   ],
+  exports: [
+    HeaderComponent
+  ]
 })
 export class DashboardWrapperPageModule {
 }

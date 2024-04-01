@@ -17,12 +17,11 @@ const EXPORTED_DECLARATIONS = [
   exports: EXPORTED_DECLARATIONS
 })
 export class AuthorizationModule {
-  static forRoot(authorizationConfigProvider: Provider, aclConfigProvider: Provider): ModuleWithProviders<AuthorizationModule> {
+  static forRoot(authorizationConfigProvider: Provider): ModuleWithProviders<AuthorizationModule> {
     return {
       ngModule: AuthorizationModule,
       providers: [
-        authorizationConfigProvider,
-        aclConfigProvider
+        authorizationConfigProvider
       ]
     };
   }

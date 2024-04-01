@@ -1,12 +1,11 @@
 import { Component, EventEmitter, HostBinding, Inject, Input, OnInit, Optional, Output } from '@angular/core';
-import { AbstractControl, ControlContainer } from '@angular/forms';
+import { AbstractControl, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { ComponentStatus } from '@libs/commons';
 import { FORM_STATUS } from '../tokens';
 
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-form-actions',
   templateUrl: './form-actions.component.html',
 })

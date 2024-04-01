@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router } from '@angular/router';
-import { AclService, AUTHORIZATION_OPTIONS, AuthorizationConfig, ResourceAccessKey } from '@libs/security';
+import {Inject, Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router} from '@angular/router';
+import {AuthContextService, AUTHORIZATION_OPTIONS, AuthorizationConfig, ResourceAccessKey} from '@libs/security';
 
 
 /**
@@ -20,10 +20,10 @@ import { AclService, AUTHORIZATION_OPTIONS, AuthorizationConfig, ResourceAccessK
  * }
  * </pre>
  */
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class CanAccessGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
-    private aclService: AclService,
+    private context: AuthContextService,
     private router: Router,
     @Inject(AUTHORIZATION_OPTIONS) private config: AuthorizationConfig
   ) {
@@ -45,13 +45,15 @@ export class CanAccessGuard implements CanActivate, CanActivateChild, CanLoad {
     if (!route.data) return true;
 
     const accessKey: ResourceAccessKey | undefined = route.data['requireAccess'];
+    const scopeAccess: ResourceAccessKey | undefined = route.data['requireScope'];
     if (!accessKey) return true;
 
-    const canAccess = await this.aclService.canAccess(accessKey);
+    const canAccess = this.context.instant().hasModule(accessKey) && (!scopeAccess || this.context.instant().hasScope(accessKey, scopeAccess));
+
     if (!canAccess) {
       const queryParams = route instanceof ActivatedRouteSnapshot ? route.queryParams : {};
-      const { unauthorized } = this.config.redirect;
-      await this.router.navigate([unauthorized], { queryParams });
+      const {unauthorized} = this.config.redirect;
+      await this.router.navigate([unauthorized], {queryParams});
     }
     return canAccess;
   }

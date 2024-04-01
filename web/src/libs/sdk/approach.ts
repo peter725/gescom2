@@ -8,16 +8,22 @@ export interface Approach extends SimpleModel, StatefulModel, TranslatedModel {
     objetive: string;
     viability: string;
     campaignTypeId: number;
+    campaignTypeName: string;
+
 }
+
 
 export interface CreateApproach {
     id: number | null;
-    autonomousCommunity: string | null;
+    autonomousCommunityName: string | null;
     approach: string | null;
     justification: string | null;
     objective: string | null;
     viability: string | null;
     campaignTypeId: number | null;
+    campaignTypeName: string | null;
+    year: number | null;
+    date: [] | null;
 
 }
 
@@ -28,6 +34,7 @@ export interface ApproachForm {
     objective: string | null;
     viability: string | null;
     campaignTypeId: number | null;
+    campaignTypeName: string | null;
 }
 
 export interface ApproachFilterForm extends AppQuerySource {

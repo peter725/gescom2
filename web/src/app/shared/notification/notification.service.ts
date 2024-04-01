@@ -41,7 +41,6 @@ export class NotificationService {
       color: this.getNotificationColor(src),
       type: src.type,
       details: src.details || [],
-
       expanded: false,
     };
   }
@@ -110,10 +109,12 @@ export class NotificationService {
     return {
       data,
       minWidth: '30%',
-      maxWidth: '30%',
-      minHeight: '5%',
+      maxWidth: '80%',
+      minHeight: '10%',
       hasBackdrop: false,
-      position: { top: '0.5rem', right: '.75rem' },
+      position: {
+        top: '30vh',
+        right: '30vw' },
     } as MatDialogConfig<Notification>;
   }
 

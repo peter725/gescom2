@@ -1,35 +1,91 @@
 import { SimpleModel, StatefulAltModel, StatefulModel } from './common';
 import {TypeCampaign} from "@libs/sdk/typeCampaign";
-import { ScopeCampaign } from './scopeCampaign';
-import { ResponsableEntityCampaign } from './responsableEntityCampaign';
+import { Ambit } from './ambit';
+import { AutonomousCommunity } from "@libs/sdk/autonomousCommunity";
+import { Proponent } from "@libs/sdk/proponent";
+import { Specialist } from "@libs/sdk/specialist";
+import { AppQuerySource } from '@libs/commons';
+import { PhaseCampaign } from '@libs/sdk/phaseCampaign';
+import { Protocol } from '@libs/sdk/protocol';
+import { ProductService } from './productService';
 
 /**
- * Default user structure.
+ * Default Campaign structure.
  */
 export interface Campaign extends SimpleModel, StatefulModel {
 
   year: number;
-  code_cpa: number;
-  campaign: string;
-  type: TypeCampaign;
-  scope: ScopeCampaign;
-  responsable_entity: string;
-
+  codeCpa: string;
+  nameCampaign: string;
+  campaignType: TypeCampaign;
+  ambit: Ambit;
+  autonomousCommunityResponsible: string;
+  phaseCampaign: PhaseCampaign | null;
+  protocols: Protocol[] | null;
+  campaignProductServiceDTOS: ProductService[] | null;
 }
 
 
 /**
- * Create a new user request structure.
+ * Create a new Campaign request structure.
  */
 export interface CreateCampaign {
   id: number | null;
 
   year: number | null;
-  code_cpa: number | null;
-  campaign: string | null;
-  type: TypeCampaign | null;
-  scope: ScopeCampaign | null;
-  responsable_entity: ResponsableEntityCampaign | null;
+  codeCpa: string | null;
+  nameCampaign: string | null;
+  campaignType: TypeCampaign | null;
+  ambit: Ambit | null;
+  autonomousCommunityResponsible: AutonomousCommunity | null;
+  participants: AutonomousCommunity[] | null;
+  proponents: Proponent[] | null;
+  specialists: Specialist[] | null;
+  protocols: Protocol[] | null;
+
+}
+
+export interface CampaignForm {
+
+  id: number | null;
+
+  year: number | null;
+  codeCpa: string | null;
+  nameCampaign: string | null;
+  campaignType: TypeCampaign | null;
+  ambit: Ambit | null;
+  autonomousCommunityResponsible: AutonomousCommunity | null;
+  participants: AutonomousCommunity[] | null;
+  proponents: Proponent[] | null;
+  specialists: Specialist[] | null;
+  phaseCampaign: PhaseCampaign | null;
+  protocols: Protocol[] | null;
+  createdAt?: string;
+  updatedAt?: string;
+  state?: number | null;
+  campaignProductServiceDTOS?: any[] | null;
+  protocolResultsDTOS?: any[] | null;
+}
+
+export interface CampaignIpr{
+  nameCampaign: string | null;
+  year: number | null;
+  protocols: Protocol[] | null;
+  porcentaje: number | null;
+  formula: string | null;
+  question: [] | null
+}
+
+
+export interface CampaignFilterForm extends AppQuerySource {
+  nameCampaign?: string;
+  year?: string;
+  campaignType?: string;
+  ambit?: string;
+  createdAtGTE?: string;
+  createdAtLTE?: string;
+  updatedAtGTE?: string;
+  updatedAtLTE?: string;
 
 }
 

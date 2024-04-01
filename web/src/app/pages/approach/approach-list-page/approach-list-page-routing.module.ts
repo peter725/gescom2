@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: ApproachListPageComponent,
-    title: 'pages.arbitration.list',
+    title: 'pages.approach.list',
     data: { breadcrumb: 'generic.actions.list' }
   }
 ];

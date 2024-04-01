@@ -1,6 +1,6 @@
-import {SimpleModel, StatefulAltModel} from "@libs/sdk/common";
+import { SimpleModel, StatefulModel } from '@libs/sdk/common';
 
-export interface TypeCampaign extends SimpleModel,StatefulAltModel{
+export interface TypeCampaign extends SimpleModel,StatefulModel{
 
     name: string;
 
@@ -8,5 +8,5 @@ export interface TypeCampaign extends SimpleModel,StatefulAltModel{
 
 export interface TypeCampaignForm {
     id: number | null;
-    name: string | null;
+    description: string | null;
 }

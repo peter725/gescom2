@@ -164,6 +164,7 @@ export abstract class CustomSelectBaseComponent<T = ComboValue>
   ) {
     super(parentFormGroup, parentForm, errorStateMatcher, ngControl, new Subject<void>());
     this.id = this.getComponentId();
+    console.log('this.id', this.id);
     if (this.ngControl != null) this.ngControl.valueAccessor = this;
   }
 
@@ -173,11 +174,14 @@ export abstract class CustomSelectBaseComponent<T = ComboValue>
    */
   @Input()
   set resourceName(resource: string) {
+    console.log('resource', resource);
     this._resourceName = resource;
     this._automaticLoad = true;
+    console.log('this._resourceName 1', this._resourceName);
   }
 
   get resourceName() {
+    console.log('this._resourceName 2', this._resourceName);
     return this._resourceName;
   }
 
@@ -188,12 +192,14 @@ export abstract class CustomSelectBaseComponent<T = ComboValue>
   set searchQueryParams(params: RequestParams) {
     this._dataSrcParams.queryParams = params;
     if (this.hasLoadedOnce) this.loadData();
+    console.log('this._dataSrcParams', this._dataSrcParams);
   }
 
   @Input()
   set searchPathParams(params: RequestParams) {
     this._dataSrcParams.pathParams = params;
     if (this.hasLoadedOnce) this.loadData();
+    console.log('this._dataSrcParams', this._dataSrcParams);
   }
 
   /**
@@ -420,10 +426,12 @@ export abstract class CustomSelectBaseComponent<T = ComboValue>
     if (this.onChangeFn) this.onChangeFn(value);
     this.valueSelected.emit(value);
     this.updateShouldLabelFloat();
+    console.log('value', value);
   }
 
   onTouch() {
     if (this.onTouchFn) this.onTouchFn();
+
   }
 
   resetValue() {

@@ -32,9 +32,9 @@ const AVAILABLE_OPERATIONS: {
     { code: OperationMode.ENDS_WITH, text: 'text.searchModes.endsWith' },
   ],
   number: [
-    { code: OperationMode.EQUALS, text: 'text.searchModes.contains' },
-    { code: OperationMode.LESSER_OR_EQUAL, text: 'text.searchModes.lesserOrEqual' },
-    { code: OperationMode.GREATER_OR_EQUAL, text: 'text.searchModes.greaterOrEqual' },
+    { code: OperationMode.EQUALS, text: 'text.searchModes.equals' },
+    // { code: OperationMode.LESSER_OR_EQUAL, text: 'text.searchModes.lesserOrEqual' },
+    // { code: OperationMode.GREATER_OR_EQUAL, text: 'text.searchModes.greaterOrEqual' },
   ]
 
 };
@@ -133,14 +133,13 @@ export class SearchInputComponent
   }
 
   get placeholder() {
-    console.log('get placeholder',this._placeholder);
     return this._placeholder;
   }
 
   @Input()
   set type(type: 'text' | 'number') {
     this._type = type;
-    if (type === this._type) return;
+    // if (type === this._type) return;
     this.updateOperations();
   }
 
@@ -172,7 +171,6 @@ export class SearchInputComponent
       };
     } else {
       next = obj;
-      console.log('writeValue 3', next);
     }
     // write external value
     this.value = next;
@@ -250,6 +248,7 @@ export class SearchInputComponent
 
   private updateOperations() {
     this.operations = [...AVAILABLE_OPERATIONS[this.type]];
+    this.form.controls.operation.setValue(this.operations[0].code)
   }
 
 }

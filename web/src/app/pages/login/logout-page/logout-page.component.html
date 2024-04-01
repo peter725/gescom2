@@ -1,0 +1,21 @@
+<div class="flex-col items-center justify-center">
+  <ng-container *ngIf="!logoutComplete">
+    <mat-spinner></mat-spinner>
+    <div class="text-center pt-4">
+      <h1>{{ 'text.other.logout.ongoing' | translate }}</h1>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="logoutComplete">
+    <mat-icon color="warn" class="login__status__indicator">verified_user</mat-icon>
+    <div class="text-center pt-4">
+      <h1>{{ 'text.other.logout.done' | translate }}</h1>
+    </div>
+  </ng-container>
+</div>
+
+<tsw-hidden-form
+  *ngIf="formData"
+  [data]="formData"
+  [autoSubmitAfter]="1000"
+></tsw-hidden-form>

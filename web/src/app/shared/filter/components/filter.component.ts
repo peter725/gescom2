@@ -25,6 +25,7 @@ export abstract class FilterComponent<T extends AppQuerySource = AppQuerySource>
   }
 
   async ngOnInit() {
+    console.log("ngOnInit filter.component.ts");
     await this.loadData();
   }
 
@@ -39,7 +40,7 @@ export abstract class FilterComponent<T extends AppQuerySource = AppQuerySource>
       source: this.getQuerySource(),
       useParams: { handling: '' }
     });
-
+    console.log("search filter.component.ts");
   }
 
   clear() {
@@ -66,6 +67,7 @@ export abstract class FilterComponent<T extends AppQuerySource = AppQuerySource>
   }
 
   private async loadData() {
+    console.log("loadData filter.component.ts");
     try {
       const external = await firstValueFrom(this.filterService.get(this.resourceName));
       this.updateSource(external.query.getSource());

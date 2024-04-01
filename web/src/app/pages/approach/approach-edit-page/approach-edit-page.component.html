@@ -1,0 +1,60 @@
+<form *ngIf="form" [formGroup]="form">
+  <tsw-form-container>
+    <tsw-tab-panel></tsw-tab-panel>
+    <tsw-section-wrapper class="mb-2" headerLabel="{{'pages.approach.edit' | translate}}" icon="edit_note">
+      <div section-content>
+        <fieldset>
+          <div class="grid grid-cols-1 mb-4">
+            <mat-radio-group aria-label="Select an option"
+                formControlName="campaignTypeId" class="flex gap-7">
+                <mat-label class="flex items-center opacity-60">{{ 'fields.approachFields.type' | translate }}:</mat-label>
+                <mat-radio-button [value]=1>{{ 'fields.approachFields.campaign-proposal.campaign-type.key1' |
+                    translate }}</mat-radio-button>
+                <mat-radio-button [value]=2>{{ 'fields.approachFields.campaign-proposal.campaign-type.key2' |
+                    translate }}</mat-radio-button>
+                <mat-radio-button [value]=3>{{ 'fields.approachFields.campaign-proposal.campaign-type.key3' |
+                    translate }}</mat-radio-button>
+                <mat-error class="!flex items-center" *ngIf="form.controls.campaignTypeId.touched">{{ form.controls.campaignTypeId.errors | extractValidationError }}</mat-error>
+              </mat-radio-group>
+          </div>
+
+          <div class="grid grid-cols-1 gap-1.5 mb-2">
+
+            <mat-form-field>
+              <mat-label>{{ 'fields.approachFields.campaign-proposal.title' | translate }}</mat-label>
+              <textarea matInput formControlName="approach" rows="2"></textarea>
+              <mat-error>{{ form.controls.approach.errors | extractValidationError }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid grid-cols-1 gap-1.5 mb-2">
+            <mat-form-field>
+              <mat-label>{{ 'fields.approachFields.justification' | translate }}</mat-label>
+              <textarea matInput formControlName="justification" rows="3"></textarea>
+              <mat-error>{{ form.controls.justification.errors | extractValidationError }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid grid-cols-1 gap-1.5 mb-2">
+            <mat-form-field>
+              <mat-label>{{ 'fields.approachFields.objectives' | translate }}</mat-label>
+              <textarea matInput formControlName="objective" rows="3"></textarea>
+              <mat-error>{{ form.controls.objective.errors | extractValidationError }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid grid-cols-1 gap-1.5 mb-2">
+            <mat-form-field>
+              <mat-label>{{ 'fields.approachFields.technical-legal-viability' | translate }}</mat-label>
+              <textarea matInput formControlName="viability" rows="4"></textarea>
+              <mat-error>{{ form.controls.viability.errors | extractValidationError }}</mat-error>
+            </mat-form-field>
+          </div>
+        </fieldset>
+      </div>
+
+    </tsw-section-wrapper>
+    <tsw-form-actions [saveBtnSkipConfirmation]="form.invalid"
+      (reset)="resetForm()" (save)="submitForm()"></tsw-form-actions>
+  </tsw-form-container>
+</form>

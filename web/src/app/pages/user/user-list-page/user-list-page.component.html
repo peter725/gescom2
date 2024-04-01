@@ -1,12 +1,9 @@
-<tsw-breadcrumbs></tsw-breadcrumbs>
-
 <tsw-filters-container class="pt-3">
   <tsw-user-list-page-filter *tswCustomFilter="'advanced'"></tsw-user-list-page-filter>
 </tsw-filters-container>
 
 <tsw-table-container
         [resourceName]="resourceName"
-        [exportFormats]="exportFormats"
         [downloadFileName]="downloadFileName | translate"
         [queryParams]="previousRequestConfig?.queryParams"
         class="pt-3"
@@ -33,7 +30,7 @@
     ></tr>
 
     <ng-container matColumnDef="select" [sticky]="true">
-      <th mat-header-cell *matHeaderCellDef>
+      <th mat-header-cell *matHeaderCellDef >
         <mat-checkbox
           (click)="$event.stopPropagation()"
           (change)="selectAll($event)"
@@ -57,20 +54,20 @@
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+      <th *matHeaderCellDef mat-header-cell style="font-weight: bold">
         {{ "fields.name" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="surnames">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header="firstSurname">
+      <th *matHeaderCellDef mat-header-cell style="font-weight: bold" >
         {{ "fields.surnames" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>
-        {{ element.firstSurname }}
-        <ng-container *ngIf="element.secondSurname">
-          {{ element.secondSurname }}
+        {{ element.surname }}
+        <ng-container *ngIf="element.lastSurname">
+          {{ element.lastSurname }}
         </ng-container>
       </td>
     </ng-container>
@@ -79,32 +76,32 @@
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
         {{ "fields.firstSurname" | translate }}
       </th>
-      <td *matCellDef="let element" mat-cell>{{ element.firstSurname }}</td>
+      <td *matCellDef="let element" mat-cell>{{ element.surname }}</td>
     </ng-container>
 
     <ng-container matColumnDef="secondSurname">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
         {{ "fields.secondSurname" | translate }}
       </th>
-      <td *matCellDef="let element" mat-cell>{{ element.secondSurname }}</td>
+      <td *matCellDef="let element" mat-cell>{{ element.lastSurname }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="profile">
-      <th *matHeaderCellDef mat-header-cell>
-        {{ "fields.profile" | translate }}
+    <ng-container matColumnDef="role">
+      <th *matHeaderCellDef mat-header-cell style="width: 10%; font-weight: bold">
+        {{ "fields.role" | translate }}
       </th>
-      <td *matCellDef="let element" mat-cell>{{ element.profile?.name }}</td>
+      <td *matCellDef="let element" mat-cell>{{ element.role?.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="userType">
-      <th *matHeaderCellDef mat-header-cell>
+      <th *matHeaderCellDef mat-header-cell style="font-weight: bold">
         {{ "fields.userType" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.userType?.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="phone">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+      <th *matHeaderCellDef mat-header-cell  style="font-weight: bold">
         {{ "fields.phone" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>
@@ -113,7 +110,7 @@
     </ng-container>
 
     <ng-container matColumnDef="email">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+      <th mat-header-cell style="width: 30%; font-weight: bold" *matHeaderCellDef>
         {{ "fields.email" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>
@@ -125,17 +122,21 @@
       matColumnDef="actions"
       [stickyEnd]="true"
     >
-      <th *matHeaderCellDef mat-header-cell></th>
+      <th *matHeaderCellDef mat-header-cell style="width: 15%"></th>
       <td *matCellDef="let element" mat-cell class="text-right">
         <ng-container >
           <div class="additional-actions">
-            <a
+            <a *ngIf="canModify"
                     mat-button
-                    [routerLink]="'userManagementEdit' | namedRoute: { id: element.id }">
+                    [routerLink]="'userManagementEdit' | namedRoute: { id: element.id }"
+                    matTooltip="Editar"
+                    matTooltipPosition="above"
+            >
                     <mat-icon>edit</mat-icon>
             </a>
           </div>
           <tsw-state-toggle
+            *ngIf="canDelete"
             [data]="element"
             [resource]="resourceName"
           ></tsw-state-toggle>

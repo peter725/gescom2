@@ -1,0 +1,15 @@
+,----.   ,------. ,---.   ,-----. ,-----. ,--.   ,--.       ,------. ,------. ,---.,--------.
+'  .-./   |  .---''   .-' '  .--./'  .-.  '|   `.'   |,-----.|  .--. '|  .---''   .-'--.  .--'
+|  | .---.|  `--, `.  `-. |  |    |  | |  ||  |'.'|  |'-----'|  '--'.'|  `--, `.  `-.  |  |
+'  '--'  ||  `---..-'    |'  '--'\'  '-'  '|  |   |  |       |  |\  \ |  `---..-'    | |  |
+ `------' `------'`-----'  `-----' `-----' `--'   `--'       `--' '--'`------'`-----'  `--'
+========================================================
+Application War:      '${spring.application.name}'
+Application Version:  '${spring.application.version}'
+Application Timestamp:  '${spring.application.timestamp}'
+Application Profiles: '${spring.profiles.active}'
+Spring Boot Version:  '${spring-boot.version}'
+Port:                 '${server.port}'
+Jndi Name              '${jdbc.jndiName}'
+Jndi User              '${jdbc.username}'
+========================================================

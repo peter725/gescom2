@@ -6,6 +6,7 @@ export type MenuItem = {
   text: string;
   // requireAccess?: ResourceAccessKey;
   requireAccess?: string;
+  requireScope?: string;
   path?: string;
   icon?: string;
   expanded?: boolean;

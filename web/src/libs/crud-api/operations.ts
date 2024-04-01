@@ -46,6 +46,7 @@ export interface OperationDef extends HttpOperationDef {
 export interface CrudOperationsDef {
   findAll: HttpOperationDef,
   findById: HttpOperationDef,
+  findAllFilter: HttpOperationDef,
   create: HttpOperationDef,
   update: HttpOperationDef,
   changeState: HttpOperationDef,
@@ -83,6 +84,7 @@ export class RestCrudOperation {
   private readonly operations: Readonly<{
     findAll: HttpOperationDef,
     findById: HttpOperationDef,
+    findAllFilter: HttpOperationDef,
     create: HttpOperationDef,
     update: HttpOperationDef,
     changeState: HttpOperationDef,
@@ -109,6 +111,10 @@ export class RestCrudOperation {
       path: `${ baseUrl }${ operation.path }`,
       operations: {
         findAll: {
+          path: '',
+          hooks: operation.hooks || {}
+        },
+        findAllFilter: {
           path: '',
           hooks: operation.hooks || {}
         },
@@ -148,7 +154,7 @@ export class RestCrudOperation {
     if (operation.type === HttpOperationType.CRUD) {
       src.operations.create.path = custom?.create?.path || '/create';
       src.operations.update.path = custom?.update?.path || '/update/:id';
-      src.operations.changeState.path = custom?.changeState?.path || '/patch/:id/status';
+      src.operations.changeState.path = custom?.changeState?.path || '/:id/switch';
       src.operations.delete.path = custom?.delete?.path || '/delete';
     }
 
@@ -166,6 +172,10 @@ export class RestCrudOperation {
 
   findAll(params?: RequestParams): HttpOperationDef {
     return this.makeOperation(this.operations.findAll, params);
+  }
+
+  findAllFilter(params?: RequestParams): HttpOperationDef {
+    return this.makeOperation(this.operations.findAllFilter, params);
   }
 
   findById(params?: RequestParams): HttpOperationDef {

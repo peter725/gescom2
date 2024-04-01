@@ -1,0 +1,23 @@
+<!--<div class="flex justify-center mb-4">-->
+<!--  <mat-spinner *ngIf="status.is$('PROCESS') | async"></mat-spinner>-->
+
+<!--  <mat-icon-->
+<!--    *ngIf="status.is$('ERROR') | async"-->
+<!--    color="warn"-->
+<!--    class="login__status__indicator"-->
+<!--  >error</mat-icon>-->
+
+<!--  <mat-icon-->
+<!--    *ngIf="status.is$('DONE') | async"-->
+<!--    color="primary"-->
+<!--    class="login__status__indicator"-->
+<!--  >verified_user</mat-icon>-->
+<!--</div>-->
+
+<div class="text-center h-6">
+  <p class="flex items-center" *ngIf="message$ | async as msg" >  <mat-icon
+    *ngIf="status.is$('ERROR') | async"
+    color="warn"
+  >error</mat-icon>
+    {{ msg | translate }}</p>
+</div>

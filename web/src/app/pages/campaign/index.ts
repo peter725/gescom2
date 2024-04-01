@@ -1,2 +1,7 @@
 export * from './campaign-add-page/campaign-add-page.module';
-// export * from './approach-list-page/approach-list-page.module';
+export * from './campaign-edit-page/campaign-edit-page.module';
+export * from './campaign-list-page/campaign-list-page.module';
+export * from './campaign-see-page/campaign-see-page.module';
+export * from './campaign-see-page/resultados/resultados.module';
+export * from './campaign-see-page/resultados-finales/resultados-finales.module';
+export * from './campaign-see-page/ipr/ipr.module';

@@ -4,7 +4,6 @@ import { Notification, NotificationDef } from '@base/shared/notification/models'
 
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tsw-notification-dialog',
   templateUrl: './notification-dialog.component.html',
 })

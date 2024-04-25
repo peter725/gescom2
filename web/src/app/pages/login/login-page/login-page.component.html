@@ -4,13 +4,24 @@
     <div class="grid grid-cols-3 sm:grid-cols-4">
       <!-- <div class="col-start-2 col-span-2 text-center py-6 border-b border-b-slate-200"> -->
       <div class="text-center py-6 border-b border-b-slate-200 col-span-2 sm:col-start-2">
-        <tsw-logo
-          *ngFor="let org of organizations"
-          class="inline-block h-12 xs:h-16 xl:h-20 2xl:h-24"
-          [text]="org.fullName"
-          [imgSrc]="org.iconColor"
-          [targetLink]="org.webUrl"
-        ></tsw-logo>
+        <div>
+          <tsw-logo
+            *ngFor="let org of organizations"
+            class="inline-block h-12 xs:h-16 xl:h-20 2xl:h-24"
+            [text]="org.fullName"
+            [imgSrc]="org.iconColor"
+            [targetLink]="org.webUrl"
+          ></tsw-logo>
+        </div>
+
+        <div>
+          <tsw-logo
+            *ngFor="let org of organizations2"
+            class="inline-block h-12 xs:h-16 xl:h-20 2xl:h-24"
+            [text]="org.fullName"
+            [imgSrc]="org.iconColor"
+          ></tsw-logo>
+        </div>
       </div>
 
 

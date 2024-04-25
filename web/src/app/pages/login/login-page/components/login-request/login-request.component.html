@@ -1,16 +1,6 @@
 <!-- Autenticación mientras cl@ve no funciona correctamente en producción -->
 <!-- Eliminar al poner en producción -->
 <!-- Gracias cl@ve -->
-<div *ngIf="(status.is$('INIT', 'ERROR') | async)  && !gcForm" class="text-center">
-  <tsw-raised-button
-    color="primary"
-    text="generic.actions.login"
-    loadingText="generic.actions.loggingIn"
-    errorText="text.err.loginFailed"
-    (click)="requestLogin()"
-  ></tsw-raised-button>
-</div>
-
 <div
   class="flex flex-col justify-center items-center"
 >
@@ -29,7 +19,7 @@
     class="py-3.5 flex-1 flex flex-col justify-center"
   ></tsw-login-status>
 
-  <div class="text-center">
+  <div class="text-center flex gap-2">
     <!--<tsw-stroked-button
       text="Cancelar"
       (click)="fakeLogin = false"
@@ -41,6 +31,17 @@
       class="ml-2"
       (click)="doLogin(nif.value, pass.value)"
     ></tsw-raised-button>
+
+    <div *ngIf="(status.is$('INIT', 'ERROR') | async)  && !gcForm" class="text-center mb-6">
+      <!-- style="background-image: url('../assets/images/logos/logo_clave_color.png'); background-size: cover;" -->
+      <tsw-raised-button
+        color="primary"
+        text="generic.actions.login"
+        loadingText="generic.actions.loggingIn"
+        errorText="text.err.loginFailed"
+        (click)="requestLogin()"
+      ></tsw-raised-button>
+    </div>
   </div>
 </div>
 <!-- / Gracias cl@ve -->

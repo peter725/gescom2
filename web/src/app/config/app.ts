@@ -35,7 +35,23 @@ export const government: AgencyInfo = {
 export const ministry: AgencyInfo = {
   fullName: 'Ministerio de Consumo',
   webUrl: 'https://www.consumo.gob.es/',
-  iconColor: './assets/images/logos/logo-consumo.png',
+  iconColor: './assets/images/logos/MDSCA.png',
+  iconPositive: '',
+  iconNegative: '',
+};
+
+export const prtr: AgencyInfo = {
+  fullName: 'Plan de Recuperación, Transformación y Resiliencia',
+  webUrl: '',
+  iconColor: './assets/images/logos/prtr_color.png',
+  iconPositive: '',
+  iconNegative: '',
+};
+
+export const ue: AgencyInfo = {
+  fullName: 'Unión Europea',
+  webUrl: '',
+  iconColor: './assets/images/logos/ue_nextgeneration.jpg',
   iconPositive: '',
   iconNegative: '',
 };

@@ -61,13 +61,13 @@
             {
               "type": "anyComponentStyle",
               "maximumWarning": "2kb",
-              "maximumError": "4kb"
+              "maximumError": "200kb"
             }
           ],
           "fileReplacements": [
             {
-              "replace": "gesco/web/src/environments/environment.ts",
-              "with": "gesco/web/src/environments/environment.pre.ts"
+              "replace": "src/environments/environment.ts",
+              "with": "src/environments/environment.pre.ts"
             }
           ],
           "baseHref": "/GESCOM/",
@@ -90,6 +90,12 @@
               "type": "anyComponentStyle",
               "maximumWarning": "2kb",
               "maximumError": "200kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "src/environments/environment.ts",
+              "with": "/src/environments/environment.dev.ts"
             }
           ],
           "baseHref": "/GESCOM/",
@@ -118,11 +124,17 @@
         "production": {
           "browserTarget": "gesco:build:production"
         },
+        "dev": {
+          "browserTarget": "gesco:build:dev"
+        },
+        "pre": {
+          "browserTarget": "gesco:build:pre"
+        },
         "local": {
           "browserTarget": "gesco:build:local"
         }
       },
-      "defaultConfiguration": "local"
+      "defaultConfiguration": "dev"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

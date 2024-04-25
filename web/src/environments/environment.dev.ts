@@ -7,14 +7,16 @@ export const environment: EnvironmentData = {
   baseHref: '/gescom',
   srv: {
     app: {
-      host: 'http://micapps01des.consumo.gob.es:8080/gescom-rest-app',
+      //host: 'http://micapps01des.consumo.gob.es:8080/gescom-rest-app',
+      host: 'http://micapps01pre.consumo.gob.es:8080/gescom-rest-app',
       api: '/api/v1',
     },
     auth: {
-      host: 'https://gescom-web-jee-r01a-id-vs-1.msc.es/jwtrest',
+      //host: 'http://micapps01des.consumo.gob.es:8080/gescom-auth-app',
+      host: 'http://micapps01pre.consumo.gob.es:8080/gescom-auth-app',
       api: '/api/v1',
-      username: '',
-      password: ''
+      username: 'GESCOM',
+      password: 'GESCOM'
     },
   },
 };

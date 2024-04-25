@@ -11,10 +11,10 @@ export const environment: EnvironmentData = {
       api: '/api/v1',
     },
     auth: {
-      host: 'https://gescom-web-jee-r01a-iq-vs-1.msc.es/jwtrest',
+      host: 'http://micapps01pre.consumo.gob.es:8080/gescom-auth-app',
       api: '/api/v1',
-      username: '',
-      password: ''
+      username: 'GESCOM',
+      password: 'GESCOM'
     },
   },
 };

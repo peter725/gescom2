@@ -157,7 +157,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <activatedProperties>local,swagger,jdbc</activatedProperties>
+                <activatedProperties>local,swagger,jndi-jdbc</activatedProperties>
                 <env.domain>local</env.domain>
                 <baseURL>http://localhost:8085</baseURL>
                 <pathLogs>C:/home/maldonado/OneDrive/Documents/Documents</pathLogs>
@@ -177,7 +177,7 @@
         <profile>
             <id>dev</id>
             <properties>
-                <activatedProperties>dev,swagger,jndi</activatedProperties>
+                <activatedProperties>dev,swagger,jndi-jdbc</activatedProperties>
                 <env.domain>dev</env.domain>
                 <baseURL>http://micapps01des.consumo.gob.es:8080</baseURL>
                 <pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
@@ -187,7 +187,7 @@
         <profile>
             <id>pre</id>
             <properties>
-                <activatedProperties>pre,swagger,jndi</activatedProperties>
+                <activatedProperties>pre,swagger,jndi-jdbc</activatedProperties>
                 <env.domain>pre</env.domain>
                 <baseURL>http://micapps01pre.consumo.gob.es:8080</baseURL>
                 <pathLogs>/documentospro/logs/GESCOM.log</pathLogs>

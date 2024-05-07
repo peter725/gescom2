@@ -20,12 +20,25 @@ public class JNDIConfig {
     }
 
    @Bean
-    public DataSource dataSource(Environment env) {
+   public DataSource dataSource(Environment env) {
+       final BasicDataSource source = getDataSource(env);
+       final String password = getPassword(env);
+       source.setUsername(env.getProperty("jdbc.username"));
+       source.setPassword(password);
+       return source;
+   }
+
+    protected BasicDataSource getDataSource(Environment env) {
         JndiDataSourceLookup lookup = new JndiDataSourceLookup();
-        BasicDataSource source = (BasicDataSource) lookup.getDataSource(env.getProperty("jdbc.jndiName"));
-        String password = encrypterService.decrypt(env.getProperty("jdbc.password"));
-        source.setUsername(env.getProperty("jdbc.username"));
-        source.setPassword(password);
-        return source;
+        return (BasicDataSource) lookup.getDataSource(env.getProperty("jdbc.jndiName"));
     }
+
+    protected String getPassword(Environment env) {
+        return encrypterService.decrypt(env.getProperty("jdbc.password"));
+    }
+
+    /*protected String getPasswordtest(String env) {
+        return encrypterService.decrypt(env);
+    }*/
 }
+

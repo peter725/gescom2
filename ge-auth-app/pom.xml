@@ -268,7 +268,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<activatedProperties>local,jdbc</activatedProperties>
+				<activatedProperties>local,jndi-jdbc</activatedProperties>
 				<env.domain>local</env.domain>
                 <frontURL>http://localhost:4200/auth/login</frontURL>
 				<baseURL>http://localhost:8085</baseURL>
@@ -289,7 +289,7 @@
 		<profile>
 			<id>dev</id>
 			<properties>
-				<activatedProperties>dev,jndi</activatedProperties>
+				<activatedProperties>dev,jndi-jdbc</activatedProperties>
 				<env.domain>dev</env.domain>
                 <frontURL>http://micapps01des.consumo.gob.es:8080/GESCOM/auth/login</frontURL>
 				<baseURL>http://micapps01des.consumo.gob.es:8080/gescom-auth-app</baseURL>
@@ -300,7 +300,7 @@
 		<profile>
 			<id>pre</id>
 			<properties>
-				<activatedProperties>pre,jndi</activatedProperties>
+				<activatedProperties>pre,jndi-jdbc</activatedProperties>
 				<env.domain>pre</env.domain>
                 <frontURL>http://micapps01pre.consumo.gob.es:8080/GESCOM/auth/login</frontURL>
 				<baseURL>http://micapps01pre.consumo.gob.es:8080</baseURL>

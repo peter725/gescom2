@@ -67,8 +67,6 @@
             <artifactId>tomcat-dbcp</artifactId>
             <version>9.0.82</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -101,5 +99,12 @@
             <artifactId>commons-codec</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- /Test unitarios -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>

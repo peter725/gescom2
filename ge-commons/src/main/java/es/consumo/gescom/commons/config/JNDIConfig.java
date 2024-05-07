@@ -37,8 +37,8 @@ public class JNDIConfig {
         return encrypterService.decrypt(env.getProperty("jdbc.password"));
     }
 
-    /*protected String getPasswordtest(String env) {
+    public String getPasswordtest(String env) {
         return encrypterService.decrypt(env);
-    }*/
+    }
 }
 

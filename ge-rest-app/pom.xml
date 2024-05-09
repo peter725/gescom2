@@ -157,7 +157,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <activatedProperties>local,swagger,jndi-jdbc</activatedProperties>
+                <activatedProperties>local,swagger,jdbc</activatedProperties>
                 <env.domain>local</env.domain>
                 <baseURL>http://localhost:8085</baseURL>
                 <pathLogs>C:/home/maldonado/OneDrive/Documents/Documents</pathLogs>

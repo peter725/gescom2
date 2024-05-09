@@ -268,7 +268,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<activatedProperties>local,jndi-jdbc</activatedProperties>
+				<activatedProperties>local,jdbc</activatedProperties>
 				<env.domain>local</env.domain>
                 <frontURL>http://localhost:4200/auth/login</frontURL>
 				<baseURL>http://localhost:8085</baseURL>

@@ -22,8 +22,8 @@
         "assets": [
           "./src/favicon.ico",
           "./src/assets",
-          ".src/WEB-INF",
-          ".src/META-INF"
+          "./src/WEB-INF",
+          "./src/META-INF"
         ],
         "styles": [
           "@angular/material/prebuilt-themes/indigo-pink.css",

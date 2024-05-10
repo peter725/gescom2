@@ -7,11 +7,11 @@ export const environment: EnvironmentData = {
   baseHref: '/gescom',
   srv: {
     app: {
-      host: 'http://micapps01pre.consumo.gob.es:8080/gescom-rest-app',
+      host: 'https://servicios-pre.consumo.gob.es/gescom-rest-app',
       api: '/api/v1',
     },
     auth: {
-      host: 'http://micapps01pre.consumo.gob.es:8080/gescom-auth-app',
+      host: 'https://servicios-pre.consumo.gob.es/gescom-auth-app',
       api: '/api/v1',
       username: 'GESCOM',
       password: 'GESCOM'

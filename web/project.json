@@ -136,7 +136,7 @@
           "browserTarget": "gesco:build:local"
         }
       },
-      "defaultConfiguration": "dev"
+      "defaultConfiguration": "pre"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

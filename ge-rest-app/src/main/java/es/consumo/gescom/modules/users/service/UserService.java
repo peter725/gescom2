@@ -17,7 +17,7 @@ public interface UserService extends CrudService<UserEntity, Long> {
 
     UserDTO findByUserId(Long id);
 
-    UserEntity create(UserDTO userDTO);
+    UserEntity create(UserDTO userDTO) throws Exception;
 
     UserEntity update(UserDTO userDTO);
 

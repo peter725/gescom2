@@ -110,27 +110,37 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public UserEntity create(UserDTO userDTO) {
-        
+    public UserEntity create(UserDTO userDTO) throws Exception {
+        // Verificar si ya existe un usuario con el mismo DNI/NIF
+        LoginEntity existingLogin = (loginRepository.findByUsername(userDTO.getDni())).get();
+        if (existingLogin != null) {
+            throw new Exception("Un usuario con este DNI/NIF ya existe.");
+        }
+
+        // Creación de la entidad Login
         LoginEntity loginEntity = new LoginEntity();
         loginEntity.setUsername(userDTO.getDni());
         String password = new BCryptPasswordEncoder().encode("admin");
         loginEntity.setPassword(password);
         loginEntity.setLastAccess(null);
         loginEntity.setEnable(true);
-   //     loginEntity.setArbitrationBoard(null);
+        // loginEntity.setArbitrationBoard(null);
+
         RoleEntity roleEntity = roleRepository.findById(userDTO.getRole().getId()).orElseThrow();
         Set<RoleEntity> rolesSet = new HashSet<>();
         rolesSet.add(roleEntity);
         loginEntity.setRoles(rolesSet);
         loginRepository.save(loginEntity);
 
+        // Creación de la entidad User
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
         userEntity.setLogin(loginEntity);
         userEntity.setRole(roleEntity);
         repository.save(userEntity);
+
         return userEntity;
     }
+
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)

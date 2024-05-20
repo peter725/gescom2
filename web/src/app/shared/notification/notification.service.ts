@@ -3,11 +3,14 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { TranslateService } from '@ngx-translate/core';
 import { Notification, NotificationDef, NotificationOptions, NotificationSrc } from './models';
 import { NotificationDialogComponent } from './notification-dialog.component';
+import { Subject } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
 
+
+  private notificationCloseSubject = new Subject<void>();
   private activeRef: MatDialogRef<NotificationDialogComponent> | undefined;
   private activeData: Notification | undefined;
 
@@ -15,6 +18,14 @@ export class NotificationService {
     private dialog: MatDialog,
     private translate: TranslateService,
   ) {
+  }
+
+  closeNotification() {
+    this.notificationCloseSubject.next();
+  }
+
+  afterClosed() {
+    return this.notificationCloseSubject.asObservable();
   }
 
   show(src: NotificationSrc, opts: Partial<NotificationOptions> = {}) {

@@ -208,15 +208,15 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     let newPhase;
     let save = true;
 
-    if (actualPhase?.phase === PHASE_DATOS_INICIALES) {
+    if (actualPhase?.phase === PHASE_DATOS_INICIALES ) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_DOC_INSPECCION);
-    } else if (actualPhase?.phase === PHASE_DOC_INSPECCION) {
+    } else if (actualPhase?.phase === PHASE_DOC_INSPECCION || actualPhase?.phase === PHASE_DOC_INSPECCION_PROTOCOLO_DEBATE || actualPhase?.phase === PHASE_DOC_INSPECCION_PROTOCOLO_DEFINITIVO || actualPhase?.phase === PHASE_DOC_INSPECCION_PLAN_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_BORRADOR_RESULTADOS);
-    } else if (actualPhase?.phase === PHASE_BORRADOR_RESULTADOS) {
+    } else if (actualPhase?.phase === PHASE_BORRADOR_RESULTADOS || actualPhase?.phase === PHASE_BORRADOR_RESULTADOS_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_IMPRESO_DEFINITIVO);
-    } else if (actualPhase?.phase === PHASE_IMPRESO_DEFINITIVO) {
+    } else if (actualPhase?.phase === PHASE_IMPRESO_DEFINITIVO || actualPhase?.phase === PHASE_IMPRESO_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_RESULTADOS_DEFINITIVOS);
-    } else if (actualPhase?.phase === PHASE_RESULTADOS_DEFINITIVOS) {
+    } else if (actualPhase?.phase === PHASE_RESULTADOS_DEFINITIVOS || actualPhase?.phase === PHASE_RESULTADOS_DEFINITIVOS_PENDIENTES) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_RESULTADOS_FINALES);
     } else if (actualPhase?.phase === PHASE_RESULTADOS_FINALES || actualPhase?.phase === PHASE_RESULTADOS_FINALES_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_FICHA_TRANSPARENCIA);

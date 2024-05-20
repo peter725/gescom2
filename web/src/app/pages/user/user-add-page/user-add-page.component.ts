@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {FormGroup, Validators} from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
-import { ComponentStatus, ControlsOf } from '@libs/commons';
+import { AppError, ComponentStatus, ControlsOf } from '@libs/commons';
 import { CreateUser, User } from '@libs/sdk/user';
 import { CustomValidators } from '@libs/validators';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
@@ -37,5 +37,21 @@ export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser
     });
   }
 
+  protected override async afterSaveError(e: any) {
+    const err = AppError.parse(e);
+    this.notification.show({
+      title: 'Error al guardar usuario',
+      message: 'No se puede crear el usuario porque el NIF ya está registrado en el sistema.'
+    });
+
+    this.notification.afterClosed().subscribe(() => {
+      // Vuelve al formulario y coloca el foco en el campo DNI después de cerrar el diálogo de notificación.
+      /*this.form.controls['dni'];*/
+    });
+
+    // Resto del manejo de errores
+    this.status.status = 'IDLE';
+    this.form.markAsUntouched();
+  }
 
 }

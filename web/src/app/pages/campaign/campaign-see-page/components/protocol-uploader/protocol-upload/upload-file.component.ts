@@ -66,7 +66,7 @@ export class UploadFileComponent <T=any> {
   displayedColumns: string[] = ['name'];
   dataSource = [...ELEMENT_DATA];
   form: FormGroup;
-  selectedFile : File | undefined;
+  selectedFile: File | undefined;
   @ViewChild(MatTable) table: MatTable<FileData> | undefined;
 
   documentsArray: { id: number, name: string }[] = [];
@@ -79,9 +79,9 @@ export class UploadFileComponent <T=any> {
     private route: ActivatedRoute) {
 
     this.form = this.fb.group({
-      description : this.fb.control(null),
-      typeDocument : this.fb.control(null),
-      date : this.fb.control(null),
+      description: this.fb.control(null),
+      typeDocument: this.fb.control(null),
+      date: this.fb.control(null),
     });
   }
 
@@ -91,7 +91,7 @@ export class UploadFileComponent <T=any> {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['documents'].currentValue) this.loadDocuments();
+    if (changes['documents'].currentValue) this.loadDocuments();
   }
 
   //CARGAR DOCUMENTOS
@@ -100,7 +100,7 @@ export class UploadFileComponent <T=any> {
 
     this.documentsArray = [];
     const id = this.idCampaign;
-  
+
     if (this.documents && this.documents.length > 0) {
       // Itera sobre los documentos y guarda el nombre y el ID de cada uno en el array
       this.documents.forEach((document: { id: number, name: string, state: number }) => {
@@ -108,10 +108,10 @@ export class UploadFileComponent <T=any> {
           this.documentsArray.push({ id: document.id, name: document.name });
         }
       });
-  
+
       // Ordena el array por el ID de más nuevo a más viejo
       this.documentsArray.sort((a, b) => b.id - a.id);
-  
+
       // Muestra el array con los nombres e IDs de los documentos
       console.log('Documents Array:', this.documentsArray);
     } else {
@@ -122,7 +122,7 @@ export class UploadFileComponent <T=any> {
   // AGREGAR DOCUMENTO
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
-    console.log("Archivo="+this.selectedFile?.name)
+    console.log("Archivo=" + this.selectedFile?.name)
   }
 
   getExtensionFromFileName(fileName: string): string {
@@ -135,27 +135,27 @@ export class UploadFileComponent <T=any> {
       fileToB64(this.selectedFile).then(result => {
         // Obtener la extensión del archivo seleccionado
         const fileExtension = this.getExtensionFromFileName(this.selectedFile!.name);
-  
+
         // Crear el objeto para enviar a la API
         let nuevoDocumento: any = {
           campaignId: this.idCampaign,
           createAt: new Date().toISOString(),
           documentType: {
-            id: this.documentTypeId ? this.documentTypeId : 0, 
+            id: this.documentTypeId ? this.documentTypeId : 0,
             name: "Nombre del tipo de documento",
-            state: 1 
+            state: 1
           },
           name: result.name,
           extension: fileExtension,
-          base64: result.data, 
-          sign: "" 
+          base64: result.data,
+          sign: ""
         };
-  
+
         const config = {
           resourceName: 'document',
-          pathParams: {}, 
+          pathParams: {},
         };
-  
+
         // Enviar el nuevo documento a la API utilizando el servicio CRUD
         this.crudService.create(nuevoDocumento, config).subscribe(
           (response: any) => {
@@ -167,7 +167,7 @@ export class UploadFileComponent <T=any> {
             console.error("Error al agregar el documento:", error);
           }
         );
-  
+
       }).catch(error => {
         console.error("Error al convertir archivo a base64:", error);
       });
@@ -180,8 +180,8 @@ export class UploadFileComponent <T=any> {
   async deleteFile(idDocument: number) {
     console.log('id a borrar: ' + idDocument);
     try {
-      await this.crudService.deleteId(idDocument, { 
-        resourceName: 'document', 
+      await this.crudService.deleteId(idDocument, {
+        resourceName: 'document',
         pathParams: { id: idDocument } // Pasamos el ID del documento aquí
       }).toPromise();
       console.log('Documento eliminado correctamente');
@@ -203,18 +203,18 @@ export class UploadFileComponent <T=any> {
     };
     const operation = this.crudService.findById(documentID as number, config);
     const res = await firstValueFrom(operation);
-  
+
     if ('base64' in res && 'name' in res) {
       const documentData = res as unknown as DocumentResponse;
-      this.downloadBase64File(documentData.base64, documentData.name);
+      this.downloadBase64File(documentData.base64, documentData.name, documentData.extension);
 
     } else {
       console.error('Error: Invalid response format');
     }
   }
-  
-  downloadBase64File(base64Data: string, fileName: string) {
-    const blob = this.base64ToBlob(base64Data);
+
+  downloadBase64File(base64Data: string, fileName: string, extension: string) {
+    const blob = this.base64ToBlob(base64Data, extension);
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
     link.download = fileName;
@@ -223,16 +223,29 @@ export class UploadFileComponent <T=any> {
     document.body.removeChild(link);
   }
 
-  private base64ToBlob(base64Data: string) {
+  private base64ToBlob(base64Data: string, extension: string) {
     const byteString = atob(base64Data);
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    return new Blob([ab], { type: 'application/pdf' });
+
+    let mimeType = 'application/pdf'; // Default to PDF
+    switch (extension.toLowerCase()) {
+      case 'docx':
+        mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        break;
+      case 'xlsx':
+        mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        break;
+      case 'pdf':
+        mimeType = 'application/pdf';
+        break;
+    }
+
+    return new Blob([ab], { type: mimeType });
+
   }
 
 }
-
-

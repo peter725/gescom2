@@ -224,8 +224,10 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
             QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
             String question = questionsDTO.getQuestion();
+            String responsible = questionsDTO.getResponse();
             String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
             questionsResponseDTO.setQuestion(questionText);
+            questionsResponseDTO.setResponsible(responsible);
             questionsResponseDTO.setOrderQuestion(questionsDTO.getOrderQuestion());
 
             for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
@@ -254,6 +256,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         QuestionsResponseDTO questionsResponseDTODC1 = new QuestionsResponseDTO();
         questionsResponseDTODC1.setQuestion("Nro. de establecimientos existentes");
+        questionsResponseDTODC1.setResponsible("S");
         questionsResponseDTODC1.setOrderQuestion(maxOrderQuestion+1);
         questionsResponseDTODC1.setCodeQuestion("DC1");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
@@ -266,6 +269,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         QuestionsResponseDTO questionsResponseDTODC8 = new QuestionsResponseDTO();
         questionsResponseDTODC8.setQuestion("Nro. de establecimientos controlados");
+        questionsResponseDTODC8.setResponsible("S");
         questionsResponseDTODC8.setOrderQuestion(maxOrderQuestion+1);
         questionsResponseDTODC8.setCodeQuestion("DC8");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
@@ -279,6 +283,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         QuestionsResponseDTO questionsResponseDTODC9 = new QuestionsResponseDTO();
         questionsResponseDTODC9.setQuestion("Total de productos/servicios controlados");
         questionsResponseDTODC9.setOrderQuestion(maxOrderQuestion+1);
+        questionsResponseDTODC9.setResponsible("S");
         questionsResponseDTODC9.setCodeQuestion("DC9");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
             if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC9")) {
@@ -291,6 +296,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         QuestionsResponseDTO questionsResponseDTODC10 = new QuestionsResponseDTO();
         questionsResponseDTODC10.setQuestion("Total de productos/servicios correctos");
         questionsResponseDTODC10.setOrderQuestion(maxOrderQuestion+1);
+        questionsResponseDTODC10.setResponsible("S");
         questionsResponseDTODC10.setCodeQuestion("DC10");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
             if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC10")) {
@@ -303,6 +309,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         QuestionsResponseDTO questionsResponseDTODC11 = new QuestionsResponseDTO();
         questionsResponseDTODC11.setQuestion("Total de productos/servicios incorrectos");
         questionsResponseDTODC11.setOrderQuestion(maxOrderQuestion+1);
+        questionsResponseDTODC11.setResponsible("S");
         questionsResponseDTODC11.setCodeQuestion("DC11");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
             if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC11")) {

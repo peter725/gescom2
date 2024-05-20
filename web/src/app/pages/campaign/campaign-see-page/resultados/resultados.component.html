@@ -245,7 +245,7 @@
                   <!-- Filas de la tabla -->
                   <div class="table-row-group">
                     <tr *ngFor="let preg of preguntasProtocolo">
-                        <ng-container *ngIf="preg.response == 'N'">
+                        <ng-container *ngIf="preg.responsible == 'N'">
                             <!-- Pregunta con respuesta 'N' -->                        
                                 <td class="p-4 bg-gray-200">
                                     {{ preg['orderQuestion'] }}
@@ -259,7 +259,7 @@
                                 <td class="p-4 bg-gray-200"></td>
                         </ng-container>
 
-                        <ng-container *ngIf="preg.response == 'S'">
+                        <ng-container *ngIf="preg.responsible == 'S'">
                             <!-- Pregunta con respuesta 'S' -->                        
                                 <td class="p-4">
                                     {{ preg['orderQuestion'] }}

@@ -42,6 +42,7 @@ export interface QuestionsResponseDTO {
   numResponseSi: number;
   numResponseNo: number;
   numResponseNoProcede: number;
+  response: string;
 }
 
 

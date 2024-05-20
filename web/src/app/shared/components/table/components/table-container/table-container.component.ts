@@ -31,7 +31,7 @@ export class TableContainerComponent<T = any> implements OnInit {
 
   @Input() showFullScreen = true;
   @Input() showRefresh = true;
-  @Input() showSettings = true;
+  @Input() showSettings = false;
 
   @Input() loading = true;
 

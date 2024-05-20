@@ -180,7 +180,7 @@ export class ResultadosComponent implements OnInit{
   save() {
     let respuestasInvalid = false;
     this.preguntasProtocolo.forEach((preg) => {
-      if (preg.response === 'S' && preg.numResponseSi !== null && preg.numResponseNo !== null && preg.numResponseNoProcede !== null && 
+      if (preg.responsible === 'S' && preg.numResponseSi !== null && preg.numResponseNo !== null && preg.numResponseNoProcede !== null &&
         preg.numResponseSi !== undefined && preg.numResponseNo !== undefined && preg.numResponseNoProcede !== undefined) {
         if (preg.numResponseSi + preg.numResponseNo + preg.numResponseNoProcede !== this.totalProductosControlados) {
           respuestasInvalid = true;

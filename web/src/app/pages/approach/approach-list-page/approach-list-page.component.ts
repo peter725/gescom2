@@ -46,7 +46,7 @@ export class ApproachListPageComponent extends BaseListPageComponent<Approach> i
     //this.monitorCtxChanges();
   }
 
-  protected override async getRequestConfig(): Promise<RequestConfig> {
+  /*protected override async getRequestConfig(): Promise<RequestConfig> {
     const config = await super.getRequestConfig();
     //const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
 
@@ -55,7 +55,7 @@ export class ApproachListPageComponent extends BaseListPageComponent<Approach> i
       //scope,
     };
     return config;
-  }
+  }*/
 
   protected getColumns(): ColumnSrc[] {
     return ['year', 'type', 'autonomusCommunity', 'approach', 'actions'];

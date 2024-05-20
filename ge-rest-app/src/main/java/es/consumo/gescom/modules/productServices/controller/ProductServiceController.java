@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/productServices")
 @Tag(name = "Product Services controller")
-public class ProductServiceController extends AbstractCrudController<ProductServiceEntity, ProductServiceDTO, Long, FilterCriteria> {
+public class ProductServiceController extends AbstractCrudController<ProductServiceEntity, ProductServiceDTO, Long, ProductServiceCriteria> {
 
     @Autowired
     public ProductServiceController(ProductServiceService service, DataConverter<ProductServiceEntity, ProductServiceDTO> dataConverter) {

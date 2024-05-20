@@ -9,6 +9,7 @@ import es.consumo.gescom.modules.autonomousCommunity.model.criteria.AutonomousCo
 import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.autonomousCommunity.service.AutonomousCommunityService;
+import es.consumo.gescom.modules.campaignProposal.service.CampaignProposalService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/autonomous_community")
 @Tag(name = "Autonomous_Community controller")
-public class AutonomousCommunityController extends AbstractCrudController<AutonomousCommunityEntity, AutonomousCommunityDTO, Long, FilterCriteria> {
+public class AutonomousCommunityController extends AbstractCrudController<AutonomousCommunityEntity, AutonomousCommunityDTO, Long, AutonomousCommunityCriteria> {
 
     @Autowired
     public AutonomousCommunityController(AutonomousCommunityService service,
@@ -35,4 +36,11 @@ public class AutonomousCommunityController extends AbstractCrudController<Autono
                 ((AutonomousCommunityService) service).findAllAutonomousCommunityByName(new CriteriaWrapper<>(autonomousCommunityCriteria), name);
         return ResponseEntity.ok(result);
     }
+
+
+    @Override
+    protected Page<?> performFindAll(CriteriaWrapper<?> criteriaWrapper) {
+        return ((AutonomousCommunityService) service).findAllCCAAActive(criteriaWrapper);
+    }
+
 }

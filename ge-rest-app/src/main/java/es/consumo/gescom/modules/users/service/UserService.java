@@ -19,7 +19,7 @@ public interface UserService extends CrudService<UserEntity, Long> {
 
     UserEntity create(UserDTO userDTO) throws Exception;
 
-    UserEntity update(UserDTO userDTO);
+    UserEntity update(UserDTO userDTO) throws Exception;
 
     UserEntity switchStatus(ChangeStatusDTO changeStatus, Long id);
 }

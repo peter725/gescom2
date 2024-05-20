@@ -59,8 +59,13 @@ public class UserController extends AbstractCrudController<UserEntity, UserDTO, 
 
     @Override
     public ResponseEntity<Object> update(Long id, @Valid  @RequestBody UserDTO payload) {
-        UserEntity result = ((UserService) service).update(payload);
-        return ResponseEntity.ok(result);
+        UserEntity result = null;
+        try {
+            result = ((UserService) service).update(payload);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+            return ResponseEntity.ok(result);
     }
 
    /* @GetMapping("/data/{id}")

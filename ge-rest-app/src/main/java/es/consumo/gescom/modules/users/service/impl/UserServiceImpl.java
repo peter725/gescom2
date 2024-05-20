@@ -147,12 +147,18 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public UserEntity update(UserDTO userDTO) {
+    public UserEntity update(UserDTO userDTO) throws Exception {
 
         LoginEntity loginEntity = new LoginEntity();
         UserEntity userEntity = repository.findById(userDTO.getId()).orElseThrow();
         RoleEntity roleEntity = roleRepository.findById(userDTO.getRole().getId()).orElseThrow();
         if (userEntity.getLogin() == null){
+            // Verificar si ya existe un usuario con el mismo DNI/NIF
+
+            Optional<LoginEntity> existingLogin = loginRepository.findByUsername(userDTO.getDni());
+            if (existingLogin.isPresent()) {
+                throw new Exception("Un usuario con este DNI/NIF ya existe.");
+            }
             //Creación de la entidad Login
             loginEntity.setUsername(userDTO.getDni());
             String password = new BCryptPasswordEncoder().encode("admin");

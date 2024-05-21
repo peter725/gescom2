@@ -3,7 +3,6 @@ package es.consumo.gescom.modules.campaignProposal.controller;
 import es.consumo.gescom.commons.constants.ApiEndpoints;
 import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
-import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.campaignProposal.model.criteria.CampaignProposalCriteria;
@@ -21,7 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/campaign_proposal")
 @Tag(name = "Campaign Proposal controller")
-public class CampaignProposalController extends AbstractCrudController<CampaignProposalEntity, CampaignProposalDTO, Long, FilterCriteria> {
+public class CampaignProposalController extends AbstractCrudController<CampaignProposalEntity, CampaignProposalDTO, Long, CampaignProposalCriteria> {
 
     @Autowired
     public CampaignProposalController(CampaignProposalService service, DataConverter<CampaignProposalEntity, CampaignProposalDTO> dataConverter) {

@@ -9,7 +9,7 @@ import {ApproachFilterForm} from "@libs/sdk/approach";
 })
 export class ApproachListPageFilterComponent extends FilterComponent<ApproachFilterForm> {
 
-    readonly resourceName = 'approach';
+    readonly resourceName = 'campaignProposal';
 
     protected buildQueryForm(): FormGroup {
 
@@ -18,10 +18,10 @@ export class ApproachListPageFilterComponent extends FilterComponent<ApproachFil
             autonomusCommunity: this.fb.control(null),
             approach: this.fb.control(null),
             type: this.fb.control(null),
-            createdAtGTE: this.fb.control(null),
-            createdAtLTE: this.fb.control(null),
-            updatedAtGTE: this.fb.control(null),
-            updatedAtLTE: this.fb.control(null)
+            // createdAtGTE: this.fb.control(null),
+            // createdAtLTE: this.fb.control(null),
+            // updatedAtGTE: this.fb.control(null),
+            // updatedAtLTE: this.fb.control(null)
         });
     }
 }

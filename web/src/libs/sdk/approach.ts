@@ -38,12 +38,13 @@ export interface ApproachForm {
 }
 
 export interface ApproachFilterForm extends AppQuerySource {
+    year?: number;
     approach?: string;
     autonomousCommunity?: string;
-    campaignTypeId?: number;
-    createdAtGTE?: string;
-    createdAtLTE?: string;
-    updatedAtGTE?: string;
-    updatedAtLTE?: string;
+    type?: string;
+    // createdAtGTE?: string;
+    // createdAtLTE?: string;
+    // updatedAtGTE?: string;
+    // updatedAtLTE?: string;
 
 }

@@ -49,6 +49,7 @@
       "restrictHierarchy": "Restringir la jerarquía",
       "save": "Guardar",
       "search": "Buscar",
+      "searchSimple": "Buscar por todos los campos de la tabla",
       "see": "Ver",
       "selectAll": "Seleccionar todos",
       "selectOne": "Selecciona un valor",

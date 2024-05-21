@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 
-import java.util.List;
-
 @Repository
 public interface AutonomousCommunityRepository extends GESCOMRepository<AutonomousCommunityEntity, Long> {
 

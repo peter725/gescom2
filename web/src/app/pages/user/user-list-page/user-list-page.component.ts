@@ -3,13 +3,9 @@ import { ColumnSrc } from '@base/shared/collections';
 import { ExportFileType } from '@base/shared/export-file/export-file.model';
 import { FilterService } from '@base/shared/filter';
 import { BaseListPageComponent } from '@base/shared/pages/list';
-import { AppContextService } from '@base/shared/app-context';
-import { CrudImplService, RequestConfig, RequestParams } from '@libs/crud-api';
+import { CrudImplService, RequestConfig } from '@libs/crud-api';
 import { User } from '@libs/sdk/user';
-import { firstValueFrom, Observable } from 'rxjs';
-import { takeUntil, skip } from 'rxjs/operators';
 import { AuthContextService } from '@libs/security';
-
 
 @Component({
   selector: 'tsw-user-list-page',

@@ -106,33 +106,36 @@
                           <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No</div>
                           <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede</div>
                       </div>
-        
+
                       <!-- Filas de la tabla -->
                       <div class="table-row-group">
                         <tr *ngFor="let preg of preguntasProtocolo; let i = index"
                             [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0, 'no-responses': preg.responsible === 'N'}">
-                          <ng-container>
+                          <ng-container *ngIf="preg.responsible === 'N'; else showResponses">
+                            <td class="p-4" colspan="5" [ngClass]="{'text-highlight': preg.responsible === 'N'}">
+                              {{ preg.orderQuestion }} - {{ preg.question }}
+                            </td>
+                          </ng-container>
+                          <ng-template #showResponses>
                             <td class="p-4">
                               {{ preg.orderQuestion }}
                             </td>
                             <td class="p-4">
                               {{ preg.question }}
                             </td>
-                            <!-- Mostrar los campos de respuesta solo si responsible es 'S' -->
-                            <ng-container *ngIf="preg.responsible === 'S'">
-                              <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
-                              </td>
-                              <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
-                              </td>
-                              <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
-                              </td>
-                            </ng-container>
-                          </ng-container>
+                            <td class="p-4">
+                              <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
+                            </td>
+                            <td class="p-4">
+                              <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
+                            </td>
+                            <td class="p-4">
+                              <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
+                            </td>
+                          </ng-template>
                         </tr>
                       </div>
+
 
                     </div>
                 </div>

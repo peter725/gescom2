@@ -30,8 +30,9 @@ public interface ProductServiceRepository extends GESCOMRepository<ProductServic
     @Override
     @Query(value = "SELECT pr FROM ProductServiceEntity pr "
             + "WHERE "
-            + "(:#{#criteria.search} is null OR UPPER(pr.name) LIKE :#{#criteria.search}) "
-            + "OR (:#{#criteria.search} is null OR UPPER(pr.code) LIKE :#{#criteria.search}) "
+            + ":#{#criteria.search} is null "
+            + " OR UPPER(pr.name) LIKE :#{#criteria.search} "
+            + " OR UPPER(pr.code) LIKE :#{#criteria.search} "
     )
     public Page<ProductServiceEntity.SimpleProjection> findAllByCriteria(ProductServiceCriteria criteria, Pageable pageable);
 }

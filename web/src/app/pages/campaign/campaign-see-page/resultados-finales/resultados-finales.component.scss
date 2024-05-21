@@ -30,3 +30,13 @@
 .position-absolute {
   position: absolute;
 }
+
+.no-responses {
+  background-color: #f0f0f0; /* Color diferente para las filas sin respuestas */
+}
+
+.text-highlight {
+  color: #ff0000; /* Color de texto diferente */
+  font-weight: bold; /* Negrita para resaltar */
+  text-align: left; /* Alinear el texto a la izquierda */
+}

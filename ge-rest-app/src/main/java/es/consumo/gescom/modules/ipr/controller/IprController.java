@@ -10,6 +10,9 @@ import es.consumo.gescom.modules.ipr.model.criteria.IprCriteria;
 import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
 import es.consumo.gescom.modules.ipr.model.entity.IprEntity;
 import es.consumo.gescom.modules.ipr.service.IprService;
+import es.consumo.gescom.modules.totalProtocolResults.model.criteria.TotalProtocolResultsCriteria;
+import es.consumo.gescom.modules.totalProtocolResults.model.entity.TotalProtocolResultsEntity;
+import es.consumo.gescom.modules.totalProtocolResults.service.TotalProtocolResultsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/ipr")
@@ -40,4 +45,12 @@ public class IprController extends AbstractCrudController<IprEntity, IprDTO, Lon
     protected IprDTO performCreate(IprDTO payload) {
         return ((IprService) service).createIPR(payload);
     }
+
+    @GetMapping("/campaign/{campaignId}/{protocolId}")
+    public ResponseEntity<List<IprDTO>> findAllIprByCampaignIdAndProtocolId(@PathVariable Long campaignId, @PathVariable Long protocolId) {
+        List<IprDTO> result =
+                ((IprService) service).findAllIprByCampaignIdAndProtocolId(campaignId, protocolId);
+        return ResponseEntity.ok(result);
+    }
+
 }

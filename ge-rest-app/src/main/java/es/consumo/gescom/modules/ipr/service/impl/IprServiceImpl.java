@@ -156,8 +156,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         searchDTO.setCampaignId(campaignId);
         searchDTO.setProtocolId(protocolId);
 
-
-
         for (IprDTO iprDTO : iprDTOS) {
 
             for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntities) {
@@ -329,8 +327,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         return resultsResponseDTOS;
     }
-
-
 
     @Override
     public ResultsResponseDTO getResultsIpr(SearchDTO searchDTO) {

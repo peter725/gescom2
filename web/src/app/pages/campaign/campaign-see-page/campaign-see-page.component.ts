@@ -407,6 +407,15 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     });
   }
 
+  async deleteProtocol(protocol: Protocol): Promise<void> {
+    console.log(protocol);
+    await this.crudService.deleteId(protocol.id, {
+      resourceName: 'protocol',
+      pathParams: { id: protocol.id }
+    }).toPromise();
+    location.reload();
+  }
+
 
   protected readonly console = console;
 }

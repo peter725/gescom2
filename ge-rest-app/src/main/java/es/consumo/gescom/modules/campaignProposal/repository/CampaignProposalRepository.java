@@ -22,6 +22,7 @@ public interface CampaignProposalRepository extends GESCOMRepository<CampaignPro
             + "AND (:#{#criteria.autonomusCommunity} is null OR UPPER(b.name) LIKE :#{#criteria.autonomusCommunity}) "
             + "AND (:#{#criteria.type} is null OR UPPER(c.name) LIKE :#{#criteria.type}) "
             + "AND (:#{#criteria.year} is null OR YEAR(a.date) = :#{#criteria.year}) "
+            + "AND (:#{#criteria.state} is null OR a.state in :#{#criteria.state}) "
             + "AND ("
             + ":#{#criteria.search} is null "
             + "OR UPPER(a.approach) like :#{#criteria.search} "

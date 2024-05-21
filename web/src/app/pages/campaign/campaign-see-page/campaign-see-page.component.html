@@ -164,7 +164,7 @@
           </mat-card-content>
         </mat-card>
         
-
+        <!-- Protocolos -->
         <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)" 
           class="mt-6">
           <mat-card-content>
@@ -197,6 +197,9 @@
                     </button>
                     <button mat-button matTooltip="Descargar" (click)="clickExportExcel(protocol)">
                       <mat-icon>download</mat-icon>
+                    </button>
+                    <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="deleteProtocol(protocol)">
+                      <mat-icon>delete</mat-icon>
                     </button>
                   </div>
                 </div>

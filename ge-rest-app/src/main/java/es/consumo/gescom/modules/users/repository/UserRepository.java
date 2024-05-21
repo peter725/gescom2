@@ -21,6 +21,7 @@ public interface UserRepository extends GESCOMRepository<UserEntity, Long> , Que
         + "AND (:#{#criteria.dni} is null OR UPPER(a.dni) LIKE :#{#criteria.dni}) "
         + "AND (:#{#criteria.email} is null OR UPPER(a.email) LIKE :#{#criteria.email}) "
         + "AND (:#{#criteria.phone} is null OR UPPER(a.phone) LIKE :#{#criteria.phone}) "
+        + "AND (:#{#criteria.state} is null OR a.state in :#{#criteria.state}) "
         + "AND ("
         + ":#{#criteria.search} is null "
         + "OR UPPER(a.name) like :#{#criteria.search} )"

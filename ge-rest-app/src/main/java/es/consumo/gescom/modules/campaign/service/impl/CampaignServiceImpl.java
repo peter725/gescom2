@@ -408,10 +408,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         if (campaignCriteria.getNameCampaign() != null) {
             campaignCriteria.setNameCampaign(campaignCriteria.getNameCampaign().toUpperCase());
         }
-//        if (campaignCriteria.getYear() != null) {
-//            campaignCriteria.setYear(campaignCriteria.getYear().replaceAll("%", ""));
-//            campaignCriteria.setYearLong(Long.parseLong(campaignCriteria.getYear().replaceAll("%", "")));
-//        }
+        if (campaignCriteria.getState() == null || campaignCriteria.getState().length == 0) {
+            campaignCriteria.setState(new Integer[]{1});
+        }
         campaignCriteria.setSort(new String[]{"id;desc"});
         Page<CampaignEntity> campaignEntities = campaignRepository.findAllByCriteria(campaignCriteria, criteria.toPageable());
 

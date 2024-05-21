@@ -16,6 +16,7 @@ public interface RoleRepository extends GESCOMRepository<RoleEntity, Long>,
     @Query(value = "SELECT a FROM RoleEntity a "
             + "WHERE "
             + "(:#{#criteria.name} is null OR UPPER(a.name) LIKE :#{#criteria.name}) "
+            + "AND (:#{#criteria.state} is null OR a.state in :#{#criteria.state}) "
             + "AND (:#{#criteria.search} is null OR UPPER(a.name) LIKE :#{#criteria.search}) "
     )
     Page<RoleEntity> findAllByCriteria(RoleCriteria criteria, Pageable pageable);

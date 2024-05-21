@@ -77,6 +77,9 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         if (campaignProposalCriteria.getType() != null) {
         	campaignProposalCriteria.setType(campaignProposalCriteria.getType().toUpperCase());
         }
+        if (campaignProposalCriteria.getState() == null || campaignProposalCriteria.getState().length == 0) {
+        	campaignProposalCriteria.setState(new Integer[]{1});
+        }
         campaignProposalCriteria.setSort(new String[]{"id;desc"});
     	
         Page<CampaignProposalEntity> campaignProposalEntityPage = campaignProposalRepository.findAllByCriteria(campaignProposalCriteria, wrapper.getCriteria().toPageable());

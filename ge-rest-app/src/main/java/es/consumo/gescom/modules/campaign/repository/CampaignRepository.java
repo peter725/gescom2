@@ -29,6 +29,7 @@ public interface CampaignRepository extends GESCOMRepository<CampaignEntity, Lon
         + "AND (:#{#criteria.nameCampaign} is null OR UPPER(a.nameCampaign) LIKE :#{#criteria.nameCampaign}) "
         + "AND (:#{#criteria.phaseCampaign} is null OR UPPER(a.phaseCampaign.description) LIKE :#{#criteria.phaseCampaign}) "
         + "AND (:#{#criteria.year} is null OR a.year = :#{#criteria.year}) "
+        + "AND (:#{#criteria.state} is null OR a.state in :#{#criteria.state}) "
         + "AND ("
         + ":#{#criteria.search} is null "
         + "OR UPPER(a.ambit.name) like :#{#criteria.search} )"

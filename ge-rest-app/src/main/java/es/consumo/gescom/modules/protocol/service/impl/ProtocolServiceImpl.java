@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
@@ -83,6 +84,16 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     public Page<ProtocolEntity> getProtocolByNameOrCode(CriteriaWrapper<ProtocolCriteria> wrapper, String protocol, String code) {
         return ((ProtocolRepository) repository).getProtocolByNameOrCode(wrapper.getCriteria().toPageable(), protocol, code);
 
+    }
+    
+    @Transactional
+    @Override
+    public void deleteById(Long id) {
+    	ProtocolEntity protocol = protocolRepository.findById(id).orElseThrow();
+    	List<QuestionsEntity> questions = questionsRepository.findAllQuestionsByProtocolId(id);
+    	
+    	questionsRepository.deleteAll(questions);
+    	protocolRepository.delete(protocol);
     }
 
     @Override

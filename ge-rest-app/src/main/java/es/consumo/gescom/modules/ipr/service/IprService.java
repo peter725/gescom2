@@ -32,4 +32,6 @@ public interface IprService extends CrudService<IprEntity, Long>{
 
     List<IprDTO> findAllIprByCampaignId(Long campaignId);
     IprDTO updateIpr(Long id, IprDTO iprDTO);
+    
+    List<IprDTO> findAllIprByCampaignId(Long campaignId);
 }

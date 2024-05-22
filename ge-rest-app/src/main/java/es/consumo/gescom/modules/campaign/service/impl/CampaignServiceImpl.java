@@ -33,6 +33,7 @@ import es.consumo.gescom.modules.campaignProductService.repository.CampaignProdu
 import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
 import es.consumo.gescom.modules.campaignType.model.converter.CampaingnTypeConverter;
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
+import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
 import es.consumo.gescom.modules.ipr.repository.IprRepository;
 import es.consumo.gescom.modules.ipr.service.IprService;
 import es.consumo.gescom.modules.phase.model.converter.PhaseConverter;
@@ -372,6 +373,8 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             });
         });
 
+        List<IprDTO> iprDTOList = iprService.findAllIprByCampaignId(idCampaign);
+
         if (campaign != null) {
             CampaignDTO campaignDTO = campaingnConverter.convertToModel(campaign);
             campaignDTO.setParticipants(autonomousCommunityParticipantsService.findByIdCampaign(idCampaign));
@@ -380,6 +383,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
             campaignDTO.setCampaignProductServiceDTOS(campaignProductServiceService.findCampaignProductServiceByCampaignId(idCampaign));
             campaignDTO.setProtocols(protocolDTO);
             campaignDTO.setProtocolResultsDTOS(protocolResultsDTOS);
+            campaignDTO.setIprDTOS(iprDTOList);
 
             return campaignDTO;
         } else {

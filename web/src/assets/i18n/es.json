@@ -450,6 +450,7 @@
     },
     "prompt": {
       "completeAction": "¿Está seguro?",
+      "completeActionProtocol": "¿Está seguro que desea eliminar el Protocolo?",
       "customAction": "Confirmación con '{{ value }}'",
       "changeStatus": "¿Cambiar el estado de \"{{ name }}\"?"
     },

@@ -13,6 +13,7 @@ import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProduc
 import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
 import es.consumo.gescom.modules.campaignProductService.repository.CampaignProductServiceRepository;
 import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
+import es.consumo.gescom.modules.ipr.model.entity.IprEntity;
 import es.consumo.gescom.modules.ipr.repository.IprRepository;
 import es.consumo.gescom.modules.ipr.service.IprService;
 import es.consumo.gescom.modules.protocol.model.converter.ProtocolConverter;
@@ -22,11 +23,16 @@ import es.consumo.gescom.modules.protocol.model.dto.ProtocolDetailDTO;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
+import es.consumo.gescom.modules.protocol_results.model.entity.ProtocolResultsEntity;
+import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
 import es.consumo.gescom.modules.questions.model.converter.QuestionsConverter;
 import es.consumo.gescom.modules.questions.model.dto.QuestionDetailDTO;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import es.consumo.gescom.modules.questions.model.entity.QuestionsEntity;
 import es.consumo.gescom.modules.questions.repository.QuestionsRepository;
+import es.consumo.gescom.modules.totalProtocolResults.model.entity.TotalProtocolResultsEntity;
+import es.consumo.gescom.modules.totalProtocolResults.repository.TotalProtocolResultsRepository;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -79,6 +85,12 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
     @Autowired
     private IprService iprService;
+    
+    @Autowired
+    private ProtocolResultsRepository protocolResultsRepository;
+    
+    @Autowired 
+    private TotalProtocolResultsRepository totalProtocolResultsRepository;
 
     @Override
     public Page<ProtocolEntity> getProtocolByNameOrCode(CriteriaWrapper<ProtocolCriteria> wrapper, String protocol, String code) {
@@ -89,9 +101,28 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     @Transactional
     @Override
     public void deleteById(Long id) {
+    	// Buscamos Protocolo
     	ProtocolEntity protocol = protocolRepository.findById(id).orElseThrow();
+    	// Bucamos Preguntas
     	List<QuestionsEntity> questions = questionsRepository.findAllQuestionsByProtocolId(id);
     	
+    	// Buscamos posibles resultados de Protocolo (puede haber uno por cada CCAA participante)
+    	List<ProtocolResultsEntity> protocolResults = protocolResultsRepository.findAllByCampaignIdAndProtocolCode(protocol.getCampaignId().getId(), protocol.getCode());
+    	protocolResults.forEach(result -> {
+    		// Por cada resultado de Protocolo buscamos y borramos los resultados de sus Preguntas
+    		List<TotalProtocolResultsEntity> totalProtocolResults = new ArrayList<TotalProtocolResultsEntity>();
+    		if (result.getCode() != null) {
+        		totalProtocolResults = totalProtocolResultsRepository.findAllByProtocolResultsCode(result.getCode());
+    		} else {
+    			totalProtocolResults = totalProtocolResultsRepository.findAllByProtocolResultsId(result.getId());
+    		}
+    		totalProtocolResultsRepository.deleteAll(totalProtocolResults);
+    		
+    	});
+    	// Borramos los resultados del Protocolo cuyos resultados Preguntas ya han sido borradas.
+    	protocolResultsRepository.deleteAll(protocolResults);
+    	
+    	// Borramos las Preguntas del Protocolo y el mismo Protocolo.
     	questionsRepository.deleteAll(questions);
     	protocolRepository.delete(protocol);
     }

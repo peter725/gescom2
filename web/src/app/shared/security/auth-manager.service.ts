@@ -14,7 +14,7 @@ import {
   UserSignInRequest
 } from '@libs/sdk/auth';
 import { AuthContextService } from '@libs/security';
-import { BehaviorSubject, firstValueFrom, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, of, switchMap } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthStorage } from './auth-storage';
 import { AppAuthSubject } from './auth-subject';
@@ -136,13 +136,14 @@ export class AuthManagerService {
   }
 
   refreshToken(): Observable<string> {
+    console.log("Refreshing token");
     const access = AuthStorage.getUserAuth();
 
     return this.getRefreshToken(access?.refresh_token)
       .pipe(switchMap((e: AuthDataResponse) => {
         AuthStorage.clearUserAuth()
         AuthStorage.saveUserAuth(e);
-        return e.access_token;
+        return of(e.access_token);
       }));
 
   }

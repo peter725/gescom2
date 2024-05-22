@@ -198,7 +198,7 @@
                     <button mat-button matTooltip="Descargar" (click)="clickExportExcel(protocol)">
                       <mat-icon>download</mat-icon>
                     </button>
-                    <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="deleteProtocol(protocol)">
+                    <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button tswConfirmAction [confirmPrompt]="'¿Está seguro que desea eliminar el Protocolo?'" (confirmed)="deleteProtocol(protocol)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>

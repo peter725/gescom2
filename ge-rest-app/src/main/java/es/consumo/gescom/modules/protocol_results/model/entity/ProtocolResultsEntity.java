@@ -57,7 +57,7 @@ public class ProtocolResultsEntity extends SimpleEntity {
 
     @JsonIgnore
     @LastModifiedDate
-    @Column(name = "UPDATED_AT", nullable = false)
+    @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt;
 
     @JsonIgnore

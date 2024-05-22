@@ -69,9 +69,12 @@ public class IprController extends AbstractCrudController<IprEntity, IprDTO, Lon
         return Optional.of(
                 ((IprService) service).findIprDTOById(id)
         );
-
-        //return super.performFindById(id);
     }
 
+
+    @Override
+    protected IprDTO performUpdate(Long id, IprDTO payload) {
+        return  ((IprService) service).updateIpr(id, payload);
+    }
 
 }

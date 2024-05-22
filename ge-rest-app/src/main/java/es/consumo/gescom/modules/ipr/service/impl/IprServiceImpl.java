@@ -30,13 +30,16 @@ import es.consumo.gescom.modules.questions.model.converter.QuestionsConverter;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import es.consumo.gescom.modules.questions.model.entity.QuestionsEntity;
 import es.consumo.gescom.modules.questions.repository.QuestionsRepository;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -120,6 +123,60 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         return iprDTONew;
     }
+
+    @Override
+    public IprDTO updateIpr(Long id, IprDTO payload) {
+        IprEntity iprEntity = iprConverter.convertToEntity(payload);
+
+        final List<Long> toDelete = new ArrayList<>();
+
+        // Verifica si el ID es nulo o si la entidad convertida no tiene ID.
+        if (iprEntity.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "ID del protocolo es requerido para la actualización.");
+        }
+
+        IprEntity iprSave = iprRepository.save(iprEntity);
+
+        if (payload.getCode() != null) {
+            List<IprQuestionEntity> iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprCode(iprSave.getCode());
+            iterateAndDeletedIprQuestions(iprQuestionEntities, toDelete);
+        }else{
+            List<IprQuestionEntity> iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprId(iprSave.getId());
+            iterateAndDeletedIprQuestions(iprQuestionEntities, toDelete);
+        }
+
+        if (!toDelete.isEmpty())
+            iprQuestionRepository.deleteAllById(toDelete);
+
+        List<IprQuestionDTO> iprQuestionDTOS = payload.getIprQuestionDTOList();
+        iprQuestionDTOS.forEach(iprQuestionDTO ->{
+            IprQuestionEntity iprQuestionEntity = new IprQuestionEntity();
+            iprQuestionEntity.setCode(iprQuestionDTO.getCode());
+            iprQuestionEntity.setIprCode(iprQuestionDTO.getIprCode());
+            iprQuestionEntity.setOrderQuestion(iprQuestionDTO.getOrderQuestion());
+            iprQuestionEntity.setPercentageRespectTo(iprQuestionDTO.getPercentageRespectTo());
+            iprQuestionEntity.setFormula(iprQuestionDTO.getFormula());
+            iprQuestionEntity.setQuestion(iprQuestionDTO.getQuestion());
+            iprQuestionEntity.setIprId(iprEntity);
+
+            iprQuestionRepository.save(iprQuestionEntity);
+        });
+
+        return iprConverter.convertToModel(iprSave);
+    }
+
+    private void iterateAndDeletedIprQuestions(List<IprQuestionEntity> iprQuestionsEntities, List<Long> toDelete) {
+
+        for(IprQuestionEntity iprQuestionsEntity : iprQuestionsEntities){
+            if(iprQuestionsEntity.getId() != (0)){
+                if(Objects.nonNull(toDelete)){
+                    toDelete.add(iprQuestionsEntity.getId());
+                }
+            }
+        }
+    }
+
+
 
     @Override
     public IprDTO findIprDTOById(Long id) {

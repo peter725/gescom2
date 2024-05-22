@@ -14,9 +14,7 @@ import es.consumo.gescom.modules.productServices.repository.ProductServiceReposi
 import es.consumo.gescom.modules.productServices.service.ProductServiceService;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -61,7 +59,11 @@ public class ProductServiceServiceImpl extends EntityCrudService<ProductServiceE
             productServiceCriteria.setSearch(productServiceCriteria.getSearch().toUpperCase());
         }
         productServiceCriteria.setSort(new String[]{"id:asc"});
-        Page<ProductServiceEntity.SimpleProjection> productSimpleProjections = ((ProductServiceRepository) repository).findAllByCriteria(productServiceCriteria, productServiceCriteria.toPageable());
+
+        // Establece siempre el Pageable a la página 0 con un tamaño de página por defecto, p.ej. 10
+        Pageable resetPageable = PageRequest.of(0, 10, Sort.by("id").ascending());
+
+        Page<ProductServiceEntity.SimpleProjection> productSimpleProjections = ((ProductServiceRepository) repository).findAllByCriteria(productServiceCriteria, resetPageable);
 
         return productSimpleProjections;
     }

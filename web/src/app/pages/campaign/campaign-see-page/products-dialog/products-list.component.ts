@@ -43,14 +43,17 @@ export class ProductsListComponent extends BaseListPageComponent<ProductService>
 
   protected override async getRequestConfig(): Promise<RequestConfig> {
     const config = await super.getRequestConfig();
-    //const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
 
+    // Resetear el page a 0
     config.queryParams = {
-      ...config.queryParams
-      //scope,
+      ...config.queryParams,
+      page: 0 // Aquí estamos forzando el page a 0
     };
+
+    console.log('Configuración de solicitud:', config);
     return config;
   }
+
 
   protected getColumns(): ColumnSrc[] {
     return [

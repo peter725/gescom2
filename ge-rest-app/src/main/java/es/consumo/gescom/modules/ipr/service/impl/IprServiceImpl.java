@@ -14,6 +14,7 @@ import es.consumo.gescom.modules.ipr.model.dto.IprResponseDTO;
 import es.consumo.gescom.modules.ipr.model.entity.IprEntity;
 import es.consumo.gescom.modules.ipr.repository.IprRepository;
 import es.consumo.gescom.modules.ipr.service.IprService;
+import es.consumo.gescom.modules.iprQuestion.model.converter.IprQuestionConverter;
 import es.consumo.gescom.modules.iprQuestion.model.dto.IprQuestionDTO;
 import es.consumo.gescom.modules.iprQuestion.model.entity.IprQuestionEntity;
 import es.consumo.gescom.modules.iprQuestion.repository.IprQuestionRepository;
@@ -26,6 +27,7 @@ import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsRespo
 import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
 import es.consumo.gescom.modules.questions.model.converter.QuestionsConverter;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
+import es.consumo.gescom.modules.questions.model.entity.QuestionsEntity;
 import es.consumo.gescom.modules.questions.repository.QuestionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -80,6 +82,9 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
     private ProtocolConverter protocolConverter;
 
     @Autowired
+    private IprQuestionConverter iprQuestionConverter;
+
+    @Autowired
     private QuestionsConverter questionsConverter;
 
     @Autowired
@@ -116,6 +121,23 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
 
         return iprDTONew;
+    }
+
+    @Override
+    public IprDTO findIprDTOById(Long id) {
+        IprEntity iprEntity = super.repository.findById(id).orElseThrow();
+        IprDTO iprDTO = iprConverter.convertToModel(iprEntity);
+        List<IprQuestionEntity> iprQuestionEntities = new ArrayList<>();
+        if (iprDTO.getCode() == null){
+            iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprId(iprDTO.getId());
+        }else{
+            iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprCode(iprDTO.getCode());
+        }
+        List<IprQuestionDTO> iprQuestionsDTOS = iprQuestionConverter.convertToModel(iprQuestionEntities);
+        iprDTO.setIprQuestionDTOList(iprQuestionsDTOS);
+
+
+        return iprDTO;
     }
 
     @Override

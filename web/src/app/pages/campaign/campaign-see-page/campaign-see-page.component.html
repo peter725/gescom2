@@ -209,6 +209,48 @@
           </mat-card-content>
         </mat-card>
 
+        <!-- Lista de ipr -->
+
+        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)" 
+        class="mt-6">
+        <mat-card-content>
+
+          <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-2xl font-semibold text-gray-900">I.P.R</h3>
+              <!-- <div *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity">
+
+                <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="openDialogCopyProtocol()">Copiar protocolo</button>
+                <button mat-raised-button color="primary" (click)="navegarAComponenteProtocol(0)">Añadir</button>
+                
+              </div> -->
+            </div>
+            <div class="border-b border-gray-300 mb-4"></div>
+            <div class="space-y-4">
+              <div *ngFor="let ipr of iprDisplay; let i = index"
+                   [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
+                   class="flex justify-between items-center p-4 shadow-md rounded-lg">
+                <p class="flex-1">
+                  {{ipr.name}}
+                </p>
+                <div>
+
+                  <!-- <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="navegarAComponenteProtocol(protocol.id)">
+                    <mat-icon>edit</mat-icon>
+                  </button> -->
+                  
+                  <button mat-button matTooltip="Visualizar" (click)="verDetallesIpr(ipr)" >
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+
+                </div> 
+              </div>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
         <!-- Documento de planificacion -->
         <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)" 
           class="mt-6">

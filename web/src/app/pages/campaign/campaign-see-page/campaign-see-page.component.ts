@@ -19,6 +19,7 @@ import { PHASE_BORRADOR_RESULTADOS, PHASE_BORRADOR_RESULTADOS_DEBATE, PHASE_DATO
 import { firstValueFrom } from 'rxjs';
 import { ProtocolListPageComponent } from '@base/pages/protocol/protocol-list-page/protocol-list-page.component';
 import { AuthContextService } from '@libs/security';
+import { IprDetailComponent } from './components/ipr-detail-dialog/ipr-detail-dialog.component';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -121,6 +122,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       updatedAt: this.fb.control(null),
       state: this.fb.control(null),
       protocols: this.fb.control([]),
+      iprDTOS: this.fb.control([]),
       campaignProductServiceDTOS: this.fb.control([]),
       protocolResultsDTOS: this.fb.control([])
     });
@@ -141,6 +143,10 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   get protocolsDisplay(){
     return this.form.get('protocols')?.value!;
+  }
+
+  get iprDisplay(){
+    return this.form.get('iprDTOS')?.value!;
   }
 
   get productsDisplay(){
@@ -416,6 +422,17 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     location.reload();
   }
 
+  verDetallesIpr(ipr: any): void {
+    // const campaign = this.form.value;
+    // const datos = {
+    //   protocol,
+    //   campaign,
+    // };
+    const dialogRef = this.dialog.open(IprDetailComponent, {
+      width: '1000px',
+      data: ipr
+    });
+  }
 
   protected readonly console = console;
 }

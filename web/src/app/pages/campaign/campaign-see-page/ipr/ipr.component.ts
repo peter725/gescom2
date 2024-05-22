@@ -310,6 +310,13 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
           title: 'text.other.dataSaved',
           message: 'IPR creado exitosamente',
         });
+
+
+        // Redirigir a la nueva URL
+        const newUrl = `/app/campanas/${this.idCampaign}/ver`;
+        this.router.navigate([newUrl]);
+
+
       },
       error => {
         console.error('Error al crear IPR:', error);

@@ -302,8 +302,14 @@
       "requiredDoc": "Cargar los documentos",
       "question": "Pregunta",
       "codInfraction": "Cod. Infracción",
-      "protocolDetails": "Detalles del protocolo"
+      "protocolDetails": "Detalles del protocolo",
+      "iprDetails": "Detalles del I.P.R"
     }
+  },
+  "ipr": {
+    "question": "Pregunta",
+    "formula": "Fórmula",
+    "%respect": "% respecto al"
   },
   "text": {
     "campaign": {

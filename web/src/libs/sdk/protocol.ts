@@ -59,6 +59,15 @@ export interface Question {
   numResponseNoProcede: any;
 }
 
+export interface QuestionIpr {
+  id: number | null;
+  orderQuestion: number | null;
+  formula: number | null;
+  question: string | null;
+  percentageRespectTo: string | null;
+
+}
+
 export interface InfriengementForm {
   id: number | null;
   code: string | null;

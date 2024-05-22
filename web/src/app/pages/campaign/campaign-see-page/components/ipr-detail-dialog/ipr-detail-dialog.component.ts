@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Protocol, ProtocolDetailForm, Question } from '@libs/sdk/protocol';
+import { Protocol, ProtocolDetailForm, Question, QuestionIpr } from '@libs/sdk/protocol';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,10 +22,7 @@ import { CommonModule } from '@angular/common';
 })
 export class IprDetailComponent implements OnInit {
 
-  protocol: Protocol | undefined;
-  campaign: CampaignForm | undefined;
-  participantes: String | undefined;
-  preguntas: Question [] | undefined;
+  preguntas: QuestionIpr [] | undefined;
   colorGris: any = '#e3e3e3';
 
 
@@ -35,7 +32,7 @@ export class IprDetailComponent implements OnInit {
   ngOnInit(): void {
     console.log('datos dialog detalle',this.data);
 
-    this.preguntas = this.data.resultsResponseDTO.questionsResponseDTOS
+    this.preguntas = this.data.iprQuestionDTOList;
 
     console.log('preguntas', this.preguntas);
 

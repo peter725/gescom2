@@ -63,13 +63,15 @@
       <ng-container *ngFor="let pregunta of preguntas">
 
         <ng-container>
-          <!-- Pregunta con respuesta 'S' -->
           <div class="flex border-b border-l border-gray-200 p-4">
             <div class="flex-grow preguntas-blanco">
               {{ pregunta.question }}
             </div>
             <div class="flex-none w-1/5 border-l border-gray-200 p-4">
-              {{ pregunta.codeInfringement }}
+              {{ pregunta.formula }}
+            </div>
+            <div class="flex-none w-1/5 border-l border-gray-200 p-4">
+              {{ pregunta.percentageRespectTo }}
             </div>
           </div>
         </ng-container>

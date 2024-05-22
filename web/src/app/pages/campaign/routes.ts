@@ -70,6 +70,14 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         loadChildren: () => import('./').then(m => m.IprModule),
     },
     {
+        path: ':idCampaña/ipr/:id',
+        data: {
+            breadcrumb,
+            requireAccess: 'campaign'
+        },
+        loadChildren: () => import('./').then(m => m.IprEditPageModule),
+    },
+    {
         path: ':id',
         data: {
             breadcrumb,

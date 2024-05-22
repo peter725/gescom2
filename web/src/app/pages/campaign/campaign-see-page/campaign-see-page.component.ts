@@ -328,6 +328,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.router.navigate([`/app/protocol/${protocolId}`]);
   }
 
+
   navegarAComponenteResultados(resultado: ProtocolResults | undefined) {
     this.campaign = this.form.value;
     const navigationExtras: NavigationExtras = {
@@ -365,6 +366,13 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.campaign = this.form.value;
     
     this.router.navigate([`app/campanas/${this.campaign.id}/ipr`]); 
+  }
+
+  
+  navegarAComponenteIprEdit(ipr: number) {
+    this.campaign = this.form.value;
+
+    this.router.navigate([`app/campanas/${this.campaign.id}/ipr/${ipr}`]); 
   }
 
   openProtocolDetailDialog() {

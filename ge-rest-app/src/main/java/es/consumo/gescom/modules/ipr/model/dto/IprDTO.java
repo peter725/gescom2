@@ -26,4 +26,6 @@ public class IprDTO implements Serializable, LongIdModel{
     private List<IprQuestionDTO> iprQuestionDTOList;
     private ResultsResponseDTO resultsResponseDTO;
 
+    private String campaignName;
+    private String protocolName;
 }

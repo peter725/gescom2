@@ -22,6 +22,7 @@ import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEnti
 import es.consumo.gescom.modules.productServices.repository.ProductServiceRepository;
 import es.consumo.gescom.modules.protocol.model.converter.ProtocolConverter;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
+import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsResponseDTO;
 import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
@@ -40,10 +41,7 @@ import es.consumo.gescom.commons.service.EntityCrudService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -342,22 +340,25 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
     public List<IprDTO> findAllIprByCampaignId(Long campaignId) {
         ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
         SearchDTO searchDTO = new SearchDTO();
+        Optional<CampaignEntity> campaignEntity = campaignRepository.findById(campaignId);
         List<IprDTO> iprDTOS = iprConverter.convertToModel(iprRepository.findAllByCampaignId(campaignId));
         List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(campaignId);
         searchDTO.setCampaignId(campaignId);
+        List<IprQuestionEntity> iprQuestionEntities = new ArrayList<>();
 
         for (IprDTO iprDTO : iprDTOS) {
-            searchDTO.setProtocolId(iprDTO.getProtocolId());
-            searchDTO.setProtocolCode(iprDTO.getProtocolCode());
-            searchDTO.setIprId(iprDTO.getId());
-            for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntities) {
-
-                searchDTO.setProductServiceId(campaignProductServiceEntity.getProductServiceId());
-                searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
-                searchDTO.setIprCode(iprDTO.getCode());
-                resultsResponseDTO = getResultsIpr(searchDTO);
-                iprDTO.setResultsResponseDTO(resultsResponseDTO);
+            CampaignEntity entity = campaignEntity.get();
+            iprDTO.setCampaignName(entity.getNameCampaign());
+            Optional<ProtocolEntity> protocolEntity = protocolRepository.findById(iprDTO.getProtocolId());
+            ProtocolEntity protocol = protocolEntity.get();
+            iprDTO.setProtocolName(protocol.getName());
+            if (iprDTO.getCode() == null){
+                iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprId(iprDTO.getId());
+            }else{
+                iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprCode(iprDTO.getCode());
             }
+            List<IprQuestionDTO> iprQuestionsDTOS = iprQuestionConverter.convertToModel(iprQuestionEntities);
+            iprDTO.setIprQuestionDTOList(iprQuestionsDTOS);
         }
         return iprDTOS;
     }

@@ -66,4 +66,25 @@ public interface IprRepository extends GESCOMRepository<IprEntity, Long> {
         """)
     List<IprResponseDTO> findAllIprByCampaignIdAndProtocolId(@Param("campaignId") Long campaignId, @Param("protocolId") Long protocolId, @Param("iprId") Long iprId);
 
+    @Query(value = " SELECT ipr FROM IprEntity ipr WHERE ipr.campaignId =:campaignId ")
+    List<IprEntity> findAllByCampaignId(@Param("campaignId") Long campaignId);
+
+    @Query(value = """
+        SELECT new es.consumo.gescom.modules.ipr.model.dto.IprResponseDTO(
+        ipr.id,
+        ipr.code,
+        ipr.protocolCode,
+        ipr.name,
+        ipr.campaignId,
+        ipr.protocolId,
+        iq.orderQuestion,
+        iq.percentageRespectTo,
+        iq.formula,
+        iq.question
+        )
+        FROM IprEntity ipr
+        JOIN IprQuestionEntity iq ON ipr.id = iq.iprId.id
+        WHERE ipr.campaignId =:campaignId
+        """)
+        List<IprResponseDTO> findAllIprByCampaignId(Long campaignId);
 }

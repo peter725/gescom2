@@ -53,4 +53,10 @@ public class IprController extends AbstractCrudController<IprEntity, IprDTO, Lon
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/campaign/{campaignId}/")
+    public ResponseEntity<List<IprDTO>> findAllIprByCampaignId(@PathVariable Long campaignId) {
+        List<IprDTO> result =
+                ((IprService) service).findAllIprByCampaignId(campaignId);
+        return ResponseEntity.ok(result);
+    }
 }

@@ -1,13 +1,10 @@
 package es.consumo.gescom.modules.ipr.service.impl;
 
-import es.consumo.gescom.modules.campaign.model.converter.CampaignConverter;
 import es.consumo.gescom.modules.campaign.model.dto.QuestionsResponseDTO;
 import es.consumo.gescom.modules.campaign.model.dto.ResultsResponseDTO;
 import es.consumo.gescom.modules.campaign.model.dto.SearchDTO;
 import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
 import es.consumo.gescom.modules.campaign.repository.CampaignRepository;
-import es.consumo.gescom.modules.campaign.service.CampaignService;
-import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
 import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
 import es.consumo.gescom.modules.campaignProductService.repository.CampaignProductServiceRepository;
 import es.consumo.gescom.modules.ipr.model.converter.IprConverter;
@@ -24,9 +21,7 @@ import es.consumo.gescom.modules.productServices.model.entity.ProductServiceEnti
 import es.consumo.gescom.modules.productServices.repository.ProductServiceRepository;
 import es.consumo.gescom.modules.protocol.model.converter.ProtocolConverter;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
-import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
-import es.consumo.gescom.modules.protocol.service.ProtocolService;
 import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsResponseDTO;
 import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
 import es.consumo.gescom.modules.questions.model.converter.QuestionsConverter;
@@ -222,10 +217,8 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
             QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
             String question = questionsDTO.getQuestion();
-            String responsible = questionsDTO.getResponse();
             String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
             questionsResponseDTO.setQuestion(questionText);
-            questionsResponseDTO.setResponsible(responsible);
             questionsResponseDTO.setOrderQuestion(questionsDTO.getOrderQuestion());
 
             for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
@@ -254,7 +247,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         QuestionsResponseDTO questionsResponseDTODC1 = new QuestionsResponseDTO();
         questionsResponseDTODC1.setQuestion("Nro. de establecimientos existentes");
-        questionsResponseDTODC1.setResponsible("S");
         questionsResponseDTODC1.setOrderQuestion(maxOrderQuestion+1);
         questionsResponseDTODC1.setCodeQuestion("DC1");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
@@ -267,7 +259,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         QuestionsResponseDTO questionsResponseDTODC8 = new QuestionsResponseDTO();
         questionsResponseDTODC8.setQuestion("Nro. de establecimientos controlados");
-        questionsResponseDTODC8.setResponsible("S");
         questionsResponseDTODC8.setOrderQuestion(maxOrderQuestion+1);
         questionsResponseDTODC8.setCodeQuestion("DC8");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
@@ -281,7 +272,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         QuestionsResponseDTO questionsResponseDTODC9 = new QuestionsResponseDTO();
         questionsResponseDTODC9.setQuestion("Total de productos/servicios controlados");
         questionsResponseDTODC9.setOrderQuestion(maxOrderQuestion+1);
-        questionsResponseDTODC9.setResponsible("S");
         questionsResponseDTODC9.setCodeQuestion("DC9");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
             if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC9")) {
@@ -294,7 +284,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         QuestionsResponseDTO questionsResponseDTODC10 = new QuestionsResponseDTO();
         questionsResponseDTODC10.setQuestion("Total de productos/servicios correctos");
         questionsResponseDTODC10.setOrderQuestion(maxOrderQuestion+1);
-        questionsResponseDTODC10.setResponsible("S");
         questionsResponseDTODC10.setCodeQuestion("DC10");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
             if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC10")) {
@@ -307,7 +296,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         QuestionsResponseDTO questionsResponseDTODC11 = new QuestionsResponseDTO();
         questionsResponseDTODC11.setQuestion("Total de productos/servicios incorrectos");
         questionsResponseDTODC11.setOrderQuestion(maxOrderQuestion+1);
-        questionsResponseDTODC11.setResponsible("S");
         questionsResponseDTODC11.setCodeQuestion("DC11");
         for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
             if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC11")) {
@@ -326,6 +314,30 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         resultsResponseDTOS.setQuestionsResponseDTOS(questionsResponseDTOSorted);
 
         return resultsResponseDTOS;
+    }
+
+    @Override
+    public List<IprDTO> findAllIprByCampaignId(Long campaignId) {
+        ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
+        SearchDTO searchDTO = new SearchDTO();
+        List<IprDTO> iprDTOS = iprConverter.convertToModel(iprRepository.findAllByCampaignId(campaignId));
+        List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(campaignId);
+        searchDTO.setCampaignId(campaignId);
+
+        for (IprDTO iprDTO : iprDTOS) {
+            searchDTO.setProtocolId(iprDTO.getProtocolId());
+            searchDTO.setProtocolCode(iprDTO.getProtocolCode());
+            searchDTO.setIprId(iprDTO.getId());
+            for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntities) {
+
+                searchDTO.setProductServiceId(campaignProductServiceEntity.getProductServiceId());
+                searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
+                searchDTO.setIprCode(iprDTO.getCode());
+                resultsResponseDTO = getResultsIpr(searchDTO);
+                iprDTO.setResultsResponseDTO(resultsResponseDTO);
+            }
+        }
+        return iprDTOS;
     }
 
     @Override
@@ -367,10 +379,13 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         }else {
             productServiceEntity = productServiceRepository.findProductServiceById(searchDTO.getProductServiceId());
         }*/
-
-        resultsResponseDTO.setCampaignName(campaignEntity.getNameCampaign());
-        resultsResponseDTO.setProtocolName(protocolDTO.getName());
-       //resultsResponseDTO.setProductName(productServiceEntity.getCode().concat(" - ").concat(productServiceEntity.getName()));
+        if(campaignEntity.getNameCampaign() != null){
+            resultsResponseDTO.setCampaignName(campaignEntity.getNameCampaign());
+        }
+        if(protocolDTO != null && protocolDTO.getName() != null){
+            resultsResponseDTO.setProtocolName(protocolDTO.getName());
+        }
+        //resultsResponseDTO.setProductName(productServiceEntity.getCode().concat(" - ").concat(productServiceEntity.getName()));
         if (iprResponseDTOS.size() == 0){
 
 

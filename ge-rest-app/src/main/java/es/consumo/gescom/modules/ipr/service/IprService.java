@@ -9,6 +9,7 @@ import es.consumo.gescom.modules.campaign.model.dto.SearchDTO;
 import es.consumo.gescom.modules.ipr.model.criteria.IprCriteria;
 import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
 import es.consumo.gescom.modules.ipr.model.entity.IprEntity;
+import es.consumo.gescom.modules.iprQuestion.model.dto.IprQuestionDTO;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import org.springframework.data.domain.Page;
 
@@ -34,4 +35,9 @@ public interface IprService extends CrudService<IprEntity, Long>{
     IprDTO updateIpr(Long id, IprDTO iprDTO);
     
     List<IprDTO> findAllIprByCampaignId(Long campaignId);
+
+    List<IprQuestionDTO> getAllQuestionsByIprId(Long Id);
+
+    List<IprQuestionDTO> getAllQuestionsByIprCode(String code);
+
 }

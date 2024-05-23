@@ -149,6 +149,13 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
                         searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
                         List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO.getId());
+                        iprDTOS.forEach(iprDTO -> {
+                            if (iprDTO.getCode() != null) {
+                                iprDTO.setIprQuestionDTOList(iprService.getAllQuestionsByIprCode(iprDTO.getCode()));
+                            }else{
+                                iprDTO.setIprQuestionDTOList(iprService.getAllQuestionsByIprId(iprDTO.getId()));
+                            }
+                        });
                         resultsResponseDTO = iprService.getResultProtocol(searchDTO);
                         protocolDTO.setResultsResponseDTO(resultsResponseDTO);
                         protocolDTO.setIprDTOS(iprDTOS);
@@ -167,6 +174,13 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                     for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntitySet) {
                         searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
                         List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());
+                        iprDTOS.forEach(iprDTO -> {
+                            if (iprDTO.getCode() != null) {
+                                iprDTO.setIprQuestionDTOList(iprService.getAllQuestionsByIprCode(iprDTO.getCode()));
+                            }else{
+                                iprDTO.setIprQuestionDTOList(iprService.getAllQuestionsByIprId(iprDTO.getId()));
+                            }
+                        });
                         resultsResponseDTO = iprService.getResultProtocol(searchDTO);
                         protocolDTO.setIprDTOS(iprDTOS);
                         protocolDTO.setResultsResponseDTO(resultsResponseDTO);

@@ -132,7 +132,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         // Verifica si el ID es nulo o si la entidad convertida no tiene ID.
         if (iprEntity.getId() == null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "ID del protocolo es requerido para la actualización.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "ID del es requerido para la actualización.");
         }
 
         IprEntity iprSave = iprRepository.save(iprEntity);
@@ -182,6 +182,14 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
     public IprDTO findIprDTOById(Long id) {
         IprEntity iprEntity = super.repository.findById(id).orElseThrow();
         IprDTO iprDTO = iprConverter.convertToModel(iprEntity);
+        iprDTO.setNameCampaign(campaignRepository.findById(iprEntity.getCampaignId()).get().getNameCampaign());
+        iprDTO.setYear(campaignRepository.findById(iprEntity.getCampaignId()).get().getYear());
+        if (iprDTO.getProtocolCode() != null){
+            iprDTO.setProtocolName(protocolRepository.findProtocolNameByCode(iprDTO.getProtocolCode()).getName());
+        }else{
+            iprDTO.setProtocolName(protocolRepository.findProtocolNameById(iprDTO.getProtocolId()).getName());
+        }
+
         List<IprQuestionEntity> iprQuestionEntities = new ArrayList<>();
         if (iprDTO.getCode() == null){
             iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprId(iprDTO.getId());
@@ -229,6 +237,11 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         searchDTO.setProtocolId(protocolId);
 
         for (IprDTO iprDTO : iprDTOS) {
+            if (iprDTO.getCode() != null) {
+                iprDTO.setIprQuestionDTOList(getAllQuestionsByIprCode(iprDTO.getCode()));
+            }else{
+                iprDTO.setIprQuestionDTOList(getAllQuestionsByIprId(iprDTO.getId()));
+            }
 
             for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntities) {
 
@@ -402,22 +415,40 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(campaignId);
         searchDTO.setCampaignId(campaignId);
         List<IprQuestionEntity> iprQuestionEntities = new ArrayList<>();
+        ProtocolEntity protocol = new ProtocolEntity();
 
         for (IprDTO iprDTO : iprDTOS) {
             CampaignEntity entity = campaignEntity.get();
-            iprDTO.setCampaignName(entity.getNameCampaign());
-            Optional<ProtocolEntity> protocolEntity = protocolRepository.findById(iprDTO.getProtocolId());
-            ProtocolEntity protocol = protocolEntity.get();
+            iprDTO.setNameCampaign(entity.getNameCampaign());
+            if (iprDTO.getProtocolCode() != null){
+                protocol = protocolRepository.findProtocoloByCode(iprDTO.getProtocolCode())
+                        .orElseThrow(() -> new IllegalStateException("Protocolo no encontrado con el código: " + iprDTO.getProtocolCode()));
+            } else {
+                protocol = protocolRepository.findById(iprDTO.getProtocolId())
+                        .orElseThrow(() -> new IllegalStateException("Protocolo no encontrado con el ID: " + iprDTO.getProtocolId()));
+            }
+
             iprDTO.setProtocolName(protocol.getName());
             if (iprDTO.getCode() == null){
-                iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprId(iprDTO.getId());
+                iprDTO.setIprQuestionDTOList(getAllQuestionsByIprId(iprDTO.getId()));
             }else{
-                iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprCode(iprDTO.getCode());
+                iprDTO.setIprQuestionDTOList(getAllQuestionsByIprCode(iprDTO.getCode()));
             }
-            List<IprQuestionDTO> iprQuestionsDTOS = iprQuestionConverter.convertToModel(iprQuestionEntities);
-            iprDTO.setIprQuestionDTOList(iprQuestionsDTOS);
         }
         return iprDTOS;
+    }
+
+    public List<IprQuestionDTO> getAllQuestionsByIprId(Long Id){
+        List<IprQuestionEntity> iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprId(Id);
+        List<IprQuestionDTO> iprQuestionsDTOS = iprQuestionConverter.convertToModel(iprQuestionEntities);
+
+        return iprQuestionsDTOS;
+    }
+
+    public List<IprQuestionDTO> getAllQuestionsByIprCode(String code){
+        List<IprQuestionEntity> iprQuestionEntities = iprQuestionRepository.findAllQuestionsByIprCode(code);
+        List<IprQuestionDTO> iprQuestionsDTOS = iprQuestionConverter.convertToModel(iprQuestionEntities);
+        return iprQuestionsDTOS;
     }
 
     @Override

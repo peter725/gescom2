@@ -12,10 +12,10 @@ import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { ProtocolQuestionDialogComponent } from '@base/pages/protocolQuestion-dialog/protocolQuestion-dialog.component';
 import { Validator } from '@base/shared/functions/validators';
 
-interface RequestConfig {
-  resourceName: string;
-  pathParams?: any;
-}
+// interface RequestConfig {
+//   resourceName: string;
+//   pathParams?: any;
+// }
 
 @Component({
   selector: 'tsw-ipr',
@@ -43,12 +43,16 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
   iprQuestionDTOList: any[] = []; // Declaración de la propiedad iprQuestionDTOList
   cancelRedirectPath = '../ver';
 
+  idIpr: any;
+
   override async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
     this.route.params.subscribe(params => {
       this.idCampaign = params['idCampaña']; 
+      this.idIpr = params['id'];
       console.log('id campaña' + this.idCampaign); 
+      console.log('id idIpr' + this.idIpr); 
     });
 
 
@@ -58,6 +62,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
 
   protected buildForm(): FormGroup {
+
     const form = this.fb.group({
       nameCampaign: { value: null, disabled: true },
       year: { value: null, disabled: true },
@@ -68,26 +73,60 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
       porcentaje: null,
     });
 
-    
-
-    // Usar setTimeout para agregar la primera fila
-    setTimeout(() => {
-      const questionsControl = form.get('question') as FormArray;
-      questionsControl.push(this.crearFila(1));
-    }, 0);
-
+      
     return form;
   }
-  
 
-  private async fetchProtocol(): Promise<any> {
+  protected override afterLoadDataSuccess(startValue: any): void {
+      
+    
+    console.log('start value', startValue.iprQuestionDTOList)
+
+    const questionArrayLoad = startValue.iprQuestionDTOList;
+
+    const questionsControl = this.form.get('question') as FormArray;
+
+    questionArrayLoad.forEach((question:any) => {
+      questionsControl.push(this.crearFila2(question));
+    });
+
+
+    // questionsControl.push(this.crearFila(1));
+
+
+    // questionsControl.push(this.crearFila2(1, 'prueba'));
+
+
+
+    super.afterLoadDataSuccess(startValue);
+  }
+
+
+
+
+  
+  private async fetchProtocol(): Promise<void> {
     const id = Number(this.idCampaign);
     this.protocolArray = await firstValueFrom(this.crudService.findById(id, {
       resourceName: 'protocolListCampaign',
       pathParams: { id },
     }));
+  
+    // Busca el protocolo con el id 3940 en el array de protocolos
+    const selectedProtocol = this.protocolArray.find((protocol: any) => protocol.id === 3940);
 
-    // console.log('protocol rest', JSON.stringify(this.protocolArray));
+  
+    // Verifica si se encontró el protocolo y luego establece el valor en el formulario
+    if (selectedProtocol) {
+
+      this.protocolSelectedId = selectedProtocol.id;
+
+      setTimeout(() => {
+        this.form.patchValue({
+          protocols: selectedProtocol.id
+        });
+      }, 0);
+    }
   }
 
   onProtocolSelectionChange(value: string) {
@@ -115,6 +154,15 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     });
   }
 
+  crearFila2(data: any): FormGroup {
+    return this.fb.group({
+      id: data?.id || null,
+      orderQuestion: [{ value: data?.orderQuestion, disabled: true }],
+      question: [data?.question || null, Validators.required],
+      formula: [data?.formula || null, Validators.required],
+      porcentaje: [data?.percentageRespectTo || null, Validator.validateNumber()],
+    });
+  }
 
   override getRedirectAfterSaveRoute(){
     return ['../consulta'];
@@ -295,7 +343,8 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     this.prepareIprQuestionDTOList();
 
     const jsonData = {
-      name: this.form.get('iprName')?.value,
+      id: this.idIpr,
+      name: this.form.get('name')?.value,
       campaignId: this.idCampaign,
       protocolId: this.protocolSelectedId,
       iprQuestionDTOList: this.iprQuestionDTOList
@@ -303,11 +352,16 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
     console.log(jsonData);
 
-    const config: RequestConfig = {
-      resourceName: 'ipr', 
-    };
+    // const config: RequestConfig = {
+    //   resourceName: 'ipr',
+    // };
 
-    this.crudService.create(jsonData, config)
+    console.log(this.idIpr);
+
+    this.crudService.update(this.idIpr, jsonData, {
+      resourceName: 'ipr',
+      pathParams: { id: this.idIpr }
+    })
     .subscribe(
       response => {
         console.log('IPR creado exitosamente:', response);

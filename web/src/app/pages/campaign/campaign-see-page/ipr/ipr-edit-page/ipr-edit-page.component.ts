@@ -41,9 +41,13 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
   responseUser: any;
   respuestasUsuarioCombined: any[] = [];
   iprQuestionDTOList: any[] = []; // Declaración de la propiedad iprQuestionDTOList
-  cancelRedirectPath = '../ver';
+  cancelRedirectPath = '../../ver';
+
+  initialFormValues: any;
 
   idIpr: any;
+
+  protocolIdLoad: any;
 
   override async ngOnInit(): Promise<void> {
     super.ngOnInit();
@@ -77,6 +81,14 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     return form;
   }
 
+  override resetForm()
+  {
+
+    this.fetchProtocol();
+
+    this.form.reset(this.initialFormValues);
+  }
+
   protected override afterLoadDataSuccess(startValue: any): void {
       
     
@@ -90,13 +102,14 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
       questionsControl.push(this.crearFila2(question));
     });
 
+    this.protocolIdLoad = startValue.protocolId;
 
-    // questionsControl.push(this.crearFila(1));
-
-
-    // questionsControl.push(this.crearFila2(1, 'prueba'));
-
-
+    // Guardar los valores iniciales del formulario
+    this.initialFormValues = this.form.getRawValue();
+    this.initialFormValues.nameCampaign = startValue.nameCampaign;
+    this.initialFormValues.year = startValue.year;
+    this.initialFormValues.name = startValue.name;
+    
 
     super.afterLoadDataSuccess(startValue);
   }
@@ -113,29 +126,35 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     }));
   
     // Busca el protocolo con el id 3940 en el array de protocolos
-    const selectedProtocol = this.protocolArray.find((protocol: any) => protocol.id === 3940);
+    const selectedProtocol = this.protocolArray.find((protocol: any) => protocol.id === this.protocolIdLoad);
 
   
     // Verifica si se encontró el protocolo y luego establece el valor en el formulario
     if (selectedProtocol) {
 
       this.protocolSelectedId = selectedProtocol.id;
+      
 
       setTimeout(() => {
         this.form.patchValue({
-          protocols: selectedProtocol.id
+          protocols: selectedProtocol
         });
       }, 0);
     }
   }
 
-  onProtocolSelectionChange(value: string) {
+
+  onProtocolSelectionChange(value: any) {
+
+    console.log('valor recogido',value.id);
     
-    const [id, code] = value.split('-');
-    console.log( 'id protocolo: ' + id + 'code protocolo: ' + code);
-    this.protocolSelectedId = id;
-    this.protocolSelectedCode = code;
-    const protocolData = { id: id, code: code };
+    // const [id, code] = value.split('-');
+    // console.log( 'id protocolo: ' + id + 'code protocolo: ' + code);
+
+    this.protocolSelectedId = value.id;
+    this.protocolSelectedCode = value.code;
+
+    const protocolData = { id: value.id, code: value.code };
     // this.sharedDataService.updateSharedData(protocolData);
   }
 
@@ -170,8 +189,13 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
   openDialog(rowIndex: number): void {
 
-    const protocolData = { id: this.protocolSelectedId, code: this.protocolSelectedCode };
+
+
+    const protocolData = { id: String(this.protocolSelectedId), code: String(this.protocolSelectedCode) };
+
+    
     this.sharedDataService.updateSharedData(protocolData);
+    console.log('protocolData', protocolData)
 
     const dialogRef = this.dialog.open(ProtocolQuestionDialogComponent, {
       width: '95%',
@@ -345,6 +369,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     const jsonData = {
       id: this.idIpr,
       name: this.form.get('name')?.value,
+      code: this.protocolSelectedCode,
       campaignId: this.idCampaign,
       protocolId: this.protocolSelectedId,
       iprQuestionDTOList: this.iprQuestionDTOList

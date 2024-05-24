@@ -30,7 +30,7 @@
           <mat-form-field> 
             <mat-label>Protocolo</mat-label>
             <mat-select formControlName="protocols"  (selectionChange)="onProtocolSelectionChange($event.value)" matNativeControl >
-              <mat-option *ngFor="let protocol of protocolArray" [value]="protocol.id">                  
+              <mat-option *ngFor="let protocol of protocolArray" [value]="protocol">                  
                 {{protocol.name}}
               </mat-option>
             </mat-select>   

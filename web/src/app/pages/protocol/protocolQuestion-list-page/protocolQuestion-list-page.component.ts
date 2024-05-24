@@ -198,7 +198,12 @@ selectAllChecks(column: string): void {
 
 // Método para verificar si todos los elementos de una columna específica están seleccionados
 allSelected(column: string): boolean {
-  return this.questionsArray.every((element: TableRow) => element[column]);
+  if(this.questionsArray){
+    return this.questionsArray.every((element: TableRow) => element[column]);
+  }else{
+    return false;
+  }
+  
 }
 
   protected getColumns(): ColumnSrc[] {

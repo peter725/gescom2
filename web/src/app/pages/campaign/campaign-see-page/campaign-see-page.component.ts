@@ -153,7 +153,9 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     if (this.form.get('campaignProductServiceDTOS')?.value) {
       this.campaignProducts = this.form.get('campaignProductServiceDTOS')?.value;
     }
+
     return this.form.get('campaignProductServiceDTOS')?.value!;
+
   }
 
   get resultsDisplay(){
@@ -208,8 +210,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     }
   }
 
-  protected changePhaseCampaign(){
-
+  protected changePhaseCampaign() {
     let actualPhase = this.form.get('phaseCampaign')?.value;
     let newPhase;
     let save = true;
@@ -227,22 +228,21 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     } else if (actualPhase?.phase === PHASE_RESULTADOS_FINALES || actualPhase?.phase === PHASE_RESULTADOS_FINALES_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_FICHA_TRANSPARENCIA);
     } else if (actualPhase?.phase === PHASE_FICHA_TRANSPARENCIA) {
-      save = false;
-      this.notification.show({ message: 'text.other.finalPhase' });
+      newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_RESULTADOS_FINALES);
     } else {
       save = false;
       this.notification.show({ message: 'text.other.errorPhase' });
-    } 
+    }
 
-    if (save){
+    if (save && newPhase) {
       this.campaign = this.form.value;
       this.campaignService.saveChangePhase(this.campaign.id, newPhase).subscribe((result: any) => {
         location.reload();
       });
     }
-    
 
   }
+
 
   agregarProducto(): void {
     const dialogRef = this.dialog.open(ProductsDialogComponent, {
@@ -443,4 +443,5 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   protected readonly console = console;
+  protected readonly PHASE_FICHA_TRANSPARENCIA = PHASE_FICHA_TRANSPARENCIA;
 }

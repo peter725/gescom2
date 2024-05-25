@@ -34,7 +34,7 @@ export class IprDetailComponent implements OnInit {
 
     this.preguntas = this.data.iprQuestionDTOList;
 
-    console.log('preguntas', this.preguntas);
+    console.log('preguntas dialog', this.preguntas);
 
     // this.protocol = this.data.protocol;
     // this.campaign = this.data.campaign;

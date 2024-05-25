@@ -22,7 +22,7 @@
 
             <!-- {{ form.controls.phaseCampaign!.value!.phase }} -->
             <button 
-              *ngIf="canModify && form.controls.phaseCampaign && form.controls.phaseCampaign.value && !canSeeFichaTransparencia.includes(form.controls.phaseCampaign.value.phase)"
+              *ngIf="canModify && form.controls.phaseCampaign && form.controls.phaseCampaign.value && !canSeeFichaTransparencia.includes(form.controls.phaseCampaign.value!.phase)"
               type="button" 
               mat-raised-button color="primary" 
               class="text-white font-bold py-2 px-4 rounded"
@@ -37,19 +37,19 @@
         
           <div class="flex justify-right mr-3 space-x-4 col-span-2">
 
-            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity || autonomousCommunityParticipants.includes(userAutonomousCommunity)) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosFinales.includes(form.controls.phaseCampaign.value.phase)"
+            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity || autonomousCommunityParticipants.includes(userAutonomousCommunity)) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosFinales.includes(form.controls.phaseCampaign.value!.phase)"
                     type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultadosFinales()"
                     class="text-white font-bold py-2 px-4 rounded">
               Resultados finales
             </button>
 
-            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)"
+            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value!.phase)"
                     type="button" mat-raised-button color="primary" (click)="navegarAComponenteIpr()"
                     class="text-white font-bold py-2 px-4 rounded">
               I.P.R
             </button>
 
-            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity || autonomousCommunityParticipants.includes(userAutonomousCommunity)) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosCCAA.includes(form.controls.phaseCampaign.value.phase)"
+            <button *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity || autonomousCommunityParticipants.includes(userAutonomousCommunity)) && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosCCAA.includes(form.controls.phaseCampaign.value!.phase)"
                     type="button" mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)"
                     class="text-white font-bold py-2 px-4 rounded">
               Cumplimentación resultados CCAA
@@ -165,53 +165,49 @@
         </mat-card>
         
         <!-- Protocolos -->
-        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)" 
+        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value!.phase)"
           class="mt-6">
           <mat-card-content>
-
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">Protocolo</h3>
                 <div *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity">
-
                   <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="openDialogCopyProtocol()">Copiar protocolo</button>
                   <button mat-raised-button color="primary" (click)="navegarAComponenteProtocol(0)">Añadir</button>
-                  
                 </div>
               </div>
               <div class="border-b border-gray-300 mb-4"></div>
-              <div class="space-y-4">
-                <div *ngFor="let protocol of protocolsDisplay; let i = index"
-                     [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
-                     class="flex justify-between items-center p-4 shadow-md rounded-lg">
-                  <p class="flex-1">
-                    {{protocol.name}}
-                  </p>
-                  <div>
-                    <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="navegarAComponenteProtocol(protocol.id)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    
-                    <button mat-button matTooltip="Visualizar" (click)="verDetallesProtocol(protocol)" >
-                      <mat-icon>visibility</mat-icon>
-                    </button>
-                    <button mat-button matTooltip="Descargar" (click)="clickExportExcel(protocol)">
-                      <mat-icon>download</mat-icon>
-                    </button>
-                    <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button tswConfirmAction [confirmPrompt]="'¿Está seguro que desea eliminar el Protocolo?'" (confirmed)="deleteProtocol(protocol)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                <div class="space-y-4">
+                  <div *ngFor="let protocol of protocolsDisplay; let i = index"
+                       [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
+                       class="flex justify-between items-center p-4 shadow-md rounded-lg">
+                    <p class="flex-1">
+                      {{protocol.name}}
+                    </p>
+                    <div>
+                      <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="navegarAComponenteProtocol(protocol.id)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+
+                      <button mat-button matTooltip="Visualizar" (click)="verDetallesProtocol(protocol)" >
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                      <button mat-button matTooltip="Descargar" (click)="clickExportExcel(protocol)">
+                        <mat-icon>download</mat-icon>
+                      </button>
+                      <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button tswConfirmAction [confirmPrompt]="'¿Está seguro que desea eliminar el Protocolo?'" (confirmed)="deleteProtocol(protocol)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
           </mat-card-content>
         </mat-card>
 
         <!-- Lista de ipr -->
 
-        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)" 
+        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value!.phase)"
         class="mt-6">
         <mat-card-content>
 
@@ -252,7 +248,7 @@
       </mat-card>
 
         <!-- Documento de planificacion -->
-        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value.phase)" 
+        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeDocumentoplanificacionProtocoloIPR.includes(form.controls.phaseCampaign.value!.phase)"
           class="mt-6">
           <mat-card-content>
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
@@ -264,15 +260,21 @@
 
             <!-- RESULTADOS CCAA -->
 
-        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosCCAA.includes(form.controls.phaseCampaign.value.phase)" 
-          class="mt-6">
+        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeResultadosCCAA.includes(form.controls.phaseCampaign.value!.phase)"
+                  class="mt-6">
           <mat-card-content>
-
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
               <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-semibold text-gray-900">Resultados</h3>
-                <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity || autonomousCommunityParticipants.includes(userAutonomousCommunity)" mat-raised-button color="primary" (click)="navegarAComponenteResultados(undefined)">Añadir</button>
+                <button
+                  *ngIf="(canModify || autonomousCommunityResponsible === userAutonomousCommunity || (autonomousCommunityParticipants.includes(userAutonomousCommunity) && form.controls.phaseCampaign.value.phase !== PHASE_FICHA_TRANSPARENCIA))"
+                  mat-raised-button
+                  color="primary"
+                  (click)="navegarAComponenteResultados(undefined)">
+                  Añadir
+                </button>
               </div>
+
               <div class="border-b border-gray-300 mb-4"></div>
               <div class="space-y-4">
                 <div *ngFor="let resultado of resultsDisplay; let i = index"
@@ -284,12 +286,12 @@
                       [ {{ resultado.autonomousCommunityCountryDTO?.name }} ]
                     </p>
                     <div>
-                      <button mat-button matTooltip="Visualizar" (click)="navegarAComponenteVerResultados(resultado)" >
+                      <button mat-button matTooltip="Visualizar" (click)="navegarAComponenteVerResultados(resultado)">
                         <mat-icon>visibility</mat-icon>
                       </button>
                     </div>
                   </div>
-                 
+
                   <p class="flex-1">
                     <!-- {{ getProductServiceName(resultado.productServiceId) }} -->
                     {{ resultado.protocolDTO.name }}
@@ -298,25 +300,43 @@
                     <!-- {{ getProtocolName(resultado.protocolId) }} -->
                     {{ resultado.productServiceDTO?.name }}
                   </p>
+                </div>
               </div>
-              </div>
-              </div>
-
+            </div>
           </mat-card-content>
         </mat-card>
 
-        <!-- Ficha de transparencia -->
-        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeFichaTransparencia.includes(form.controls.phaseCampaign.value.phase)" 
-          class="mt-6">
+
+
+        <mat-card *ngIf="form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeFichaTransparencia.includes(form.controls.phaseCampaign.value!.phase)"
+                  class="mt-6">
           <mat-card-content>
             <div class="w-3/4 mx-auto p-4 rounded-md mb-8 color-grey">
-              <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900" >{{'text.campaign.trasparencySheet' | translate}}</h3>
+              <!-- Contenedor para el título y el botón "Siguiente fase" alineados -->
+              <div class="flex justify-between items-center">
+                <h3 class="text-2xl font-semibold leading-7 sm:col-span-1 text-gray-900">{{'text.campaign.trasparencySheet' | translate}}</h3>
+                <button
+                  *ngIf="canModify && form.controls.phaseCampaign && form.controls.phaseCampaign.value && canSeeFichaTransparencia.includes(form.controls.phaseCampaign.value!.phase)"
+                  type="button"
+                  mat-raised-button color="primary"
+                  class="text-white font-bold py-2 px-4 rounded"
+                  loadingSpinnerColor="primary"
+                  tswConfirmAction
+                  (confirmed)="changePhaseCampaign()">
+                  Habilitar Resultados
+                  <mat-icon>arrow_forward</mat-icon>
+                </button>
+              </div>
               <tsw-file-upload [canUpload]="canModify" [canDelete]="canModify" [documentTypeId]="3" [documents]="documentsTrasparencySheet"></tsw-file-upload>
             </div>
           </mat-card-content>
         </mat-card>
 
-        </div>
+
+
+
+
+      </div>
 
     </tsw-section-wrapper>
 

@@ -110,9 +110,9 @@
                       <!-- Filas de la tabla -->
                       <div class="table-row-group">
                         <tr *ngFor="let preg of preguntasProtocolo; let i = index"
-                            [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0, 'no-responses': preg.responsible === 'N'}">
-                          <ng-container *ngIf="preg.responsible === 'N'; else showResponses">
-                            <td class="p-4" colspan="5" [ngClass]="{'text-highlight': preg.responsible === 'N'}">
+                            [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0, 'no-responses': preg.response === 'N'}">
+                          <ng-container *ngIf="preg.response === 'N'; else showResponses">
+                            <td class="p-4" colspan="5" [ngClass]="{'text-highlight': preg.response === 'N'}">
                               {{ preg.orderQuestion }} - {{ preg.question }}
                             </td>
                           </ng-container>

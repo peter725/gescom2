@@ -115,6 +115,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
         this.srcData.question.forEach((q: any) => {
           questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
         });
+        console.log('Questions Protocol-edit', questions)
       } catch (err: any) {
         this.afterLoadDataError(err);
       }
@@ -130,6 +131,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
       codeInfringement: codeInfringement,
       response: formattedResponse // Inicializar con 'SI'
     });
+
   }
 
   openDialog(rowIndex: number): void {

@@ -52,7 +52,7 @@ export interface Question {
   question: string | null;
   codeInfringement: string | null;
   bkTrinti: string | null;
-  responsible: any | null;
+  response: any | null;
   bkTrrees: string | null;
   numResponseSi: any;
   numResponseNo: any;

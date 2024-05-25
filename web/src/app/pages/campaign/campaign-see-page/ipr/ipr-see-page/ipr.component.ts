@@ -51,9 +51,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
       console.log('id campaña' + this.idCampaign); // aquí puedes hacer lo que necesites con el ID recuperado
     });
 
-
     await this.fetchProtocol();
-
   }
 
   private async fetchProtocol(): Promise<any> {

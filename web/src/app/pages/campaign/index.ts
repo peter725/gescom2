@@ -4,5 +4,6 @@ export * from './campaign-list-page/campaign-list-page.module';
 export * from './campaign-see-page/campaign-see-page.module';
 export * from './campaign-see-page/resultados/resultados.module';
 export * from './campaign-see-page/resultados-finales/resultados-finales.module';
+export * from './campaign-see-page/results-ccaa-edit/results-ccaa-edit.module';
 export * from './campaign-see-page/ipr/ipr-see-page/ipr.module';
 export * from './campaign-see-page/ipr/ipr-edit-page/ipr-edit-page.module';

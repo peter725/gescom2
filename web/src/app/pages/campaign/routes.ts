@@ -62,6 +62,14 @@ export const CAMPAIGN_PAGE_ROUTES: Routes = [
         loadChildren: () => import('./').then(m => m.ResultadosFinalesModule),
     },
     {
+        path: ':id/results/editar',
+        data: {
+            breadcrumb,
+            requireAccess: 'campaign'
+        },
+        loadChildren: () => import('./').then(m => m.ResultadosCaaEditModule),
+    },
+    {
         path: ':id/ipr',
         data: {
             breadcrumb,

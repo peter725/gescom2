@@ -353,6 +353,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   navegarAComponenteVerResultados(resultado: ProtocolResults | undefined) {
     this.campaign = this.form.value;
+    console.log('Aqui entra al presionar el boton de vizualizar')
     const navigationExtras: NavigationExtras = {
       state: {
         campaign: this.campaign,
@@ -361,6 +362,21 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     };
     this.router.navigate([`app/campanas/${this.campaign.id}/resultados/ver`], navigationExtras);
   }
+
+  navegarAComponenteEditarResultados(resultado: ProtocolResults | undefined) {
+    this.campaign = this.form.value;
+    console.log('Aquí entra al presionar el botón de editar');
+    const navigationExtras: NavigationExtras = {
+      state: {
+        campaign: this.campaign,
+        resultadoSelected: resultado ? resultado : undefined
+      }
+    };
+    console.log('resultado seleccionado', resultado)
+    console.log('campaña enviada:', navigationExtras.state)
+    this.router.navigate([`app/campanas/${this.campaign.id}/results/editar`], navigationExtras);
+  }
+
 
   navegarAComponenteIpr() {
     this.campaign = this.form.value;

@@ -48,4 +48,11 @@ public class ProtocolResultsController extends AbstractCrudController<ProtocolRe
         ProtocolResultsEntity result = ((ProtocolResultsService) service).saveProtocolResults(protocolResults);
         return ResponseEntity.ok(result);
     }
+
+    @Override
+    protected ProtocolResultsDTO performUpdate(Long id, ProtocolResultsDTO payload) {
+        return ((ProtocolResultsService) service).updateProtocolResults(id, payload);
+    }
+
+
 }

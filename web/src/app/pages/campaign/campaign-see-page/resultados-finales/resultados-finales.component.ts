@@ -180,6 +180,7 @@ export class ResultadosFinalesComponent implements OnInit{
       this.iprList = this.protocoloSelected.iprDTOS;
       this.protocoloResultados = this.protocoloSelected.resultsResponseDTO;
     }
+    console.log('protocoloResultados', this.protocoloResultados)
   }
 
   iprOnChange() {

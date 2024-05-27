@@ -122,7 +122,6 @@
                         <!-- Pregunta con respuesta 'N' -->                        
                             <td class="p-4 bg-gray-200">
                                 {{ preg['orderQuestion'] }}
-                                
                             </td>
                             <td  class="p-4 bg-gray-200">
                                 {{ preg['question'] }}
@@ -136,7 +135,6 @@
                         <!-- Pregunta con respuesta 'S' -->                        
                             <td class="p-4">
                                 {{ preg['orderQuestion'] }}
-                                
                             </td>
                             <td  class="p-4">
                                 {{ preg['question'] }}
@@ -157,4 +155,8 @@
             </div>
           </div>
 
-      
+<div class="border-b border-gray-300 mb-4"></div>
+<!-- Contenedor para el botón al final del formulario -->
+<div class="flex justify-center mt-4">
+  <button mat-raised-button color="primary" (click)="navegarAComponente()">Regresar a la campaña</button>
+</div>

@@ -309,6 +309,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
             String question = questionsDTO.getQuestion();
             String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
             questionsResponseDTO.setQuestion(questionText);
+            questionsResponseDTO.setResponse(questionsDTO.getResponse());
             questionsResponseDTO.setOrderQuestion(questionsDTO.getOrderQuestion());
 
             for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {

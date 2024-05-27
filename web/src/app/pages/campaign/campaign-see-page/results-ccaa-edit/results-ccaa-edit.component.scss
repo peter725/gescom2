@@ -1,0 +1,42 @@
+.display-grid {
+  display: grid;
+}
+
+.div-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-titles {
+  font-weight: bold;
+}
+
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.input-con-borde {
+  border: 1px solid #ccc;
+}
+
+.header-titles {
+  background-color: rgb(21,68,129);
+  font-weight: bold;
+  color: white;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.no-responses {
+  background-color: #f0f0f0; /* Color diferente para las filas sin respuestas */
+}
+
+.text-highlight {
+  color: #ff0000; /* Color de texto diferente */
+  font-weight: bold; /* Negrita para resaltar */
+  text-align: left; /* Alinear el texto a la izquierda */
+}

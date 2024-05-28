@@ -292,7 +292,7 @@
 				<activatedProperties>dev,jndi-jdbc</activatedProperties>
 				<env.domain>dev</env.domain>
                 <frontURL>https://servicios-des.consumo.gob.es/GESCOM/auth/login</frontURL>
-				<baseURL>http://micapps01pre.consumo.gob.es:8080/gescom-auth-app</baseURL>
+				<baseURL>http://micapps01des.consumo.gob.es:8080/gescom-auth-app</baseURL>
 				<pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
 				<config.files>/documentospro/properties/GESCO</config.files>
 			</properties>

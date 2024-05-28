@@ -65,3 +65,4 @@ ge-rest-app/src/main/resources/config/application-docker.properties
 ge-auth-app/src/main/resources/config/application-local.properties
 ge-auth-app/@pathLogs@.2024-03-14.0.gz
 ge-auth-app/GESCO-auth.log
+ge-auth-app/@pathLogs@.2024-05-27.0.gz

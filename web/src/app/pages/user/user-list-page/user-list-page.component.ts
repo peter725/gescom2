@@ -39,13 +39,16 @@ export class UserListPageComponent extends BaseListPageComponent<User> implement
   }
 
   protected override async getRequestConfig(): Promise<RequestConfig> {
+    console.log('aqui entra a hacer la busqueda')
     const config = await super.getRequestConfig();
     //const scope = (await firstValueFrom(this.sampleCtx.scope$)).scopeCode;
 
     config.queryParams = {
-      ...config.queryParams
+      ...config.queryParams,
       //scope,
+      page: 0 // Aquí estamos forzando el page a 0
     };
+    console.log('Configuración de solicitud:', config);
     return config;
   }
 

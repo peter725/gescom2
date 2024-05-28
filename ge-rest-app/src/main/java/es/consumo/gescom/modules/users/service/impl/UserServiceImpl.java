@@ -14,6 +14,9 @@ import es.consumo.gescom.modules.userType.service.UserTypeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -102,7 +105,10 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         	userCriteria.setState(new Integer[]{1});
         }
         userCriteria.setSort(new String[]{"id;desc"});
-        Page<UserEntity.SimpleProjection>  userSimpleProjections = ((UserRepository) repository).findAllByCriteria(userCriteria, userCriteria.toPageable());
+        // Establece siempre el Pageable a la página 0 con un tamaño de página por defecto, p.ej. 10
+        Pageable resetPageable = PageRequest.of(0, 50, Sort.by("id").ascending());
+
+        Page<UserEntity.SimpleProjection>  userSimpleProjections = ((UserRepository) repository).findAllByCriteria(userCriteria, resetPageable);
 
         return userSimpleProjections;
     }

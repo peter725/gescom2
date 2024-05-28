@@ -61,7 +61,7 @@ public class ProductServiceServiceImpl extends EntityCrudService<ProductServiceE
         productServiceCriteria.setSort(new String[]{"id:asc"});
 
         // Establece siempre el Pageable a la página 0 con un tamaño de página por defecto, p.ej. 10
-        Pageable resetPageable = PageRequest.of(0, 10, Sort.by("id").ascending());
+        Pageable resetPageable = PageRequest.of(0, 50, Sort.by("id").ascending());
 
         Page<ProductServiceEntity.SimpleProjection> productSimpleProjections = ((ProductServiceRepository) repository).findAllByCriteria(productServiceCriteria, resetPageable);
 

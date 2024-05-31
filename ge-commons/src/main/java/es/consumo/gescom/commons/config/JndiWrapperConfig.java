@@ -32,7 +32,7 @@ public class JndiWrapperConfig extends JNDIConfig {
                 .password(getPassword(env))
                 .build();
 
-        /*log.info("******************{}******************************", getPasswordtest("tD8lyHh8vmQF+c9FS283FJuVcy3+cAgCFdUm6992OVQzzm6o2A=="));*/
+        /*log.info("******************{}******************************", getPasswordtest(""));*/
         return response;
 
 

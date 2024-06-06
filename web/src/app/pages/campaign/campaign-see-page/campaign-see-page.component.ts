@@ -69,6 +69,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     super.ngOnInit();
     this.loadPhases();
     this.loadDocuments();
+    this.console.log(this.userAutonomousCommunity.substring(0, 5));
   }
 
   get autonomousCommunityResponsible() : string {

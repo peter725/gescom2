@@ -252,27 +252,30 @@
               <div class="border-b border-gray-300 mb-4"></div>
               <div class="space-y-4">
                 <div *ngFor="let resultado of resultsDisplay; let i = index"
-                     [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
-                     class="justify-between items-center p-4 shadow-md rounded-lg">
-                  <div class="flex">
-                    <p class="flex-1">
-                      [ {{ resultado.autonomousCommunityCountryDTO?.name }} ]
-                    </p>
-                    <div>
-                      <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="navegarAComponenteEditarResultados(resultado)">
-                        <mat-icon>edit</mat-icon>
-                      </button>
-                      <button mat-button matTooltip="Visualizar" (click)="navegarAComponenteVerResultados(resultado)">
-                        <mat-icon>visibility</mat-icon>
-                      </button>
+                  [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
+                  [ngStyle]="{ 'display': canModify || autonomousCommunityResponsible === userAutonomousCommunity || (resultado.autonomousCommunityCountryDTO && resultado.autonomousCommunityCountryDTO.name.includes(userAutonomousCommunity.substring(0, 5))) ? 'block' : 'none' }"
+                  class="justify-between items-center p-4 shadow-md rounded-lg">
+                  <div class="contents" *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity || (resultado.autonomousCommunityCountryDTO && resultado.autonomousCommunityCountryDTO.name.includes(userAutonomousCommunity.substring(0, 5)))">
+                    <div class="flex" >
+                      <p class="flex-1">
+                        [ {{ resultado.autonomousCommunityCountryDTO?.name }} ]
+                      </p>
+                      <div>
+                        <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="navegarAComponenteEditarResultados(resultado)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-button matTooltip="Visualizar" (click)="navegarAComponenteVerResultados(resultado)">
+                          <mat-icon>visibility</mat-icon>
+                        </button>
+                      </div>
                     </div>
+                    <p class="flex-1">
+                      {{ resultado.protocolDTO.name }}
+                    </p>
+                    <p class="flex-1">
+                      {{ resultado.productServiceDTO?.name }}
+                    </p>
                   </div>
-                  <p class="flex-1">
-                    {{ resultado.protocolDTO.name }}
-                  </p>
-                  <p class="flex-1">
-                    {{ resultado.productServiceDTO?.name }}
-                  </p>
                 </div>
               </div>
             </div>

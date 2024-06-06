@@ -98,12 +98,14 @@
           <div class="additional-actions">
             <a
               mat-button
-              [routerLink]="'campaignManagementSee' | namedRoute: { id: element.id }">
+              [routerLink]="'campaignManagementSee' | namedRoute: { id: element.id }"
+              matTooltip="Abrir">
               <mat-icon>visibility</mat-icon>
             </a>
             <a *ngIf="canModify"
               mat-button
-              [routerLink]="'campaignManagementEdit' | namedRoute: { id: element.id }">
+              [routerLink]="'campaignManagementEdit' | namedRoute: { id: element.id }"
+               matTooltip="Editar datos iniciales">
               <mat-icon>edit</mat-icon>
             </a>
           </div>

@@ -271,6 +271,8 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                 QuestionsDTO questionsDTO = new QuestionsDTO();
                 questionsDTO.setQuestion(questionsEntity.getQuestion());
                 questionsDTO.setCodeQuestion(questionsEntity.getCodeQuestion());
+                questionsDTO.setResponse(questionsEntity.getResponse());
+                questionsDTO.setOrderQuestion(questionsEntity.getOrderQuestion());
                 questionDetailDTOList.add(questionsDTO);
             });
         }else {
@@ -279,6 +281,8 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                 QuestionsDTO questionsDTO = new QuestionsDTO();
                 questionsDTO.setQuestion(questionsEntity.getQuestion());
                 questionsDTO.setCodeQuestion(questionsEntity.getCodeQuestion());
+                questionsDTO.setResponse(questionsEntity.getResponse());
+                questionsDTO.setOrderQuestion(questionsEntity.getOrderQuestion());
                 questionDetailDTOList.add(questionsDTO);
             });
         }

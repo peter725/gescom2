@@ -59,6 +59,13 @@ export interface Question {
   numResponseNoProcede: any;
 }
 
+export interface QuestionSimple{
+  codeQuestion: number | null;
+  question: string | null;
+  response: any | null;
+  orderQuestion: number | null;
+}
+
 export interface QuestionIpr {
   id: number | null;
   orderQuestion: number | null;

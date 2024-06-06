@@ -7,6 +7,7 @@ import { ColumnSrc } from '@base/shared/collections';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { SharedDataService } from '@base/services/sharedDataService';
+import { QuestionSimple } from '@libs/sdk/protocol';
 
 
 interface TableRow {
@@ -36,7 +37,7 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
 
 
   dataSourceSample: any[] = []; // Aquí almacenaremos los datos de ejemplo
-  dataSourceQuestion: any[] = []; // Aquí almacenaremos los datos de ejemplo
+  dataSourceQuestion: QuestionSimple[] = []; // Aquí almacenaremos los datos de ejemplo
   idProtocol: any;
   codeProtocol: any;
   questionsArray: any;
@@ -97,7 +98,7 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
       },
     }));
 
-    console.log(this.dataSourceQuestion);
+    console.log('aqui imorime las preguntas que van al componente',this.dataSourceQuestion);
     this.questionsArray = this.dataSourceQuestion;
   
   }
@@ -134,13 +135,13 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
   
       // Verifica si se ha seleccionado cada opción de la fila y construye la respuesta
       if (element.si) {
-        respuestasFila += 'S' + (element.codeQuestion || '') + '+';
+        respuestasFila += 'S' + (element['orderQuestion'] || '') + '+';
       }
       if (element.no) {
-        respuestasFila += 'N' + (element.codeQuestion || '') + '+';
+        respuestasFila += 'N' + (element['orderQuestion'] || '') + '+';
       }
       if (element.noProcede) {
-        respuestasFila += 'NP' + (element.codeQuestion || '') + '+';
+        respuestasFila += 'NP' + (element['orderQuestion'] || '') + '+';
       }
   
       // Elimina el último '+' si hay alguna respuesta
@@ -153,7 +154,7 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
         // Agrega la respuesta al arreglo de respuestas
         this.respuestasUsuario.push({
           index: index + 1,
-          pregunta: element.codeQuestion || '', // Usa una cadena vacía si codeQuestion es undefined
+          pregunta: element['orderQuestion'] || '', // Usa una cadena vacía si codeQuestion es undefined
           respuesta: respuestasFila
         });
       }

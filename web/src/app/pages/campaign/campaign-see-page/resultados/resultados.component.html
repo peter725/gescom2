@@ -147,6 +147,7 @@
                         <mat-form-field class="col-span-2">
                             <mat-label>{{ 'pages.results.tProdControlados' | translate }}</mat-label>
                               <input matInput formControlName="totalProdControlados" type="number" required>
+                              <mat-error>{{ editForm2.controls.totalProdControlados.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
         
                         <mat-form-field class="col-span-2">

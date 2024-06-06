@@ -480,6 +480,7 @@
       "maxlength": "El campo no puede tener más de {{ requiredLength }} caracteres",
       "min": "El valor debe ser al menos {{ min }}",
       "minlength": "El campo debe tener al menos {{ requiredLength }} caracteres",
+      "mustMatch": "La suma de correctos e incorrectos debe ser igual al total de controlados",
       "required": "El campo es obligatorio",
       "endDateLessThanStartDate": "Por favor, elige una fecha posterior a la de inicio.",
       "matDatepickerMin": "La fecha no se corresponde con el año del ejercicio"

@@ -16,6 +16,7 @@ import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults
 import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
 import { NotificationService } from '@base/shared/notification';
 import { AuthContextService } from '@libs/security';
+import { Validator } from '@base/shared/functions/validators';
 
 
 @Component({
@@ -92,6 +93,9 @@ export class ResultadosComponent implements OnInit{
     totalProdCorrectos: [],
     totalProdIncorrectos: [],
 
+  },
+  {
+    validators: [ Validator.totalProductsValidator('totalProdControlados', 'totalProdCorrectos', 'totalProdIncorrectos') ]
   });
 
   goBack() {

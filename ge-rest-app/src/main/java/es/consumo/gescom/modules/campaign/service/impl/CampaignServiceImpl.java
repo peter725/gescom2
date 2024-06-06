@@ -415,7 +415,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         if (campaignCriteria.getState() == null || campaignCriteria.getState().length == 0) {
             campaignCriteria.setState(new Integer[]{1});
         }
-        campaignCriteria.setSort(new String[]{"id;desc"});
+        campaignCriteria.setSort(campaignCriteria.getSort());
         Page<CampaignEntity> campaignEntities = campaignRepository.findAllByCriteria(campaignCriteria, criteria.toPageable());
 
         return campaignEntities;

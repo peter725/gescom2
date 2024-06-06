@@ -261,7 +261,7 @@
                         [ {{ resultado.autonomousCommunityCountryDTO?.name }} ]
                       </p>
                       <div>
-                        <button *ngIf="canModify || autonomousCommunityResponsible === userAutonomousCommunity" mat-button (click)="navegarAComponenteEditarResultados(resultado)">
+                        <button mat-button (click)="navegarAComponenteEditarResultados(resultado)">
                           <mat-icon>edit</mat-icon>
                         </button>
                         <button mat-button matTooltip="Visualizar" (click)="navegarAComponenteVerResultados(resultado)">

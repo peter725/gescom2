@@ -82,6 +82,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         UserCriteria userCriteria = (UserCriteria) criteria;
         if (userCriteria.getSearch() != null) {
             userCriteria.setSearch(userCriteria.getSearch().toUpperCase());
+            userCriteria.setPage(0);
         }
         if (userCriteria.getName() != null) {
             userCriteria.setName(userCriteria.getName().toUpperCase());
@@ -105,10 +106,8 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         	userCriteria.setState(new Integer[]{1});
         }
         userCriteria.setSort(new String[]{"id;desc"});
-        // Establece siempre el Pageable a la página 0 con un tamaño de página por defecto, p.ej. 10
-        Pageable resetPageable = PageRequest.of(0, 50, Sort.by("id").ascending());
 
-        Page<UserEntity.SimpleProjection>  userSimpleProjections = ((UserRepository) repository).findAllByCriteria(userCriteria, resetPageable);
+        Page<UserEntity.SimpleProjection>  userSimpleProjections = ((UserRepository) repository).findAllByCriteria(userCriteria, userCriteria.toPageable());
 
         return userSimpleProjections;
     }

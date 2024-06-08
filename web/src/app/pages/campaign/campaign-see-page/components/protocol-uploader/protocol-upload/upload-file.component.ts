@@ -187,7 +187,6 @@ export class UploadFileComponent <T=any> {
       console.log('Documento eliminado correctamente');
       location.reload();
       // this.loadDocuments();
-      // Realiza alguna acción después de eliminar el documento, si es necesario
     } catch (error) {
       console.error('Hubo un error al eliminar el documento:', error);
     }

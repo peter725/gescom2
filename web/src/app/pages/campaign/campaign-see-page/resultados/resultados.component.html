@@ -16,13 +16,6 @@
                 </div>
             </div>
 
-            <!-- <div class="grid grid-cols-4 gap-1.5 mb-2">
-                <mat-form-field class="col-span-4">
-                  <mat-label>{{ 'fields.nameCampaign' | translate }}</mat-label>
-                  <input matInput formControlName="nameCampaign" readonly>
-                </mat-form-field>
-              </div> -->
-
             <div class="grid grid-cols-1 gap-1.5 mt-4">
                 <mat-form-field>
                     <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
@@ -117,22 +110,6 @@
                             <input matInput formControlName="numControlados" type="number" required>
                         </mat-form-field>
                     </div>
-
-                    <!-- <div class="grid grid-cols-6 gap-1.5">
-
-                            <mat-form-field class="col-span-6">
-                            <mat-label>{{ 'pages.results.numExistentes' | translate }}</mat-label>
-                            <input matInput formControlName="numExistentes" type="number">
-                            </mat-form-field>
-
-        
-
-                            <mat-form-field class="col-span-6">
-                            <mat-label>{{ 'pages.results.numControlados' | translate }}</mat-label>
-                            <input matInput formControlName="numControlados" type="number" required>
-                            </mat-form-field>
-
-                    </div> -->
                 </mat-card-content>
             </mat-card>
 
@@ -141,7 +118,6 @@
                     <mat-card-subtitle>{{ 'pages.results.tProductos' | translate }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-
                     
                     <div class="grid grid-cols-6 gap-1.5">
                         <mat-form-field class="col-span-2">
@@ -160,40 +136,17 @@
                               <input matInput formControlName="totalProdIncorrectos" type="number" required>
                         </mat-form-field>
                     </div>
-<!-- 
-                    <div class="grid grid-cols-6 gap-1.5">
-                        <div class="col-span-2 div-center ">
-                            <mat-form-field>
-                              <mat-label>{{ 'pages.results.tProdControlados' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdControlados" type="number" required>
-                            </mat-form-field>
-                        </div>
-        
-                        <div class="col-span-2 div-center ">
-                            <mat-form-field class="col-span-1">
-                              <mat-label>{{ 'pages.results.tProdCorrectos' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdCorrectos" type="number" required>
-                            </mat-form-field>
-                        </div>
-    
-                        <div class="col-span-2 div-center ">
-                            <mat-form-field class="col-span-1">
-                              <mat-label>{{ 'pages.results.tProdIncorrectos' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdIncorrectos" type="number" required>
-                            </mat-form-field>
-                        </div>
-                    </div> -->
                 </mat-card-content>
-                
+
             </mat-card>
-                
+
         </form>
         <div class="justify-center mt-3">
             <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" (click)="goBack()">Cancelar</button>
             <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" matStepperPrevious>Anterior</button>
             <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 rounded" matStepperNext>Siguiente</button>
         </div>
-        
+
     </mat-step>
 
     <mat-step [stepControl]="editForm2">
@@ -210,7 +163,7 @@
                         <input matInput formControlName="year" readonly>
                     </mat-form-field>
             </div>
-            
+
         </form>
 
             <div class="grid grid-cols-6 gap-1.5">
@@ -242,7 +195,7 @@
                     <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No</div>
                     <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede</div>
                   </div>
-      
+
                   <!-- Filas de la tabla -->
                   <div class="table-row-group">
                     <tr *ngFor="let preg of preguntasProtocolo">

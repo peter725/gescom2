@@ -486,29 +486,14 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
 
 
-        /*if (searchDTO.getProductServiceCode() != null) {
-            productServiceEntity = productServiceRepository.findProductServiceByCode(searchDTO.getProductServiceCode());
-        }else {
-            productServiceEntity = productServiceRepository.findProductServiceById(searchDTO.getProductServiceId());
-        }*/
         if(campaignEntity.getNameCampaign() != null){
             resultsResponseDTO.setCampaignName(campaignEntity.getNameCampaign());
         }
         if(protocolDTO != null && protocolDTO.getName() != null){
             resultsResponseDTO.setProtocolName(protocolDTO.getName());
         }
-        //resultsResponseDTO.setProductName(productServiceEntity.getCode().concat(" - ").concat(productServiceEntity.getName()));
         if (iprResponseDTOS.size() == 0){
 
-
-            /*for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
-                if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC1")) {
-                    questionsResponseDTO.setQuestion("DC1- Nro. de establecimientos existentes");
-                    questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                    questionsResponseDTOS.add(questionsResponseDTO);
-                }
-            }*/
 
             for (QuestionsDTO questionsDTO : questionsDTOS){
 

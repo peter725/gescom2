@@ -122,10 +122,12 @@ export class ResultsCcaaEditComponent implements OnInit{
   }
 
   loadResultados(resultadoSelected: ProtocolResults) {
+    console.log('resultados seleecionados:' ,resultadoSelected.totalProtocolResultsDTOS)
     this.protocoloSelected = resultadoSelected?.protocolDTO;
     this.productoSelected = resultadoSelected?.productServiceDTO;
     this.caSelected = resultadoSelected?.autonomousCommunityCountryDTO;
     this.preguntasProtocolo = this.protocoloSelected?.question;
+    console.log('Preguntas antes de forEach', this.preguntasProtocolo)
     this.sortQuestionsByOrder();
 
     this.numExistentes = resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion === this.codNumExistentes)?.ccaaRes || null;
@@ -135,13 +137,17 @@ export class ResultsCcaaEditComponent implements OnInit{
     this.totalProdIncorrectos = resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion === this.codProdIncorrectos)?.ccaaRes || null;
 
     this.preguntasProtocolo.forEach((question, index) => {
-      const resultado = resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion === question.codeQuestion);
+      const numericCodeQuestion = Number(resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion))
+      const resultado = resultadoSelected.totalProtocolResultsDTOS?.find(r => Number(r.codeQuestion) === question.orderQuestion);
+      console.log('Resultado: ', resultado)
       if (resultado) {
         question.numResponseSi = resultado.ccaaRes;
         question.numResponseNo = resultado.ccaaRen;
         question.numResponseNoProcede = resultado.ccaaRep;
       }
     });
+
+    console.log('Preguntas despues de forEach', this.preguntasProtocolo)
 
     // Asignar el ID correcto de `protocolResults`
     this.editForm1.patchValue({
@@ -230,6 +236,10 @@ export class ResultsCcaaEditComponent implements OnInit{
 
   getProtocolo(id: any): any {
     return this.protocolosList?.find(protocolo => protocolo.id === id);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   saveResults(): void {

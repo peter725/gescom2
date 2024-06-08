@@ -54,6 +54,9 @@ export interface Question {
   bkTrinti: string | null;
   response: any | null;
   bkTrrees: string | null;
+  ccaarep: number | null;
+  ccaaren: number | null;
+  ccaares: number | null;
   numResponseSi: any;
   numResponseNo: any;
   numResponseNoProcede: any;

@@ -167,7 +167,24 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     if (this.form.get('protocolResultsDTOS')?.value) {
       this.campaignResults = this.form.get('protocolResultsDTOS')?.value;
     }
+    console.log('return this.form.get(\'protocolResultsDTOS\')?.value!', this.form.get('protocolResultsDTOS')?.value!)
     return this.form.get('protocolResultsDTOS')?.value!;
+  }
+
+  //BORRADO RESULTADO DE CCAA
+  async deleteResult(idResult: number) {
+    console.log('id a borrar: ' + idResult);
+    try {
+      await this.crudService.deleteId(idResult, {
+        resourceName: 'protocolResult',
+        pathParams: { id: idResult } // Pasamos el ID del documento aquí
+      }).toPromise();
+      console.log('Documento eliminado correctamente');
+      location.reload();
+      // this.loadDocuments();
+    } catch (error) {
+      console.error('Hubo un error al eliminar el resultado:', error);
+    }
   }
 
   getAutonomousCommunityName(code: any): string {

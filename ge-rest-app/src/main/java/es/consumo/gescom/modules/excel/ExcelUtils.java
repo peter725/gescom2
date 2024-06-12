@@ -250,6 +250,7 @@ public class ExcelUtils {
 
                 for (QuestionsResponseDTO pregunta : preguntasOrder) {
                     colHeader = 0;
+
                     if (pregunta.getNumResponseSi() == 0 && pregunta.getNumResponseNo() == 0 && pregunta.getNumResponseNoProcede() == 0){
                         row = sheet.createRow(rowNum++);
                         row.setHeightInPoints(5);
@@ -318,11 +319,11 @@ public class ExcelUtils {
                     colHeader = 0;
                     numPregunta++;
                     if (pregunta.getResponse().equals("N")) {
-                        row = sheet.createRow(rowNum++);
-                        row.setHeightInPoints(5);
-                        cell = row.createCell(colHeader);
-                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
-
+                        if (numPregunta > 1){
+                            row = sheet.createRow(rowNum++);
+                            row.setHeightInPoints(12);
+                            sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+                        }
                         row = sheet.createRow(rowNum++);
                         cell = row.createCell(colHeader++);
                         cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
@@ -337,10 +338,10 @@ public class ExcelUtils {
                         cell = row.createCell(colHeader++);
                         cell.setCellStyle(stylePreguntas);
 
-                        row = sheet.createRow(rowNum++);
+                        /*row = sheet.createRow(rowNum++);
                         row.setHeightInPoints(5);
                         cell = row.createCell(colHeader);
-                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));*/
 
                     } else {
                         row = sheet.createRow(rowNum++);

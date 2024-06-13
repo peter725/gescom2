@@ -137,6 +137,7 @@ export class ResultsCcaaEditComponent implements OnInit{
     this.totalProdIncorrectos = resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion === this.codProdIncorrectos)?.ccaaRes || null;
 
     this.preguntasProtocolo.forEach((question, index) => {
+      console.log('Pregunstas',question);
       const numericCodeQuestion = Number(resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion))
       const resultado = resultadoSelected.totalProtocolResultsDTOS?.find(r => Number(r.codeQuestion) === question.orderQuestion);
       console.log('Resultado: ', resultado)
@@ -265,9 +266,9 @@ export class ResultsCcaaEditComponent implements OnInit{
             ccaaRen: pregunta.numResponseNo,
             ccaaRep: pregunta.numResponseNoProcede,
             ccaaRes: pregunta.numResponseSi,
-            code: pregunta.codeQuestion,
+            code: pregunta.code,
             protocolResultsCode: this.protocoloSelected?.code,
-            codeQuestion: pregunta.codeQuestion,
+            codeQuestion: pregunta.orderQuestion.toString(),
             protocolResultsId: this.editForm1.get('id')?.value
           })),
           // Agregar los campos adicionales a totalProtocolResultsDTOS

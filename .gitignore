@@ -63,3 +63,9 @@ web/src/environments/environment.ts
 ge-rest-app/src/main/resources/config/application-local.properties
 ge-rest-app/src/main/resources/config/application-docker.properties
 ge-auth-app/src/main/resources/config/application-local.properties
+ge-resources/.idea/ge-resources.iml
+ge-resources/.idea/libraries/libs.xml
+ge-resources/.idea/misc.xml
+ge-resources/.idea/modules.xml
+ge-resources/.idea/vcs.xml
+ge-resources/.idea/workspace.xml

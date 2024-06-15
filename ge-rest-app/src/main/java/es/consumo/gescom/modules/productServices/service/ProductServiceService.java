@@ -17,4 +17,5 @@ public interface ProductServiceService extends CrudService<ProductServiceEntity,
     ProductServiceDTO findByCode(String code);
 
     ProductServiceDTO findProductServiceById(Long id);
+
 }

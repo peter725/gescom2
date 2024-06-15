@@ -37,6 +37,7 @@ export class ProtocolQuestionDialogComponent {
       infringement: this.fb.control(null),
       code: this.fb.control(null),
     });
+
   }
 
   handleSelectionChange(event: {row: any, selected: boolean}) {
@@ -49,6 +50,7 @@ export class ProtocolQuestionDialogComponent {
       // Remover el elemento si ya no está seleccionado
       this.dataSource = this.dataSource.filter(item => item.id !== event.row.id);
     }
+    console.log('formulario', this.form)
   }
  
 

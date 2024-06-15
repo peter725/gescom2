@@ -88,6 +88,7 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
         this.btnStatus.status = 'IDLE';
         this.updateResourceState();
         this.updateBtnDetails();
+        if(payload.status === ModelStates.OFF) location.reload();
       },
       error: e => {
         this.btnStatus.status = 'ERROR';

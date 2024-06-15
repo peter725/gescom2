@@ -1,12 +1,9 @@
 package es.consumo.gescom.modules.users.repository;
 
 import es.consumo.gescom.commons.db.repository.QueryByCriteria;
-import es.consumo.gescom.modules.ambit.model.criteria.AmbitCriteria;
-import es.consumo.gescom.modules.ambit.model.entity.AmbitEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
@@ -24,6 +21,7 @@ public interface UserRepository extends GESCOMRepository<UserEntity, Long> , Que
         + "AND (:#{#criteria.dni} is null OR UPPER(a.dni) LIKE :#{#criteria.dni}) "
         + "AND (:#{#criteria.email} is null OR UPPER(a.email) LIKE :#{#criteria.email}) "
         + "AND (:#{#criteria.phone} is null OR UPPER(a.phone) LIKE :#{#criteria.phone}) "
+        + "AND (:#{#criteria.state} is null OR a.state in :#{#criteria.state}) "
         + "AND ("
         + ":#{#criteria.search} is null "
         + "OR UPPER(a.name) like :#{#criteria.search} )"
@@ -32,6 +30,7 @@ public interface UserRepository extends GESCOMRepository<UserEntity, Long> , Que
         + "OR UPPER(a.dni) LIKE :#{#criteria.search} "
         + "OR UPPER(a.email) LIKE :#{#criteria.search} "
         + "OR UPPER(a.phone) LIKE :#{#criteria.search} "
+        + "OR UPPER(a.role.name) LIKE :#{#criteria.search} "
         )
         public Page<UserEntity.SimpleProjection> findAllByCriteria(UserCriteria criteria, Pageable pageable);
 

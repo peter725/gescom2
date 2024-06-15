@@ -49,6 +49,7 @@
       "restrictHierarchy": "Restringir la jerarquía",
       "save": "Guardar",
       "search": "Buscar",
+      "searchSimple": "Buscar por todos los campos de la tabla",
       "see": "Ver",
       "selectAll": "Seleccionar todos",
       "selectOne": "Selecciona un valor",
@@ -246,7 +247,7 @@
     "sequence": "Secuencia",
     "settings": "Configuración",
     "sharedAccess": "Acceso compartido",
-    "showHidden": "Mostrar ocultos",
+    "showHidden": "Mostrar eliminados",
     "sortOrder": "Orden",
     "startDate": "Fecha de Inicio",
     "state": "Estado",
@@ -301,8 +302,14 @@
       "requiredDoc": "Cargar los documentos",
       "question": "Pregunta",
       "codInfraction": "Cod. Infracción",
-      "protocolDetails": "Detalles del protocolo"
+      "protocolDetails": "Detalles del protocolo",
+      "iprDetails": "Detalles del I.P.R"
     }
+  },
+  "ipr": {
+    "question": "Pregunta",
+    "formula": "Fórmula",
+    "%respect": "% respecto a"
   },
   "text": {
     "campaign": {
@@ -443,6 +450,7 @@
     },
     "prompt": {
       "completeAction": "¿Está seguro?",
+      "completeActionProtocol": "¿Está seguro que desea eliminar el Protocolo?",
       "customAction": "Confirmación con '{{ value }}'",
       "changeStatus": "¿Cambiar el estado de \"{{ name }}\"?"
     },
@@ -472,6 +480,7 @@
       "maxlength": "El campo no puede tener más de {{ requiredLength }} caracteres",
       "min": "El valor debe ser al menos {{ min }}",
       "minlength": "El campo debe tener al menos {{ requiredLength }} caracteres",
+      "mustMatch": "La suma de correctos e incorrectos debe ser igual al total de controlados",
       "required": "El campo es obligatorio",
       "endDateLessThanStartDate": "Por favor, elige una fecha posterior a la de inicio.",
       "matDatepickerMin": "La fecha no se corresponde con el año del ejercicio"

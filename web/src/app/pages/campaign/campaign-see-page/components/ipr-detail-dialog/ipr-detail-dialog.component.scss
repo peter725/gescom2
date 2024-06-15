@@ -1,0 +1,46 @@
+.header-titles {
+  background-color: rgb(21,68,129);
+  font-weight: bold;
+  color: white;
+}
+
+.centered-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.div-margin {
+  margin: 33px;
+}
+
+.preguntas-gris {
+  background-color: rgb(227,227,227);
+  font-weight: bold;
+  text-transform: uppercase;
+  /*position: absolute;
+  left: 33px;*/
+  padding: 33px;
+}
+
+.dynamic-height {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden; /* O 'visible', dependiendo de cómo quieras manejar el desbordamiento */
+}
+
+.nombre-protocolo {
+  color: rgb(21,68,129);
+  text-decoration: underline;
+  text-transform: uppercase;
+  margin: 15px;
+}
+
+.flex-grow-0 {
+  flex-grow: 0;
+}
+.flex-grow {
+  flex-grow: 1;
+}
+

@@ -19,6 +19,7 @@ import { PHASE_BORRADOR_RESULTADOS, PHASE_BORRADOR_RESULTADOS_DEBATE, PHASE_DATO
 import { firstValueFrom } from 'rxjs';
 import { ProtocolListPageComponent } from '@base/pages/protocol/protocol-list-page/protocol-list-page.component';
 import { AuthContextService } from '@libs/security';
+import { IprDetailComponent } from './components/ipr-detail-dialog/ipr-detail-dialog.component';
 
 @Component({
   selector: 'app-campaign-see-page',
@@ -47,6 +48,10 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   canSeeResultadosCCAA = [ PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_DEFINITIVOS_PENDIENTES, PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE, PHASE_FICHA_TRANSPARENCIA ]
   canSeeResultadosFinales = [ PHASE_RESULTADOS_FINALES, PHASE_RESULTADOS_FINALES_DEBATE, PHASE_FICHA_TRANSPARENCIA ]
   canSeeFichaTransparencia = [ PHASE_FICHA_TRANSPARENCIA ]
+  // Nueva variable para las fases en las que se puede ver el botón de eliminar protocolo
+  canSeeDeleteProtocolo = [ PHASE_DATOS_INICIALES, PHASE_DOC_INSPECCION_PROTOCOLO_DEBATE, PHASE_DOC_INSPECCION_PROTOCOLO_DEFINITIVO, PHASE_DOC_INSPECCION_PLAN_DEBATE, PHASE_DOC_INSPECCION, PHASE_BORRADOR_RESULTADOS_DEBATE, PHASE_BORRADOR_RESULTADOS, PHASE_IMPRESO_DEBATE ];
+  canSeeIpr = [ PHASE_IMPRESO_DEFINITIVO, PHASE_RESULTADOS_DEFINITIVOS_PENDIENTES, PHASE_RESULTADOS_DEFINITIVOS, PHASE_RESULTADOS_FINALES_DEBATE, PHASE_RESULTADOS_FINALES, PHASE_FICHA_TRANSPARENCIA ]
+
 
   campaignProducts: ProductService[] | null | undefined = [];
   campaignResults: ProtocolResults[] | null | undefined = [];
@@ -64,6 +69,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     super.ngOnInit();
     this.loadPhases();
     this.loadDocuments();
+    this.console.log(this.userAutonomousCommunity.substring(0, 5));
   }
 
   get autonomousCommunityResponsible() : string {
@@ -121,6 +127,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
       updatedAt: this.fb.control(null),
       state: this.fb.control(null),
       protocols: this.fb.control([]),
+      iprDTOS: this.fb.control([]),
       campaignProductServiceDTOS: this.fb.control([]),
       protocolResultsDTOS: this.fb.control([])
     });
@@ -143,18 +150,41 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     return this.form.get('protocols')?.value!;
   }
 
+  get iprDisplay(){
+    return this.form.get('iprDTOS')?.value!;
+  }
+
   get productsDisplay(){
     if (this.form.get('campaignProductServiceDTOS')?.value) {
       this.campaignProducts = this.form.get('campaignProductServiceDTOS')?.value;
     }
+
     return this.form.get('campaignProductServiceDTOS')?.value!;
+
   }
 
   get resultsDisplay(){
     if (this.form.get('protocolResultsDTOS')?.value) {
       this.campaignResults = this.form.get('protocolResultsDTOS')?.value;
     }
+    console.log('return this.form.get(\'protocolResultsDTOS\')?.value!', this.form.get('protocolResultsDTOS')?.value!)
     return this.form.get('protocolResultsDTOS')?.value!;
+  }
+
+  //BORRADO RESULTADO DE CCAA
+  async deleteResult(idResult: number) {
+    console.log('id a borrar: ' + idResult);
+    try {
+      await this.crudService.deleteId(idResult, {
+        resourceName: 'protocolResult',
+        pathParams: { id: idResult } // Pasamos el ID del documento aquí
+      }).toPromise();
+      console.log('Documento eliminado correctamente');
+      location.reload();
+      // this.loadDocuments();
+    } catch (error) {
+      console.error('Hubo un error al eliminar el resultado:', error);
+    }
   }
 
   getAutonomousCommunityName(code: any): string {
@@ -202,41 +232,39 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     }
   }
 
-  protected changePhaseCampaign(){
-
+  protected changePhaseCampaign() {
     let actualPhase = this.form.get('phaseCampaign')?.value;
     let newPhase;
     let save = true;
 
-    if (actualPhase?.phase === PHASE_DATOS_INICIALES) {
+    if (actualPhase?.phase === PHASE_DATOS_INICIALES ) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_DOC_INSPECCION);
-    } else if (actualPhase?.phase === PHASE_DOC_INSPECCION) {
+    } else if (actualPhase?.phase === PHASE_DOC_INSPECCION || actualPhase?.phase === PHASE_DOC_INSPECCION_PROTOCOLO_DEBATE || actualPhase?.phase === PHASE_DOC_INSPECCION_PROTOCOLO_DEFINITIVO || actualPhase?.phase === PHASE_DOC_INSPECCION_PLAN_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_BORRADOR_RESULTADOS);
-    } else if (actualPhase?.phase === PHASE_BORRADOR_RESULTADOS) {
+    } else if (actualPhase?.phase === PHASE_BORRADOR_RESULTADOS || actualPhase?.phase === PHASE_BORRADOR_RESULTADOS_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_IMPRESO_DEFINITIVO);
-    } else if (actualPhase?.phase === PHASE_IMPRESO_DEFINITIVO) {
+    } else if (actualPhase?.phase === PHASE_IMPRESO_DEFINITIVO || actualPhase?.phase === PHASE_IMPRESO_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_RESULTADOS_DEFINITIVOS);
-    } else if (actualPhase?.phase === PHASE_RESULTADOS_DEFINITIVOS) {
+    } else if (actualPhase?.phase === PHASE_RESULTADOS_DEFINITIVOS || actualPhase?.phase === PHASE_RESULTADOS_DEFINITIVOS_PENDIENTES) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_RESULTADOS_FINALES);
     } else if (actualPhase?.phase === PHASE_RESULTADOS_FINALES || actualPhase?.phase === PHASE_RESULTADOS_FINALES_DEBATE) {
       newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_FICHA_TRANSPARENCIA);
     } else if (actualPhase?.phase === PHASE_FICHA_TRANSPARENCIA) {
-      save = false;
-      this.notification.show({ message: 'text.other.finalPhase' });
+      newPhase = this.phases.find((item: PhaseCampaign) => item.phase === PHASE_RESULTADOS_FINALES);
     } else {
       save = false;
       this.notification.show({ message: 'text.other.errorPhase' });
-    } 
+    }
 
-    if (save){
+    if (save && newPhase) {
       this.campaign = this.form.value;
       this.campaignService.saveChangePhase(this.campaign.id, newPhase).subscribe((result: any) => {
         location.reload();
       });
     }
-    
 
   }
+
 
   agregarProducto(): void {
     const dialogRef = this.dialog.open(ProductsDialogComponent, {
@@ -322,6 +350,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.router.navigate([`/app/protocol/${protocolId}`]);
   }
 
+
   navegarAComponenteResultados(resultado: ProtocolResults | undefined) {
     this.campaign = this.form.value;
     const navigationExtras: NavigationExtras = {
@@ -346,6 +375,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   navegarAComponenteVerResultados(resultado: ProtocolResults | undefined) {
     this.campaign = this.form.value;
+    console.log('Aqui entra al presionar el boton de vizualizar')
     const navigationExtras: NavigationExtras = {
       state: {
         campaign: this.campaign,
@@ -355,10 +385,32 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     this.router.navigate([`app/campanas/${this.campaign.id}/resultados/ver`], navigationExtras);
   }
 
+  navegarAComponenteEditarResultados(resultado: ProtocolResults | undefined) {
+    this.campaign = this.form.value;
+    console.log('Aquí entra al presionar el botón de editar');
+    const navigationExtras: NavigationExtras = {
+      state: {
+        campaign: this.campaign,
+        resultadoSelected: resultado ? resultado : undefined
+      }
+    };
+    console.log('resultado seleccionado', resultado)
+    console.log('campaña enviada:', navigationExtras.state)
+    this.router.navigate([`app/campanas/${this.campaign.id}/results/editar`], navigationExtras);
+  }
+
+
   navegarAComponenteIpr() {
     this.campaign = this.form.value;
     
     this.router.navigate([`app/campanas/${this.campaign.id}/ipr`]); 
+  }
+
+  
+  navegarAComponenteIprEdit(ipr: number) {
+    this.campaign = this.form.value;
+
+    this.router.navigate([`app/campanas/${this.campaign.id}/ipr/${ipr}`]); 
   }
 
   openProtocolDetailDialog() {
@@ -407,6 +459,27 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     });
   }
 
+  async deleteProtocol(protocol: Protocol): Promise<void> {
+    console.log(protocol);
+    await this.crudService.deleteId(protocol.id, {
+      resourceName: 'protocol',
+      pathParams: { id: protocol.id }
+    }).toPromise();
+    location.reload();
+  }
+
+  verDetallesIpr(ipr: any): void {
+    // const campaign = this.form.value;
+    // const datos = {
+    //   protocol,
+    //   campaign,
+    // };
+    const dialogRef = this.dialog.open(IprDetailComponent, {
+      width: '1000px',
+      data: ipr
+    });
+  }
 
   protected readonly console = console;
+  protected readonly PHASE_FICHA_TRANSPARENCIA = PHASE_FICHA_TRANSPARENCIA;
 }

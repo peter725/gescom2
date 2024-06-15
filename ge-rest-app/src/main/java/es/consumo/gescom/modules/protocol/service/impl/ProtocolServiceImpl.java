@@ -13,6 +13,7 @@ import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProduc
 import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
 import es.consumo.gescom.modules.campaignProductService.repository.CampaignProductServiceRepository;
 import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
+import es.consumo.gescom.modules.ipr.model.entity.IprEntity;
 import es.consumo.gescom.modules.ipr.repository.IprRepository;
 import es.consumo.gescom.modules.ipr.service.IprService;
 import es.consumo.gescom.modules.protocol.model.converter.ProtocolConverter;
@@ -22,16 +23,22 @@ import es.consumo.gescom.modules.protocol.model.dto.ProtocolDetailDTO;
 import es.consumo.gescom.modules.protocol.model.entity.ProtocolEntity;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
+import es.consumo.gescom.modules.protocol_results.model.entity.ProtocolResultsEntity;
+import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
 import es.consumo.gescom.modules.questions.model.converter.QuestionsConverter;
 import es.consumo.gescom.modules.questions.model.dto.QuestionDetailDTO;
 import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 import es.consumo.gescom.modules.questions.model.entity.QuestionsEntity;
 import es.consumo.gescom.modules.questions.repository.QuestionsRepository;
+import es.consumo.gescom.modules.totalProtocolResults.model.entity.TotalProtocolResultsEntity;
+import es.consumo.gescom.modules.totalProtocolResults.repository.TotalProtocolResultsRepository;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.service.EntityCrudService;
@@ -78,11 +85,46 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
     @Autowired
     private IprService iprService;
+    
+    @Autowired
+    private ProtocolResultsRepository protocolResultsRepository;
+    
+    @Autowired 
+    private TotalProtocolResultsRepository totalProtocolResultsRepository;
 
     @Override
     public Page<ProtocolEntity> getProtocolByNameOrCode(CriteriaWrapper<ProtocolCriteria> wrapper, String protocol, String code) {
         return ((ProtocolRepository) repository).getProtocolByNameOrCode(wrapper.getCriteria().toPageable(), protocol, code);
 
+    }
+    
+    @Transactional
+    @Override
+    public void deleteById(Long id) {
+    	// Buscamos Protocolo
+    	ProtocolEntity protocol = protocolRepository.findById(id).orElseThrow();
+    	// Bucamos Preguntas
+    	List<QuestionsEntity> questions = questionsRepository.findAllQuestionsByProtocolId(id);
+    	
+    	// Buscamos posibles resultados de Protocolo (puede haber uno por cada CCAA participante)
+    	List<ProtocolResultsEntity> protocolResults = protocolResultsRepository.findAllByCampaignIdAndProtocolCode(protocol.getCampaignId().getId(), protocol.getCode());
+    	protocolResults.forEach(result -> {
+    		// Por cada resultado de Protocolo buscamos y borramos los resultados de sus Preguntas
+    		List<TotalProtocolResultsEntity> totalProtocolResults = new ArrayList<TotalProtocolResultsEntity>();
+    		if (result.getCode() != null) {
+        		totalProtocolResults = totalProtocolResultsRepository.findAllByProtocolResultsCode(result.getCode());
+    		} else {
+    			totalProtocolResults = totalProtocolResultsRepository.findAllByProtocolResultsId(result.getId());
+    		}
+    		totalProtocolResultsRepository.deleteAll(totalProtocolResults);
+    		
+    	});
+    	// Borramos los resultados del Protocolo cuyos resultados Preguntas ya han sido borradas.
+    	protocolResultsRepository.deleteAll(protocolResults);
+    	
+    	// Borramos las Preguntas del Protocolo y el mismo Protocolo.
+    	questionsRepository.deleteAll(questions);
+    	protocolRepository.delete(protocol);
     }
 
     @Override
@@ -107,6 +149,13 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
                         searchDTO.setProductServiceCode(campaignProductServiceEntities.get(0).getCodeProductService());
                         List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolId(idCampaign, protocolDTO.getId());
+                        iprDTOS.forEach(iprDTO -> {
+                            if (iprDTO.getCode() != null) {
+                                iprDTO.setIprQuestionDTOList(iprService.getAllQuestionsByIprCode(iprDTO.getCode()));
+                            }else{
+                                iprDTO.setIprQuestionDTOList(iprService.getAllQuestionsByIprId(iprDTO.getId()));
+                            }
+                        });
                         resultsResponseDTO = iprService.getResultProtocol(searchDTO);
                         protocolDTO.setResultsResponseDTO(resultsResponseDTO);
                         protocolDTO.setIprDTOS(iprDTOS);
@@ -125,6 +174,13 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                     for (CampaignProductServiceEntity campaignProductServiceEntity : campaignProductServiceEntitySet) {
                         searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
                         List<IprDTO> iprDTOS = iprService.findAllIprByCampaignIdAndProtocolCode(idCampaign, protocolDTO.getCode());
+                        iprDTOS.forEach(iprDTO -> {
+                            if (iprDTO.getCode() != null) {
+                                iprDTO.setIprQuestionDTOList(iprService.getAllQuestionsByIprCode(iprDTO.getCode()));
+                            }else{
+                                iprDTO.setIprQuestionDTOList(iprService.getAllQuestionsByIprId(iprDTO.getId()));
+                            }
+                        });
                         resultsResponseDTO = iprService.getResultProtocol(searchDTO);
                         protocolDTO.setIprDTOS(iprDTOS);
                         protocolDTO.setResultsResponseDTO(resultsResponseDTO);
@@ -215,6 +271,8 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                 QuestionsDTO questionsDTO = new QuestionsDTO();
                 questionsDTO.setQuestion(questionsEntity.getQuestion());
                 questionsDTO.setCodeQuestion(questionsEntity.getCodeQuestion());
+                questionsDTO.setResponse(questionsEntity.getResponse());
+                questionsDTO.setOrderQuestion(questionsEntity.getOrderQuestion());
                 questionDetailDTOList.add(questionsDTO);
             });
         }else {
@@ -223,6 +281,8 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
                 QuestionsDTO questionsDTO = new QuestionsDTO();
                 questionsDTO.setQuestion(questionsEntity.getQuestion());
                 questionsDTO.setCodeQuestion(questionsEntity.getCodeQuestion());
+                questionsDTO.setResponse(questionsEntity.getResponse());
+                questionsDTO.setOrderQuestion(questionsEntity.getOrderQuestion());
                 questionDetailDTOList.add(questionsDTO);
             });
         }

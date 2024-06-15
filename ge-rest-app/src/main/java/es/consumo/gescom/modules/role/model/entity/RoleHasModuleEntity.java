@@ -28,12 +28,15 @@ public class RoleHasModuleEntity extends SimpleEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "permission_id")
     private PermissionEntity permission;
+
     @Basic
     @Column(name = "role_id")
     private Long roleId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "module_id")
     private ModuleEntity module;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "scope", nullable = false)
 //   @Type(type = PostgreSQLEnumType.class)

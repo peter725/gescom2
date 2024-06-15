@@ -1,9 +1,7 @@
 package es.consumo.gescom.modules.campaignProposal.service.impl;
 
-import es.consumo.gescom.commons.db.repository.QueryByCriteria;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
-import es.consumo.gescom.modules.arbitration.model.entity.ArbitrationEntity;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.autonomousCommunity.repository.AutonomousCommunityRepository;
 import es.consumo.gescom.modules.campaignProposal.model.converter.CampaignProposalConverter;
@@ -14,6 +12,7 @@ import es.consumo.gescom.modules.campaignProposal.repository.CampaignProposalRep
 import es.consumo.gescom.modules.campaignProposal.service.CampaignProposalService;
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
 import es.consumo.gescom.modules.campaignType.repository.CampaignTypeRepository;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 
 @Service
@@ -64,15 +64,57 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
 
     @Override
     public Page<CampaignProposalDTO> findAllCampaignProposal(CriteriaWrapper<?> wrapper) {
-        Page<CampaignProposalEntity> campaignProposalEntityPage = repository.findAll(wrapper.getCriteria().toPageable());
+    	CampaignProposalCriteria campaignProposalCriteria = (CampaignProposalCriteria) wrapper.getCriteria();
+        if (campaignProposalCriteria.getSearch() != null) {
+        	campaignProposalCriteria.setSearch(campaignProposalCriteria.getSearch().toUpperCase());
+        }
+        if (campaignProposalCriteria.getAutonomusCommunity() != null) {
+        	campaignProposalCriteria.setAutonomusCommunity(campaignProposalCriteria.getAutonomusCommunity().toUpperCase());
+        }
+        if (campaignProposalCriteria.getApproach() != null) {
+        	campaignProposalCriteria.setApproach(campaignProposalCriteria.getApproach().toUpperCase());
+        }
+        if (campaignProposalCriteria.getType() != null) {
+        	campaignProposalCriteria.setType(campaignProposalCriteria.getType().toUpperCase());
+        }
+        if (campaignProposalCriteria.getState() == null || campaignProposalCriteria.getState().length == 0) {
+        	campaignProposalCriteria.setState(new Integer[]{1});
+        }
+        
+        String[] originalSort = campaignProposalCriteria.getSort();
+        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("year")) {
+        	campaignProposalCriteria.setSort(new String[] {campaignProposalCriteria.getSort()[0].replace("year", "date")});
+        }
+        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("type")) {
+        	campaignProposalCriteria.setSort(new String[] {campaignProposalCriteria.getSort()[0].replace("type", "campaignTypeId")});
+        }
+        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("autonomusCommunity")) {
+        	campaignProposalCriteria.setSort(null);
+        }
+        campaignProposalCriteria.setSort(campaignProposalCriteria.getSort());
+    	
+        Page<CampaignProposalEntity> campaignProposalEntityPage = null;
+        if (originalSort != null && originalSort[0].contains("autonomusCommunity")) {
+        	if (originalSort[0].split(";")[1].equals("asc")) {
+                campaignProposalEntityPage = campaignProposalRepository.findAllByCriteriaOrderByAutonomousCommunityAsc(campaignProposalCriteria, wrapper.getCriteria().toPageable());
+        	} else {
+                campaignProposalEntityPage = campaignProposalRepository.findAllByCriteriaOrderByAutonomousCommunityDesc(campaignProposalCriteria, wrapper.getCriteria().toPageable());
+        	}
+        } else {
+            campaignProposalEntityPage = campaignProposalRepository.findAllByCriteria(campaignProposalCriteria, wrapper.getCriteria().toPageable());
+        }
+        
         Page<CampaignProposalDTO> campaignProposalDTOPage = campaignProposalEntityPage.map(campaignProposalConverter::convertToModel);
         campaignProposalDTOPage.forEach(campaignProposalDTO -> {
-            AutonomousCommunityEntity autonomousCommunityEntity = autonmousCommunityRepository.findById(campaignProposalDTO.getAutonomousCommunityId()).orElse(null);
-            CampaignTypeEntity campaignTypeEntity = campaignTypeRepository.findById(campaignProposalDTO.getCampaignTypeId()).orElse(null);
-            campaignProposalDTO.setAutonomousCommunityName(autonomousCommunityEntity.getName());
-            campaignProposalDTO.setCampaignTypeName(campaignTypeEntity.getName());
+            Optional<AutonomousCommunityEntity> optionalAutonomousCommunityEntity = autonmousCommunityRepository.findById(campaignProposalDTO.getAutonomousCommunityId());
+            if (optionalAutonomousCommunityEntity.isPresent()) {
+                campaignProposalDTO.setAutonomousCommunityName(optionalAutonomousCommunityEntity.get().getName());
+            }
+            Optional<CampaignTypeEntity> optionalCampaignTypeEntity = campaignTypeRepository.findById(campaignProposalDTO.getCampaignTypeId());
+            if (optionalCampaignTypeEntity.isPresent()) {
+                campaignProposalDTO.setCampaignTypeName(optionalCampaignTypeEntity.get().getName());
+            }
         });
-
 
         return campaignProposalDTOPage;
     }
@@ -135,7 +177,16 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         if (campaignProposalCriteria.getSearch() != null) {
             campaignProposalCriteria.setSearch(campaignProposalCriteria.getSearch().toUpperCase());
         }
-        campaignProposalCriteria.setSort(new String[]{"id;asc"});
+        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("year")) {
+        	campaignProposalCriteria.setSort(new String[] {campaignProposalCriteria.getSort()[0].replace("year", "date")});
+        }
+        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("type")) {
+        	campaignProposalCriteria.setSort(new String[] {campaignProposalCriteria.getSort()[0].replace("type", "campaignTypeId")});
+        }
+        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("autonomusCommunity")) {
+        	campaignProposalCriteria.setSort(new String[] {campaignProposalCriteria.getSort()[0].replace("autonomusCommunity", "autonomousCommunityId")});
+        }
+        campaignProposalCriteria.setSort(campaignProposalCriteria.getSort());
         Page<CampaignProposalEntity> campaignProposalSimpleProjections = ((CampaignProposalRepository) repository).findAllByCriteria(campaignProposalCriteria, campaignProposalCriteria.toPageable());
 
         return campaignProposalSimpleProjections;

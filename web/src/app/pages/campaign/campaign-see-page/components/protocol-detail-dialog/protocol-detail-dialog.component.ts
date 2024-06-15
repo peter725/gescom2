@@ -25,7 +25,7 @@ export class ProtocolDetailComponent implements OnInit {
   protocol: Protocol | undefined;
   campaign: CampaignForm | undefined;
   participantes: String | undefined;
-  preguntas: Question [] | undefined;
+  preguntasProtocol: Question [] | undefined;
   colorGris: any = '#e3e3e3';
 
 
@@ -35,12 +35,13 @@ export class ProtocolDetailComponent implements OnInit {
   ngOnInit(): void {
     this.protocol = this.data.protocol;
     this.campaign = this.data.campaign;
-    this.preguntas = this.data.protocol.question
+    this.preguntasProtocol = this.data.protocol.question
     if (Array.isArray(this.campaign?.['participants'])) {
       this.participantes = this.campaign?.['participants']?.map((item: any) => item.name).join(', ');
     } else {
       this.participantes = '';
     }
+    console.log('dialog preguntas', this.preguntasProtocol)
   }
 
   close(): void {

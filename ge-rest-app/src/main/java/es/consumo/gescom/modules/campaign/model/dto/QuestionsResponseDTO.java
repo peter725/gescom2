@@ -21,6 +21,7 @@ public class QuestionsResponseDTO implements Serializable, LongIdModel {
     private Long total = 0L;
     private Float percentage;
     private Integer percentageRespectTo;
+    private String response;
 
     private Long numResponseSi = 0L;
     private Long numResponseNo = 0L;

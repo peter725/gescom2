@@ -123,9 +123,14 @@ $row-hover-bg-color: #f3f3f3;
     .additional-actions {
       opacity: 0;
     }
+    @media (pointer:coarse) {
+      .additional-actions {
+        opacity: 1;
+      }
+    }
   }
 
-  &:hover {
+  &:hover, &:active {
     .mat-column-actions {
       .additional-actions {
         opacity: 1;

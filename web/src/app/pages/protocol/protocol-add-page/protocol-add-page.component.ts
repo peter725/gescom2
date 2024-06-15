@@ -101,9 +101,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     if (questions.at(rowIndex)) {
       const question = questions.at(rowIndex) as FormGroup;
       question.patchValue({
-        // Suponiendo que el campo se llama 'infringement' en tu formulario y 'nombre' en tu objeto seleccionado
         codeInfringement: selectedItem.code,
-        // Aquí puedes actualizar otros campos relevantes
       });
       console.log('row', question);
     }
@@ -123,7 +121,6 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
       questionsControl.push(this.crearFila(1));
     }, 0);
 
-    console.log('form', form.get('nameCampaign')?.value);
     return form;
   }
 
@@ -132,7 +129,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
-      codeQuestion: null,
+      codeQuestion: ['', Validators.required],
       question: ['', Validators.required],
       codeInfringement: null,
       response: ['SI'] // Inicializar con 'SI'

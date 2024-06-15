@@ -14,5 +14,8 @@ public interface ProtocolResultsService extends CrudService<ProtocolResultsEntit
     Page<ProtocolResultsEntity.SimpleProjection> findAllSumProtocolById(CriteriaWrapper<ProtocolResultsCriteria> wrapper, Long id);
 
     ProtocolResultsEntity saveProtocolResults(ProtocolResultsDTO protocolResults);
+
     List<ProtocolResultsDTO> findProtocolResultsByCampaignId(Long campaignId);
+
+    ProtocolResultsDTO updateProtocolResults(Long id, ProtocolResultsDTO protocolResultsDTO);
 }

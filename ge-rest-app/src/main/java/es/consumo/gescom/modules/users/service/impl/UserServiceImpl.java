@@ -1,6 +1,7 @@
 package es.consumo.gescom.modules.users.service.impl;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import es.consumo.gescom.commons.dto.FilterCriteria;
@@ -78,6 +79,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         UserCriteria userCriteria = (UserCriteria) criteria;
         if (userCriteria.getSearch() != null) {
             userCriteria.setSearch(userCriteria.getSearch().toUpperCase());
+            userCriteria.setPage(0);
         }
         if (userCriteria.getName() != null) {
             userCriteria.setName(userCriteria.getName().toUpperCase());
@@ -97,7 +99,11 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         if (userCriteria.getEmail() != null) {
             userCriteria.setEmail(userCriteria.getEmail().toUpperCase());
         }
+        if (userCriteria.getState() == null || userCriteria.getState().length == 0) {
+        	userCriteria.setState(new Integer[]{1});
+        }
         userCriteria.setSort(new String[]{"id;desc"});
+
         Page<UserEntity.SimpleProjection>  userSimpleProjections = ((UserRepository) repository).findAllByCriteria(userCriteria, userCriteria.toPageable());
 
         return userSimpleProjections;
@@ -110,38 +116,71 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public UserEntity create(UserDTO userDTO) {
-        
+    public UserEntity create(UserDTO userDTO) throws Exception {
+        // Verificar si ya existe un usuario con el mismo DNI/NIF
+        Optional<LoginEntity> existingLogin = loginRepository.findByUsername(userDTO.getDni());
+        if (existingLogin.isPresent()) {
+            throw new Exception("Un usuario con este DNI/NIF ya existe.");
+        }
+
+
+        // Creación de la entidad Login
         LoginEntity loginEntity = new LoginEntity();
-        loginEntity.setUsername(userDTO.getDni());
+        loginEntity.setUsername(userDTO.getDni().replace(" ", "").trim());
         String password = new BCryptPasswordEncoder().encode("admin");
         loginEntity.setPassword(password);
         loginEntity.setLastAccess(null);
         loginEntity.setEnable(true);
-   //     loginEntity.setArbitrationBoard(null);
+        // loginEntity.setArbitrationBoard(null);
+
         RoleEntity roleEntity = roleRepository.findById(userDTO.getRole().getId()).orElseThrow();
         Set<RoleEntity> rolesSet = new HashSet<>();
         rolesSet.add(roleEntity);
         loginEntity.setRoles(rolesSet);
         loginRepository.save(loginEntity);
 
+        // Creación de la entidad User
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+        userEntity.setDni(userEntity.getDni().replace(" ","").trim());
         userEntity.setLogin(loginEntity);
         userEntity.setRole(roleEntity);
         repository.save(userEntity);
+
         return userEntity;
     }
 
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public UserEntity update(UserDTO userDTO) {
+    public UserEntity update(UserDTO userDTO) throws Exception {
+
+        LoginEntity loginEntity = new LoginEntity();
         UserEntity userEntity = repository.findById(userDTO.getId()).orElseThrow();
         RoleEntity roleEntity = roleRepository.findById(userDTO.getRole().getId()).orElseThrow();
-        LoginEntity loginEntity = userEntity.getLogin();
-        Set<RoleEntity> rolesSet = new HashSet<>();
-        rolesSet.add(roleEntity);
-        loginEntity.setRoles(rolesSet);
-        loginRepository.save(loginEntity);
+        if (userEntity.getLogin() == null){
+            // Verificar si ya existe un usuario con el mismo DNI/NIF
+
+            Optional<LoginEntity> existingLogin = loginRepository.findByUsername(userDTO.getDni());
+            if (existingLogin.isPresent()) {
+                throw new Exception("Un usuario con este DNI/NIF ya existe.");
+            }
+            //Creación de la entidad Login
+            loginEntity.setUsername(userDTO.getDni());
+            String password = new BCryptPasswordEncoder().encode("admin");
+            loginEntity.setPassword(password);
+            loginEntity.setLastAccess(null);
+            loginEntity.setEnable(true);
+            Set<RoleEntity> rolesSet = new HashSet<>();
+            rolesSet.add(roleEntity);
+            loginEntity.setRoles(rolesSet);
+            loginRepository.save(loginEntity);
+        }else {
+            loginEntity = userEntity.getLogin();
+            Set<RoleEntity> rolesSet = new HashSet<>();
+            rolesSet.add(roleEntity);
+            loginEntity.setRoles(rolesSet);
+            loginRepository.save(loginEntity);
+        }
         //modelMapper.map(userDTO, userEntity);
         AutonomousCommunityEntity autonomousCommunityEntity = autonomousCommunityService.findById(userDTO.getAutonomousCommunity().getId()).orElseThrow();
         UserTypeEntity userTypeEntity = userTypeService.findById(userDTO.getUserType().getId()).orElseThrow();
@@ -158,7 +197,9 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         userEntity.setPhone(userDTO.getPhone());
         userEntity.setSurname(userDTO.getSurname());
         userEntity.setRole(roleEntity);
+        userEntity.setLogin(loginEntity);
         repository.save(userEntity);
+
         return userEntity;
     }
 

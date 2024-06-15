@@ -54,6 +54,7 @@ export class ProtocolSeePageComponent extends EditPageBaseComponent<Protocol, Cr
   }
 
   get question() {
+
     return this.form.get('question') as unknown as FormArray;
   }
 

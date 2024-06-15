@@ -19,6 +19,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { ResultadosSeeComponent } from './resultados-see.component';
+import { FormExtensionModule } from '@base/shared/components/form';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { ResultadosSeeComponent } from './resultados-see.component';
     ResultadosRoutingModule,
     MatStepperModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    FormExtensionModule
   ],
   declarations: [
     ResultadosComponent,

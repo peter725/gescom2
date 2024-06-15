@@ -48,15 +48,34 @@ export interface Infriengement extends SimpleModel, StatefulAltModel {
 export interface Question {
   id: number | null;
   orderQuestion: number | null;
-  code: number | null;
+  codeQuestion: number | null;
   question: string | null;
   codeInfringement: string | null;
   bkTrinti: string | null;
   response: any | null;
   bkTrrees: string | null;
+  ccaarep: number | null;
+  ccaaren: number | null;
+  ccaares: number | null;
   numResponseSi: any;
   numResponseNo: any;
   numResponseNoProcede: any;
+}
+
+export interface QuestionSimple{
+  codeQuestion: number | null;
+  question: string | null;
+  response: any | null;
+  orderQuestion: number | null;
+}
+
+export interface QuestionIpr {
+  id: number | null;
+  orderQuestion: number | null;
+  formula: number | null;
+  question: string | null;
+  percentageRespectTo: string | null;
+
 }
 
 export interface InfriengementForm {

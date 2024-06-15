@@ -9,6 +9,7 @@ import es.consumo.gescom.modules.ambit.model.dto.AmbitDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.dto.AutonomousCommunityDTO;
 import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
 import es.consumo.gescom.modules.campaignType.model.dto.CampaignTypeDTO;
+import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
 import es.consumo.gescom.modules.phase.model.dto.PhaseDTO;
 import es.consumo.gescom.modules.productServices.model.dto.ProductServiceDTO;
 import es.consumo.gescom.modules.proponent.model.dto.ProponentDTO;
@@ -46,6 +47,6 @@ public class CampaignDTO implements Serializable {
     private List<ProtocolResultsDTO> protocolResultsDTOS;
     private Integer state = EntityState.ON.getValue();
     private ResultsResponseDTO resultsResponseDTO;
+    private List<IprDTO> iprDTOS;
 
-    //lista de productos
 }

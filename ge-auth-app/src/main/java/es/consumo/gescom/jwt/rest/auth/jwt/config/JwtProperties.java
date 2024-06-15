@@ -56,4 +56,12 @@ public class JwtProperties {
 	public TemporalAmount tempTokenTTLAsTemporalAmount() {
 		return Duration.ofMinutes(tempTokenTTL);
 	}
+	
+	public long tokenTTLAsSeconds() {
+		return tokenTTL * 60;
+	}
+
+	public long tempTokenTTLAsSeconds() {
+		return tempTokenTTL * 60;
+	}
 }

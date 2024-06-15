@@ -18,9 +18,14 @@ import es.consumo.gescom.modules.totalProtocolResults.repository.TotalProtocolRe
 import es.consumo.gescom.modules.totalProtocolResults.service.TotalProtocolResultsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -108,6 +113,61 @@ public class ProtocolResultsServiceImpl extends EntityCrudService<ProtocolResult
         }
 
         return protocolResultsDTOS;
+    }
+
+    @Override
+    public ProtocolResultsDTO updateProtocolResults(Long id, ProtocolResultsDTO protocolResultsDTO) {
+        ProtocolResultsEntity protocolResultsEntity = protocolResultsConverter.convertToEntity(protocolResultsDTO);
+        ProtocolResultsEntity oldEntity = protocolResultsRepository.findById(id).get();
+        protocolResultsEntity.setCreatedAt(oldEntity.getCreatedAt());
+        protocolResultsEntity.setUpdatedAt(oldEntity.getUpdatedAt());
+        protocolResultsEntity.setCreatedBy(oldEntity.getCreatedBy());
+        protocolResultsEntity.setUpdatedBy(oldEntity.getUpdatedBy());
+        protocolResultsEntity.setState(oldEntity.getState());
+        final List<Long> toDelete = new ArrayList<>();
+
+        if (protocolResultsEntity.getId() == null){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "ID del es requerido para la actualización.");
+        }
+
+        ProtocolResultsEntity entitySave = protocolResultsRepository.save(protocolResultsEntity);
+        if (protocolResultsDTO.getCode() != null){
+            List<TotalProtocolResultsEntity> totalProtocolResultsEntities = totalProtocolResultsRepository.findAllByProtocolResultsCode(protocolResultsDTO.getCode());
+            iterateForDeletedTotalProtocolResults(totalProtocolResultsEntities, toDelete);
+        }else{
+            List<TotalProtocolResultsEntity> totalProtocolResultsEntities = totalProtocolResultsRepository.findAllByProtocolResultsId(protocolResultsDTO.getId());
+            iterateForDeletedTotalProtocolResults(totalProtocolResultsEntities, toDelete);
+        }
+
+        if (!toDelete.isEmpty()){
+            totalProtocolResultsRepository.deleteAllById(toDelete);
+        }
+
+        List<TotalProtocolResultsDTO> totalProtocolResultsDTOS = protocolResultsDTO.getTotalProtocolResultsDTOS();
+        totalProtocolResultsDTOS.forEach(item ->{
+            TotalProtocolResultsEntity totalProtocolResultsEntity = new TotalProtocolResultsEntity();
+            totalProtocolResultsEntity.setCcaaRen(item.getCcaaRen());
+            totalProtocolResultsEntity.setCcaaRep(item.getCcaaRep());
+            totalProtocolResultsEntity.setCcaaRes(item.getCcaaRes());
+            totalProtocolResultsEntity.setCode(item.getCode());
+            totalProtocolResultsEntity.setProtocolResultsCode(item.getProtocolResultsCode());
+            totalProtocolResultsEntity.setCodeQuestion(item.getCodeQuestion());
+            totalProtocolResultsEntity.setProtocolResultsId(item.getProtocolResultsId());
+            totalProtocolResultsEntity.setUpdatedAt(LocalDateTime.now());
+
+            totalProtocolResultsRepository.save(totalProtocolResultsEntity);
+        });
+        return protocolResultsConverter.convertToModel(entitySave);
+    }
+
+    private void iterateForDeletedTotalProtocolResults(List<TotalProtocolResultsEntity> totalProtocolResultsEntities, List<Long> toDelete){
+        for (TotalProtocolResultsEntity totalProtocolResultsEntity : totalProtocolResultsEntities){
+            if (totalProtocolResultsEntity.getId() != (0)){
+                if (Objects.nonNull(toDelete)){
+                    toDelete.add(totalProtocolResultsEntity.getId());
+                }
+            }
+        }
     }
 
 }

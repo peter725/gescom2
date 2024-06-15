@@ -115,6 +115,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
         this.srcData.question.forEach((q: any) => {
           questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
         });
+        console.log('Questions Protocol-edit', questions)
       } catch (err: any) {
         this.afterLoadDataError(err);
       }
@@ -125,11 +126,12 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
-      codeQuestion: codeQuestion,
+      codeQuestion: [codeQuestion, Validators.required],
       question: [question, Validators.required],
       codeInfringement: codeInfringement,
       response: formattedResponse // Inicializar con 'SI'
     });
+
   }
 
   openDialog(rowIndex: number): void {
@@ -164,7 +166,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
-      codeQuestion: null,
+      codeQuestion: ['', Validators.required],
       question: ['', Validators.required],
       codeInfringement: null,
       response: ['SI'] // Inicializar con 'SI'
@@ -204,7 +206,6 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
 
     // Recorre todas las filas restantes para actualizar el campo 'orden'
     this.question.controls.forEach((control, i) => {
-      console.log('control', control);
       control.get('order')?.setValue(i + 1);
     });
 

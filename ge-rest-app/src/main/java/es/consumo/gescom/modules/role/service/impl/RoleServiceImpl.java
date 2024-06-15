@@ -3,8 +3,7 @@ package es.consumo.gescom.modules.role.service.impl;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.service.EntityCrudService;
-import es.consumo.gescom.modules.campaign.model.criteria.CampaignCriteria;
-import es.consumo.gescom.modules.campaign.model.entity.CampaignEntity;
+import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.module.model.entity.ModuleEntity;
 import es.consumo.gescom.modules.module.repository.ModuleRepository;
 import es.consumo.gescom.modules.permission.model.entity.PermissionEntity;
@@ -84,6 +83,9 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
     	
     	if (roleCriteria.getSearch() != null) {
     		roleCriteria.setSearch(criteria.getSearch().toUpperCase());
+        }
+    	if (roleCriteria.getState() == null || roleCriteria.getState().length == 0) {
+    		roleCriteria.setState(new Integer[]{1});
         }
     	roleCriteria.setSort(new String[]{"id;desc"});
         Page<RoleEntity> roleEntities = roleRepository.findAllByCriteria(roleCriteria, roleCriteria.toPageable());
@@ -191,5 +193,13 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
         roleHasModuleEntity.setPermission(permission);
         roleHasModuleEntity.setScope(scope);
         return roleHasModuleEntity;
+    }
+    
+    @Override
+    public RoleEntity switchStatus(ChangeStatusDTO changeStatusDTO, Long id) {
+    	RoleEntity entity = findById(id).orElseThrow();
+        entity.setState(changeStatusDTO.getStatus());
+
+        return repository.save(entity);
     }
 }

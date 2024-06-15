@@ -89,6 +89,7 @@ export class ResultadosSeeComponent implements OnInit{
     protected fb: FormBuilder,
     private router: Router) {
       const navigation = this.router.getCurrentNavigation();
+
       let state = undefined;
       if (navigation) {
         state = navigation!.extras.state as {
@@ -97,6 +98,7 @@ export class ResultadosSeeComponent implements OnInit{
         }
         this.campaign = state.campaign;
         this.resultadoSelected = state.resultadoSelected;
+        console.log('componente ver, resultadoSelected.protocolDTO', this.resultadoSelected?.protocolDTO)
       } else {
         this.router.navigate([`app/campanas/consulta`]);
       }
@@ -126,6 +128,7 @@ export class ResultadosSeeComponent implements OnInit{
     });
 
     resultadoSelected.totalProtocolResultsDTOS?.forEach((protocolResult) => {
+
       if (protocolResult.codeQuestion === this.codNumExistentes) {
           this.numExistentes = protocolResult.ccaaRes
       } else if (protocolResult.codeQuestion === this.codNumControlados) {
@@ -137,6 +140,7 @@ export class ResultadosSeeComponent implements OnInit{
       } else if (protocolResult.codeQuestion === this.codProdIncorrectos) {
           this.totalProdIncorrectos = protocolResult.ccaaRes
       } else if (this.preguntasProtocolo && this.preguntasProtocolo.length > 0) {
+        console.log('numResponseSi',protocolResult.ccaaRes)
        
         this.preguntasProtocolo.forEach((question) => {
           if (question.orderQuestion) {
@@ -182,6 +186,12 @@ export class ResultadosSeeComponent implements OnInit{
     if (campania && campania.campaignProductServiceDTOS) {
       this.productosList = campania.campaignProductServiceDTOS;
     }
+    console.log('revisando el id de campaña en ver resultados', campania.id)
+  }
+
+  navegarAComponente(): void {
+    // Reemplaza 'ruta/deseada' con la ruta a la que quieres navegar
+    this.router.navigate([`/app/campanas/${this.campaign.id}/ver`]);
   }
 
   getAutonomousCommunity(code: any): any {

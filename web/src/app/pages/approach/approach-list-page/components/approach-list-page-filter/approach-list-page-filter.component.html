@@ -1,20 +1,29 @@
 <form [formGroup]="form" (ngSubmit)="search()">
-    <div class="grid grid-cols-4 gap-1.5">
+    <div class="grid grid-cols-3 gap-1.5">
 
         <mat-form-field>
             <mat-label>{{ 'fields.approachFields.year' | translate }}</mat-label>
-            <tsw-search-input formControlName="year"></tsw-search-input>
-        </mat-form-field>
+            <tsw-search-input [type]="'number'" formControlName="year"></tsw-search-input>
+          </mat-form-field>
         <mat-form-field>
             <mat-label>{{ 'fields.ccaa' | translate }}</mat-label>
             <tsw-search-input formControlName="autonomusCommunity"></tsw-search-input>
         </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'fields.type' | translate }}</mat-label>
+            <tsw-search-input formControlName="type"></tsw-search-input>
+        </mat-form-field>
 
     </div>
 
-    <div class="grid grid-cols-4 gap-1.5">
+    <div class="grid grid-cols-1 gap-1.5">
 
         <mat-form-field>
+            <mat-label>{{ 'fields.approach' | translate }}</mat-label>
+            <tsw-search-input formControlName="approach"></tsw-search-input>
+        </mat-form-field>
+
+        <!-- <mat-form-field>
             <mat-label>{{ 'fields.createdAtLTE' | translate }}</mat-label>
             <input matInput [matDatepicker]="createdAtLTEPicker" formControlName="createdAtLTE">
             <mat-datepicker-toggle matSuffix [for]="createdAtLTEPicker"></mat-datepicker-toggle>
@@ -40,7 +49,7 @@
             <input matInput [matDatepicker]="updatedAtGTEPicker" formControlName="updatedAtGTE">
             <mat-datepicker-toggle matSuffix [for]="updatedAtGTEPicker"></mat-datepicker-toggle>
             <mat-datepicker #updatedAtGTEPicker></mat-datepicker>
-        </mat-form-field>
+        </mat-form-field> -->
 
     </div>
 

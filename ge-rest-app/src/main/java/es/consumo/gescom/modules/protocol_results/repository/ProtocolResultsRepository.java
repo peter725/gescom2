@@ -20,6 +20,9 @@ public interface ProtocolResultsRepository extends GESCOMRepository<ProtocolResu
 
     @Query(value = "SELECT h FROM ProtocolResultsEntity h where h.campaignId = :campaignId ")
     List<ProtocolResultsEntity> findAllByCampaignId(@Param("campaignId") Long campaignId);
+    
+    @Query(value = "SELECT h FROM ProtocolResultsEntity h where h.campaignId = :campaignId and h.protocolCode = :protocolCode ")
+    List<ProtocolResultsEntity> findAllByCampaignIdAndProtocolCode(@Param("campaignId") Long campaignId, @Param("protocolCode") String protocolCode);
 
     @Query(value = """
             SELECT new es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsResponseDTO(

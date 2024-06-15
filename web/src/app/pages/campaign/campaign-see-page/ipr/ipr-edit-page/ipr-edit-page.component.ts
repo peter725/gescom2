@@ -12,25 +12,25 @@ import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { ProtocolQuestionDialogComponent } from '@base/pages/protocolQuestion-dialog/protocolQuestion-dialog.component';
 import { Validator } from '@base/shared/functions/validators';
 
-interface RequestConfig {
-  resourceName: string;
-  pathParams?: any;
-}
+// interface RequestConfig {
+//   resourceName: string;
+//   pathParams?: any;
+// }
 
 @Component({
   selector: 'tsw-ipr',
-  templateUrl: './ipr.component.html',
-  styleUrls: ['./ipr.component.scss'],
+  templateUrl: './ipr-edit-page.component.html',
+  styleUrls: ['./ipr-edit-page.component.scss'],
   providers: [
     { provide: FORM_STATUS, useValue: new ComponentStatus('IDLE') },
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'black' } }
   ]
 })
 
-export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implements OnInit{
+export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr> implements OnInit{
 
   campaign: any;
-  readonly resourceName = 'campaign';
+  readonly resourceName = 'ipr';
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
   campaignId: number | null = null; // Variable para almacenar el id de la campaña
   private location: Location = inject(Location);
@@ -41,14 +41,23 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
   responseUser: any;
   respuestasUsuarioCombined: any[] = [];
   iprQuestionDTOList: any[] = []; // Declaración de la propiedad iprQuestionDTOList
-  cancelRedirectPath = '../ver';
+  cancelRedirectPath = '../../ver';
+
+  initialFormValues: any;
+
+  idIpr: any;
+
+  protocolIdLoad: any;
+  protocolCodeLoad: any
 
   override async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
     this.route.params.subscribe(params => {
-      this.idCampaign = params['id']; // 'id' debe coincidir con el nombre del parámetro en la ruta
-      console.log('id campaña' + this.idCampaign); // aquí puedes hacer lo que necesites con el ID recuperado
+      this.idCampaign = params['idCampaña']; 
+      this.idIpr = params['id'];
+      console.log('id campaña' + this.idCampaign); 
+      console.log('id idIpr' + this.idIpr); 
     });
 
 
@@ -56,46 +65,103 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
 
   }
 
-  private async fetchProtocol(): Promise<any> {
-    const id = Number(this.idCampaign);
-    this.protocolArray = await firstValueFrom(this.crudService.findById(id, {
-      resourceName: 'protocolListCampaign',
-      pathParams: { id },
-    }));
 
-    // console.log('protocol rest', JSON.stringify(this.protocolArray));
-  }
-
-  onProtocolSelectionChange(value: string) {
-    
-    const [id, code] = value.split('-');
-    console.log( 'id protocolo: ' + id + 'code protocolo: ' + code);
-    this.protocolSelectedId = id;
-    this.protocolSelectedCode = code;
-    const protocolData = { id: id, code: code };
-    // this.sharedDataService.updateSharedData(protocolData);
-  }
-
-
-  
   protected buildForm(): FormGroup {
+
     const form = this.fb.group({
       nameCampaign: { value: null, disabled: true },
       year: { value: null, disabled: true },
-      iprName : this.fb.control(null,[Validators.required]),
+      name : this.fb.control(null,[Validators.required]),
       protocols: this.fb.control(null,[Validators.required]),
       question: this.fb.array([]),
       formula: null,
       porcentaje: null,
     });
 
-    // Usar setTimeout para agregar la primera fila
-    setTimeout(() => {
-      const questionsControl = form.get('question') as FormArray;
-      questionsControl.push(this.crearFila(1));
-    }, 0);
-
+      
     return form;
+  }
+
+  override resetForm()
+  {
+
+    this.fetchProtocol();
+
+    this.form.reset(this.initialFormValues);
+  }
+
+  protected override afterLoadDataSuccess(startValue: any): void {
+      
+    
+    console.log('start value', startValue.iprQuestionDTOList)
+
+    const questionArrayLoad = startValue.iprQuestionDTOList;
+
+    const questionsControl = this.form.get('question') as FormArray;
+
+    questionArrayLoad.forEach((question:any) => {
+      questionsControl.push(this.crearFila2(question));
+    });
+
+    this.protocolIdLoad = startValue.protocolId;
+    this.protocolCodeLoad = startValue.protocolCode;
+
+    // Guardar los valores iniciales del formulario
+    this.initialFormValues = this.form.getRawValue();
+    this.initialFormValues.nameCampaign = startValue.nameCampaign;
+    this.initialFormValues.year = startValue.year;
+    this.initialFormValues.name = startValue.name;
+    
+
+    super.afterLoadDataSuccess(startValue);
+  }
+
+
+
+
+  
+  private async fetchProtocol(): Promise<void> {
+    const id = Number(this.idCampaign);
+    this.protocolArray = await firstValueFrom(this.crudService.findById(id, {
+      resourceName: 'protocolListCampaign',
+      pathParams: { id },
+    }));
+
+    console.log('array de protocolo:', this.protocolArray)
+    // Primero busca el protocolo por code
+    let selectedProtocol = this.protocolArray.find((protocol: any) => protocol.code === this.protocolCodeLoad);
+
+    // Si no se encuentra por code, busca por id
+    if (!selectedProtocol) {
+      selectedProtocol = this.protocolArray.find((protocol: any) => protocol.id === this.protocolIdLoad);
+    }
+
+  
+    // Verifica si se encontró el protocolo y luego establece el valor en el formulario
+    if (selectedProtocol) {
+
+      this.protocolSelectedId = selectedProtocol.id;
+      this.protocolSelectedCode = selectedProtocol.code;
+      
+
+      setTimeout(() => {
+        this.form.patchValue({
+          protocols: selectedProtocol
+        });
+      }, 0);
+    }
+  }
+
+
+  onProtocolSelectionChange(value: any) {
+    console.log('valor recogido',value.id);
+    console.log('valor recogido 2:', value.code);
+    // const [id, code] = value.split('-');
+    // console.log( 'id protocolo: ' + id + 'code protocolo: ' + code);
+    this.protocolSelectedId = value.id;
+    this.protocolSelectedCode = value.code;
+    const protocolData = { id: value.id, code: value.code };
+    // this.sharedDataService.updateSharedData(protocolData);
   }
 
   crearFila(orden: number): FormGroup {
@@ -109,6 +175,15 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     });
   }
 
+  crearFila2(data: any): FormGroup {
+    return this.fb.group({
+      id: data?.id || null,
+      orderQuestion: [{ value: data?.orderQuestion, disabled: true }],
+      question: [data?.question || null, Validators.required],
+      formula: [data?.formula || null, Validators.required],
+      porcentaje: [data?.percentageRespectTo || null, Validator.validateNumber()],
+    });
+  }
 
   override getRedirectAfterSaveRoute(){
     return ['../consulta'];
@@ -116,8 +191,10 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
 
   openDialog(rowIndex: number): void {
 
-    const protocolData = { id: this.protocolSelectedId, code: this.protocolSelectedCode };
+    const protocolData = { id: String(this.protocolSelectedId), code: String(this.protocolSelectedCode) };
+    console.log('protocolData', protocolData)
     this.sharedDataService.updateSharedData(protocolData);
+    console.log('protocolData', protocolData)
 
     const dialogRef = this.dialog.open(ProtocolQuestionDialogComponent, {
       width: '95%',
@@ -136,14 +213,9 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
       this.sharedDataService.sharedData$.subscribe(data => {
         this.responseUser = data;
       });
-  
-      console.log('datos respuesta recibidos: ' + JSON.stringify(this.responseUser))
-
+      //console.log('datos respuesta recibidos: ' + JSON.stringify(this.responseUser))
       this.createCombinedFormula(this.responseUser, rowIndex);
-
     });
-
-
   }
 
 
@@ -289,7 +361,9 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     this.prepareIprQuestionDTOList();
 
     const jsonData = {
-      name: this.form.get('iprName')?.value,
+      id: this.idIpr,
+      name: this.form.get('name')?.value,
+      protocolCode: this.protocolSelectedCode,
       campaignId: this.idCampaign,
       protocolId: this.protocolSelectedId,
       iprQuestionDTOList: this.iprQuestionDTOList
@@ -297,11 +371,16 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
 
     console.log(jsonData);
 
-    const config: RequestConfig = {
-      resourceName: 'ipr', 
-    };
+    // const config: RequestConfig = {
+    //   resourceName: 'ipr',
+    // };
 
-    this.crudService.create(jsonData, config)
+    console.log(this.idIpr);
+
+    this.crudService.update(this.idIpr, jsonData, {
+      resourceName: 'ipr',
+      pathParams: { id: this.idIpr }
+    })
     .subscribe(
       response => {
         console.log('IPR creado exitosamente:', response);
@@ -310,6 +389,13 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
           title: 'text.other.dataSaved',
           message: 'IPR creado exitosamente',
         });
+
+
+        // Redirigir a la nueva URL
+        const newUrl = `/app/campanas/${this.idCampaign}/ver`;
+        this.router.navigate([newUrl]);
+
+
       },
       error => {
         console.error('Error al crear IPR:', error);

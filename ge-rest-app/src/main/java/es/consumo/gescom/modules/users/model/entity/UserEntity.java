@@ -35,15 +35,15 @@ public class UserEntity extends SimpleEntity{
     private LocalDateTime updateAt;
 
     @Basic
-    @Column(name = "name", nullable = false, length = 40)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Basic
-    @Column(name = "surname", nullable = false, length = 20)
+    @Column(name = "surname", nullable = false)
     private String surname;
 
     @Basic
-    @Column(name = "last_surname", nullable = true, length = 20)
+    @Column(name = "last_surname", nullable = true)
     private String lastSurname;
 
     @Basic
@@ -55,7 +55,7 @@ public class UserEntity extends SimpleEntity{
     private String email;
 
     @Basic
-    @Column(name = "phone", nullable = false, length = 10)
+    @Column(name = "phone", nullable = false)
     private String phone;
 
     @ManyToOne

@@ -1,5 +1,7 @@
 package es.consumo.gescom.modules.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +21,8 @@ import java.util.Optional;
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
+
     private final AuthenticationManager manager;
 
     public JwtAuthorizationFilter(AuthenticationManager manager) {
@@ -33,8 +37,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             final String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
                     .orElse("")
                     .replace("Bearer ", "");
+            logger.info("Attempting to authenticate token: {}", token);
 
             Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(null, token));
+            logger.info("Authentication successful, security context updated with: {}", authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);

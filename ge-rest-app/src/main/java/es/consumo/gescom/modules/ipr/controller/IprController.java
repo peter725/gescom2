@@ -73,7 +73,7 @@ public class IprController extends AbstractCrudController<IprEntity, IprDTO, Lon
     }
 
     @Override
-    protected IprDTO performUpdate(Long id, IprDTO payload) {
+    public IprDTO performUpdate(Long id, IprDTO payload) {
         return  ((IprService) service).updateIpr(id, payload);
     }
 

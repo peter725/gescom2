@@ -4,6 +4,8 @@ import es.consumo.gescom.commons.controller.advice.FilterChainExceptionHandler;
 import es.consumo.gescom.modules.security.JwtAuthorizationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,8 +17,9 @@ import java.util.List;
 
 import static org.springframework.http.HttpMethod.OPTIONS;
 
-@Configuration("securityConfig")
+@Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(jsr250Enabled = true, securedEnabled = true)
 public class WebSecurityConfig {
     private final JwtAuthorizationFilter authorizationFilter;
     private final FilterChainExceptionHandler chainExceptionFilter;
@@ -53,7 +56,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .antMatchers(OPTIONS, "/**").permitAll()
                         .antMatchers(getPublicEndpoints()).permitAll()
-//                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                        .antMatchers("/api/v1/roles/**").hasRole("ADMINISTRADOR DE ÁMBITO")
+                        .antMatchers("api/v1/campaign_proposal/**").hasAnyRole("DGC", "CCAA", "CICC", "ADMINISTRADOR DE ÁMBITO")
                         .anyRequest().authenticated())
                 .addFilterBefore(chainExceptionFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(authorizationFilter, UsernamePasswordAuthenticationFilter.class);

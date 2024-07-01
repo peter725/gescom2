@@ -16,9 +16,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -56,25 +54,26 @@ public class AuthenticationManagerJwt implements AuthenticationManager {
     private Authentication mapAuth(VerifyToken verifyToken) {
         LoginEntity loginEntity = (LoginEntity) userDetailsService.loadUserByUsername(verifyToken.getUserName());
 
-        Map<String, Set<String>> modules = getModules(loginEntity);
-        Set<GrantedAuthority> authorities = getAuthority(modules);
+        ArrayList<String> roles = verifyToken.getRoleName();
+        Set<GrantedAuthority> authorities = getAuthority(roles);
         return new UsernamePasswordAuthenticationToken(loginEntity, null, authorities);
     }
 
-    private Map<String, Set<String>> getModules(LoginEntity loginEntity) {
+    private Map<String, Set<String>> getRoles(LoginEntity loginEntity) {
 
-        final Set<RoleHasModuleEntity.FullAuthoritiesProjection> modules =
-                this.roleHasModuleRepository.findAllByLoginId(loginEntity.getId());
+        final Set<RoleHasModuleEntity.FullAuthoritiesProjection> roles =
+                this.roleHasModuleRepository.findAllRolesByLoginId(loginEntity.getId());
 
-        return modules.stream()
-                .collect(Collectors.groupingBy(RoleHasModuleEntity.FullAuthoritiesProjection::getModuleCode,
-                        Collectors.mapping(RoleHasModuleEntity.FullAuthoritiesProjection::getPermissionCode, Collectors.toSet())));
+        return roles.stream()
+            .collect(Collectors.groupingBy(RoleHasModuleEntity.FullAuthoritiesProjection::getRoleName,
+            Collectors.mapping(RoleHasModuleEntity.FullAuthoritiesProjection::getRoleName, Collectors.toSet())));
+
     }
 
-    private Set<GrantedAuthority> getAuthority(Map<String, Set<String>> modules) {
-        return modules.entrySet().stream().flatMap(e ->
-                        e.getValue().stream().map(f -> String.format("%s_%s", e, f)).toList().stream()
-                ).map(SimpleGrantedAuthority::new)
+    private Set<GrantedAuthority> getAuthority(ArrayList<String> roles) {
+        return roles.stream()
+                .map(role -> role.replace("[", "").replace("]", "").trim())
+                .map(SimpleGrantedAuthority::new)  // Directamente crea SimpleGrantedAuthority con el rol
                 .collect(Collectors.toSet());
     }
 

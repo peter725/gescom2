@@ -3,6 +3,7 @@ package es.consumo.gescom.modules.role.repository;
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,4 +43,10 @@ public interface RoleHasModuleRepository extends GESCOMRepository<RoleHasModuleE
             "JOIN PermissionEntity p on rm.permission.id=p.id " +
             "WHERE l.id= :loginId")
     Set<RoleHasModuleEntity.FullAuthoritiesProjection> findAllByLoginId(Long loginId);
+
+    @Query("select r.name as roleName from LoginEntity l " +
+       "JOIN l.roles r " +
+       "WHERE l.id= :loginId")
+    Set<RoleHasModuleEntity.FullAuthoritiesProjection> findAllRolesByLoginId(@Param("loginId") Long loginId);
+
 }

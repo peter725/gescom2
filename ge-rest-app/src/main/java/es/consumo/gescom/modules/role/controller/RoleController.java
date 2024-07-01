@@ -11,6 +11,7 @@ import es.consumo.gescom.modules.role.model.entity.RoleEntity;
 import es.consumo.gescom.modules.role.service.RoleService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,25 +25,38 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(ApiEndpoints.V1_API + "/roles")
 @Tag(name = "Role controller")
+@PreAuthorize("hasRole('ROLE_ADMINISTRADOR DE ÁMBITO')")
 public class RoleController extends AbstractCrudController<RoleEntity, RoleNewDTO, Long, RoleCriteria> {
 
     protected RoleController(CrudService<RoleEntity, Long> service,
                              DataConverter<RoleEntity, RoleNewDTO> dataConverter) {
         super(service, dataConverter);
     }
-    
+
+
     @PostMapping("/{id}/switch")
     public ResponseEntity<RoleEntity> switchStatus(@RequestBody ChangeStatusDTO changeStatus, @PathVariable  Long id) {
     	RoleEntity result = ((RoleService) service).switchStatus(changeStatus, id);
         return ResponseEntity.ok(result);
     }
-    
+
+    /*@Override
+    public ResponseEntity<Object> findAll(@Valid RoleCriteria criteria) {
+        return super.findAll(criteria);
+    }*/
+
     @Override
     protected Optional<?> performFindById(Long id) {
         return Optional.of(
                 ((RoleService) service).findRoleById(id)
         );
     }
+
+
+    /*@Override
+    protected void performDelete(Long id) {
+        super.performDelete(id);
+    }*/
 
     @Override
     public ResponseEntity<Object> create(@Valid  @RequestBody RoleNewDTO payload) {

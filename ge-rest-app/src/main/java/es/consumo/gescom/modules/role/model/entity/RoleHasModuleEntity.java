@@ -29,9 +29,9 @@ public class RoleHasModuleEntity extends SimpleEntity {
     @JoinColumn(name = "permission_id")
     private PermissionEntity permission;
 
-    @Basic
-    @Column(name = "role_id")
-    private Long roleId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private RoleEntity roleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "module_id")
@@ -49,5 +49,7 @@ public class RoleHasModuleEntity extends SimpleEntity {
         String getModuleCode();
 
         String getScope();
+
+        String getRoleName();
     }
 }

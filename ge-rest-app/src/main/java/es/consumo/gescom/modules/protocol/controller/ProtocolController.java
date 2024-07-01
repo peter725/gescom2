@@ -71,7 +71,7 @@ public class ProtocolController extends AbstractCrudController<ProtocolEntity, P
     }
 
     @Override
-    protected ProtocolDTO performUpdate(Long id, ProtocolDTO payload) {
+    public ProtocolDTO performUpdate(Long id, ProtocolDTO payload) {
         return  ((ProtocolService) service).updateProtocol(id, payload);
     }
 }

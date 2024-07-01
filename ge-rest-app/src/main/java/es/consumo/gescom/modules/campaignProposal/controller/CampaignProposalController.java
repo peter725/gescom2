@@ -13,8 +13,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +29,10 @@ public class CampaignProposalController extends AbstractCrudController<CampaignP
         super(service, dataConverter);
     }
 
+    @Override
+    public ResponseEntity<Object> findAll(@Valid CampaignProposalCriteria criteria) {
+        return super.findAll(criteria);
+    }
 
     @Override
     public Optional<?> performFindById(Long id) {
@@ -37,6 +43,8 @@ public class CampaignProposalController extends AbstractCrudController<CampaignP
     protected Page<?> performFindAll(CriteriaWrapper<?> criteriaWrapper) {
         return ((CampaignProposalService) service).findAllCampaignProposal(criteriaWrapper);
     }
+
+
 
     @Override
     public CampaignProposalDTO performCreate(CampaignProposalDTO payload) {

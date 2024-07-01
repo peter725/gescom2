@@ -5,6 +5,7 @@ import es.consumo.gescom.modules.role.model.entity.RoleEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Basic;
@@ -20,6 +21,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "login")
@@ -40,7 +42,7 @@ public class LoginEntity extends SimpleEntity implements UserDetails {
     @Column(name = "enable", nullable = false)
     private Boolean enable;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "login_has_role",
             joinColumns = @JoinColumn(name = "login_id"),
@@ -75,9 +77,13 @@ public class LoginEntity extends SimpleEntity implements UserDetails {
     }
 
 
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
+                .collect(Collectors.toSet());
     }
 
     @Override

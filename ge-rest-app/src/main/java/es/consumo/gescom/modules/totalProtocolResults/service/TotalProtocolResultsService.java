@@ -18,4 +18,5 @@ public interface TotalProtocolResultsService extends CrudService<TotalProtocolRe
 
     List<TotalProtocolResultsDTO> findByProtocolResultsId(ProtocolResultsDTO protocolResultsDTO);
 
+
 }

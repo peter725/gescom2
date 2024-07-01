@@ -280,13 +280,9 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         final List<Long> toDelete = new ArrayList<>();
         final List<Long> toDeleteProponent = new ArrayList<>();
         final List<Long> toDeleteSpecialist = new ArrayList<>();
-        final List<RoleHasModuleEntity> toSave = new ArrayList<>();
 
         if (ObjectUtils.isEmpty(campaign.getId())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
-        if (campaign.getId() == null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
+           throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
 
         List<AutonomousCommunityParticipantsEntity> acParticipantes = autonomousCommunityParticipantsRepository.findByIdCampaign(campaignDTO.getId());

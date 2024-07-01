@@ -41,6 +41,7 @@ public class TokenManagerServiceImpl implements TokenManagerService {
         Hibernate.initialize(entity);
     return getAccessToken(entity);
     }
+
     @Override
     public OAuth2AccessToken getAccessToken(LoginEntity entity) {
 
@@ -51,6 +52,7 @@ public class TokenManagerServiceImpl implements TokenManagerService {
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("client_id", clientDetails.getClientId());
         parameters.put("grant_type", "authorization_code");
+
 
         OAuth2Request request = new OAuth2Request(parameters, clientId, new ArrayList<>(), true,
                 clientDetails.getScope(), clientDetails.getResourceIds(), null, null,

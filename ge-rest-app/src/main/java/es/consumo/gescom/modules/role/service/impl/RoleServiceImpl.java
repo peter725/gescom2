@@ -187,8 +187,9 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
 
     private RoleHasModuleEntity createRoleHasModuleEntity(Long rolId, ModuleEntity module,
                                                           PermissionEntity permission, PermissionScope scope) {
+        RoleEntity role = roleRepository.findById(rolId).orElseThrow();
         RoleHasModuleEntity roleHasModuleEntity = new RoleHasModuleEntity();
-        roleHasModuleEntity.setRoleId(rolId);
+        roleHasModuleEntity.setRoleId(role);
         roleHasModuleEntity.setModule(module);
         roleHasModuleEntity.setPermission(permission);
         roleHasModuleEntity.setScope(scope);

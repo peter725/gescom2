@@ -15,13 +15,16 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +37,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final JwtProperties properties;
     private final Environment env;
     private final BCryptPasswordEncoder passwordEncoder;
-
 
     private final AuthenticationManager authenticationManager;
 
@@ -68,12 +70,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 }))
                 .authorizeHttpRequests(requests -> requests
                         .antMatchers(OPTIONS, "/**").permitAll()
-//                        .antMatchers(getPublicEndpoints()).permitAll()
-//                        .antMatchers(HttpMethod.POST,"/api/v1/auth/user/request").permitAll()
-//                        .antMatchers(HttpMethod.POST,"/api/v1/auth/user/sign_in").permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/login_response")).permitAll()
+                        .antMatchers("/api/v1/roles/**").hasRole("ADMINISTRADOR DE ÁMBITO")
                         .anyRequest().authenticated());
-
     }
 
     @Override
@@ -93,18 +92,24 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .refreshTokenValiditySeconds((int) (properties.tokenTTLAsSeconds() + 3600));
     }
 
+
+
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(accessTokenConverter()));
-//        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken, accessTokenConverter()));
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer(), accessTokenConverter()));
 
         endpoints.authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
                 .tokenStore(tokenStore())
                 .accessTokenConverter(accessTokenConverter())
                 .tokenEnhancer(tokenEnhancerChain);
+    }
+
+    @Bean
+    public TokenEnhancer customTokenEnhancer() {
+        return new CustomTokenEnhancer();
     }
 
     @Bean

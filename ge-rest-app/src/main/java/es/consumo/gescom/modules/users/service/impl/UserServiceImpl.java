@@ -123,7 +123,6 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
             throw new Exception("Un usuario con este DNI/NIF ya existe.");
         }
 
-
         // Creación de la entidad Login
         LoginEntity loginEntity = new LoginEntity();
         loginEntity.setUsername(userDTO.getDni().replace(" ", "").trim());

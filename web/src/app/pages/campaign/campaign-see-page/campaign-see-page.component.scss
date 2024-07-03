@@ -30,3 +30,49 @@ dl > div:nth-child(odd) {
 .text-color-red {
   color: #e40000;
  }
+
+.flex-buttons.mat-raised-button {
+  flex: 1 1 auto ;  /* Crecen y se encogen, pero siempre ocupan una parte igual del contenedor */
+  min-width: 150px;  /* Ancho mínimo para asegurar la legibilidad */
+  white-space: nowrap;  /* Evita que el texto se ajuste y se desborde */
+  overflow: hidden;  /* Oculta cualquier contenido que desborde */
+  text-overflow: ellipsis;  /* Añade puntos suspensivos si el texto es demasiado largo */
+}
+
+.icon-text-button {
+  display: inline-flex;
+  align-items: center; /* Alinea verticalmente el texto y el ícono */
+  justify-content: center; /* Centra el contenido horizontalmente */
+}
+
+/* Estilos básicos para botones */
+.btn-responsive {
+  display: inline-block;
+  font-weight: bold;
+  color: white;
+  padding: 4px 16px;
+  border-radius: 4px;
+  transition: padding 0.3s ease, font-size 0.3s ease;
+}
+
+/* Tamaños de pantalla pequeños */
+@media (max-width: 768px) {
+  .btn-responsive {
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+}
+
+/* Tamaños de pantalla muy pequeños */
+@media (max-width: 480px) {
+  .btn-responsive {
+    font-size: 8px;
+    padding: 8px 10px;
+  }
+}
+
+.no-overflow-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

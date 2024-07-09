@@ -59,7 +59,7 @@ public interface IprRepository extends GESCOMRepository<IprEntity, Long> {
         iq.question
         )
         FROM IprEntity ipr
-        JOIN IprQuestionEntity iq ON ipr.code = iq.iprCode
+        JOIN IprQuestionEntity iq ON ipr.id = iq.iprId.id
         WHERE ipr.campaignId =:campaignId
         AND ipr.protocolId =:protocolId
         AND ipr.id =:iprId

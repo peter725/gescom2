@@ -130,7 +130,8 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
     @Override
     public List<ProtocolDTO> findProtocolByCampaignId(Long idCampaign) {
 
-        ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
+        new ResultsResponseDTO();
+        ResultsResponseDTO resultsResponseDTO;
         SearchDTO searchDTO = new SearchDTO();
         List<ProtocolEntity> protocolEntity = protocolRepository.findProtocolByCampaignId(idCampaign);
         List<ProtocolDTO> listProtocolDTO = protocolConverter.convertToModel(protocolEntity);

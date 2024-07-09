@@ -9,12 +9,11 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CampaignForm } from '@libs/sdk/campaign';
 import { CampaignProductServiceDTO } from '@libs/sdk/productService';
-import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults';
+import { ProtocolResults } from '@libs/sdk/protocolResults';
 import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
 import { NotificationService } from '@base/shared/notification';
-import { IprDTO, ResultsResponseDTO } from '@libs/sdk/ipr';
-import { ExcelService } from '@base/shared/utilsExcel/excel.service';
 import { AutonomousCommunity } from '@libs/sdk/autonomousCommunity';
+import { Validator } from '@base/shared/functions/validators';
 
 @Component({
   selector: 'tsw-resultados-edit',
@@ -88,6 +87,10 @@ export class ResultsCcaaEditComponent implements OnInit{
     totalProdControlados: this.fb.control<number | null>(null),
     totalProdCorrectos: this.fb.control<number | null>(null),
     totalProdIncorrectos: this.fb.control<number | null>(null),
+  },
+    {
+        validators: [ Validator.totalProductsValidator('totalProdControlados', 'totalProdCorrectos', 'totalProdIncorrectos') ]
+
   });
 
   constructor(
@@ -325,7 +328,6 @@ export class ResultsCcaaEditComponent implements OnInit{
         ]
       };
 
-      console.log('Resultados a guardar:', resultsToSave);
       this.protocolResultsService.updateResults(resultsToSave).subscribe(
         (response) => {
           console.log('Resultados guardados con éxito:', response);
@@ -334,13 +336,14 @@ export class ResultsCcaaEditComponent implements OnInit{
             message: 'Datos guardados exitosamente',
           });
           // Redirigir a la página de la campaña específica que se acaba de editar
-          this.router.navigate([`/app/campanas/${this.campaign.id}/ver`]); // Ajusta la ruta según sea necesario
+          this.router.navigate([`/app/campanas/${this.campaign.id}/ver`]);
         },
         (error) => {
           console.error('Error al guardar los resultados:', error);
         }
       );
     } else {
+      this.notification.show({ message: 'text.other.pleaseReview' });
       console.log('Formulario inválido');
     }
   }

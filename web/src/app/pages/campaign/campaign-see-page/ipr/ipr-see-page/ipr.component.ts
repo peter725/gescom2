@@ -1,12 +1,10 @@
-import { Component, ElementRef, inject, OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component,  inject, OnInit} from '@angular/core';
+import { FormArray,  FormGroup, Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus } from '@libs/commons';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
-import { DataSharingService } from '@base/services/dataSharingService';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CampaignIpr } from '@libs/sdk/campaign';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { ProtocolQuestionDialogComponent } from '@base/pages/protocolQuestion-dialog/protocolQuestion-dialog.component';

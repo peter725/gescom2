@@ -6,6 +6,7 @@ import es.consumo.gescom.modules.iprQuestion.model.dto.IprQuestionDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -36,6 +37,11 @@ public class IprEntity extends SimpleEntity {
 
     @Column(name = "PROTOCOL_ID")
     private Long protocolId;
+
+    @JsonIgnore
+    @CreatedDate
+    @Column(name = "CREATED_AT", nullable = false)
+    private LocalDateTime createdAt;
 
     @JsonIgnore
     @LastModifiedDate

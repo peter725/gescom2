@@ -18,6 +18,7 @@ import { ResultsCcaaEditRoutingModule } from './results-ccaa-edit-routing.module
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { FormExtensionModule } from '@base/shared/components/form';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { MatCardModule } from '@angular/material/card';
     ResultsCcaaEditRoutingModule,
     MatStepperModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    FormExtensionModule
   ],
   declarations: [
     ResultsCcaaEditComponent

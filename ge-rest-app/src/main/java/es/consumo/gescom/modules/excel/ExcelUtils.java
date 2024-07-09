@@ -321,7 +321,7 @@ public class ExcelUtils {
                     if (pregunta.getResponse().equals("N")) {
                         if (numPregunta > 1){
                             row = sheet.createRow(rowNum++);
-                            row.setHeightInPoints(12);
+                            row.setHeightInPoints(5);
                             sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
                         }
                         row = sheet.createRow(rowNum++);

@@ -205,7 +205,8 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
     @Override
     public List<IprDTO> findAllIprByCampaignIdAndProtocolCode(Long campaignId, String protocolCode) {
-        ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
+        new ResultsResponseDTO();
+        ResultsResponseDTO resultsResponseDTO;
         SearchDTO searchDTO = new SearchDTO();
         List<IprDTO> iprDTOS = iprConverter.convertToModel(iprRepository.findAllByCampaignAndProtocolCode(campaignId, protocolCode));
         List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(campaignId);
@@ -248,6 +249,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
                 searchDTO.setProductServiceId(campaignProductServiceEntity.getProductServiceId());
                 searchDTO.setProductServiceCode(campaignProductServiceEntity.getCodeProductService());
                 searchDTO.setIprCode(iprDTO.getCode());
+                searchDTO.setIprId(iprDTO.getId());
                 resultsResponseDTO = getResultsIpr(searchDTO);
                 iprDTO.setResultsResponseDTO(resultsResponseDTO);
 
@@ -278,8 +280,8 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
                 resultsResponseDTOS.setProductName(productServiceEntity.getCode().concat(" - ").concat(productServiceEntity.getName()));
             }
         }
-        ProductServiceEntity productServiceEntity = productServiceRepository.findProductServiceByCode(searchDTO.getProductServiceCode());
-        ProtocolDTO  protocolDTO = new ProtocolDTO();
+        new ProtocolDTO();
+        ProtocolDTO  protocolDTO;
 
         CampaignEntity campaignEntity = campaignRepository.findById(searchDTO.getCampaignId()).orElseThrow();
         if (searchDTO.getProtocolCode() != null) {
@@ -395,12 +397,7 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         }
         questionsResponseDTOS.add(questionsResponseDTODC11);
 
-
-
-
         List<QuestionsResponseDTO> questionsResponseDTOSorted = questionsResponseDTOS.stream().sorted(Comparator.comparingInt(QuestionsResponseDTO::getOrderQuestion)).toList();
-
-
 
         resultsResponseDTOS.setQuestionsResponseDTOS(questionsResponseDTOSorted);
 
@@ -454,24 +451,31 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
     @Override
     public ResultsResponseDTO getResultsIpr(SearchDTO searchDTO) {
+
+        //declaracion de las variables
         ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
         List<QuestionsResponseDTO> questionsResponseDTOS = new ArrayList<>();
         List<QuestionsDTO> questionsDTOS = new ArrayList<>();
-        List<IprResponseDTO> iprResponseDTOS = new ArrayList<>();
-        List<ProtocolResultsResponseDTO> protocolResultsResponseDTOS = new ArrayList<>();
-        ProductServiceEntity productServiceEntity = new ProductServiceEntity();
-        ProtocolDTO  protocolDTO = new ProtocolDTO();
+        List<IprResponseDTO> iprResponseDTOS;
+        List<ProtocolResultsResponseDTO> protocolResultsResponseDTOS;
+        ProtocolDTO  protocolDTO;
 
+        //obtenemos la entidad campaña
         CampaignEntity campaignEntity = campaignRepository.findById(searchDTO.getCampaignId()).orElseThrow();
+
+        //obtenemos la entidad protocolo y la convertimos en DTO
+        //se hace una comprobacion de campo CODE la data antigua maneja un CODE mientras la data nueva maneja ID
         if (searchDTO.getProtocolCode() != null) {
             protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameByCode(searchDTO.getProtocolCode()));
         }else {
             protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameById(searchDTO.getProtocolId()));
         }
 
+        //aqui se crean las respuestas del ipr, cruzando los datos de dos tablas: questions e iprQuestions
+        //se hace una comprobacion de campo CODE la data antigua maneja un CODE mientras la data nueva maneja ID
         if (searchDTO.getProtocolCode() != null) {
             iprResponseDTOS = iprRepository.findAllIprByCampaignIdAndProtocolCode(searchDTO.getCampaignId(), searchDTO.getProtocolCode(), searchDTO.getIprCode());
-            if ( iprResponseDTOS.size() == 0){
+            if (iprResponseDTOS.isEmpty()){
                 questionsDTOS = questionsConverter.convertToModel(questionsRepository.findAllQuestionsByProtocolCode(searchDTO.getProtocolCode()));
             }
             protocolResultsResponseDTOS = protocolResultsRepository.findProtocolResultsByCampaignIdAndProtocolCode(searchDTO.getCampaignId(), searchDTO.getProtocolCode(), searchDTO.getProductServiceCode());
@@ -484,19 +488,18 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         }
 
-
-
+        //seteamos el nombre de la campaña
         if(campaignEntity.getNameCampaign() != null){
             resultsResponseDTO.setCampaignName(campaignEntity.getNameCampaign());
         }
+
+        //seteamos el nombre del protocolo
         if(protocolDTO != null && protocolDTO.getName() != null){
             resultsResponseDTO.setProtocolName(protocolDTO.getName());
         }
-        if (iprResponseDTOS.size() == 0){
 
-
+        if (iprResponseDTOS.isEmpty()){
             for (QuestionsDTO questionsDTO : questionsDTOS){
-
                 QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
                 String question = questionsDTO.getQuestion();
                 String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
@@ -517,8 +520,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
                     }
                 }
                 questionsResponseDTOS.add(questionsResponseDTO);
-
-
             }
             resultsResponseDTO.setQuestionsResponseDTOS(questionsResponseDTOS);
             return resultsResponseDTO;

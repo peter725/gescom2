@@ -176,20 +176,23 @@ export class ResultadosFinalesComponent implements OnInit{
     if (this.editForm1.get('protocolo')?.value) {
       this.protocoloSelected = this.editForm1.get('protocolo')?.value!;
       this.preguntasIpr = this.protocoloSelected.resultsResponseDTO?.questionsResponseDTOS;
-      console.log(this.preguntasIpr);
+      console.log('dentro de protocolo',this.preguntasIpr);
       this.iprList = this.protocoloSelected.iprDTOS;
       this.protocoloResultados = this.protocoloSelected.resultsResponseDTO;
     }
-    console.log('protocoloResultados', this.protocoloResultados)
   }
 
   iprOnChange() {
+    console.log('iprOnChange');
     if (this.editForm1.get('ipr')?.value) {
       this.iprSelected = this.editForm1.get('ipr')?.value!;
-      this.preguntasIpr = this.iprSelected.resultsResponseDTO?.questionsResponseDTOS
-      this.isTablaProtocolo = this.iprSelected == this.iprResultadosProtocolo ? true : false;
+      this.preguntasIpr = this.iprSelected.resultsResponseDTO?.questionsResponseDTOS;
+      console.log('preguntasIpr', this.preguntasIpr);
+      this.isTablaProtocolo = this.iprSelected == this.iprResultadosProtocolo;
+      console.log('seleccion de ipr',this.isTablaProtocolo);
       this.sortQuestionsByOrder();
     }
+    console.log('IPR seleccionado',this.iprSelected);
   }
 
   sortQuestionsByOrder() {
@@ -222,7 +225,6 @@ export class ResultadosFinalesComponent implements OnInit{
   }
 
   exportExcel(): void {
-
     if (this.isTablaProtocolo) {
       this.excelService.exportExcelResultadosProtocolo(this.protocoloSelected).subscribe(
         (res: Blob | MediaSource) => {

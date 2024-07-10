@@ -258,6 +258,13 @@
                     <include>**/cliente-keystore-integra-nuevo.jks</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/security</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/KeyStore.jks</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 
@@ -270,7 +277,7 @@
 			<properties>
 				<activatedProperties>local,jdbc</activatedProperties>
 				<env.domain>local</env.domain>
-                <frontURL>http://localhost:4200</frontURL>
+                <frontURL>http://localhost:4200/auth/login</frontURL>
 				<baseURL>http://localhost:8085</baseURL>
 				<pathLogs>C:/Users/Juan Pablo Zabala/SoftwareWork/SERIKAT/log/GESCOM.log</pathLogs>
 				<config.files>C:/Users/Juan Pablo Zabala/SoftwareWork/SERIKAT</config.files>
@@ -291,7 +298,7 @@
 			<properties>
 				<activatedProperties>dev,jndi-jdbc</activatedProperties>
 				<env.domain>dev</env.domain>
-                <frontURL>https://servicios-des.consumo.gob.es</frontURL>
+                <frontURL>https://servicios-des.consumo.gob.es/GESCOM/auth/login</frontURL>
 				<baseURL>http://micapps01des.consumo.gob.es:8080/gescom-auth-app</baseURL>
 				<pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
 				<config.files>/documentospro/properties/GESCO</config.files>
@@ -302,7 +309,7 @@
 			<properties>
 				<activatedProperties>pre,jndi-jdbc</activatedProperties>
 				<env.domain>pre</env.domain>
-                <frontURL>https://servicios-pre.consumo.gob.es</frontURL>
+                <frontURL>https://servicios-pre.consumo.gob.es/GESCOM/auth/login</frontURL>
 				<baseURL>http://micapps01pre.consumo.gob.es:8080</baseURL>
 				<pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
 				<config.files>/documentospro/properties/GESCO</config.files>

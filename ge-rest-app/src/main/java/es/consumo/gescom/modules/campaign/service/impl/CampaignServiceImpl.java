@@ -47,9 +47,8 @@ import es.consumo.gescom.modules.proponent.model.entity.ProponentEntity;
 import es.consumo.gescom.modules.protocol.model.dto.ProtocolDTO;
 import es.consumo.gescom.modules.protocol.repository.ProtocolRepository;
 import es.consumo.gescom.modules.protocol.service.ProtocolService;
-import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsDTO;
-import es.consumo.gescom.modules.protocol_results.repository.ProtocolResultsRepository;
-import es.consumo.gescom.modules.protocol_results.service.ProtocolResultsService;
+import es.consumo.gescom.modules.protocolResults.model.dto.ProtocolResultsDTO;
+import es.consumo.gescom.modules.protocolResults.service.ProtocolResultsService;
 import es.consumo.gescom.modules.role.model.entity.RoleHasModuleEntity;
 import es.consumo.gescom.modules.specialist.model.converter.SpecialistConverter;
 import es.consumo.gescom.modules.specialist.model.dto.SpecialistDTO;
@@ -157,8 +156,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
     @Autowired
     private IprRepository iprRepository;
 
-    @Autowired
-    private ProtocolResultsRepository protocolResultsRepository;
+
 
     private final AutonomousCommunityRepository autonomousCommunityRepository;
 

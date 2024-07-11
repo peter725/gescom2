@@ -245,6 +245,7 @@ export class ResultadosFinalesComponent implements OnInit{
         }
       );
     } else {
+      console.log('this.iprSelected',this.iprSelected)
         this.excelService.exportExcelResultadosIpr(this.iprSelected).subscribe(
           (res: Blob | MediaSource) => {
             const fileName = 'resultados_finales.xlsx';

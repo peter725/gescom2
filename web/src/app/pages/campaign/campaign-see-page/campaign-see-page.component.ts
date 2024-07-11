@@ -63,21 +63,27 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   private campaignService: CampaignService = inject(CampaignService);
   private authContextService: AuthContextService = inject(AuthContextService);
   canModify = this.authContextService.instant().canWrite('campaign');
-  userAutonomousCommunity = this.authContextService.instant().getAutonomousCommunity();
+  userAutonomousCommunity = this.removeAccents(this.authContextService.instant().getAutonomousCommunity());
 
   override ngOnInit(): void {
     super.ngOnInit();
     this.loadPhases();
     this.loadDocuments();
     this.console.log(this.userAutonomousCommunity.substring(0, 5));
+    this.console.log('this.autonomousCommunityResponsible', this.autonomousCommunityResponsible.toString())
   }
 
   get autonomousCommunityResponsible() : string {
-    return this.form.controls.autonomousCommunityResponsible.value ? this.form.controls.autonomousCommunityResponsible.value.name : "";
+    console.log(this.form.controls.autonomousCommunityResponsible.value ? this.form.controls.autonomousCommunityResponsible.value.name : "")
+    return this.removeAccents(this.form.controls.autonomousCommunityResponsible.value ? this.form.controls.autonomousCommunityResponsible.value.name : "");
   }
 
   get autonomousCommunityParticipants() : string[] {
     return this.form.controls.participants.value ? this.form.controls.participants.value.map((p) => { return p.name }) : [];
+  }
+
+  removeAccents(str: string) {  // ✔ Correcto, definición de método de clase
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 
   private loadPhases(): void {
@@ -482,4 +488,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   protected readonly console = console;
   protected readonly PHASE_FICHA_TRANSPARENCIA = PHASE_FICHA_TRANSPARENCIA;
+  protected readonly PHASE_RESULTADOS_FINALES = PHASE_RESULTADOS_FINALES;
+  protected readonly PHASE_RESULTADOS_FINALES_DEBATE = PHASE_RESULTADOS_FINALES_DEBATE;
 }

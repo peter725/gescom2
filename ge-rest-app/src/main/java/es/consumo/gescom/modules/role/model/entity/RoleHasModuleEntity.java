@@ -31,7 +31,7 @@ public class RoleHasModuleEntity extends SimpleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
-    private RoleEntity roleId;
+    private RoleEntity role;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "module_id")

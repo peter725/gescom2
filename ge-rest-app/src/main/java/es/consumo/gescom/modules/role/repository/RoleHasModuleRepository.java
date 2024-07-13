@@ -15,30 +15,29 @@ public interface RoleHasModuleRepository extends GESCOMRepository<RoleHasModuleE
     @Query("select re from RoleHasModuleEntity re " +
             "join re.permission p " +
             "join re.module m " +
-            "where re.roleId=:roleId and p.visible=true and m.visible=true")
+            "where re.role.id=:roleId and p.visible=true and m.visible=true")
     List<RoleHasModuleEntity> findByRoleId(Long roleId);
     
     @Query("select re from RoleHasModuleEntity re " +
             "join re.permission p " +
             "join re.module m " +
-            "where re.roleId=:roleId and p.id=:permissionId and m.id=:moduleId and p.visible=true and m.visible=true")
+            "where re.role.id=:roleId and p.id=:permissionId and m.id=:moduleId and p.visible=true and m.visible=true")
     Optional<RoleHasModuleEntity> findByRoleIdAndPermissionIdAndModuleId(Long roleId, Long permissionId, Long moduleId);
     
     @Query("select re.id from RoleHasModuleEntity re " +
             "join re.permission p " +
             "join re.module m " +
-            "where re.roleId=:roleId and m.id=:moduleId and p.id not in (:permissionId) and p.visible=true and m.visible=true")
+            "where re.role.id=:roleId and m.id=:moduleId and p.id not in (:permissionId) and p.visible=true and m.visible=true")
     List<Long> findIdByRoleIdAndModuleIdAndPermissionIdNotIn(Long roleId, List<Long> permissionId, Long moduleId);
     
     @Query("select re.id from RoleHasModuleEntity re " +
             "join re.permission p " +
             "join re.module m " +
-            "where re.roleId=:roleId and m.id not in (:moduleId) and p.visible=true and m.visible=true")
     List<Long> findIdByRoleIdAndModuleIdNotIn(Long roleId, List<Long> moduleId);
 
     @Query("select m.code as moduleCode , p.code as permissionCode from LoginEntity l  " +
             "JOIN l.roles r " +
-            "JOIN RoleHasModuleEntity rm on r.id=rm.roleId " +
+            "JOIN RoleHasModuleEntity rm on r.id=rm.role.id " +
             "JOIN ModuleEntity m on rm.module.id=m.id " +
             "JOIN PermissionEntity p on rm.permission.id=p.id " +
             "WHERE l.id= :loginId")

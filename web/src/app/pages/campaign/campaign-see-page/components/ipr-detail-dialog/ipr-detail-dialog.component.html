@@ -1,18 +1,16 @@
 <div class="centered-title">
   <h1>{{'fields.campaign.iprDetails' | translate}}</h1>
-
 </div>
 <hr>
 <mat-dialog-content>
-
   <div class="flex flex-col gap-4">
     <!-- Encabezados -->
     <div class="flex border-b border-gray-200">
       <div class="flex-grow header-titles p-4">
-        {{ 'ipr.question' | translate }}
+        {{ 'ipr.question' | translate }}<span class="required">*</span>
       </div>
       <div class="flex-none w-1/5 header-titles p-4">
-        {{ 'ipr.formula' | translate }}
+        {{ 'ipr.formula' | translate }}<span class="required">*</span>
       </div>
       <div class="flex-none w-1/5 header-titles p-4">
         {{ 'ipr.%respect' | translate }}
@@ -38,13 +36,6 @@
       </ng-container>
     </div>
   </div>
-
-
-
-
-
-
-
 
   <div mat-dialog-actions>
     <button mat-button (click)="close()">Cerrar</button>

@@ -17,7 +17,7 @@
 
           <mat-form-field>
             <mat-label>{{ 'fields.code_cpa' | translate }}</mat-label>
-            <input matInput formControlName="codeCpa">
+            <input matInput formControlName="codeCpa" maxlength="30">
             <mat-error>{{ form.controls.codeCpa.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 

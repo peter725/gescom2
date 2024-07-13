@@ -110,7 +110,10 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
             iterateAndSaveRoleHasModuleEntityCreate(permissionModuleDTO.getPermissions(), roleHasModules, map, roleEntity, module);
         }
         if (!roleHasModules.isEmpty())
-            roleHasModuleRepository.saveAll(roleHasModules);
+            roleHasModules.forEach(item ->{
+                roleHasModuleRepository.save(item);
+            } );
+
         return roleEntity;
     }
     
@@ -189,7 +192,7 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
                                                           PermissionEntity permission, PermissionScope scope) {
         RoleEntity role = roleRepository.findById(rolId).orElseThrow();
         RoleHasModuleEntity roleHasModuleEntity = new RoleHasModuleEntity();
-        roleHasModuleEntity.setRoleId(role);
+        roleHasModuleEntity.setRole(role);
         roleHasModuleEntity.setModule(module);
         roleHasModuleEntity.setPermission(permission);
         roleHasModuleEntity.setScope(scope);

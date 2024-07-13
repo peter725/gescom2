@@ -33,6 +33,7 @@ public interface RoleHasModuleRepository extends GESCOMRepository<RoleHasModuleE
     @Query("select re.id from RoleHasModuleEntity re " +
             "join re.permission p " +
             "join re.module m " +
+            "where re.role.id=:roleId and re.module.id  not in (:moduleId) and re.permission.visible=true and re.module.visible=true")
     List<Long> findIdByRoleIdAndModuleIdNotIn(Long roleId, List<Long> moduleId);
 
     @Query("select m.code as moduleCode , p.code as permissionCode from LoginEntity l  " +

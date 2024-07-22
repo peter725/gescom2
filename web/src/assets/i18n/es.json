@@ -157,6 +157,7 @@
     "failureReason": "Motivo del fallo",
     "field": "Campo",
     "fieldType": "Tipo de campo",
+    "uploadFile": "Cargar archivo",
     "firstSurname": "Primer apellido",
     "firstVersionYear": "Año primera versión",
     "forEachElements": "Campos a agrupar",

@@ -60,7 +60,7 @@ export const dgc = {
   name: 'Dirección General de Consumo',
   shortName: 'DGC',
   web: 'https://www.consumo.gob.es/',
-  icon: './assets/images/logos/logogescan.jpg',
+  icon: './assets/images/logos/MDSCA.Gob.Web-72px.jpg',
 };
 
 export const appOrigin = window.location.origin + environment.baseHref;

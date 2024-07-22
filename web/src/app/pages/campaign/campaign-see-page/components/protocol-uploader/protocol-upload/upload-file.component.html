@@ -1,7 +1,8 @@
 <!-- <h2 mat-dialog-title>Documentos</h2> -->
 <form *ngIf="canUpload" [formGroup]="form" class="mt-7 justify-between flex">
     <!-- Sección personalizada para el input de tipo archivo -->
-    <div class="basis-2/4 flex items-center">
+    <div class="basis-3/4 flex items-center">
+      <label for="fileInput" class="mr-2">{{ 'fields.uploadFile' | translate }}</label>
       <input type="file" id="fileInput" (change)="onFileSelected($event)">
     </div>
     
@@ -23,7 +24,7 @@
             {{document.name}}
           </p>
           <div>
-            <!-- Botones sin eventos click -->
+            <!-- Botones  -->
             <button mat-button (click)="downloadFile(document.id)">
               <mat-icon>download</mat-icon>
             </button>

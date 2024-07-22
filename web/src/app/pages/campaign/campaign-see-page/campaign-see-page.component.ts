@@ -82,6 +82,10 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     return this.form.controls.participants.value ? this.form.controls.participants.value.map((p) => { return p.name }) : [];
   }
 
+  get fullAutonomousCommunityParticipants(){
+    return this.form.get('participants')?.value!;
+  }
+
   removeAccents(str: string) {  // ✔ Correcto, definición de método de clase
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }

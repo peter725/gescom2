@@ -10,7 +10,7 @@
       <div section-content>
         <div class="px-10 mb-3 sm:px-5 sm:grid sm:grid-cols-5">
           <h1 class="mt-1 max-w-2xl text-sm leading-6 sm:col-span-1 text-gray-500 centered-element">{{'text.campaign.inspection' | translate}}</h1>
-          <h3 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900 centered-element text-color-red" >{{ form.get('phaseCampaign')?.value?.description }}</h3>
+          <h2 class="text-base font-semibold leading-7 sm:col-span-1 text-gray-900 centered-element text-color-red" >{{ form.get('phaseCampaign')?.value?.description }}</h2>
 
           <div class="flex mr-3 space-x-4 col-span-1 flex-buttons">
             <button 
@@ -94,7 +94,10 @@
 
             <div class="px-10 sm:px-5 py-5" >
               <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.participants' | translate}}</p>
-              <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ participantsDispaly }}</h3>
+              <div *ngFor="let ccaa of fullAutonomousCommunityParticipants; let i = index" class="flex items-baseline gap-2">
+                <i class="material-icons text-[0.75rem]">fiber_manual_record</i>
+                <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ ccaa.name }}</h3>
+              </div>
               <h3 *ngIf="!participantsDispaly">-</h3>
               <hr>
             </div>

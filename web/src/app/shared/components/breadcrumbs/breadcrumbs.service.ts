@@ -28,8 +28,9 @@ export class BreadcrumbsService {
   private updateCrumbs() {
     // Construct the breadcrumb hierarchy
     const root = this.router.routerState.snapshot.root;
+    //se descativa breadcrumb de inicio
     const breadcrumbs: Breadcrumb[] = [
-      { path: '/', title: 'Inicio', active: this.router.routerState.snapshot.url === '/app/inicio' ? true : false },
+      //{ path: '/', title: 'Inicio', active: this.router.routerState.snapshot.url === '/app/inicio' ? true : false },
     ];
     this.addBreadcrumb(root, [], breadcrumbs);
 

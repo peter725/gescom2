@@ -1,21 +1,15 @@
-import { Component, ElementRef, inject, OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus } from '@libs/commons';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
-import { DataSharingService } from '@base/services/dataSharingService';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CampaignIpr } from '@libs/sdk/campaign';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { ProtocolQuestionDialogComponent } from '@base/pages/protocolQuestion-dialog/protocolQuestion-dialog.component';
 import { Validator } from '@base/shared/functions/validators';
 
-// interface RequestConfig {
-//   resourceName: string;
-//   pathParams?: any;
-// }
 
 @Component({
   selector: 'tsw-ipr',
@@ -52,19 +46,12 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
   override async ngOnInit(): Promise<void> {
     super.ngOnInit();
-
     this.route.params.subscribe(params => {
       this.idCampaign = params['idCampaña']; 
       this.idIpr = params['id'];
-      console.log('id campaña' + this.idCampaign); 
-      console.log('id idIpr' + this.idIpr); 
     });
-
-
     await this.fetchProtocol();
-
   }
-
 
   protected buildForm(): FormGroup {
 
@@ -84,21 +71,14 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
   override resetForm()
   {
-
     this.fetchProtocol();
-
     this.form.reset(this.initialFormValues);
   }
 
   protected override afterLoadDataSuccess(startValue: any): void {
-      
-    
-    console.log('start value', startValue.iprQuestionDTOList)
 
     const questionArrayLoad = startValue.iprQuestionDTOList;
-
     const questionsControl = this.form.get('question') as FormArray;
-
     questionArrayLoad.forEach((question:any) => {
       questionsControl.push(this.crearFila2(question));
     });
@@ -111,14 +91,9 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     this.initialFormValues.nameCampaign = startValue.nameCampaign;
     this.initialFormValues.year = startValue.year;
     this.initialFormValues.name = startValue.name;
-    
 
     super.afterLoadDataSuccess(startValue);
   }
-
-
-
-
   
   private async fetchProtocol(): Promise<void> {
     const id = Number(this.idCampaign);
@@ -126,8 +101,6 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
       resourceName: 'protocolListCampaign',
       pathParams: { id },
     }));
-
-    console.log('array de protocolo:', this.protocolArray)
     // Primero busca el protocolo por code
     let selectedProtocol = this.protocolArray.find((protocol: any) => protocol.code === this.protocolCodeLoad);
 
@@ -135,14 +108,12 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     if (!selectedProtocol) {
       selectedProtocol = this.protocolArray.find((protocol: any) => protocol.id === this.protocolIdLoad);
     }
-
   
     // Verifica si se encontró el protocolo y luego establece el valor en el formulario
     if (selectedProtocol) {
 
       this.protocolSelectedId = selectedProtocol.id;
       this.protocolSelectedCode = selectedProtocol.code;
-      
 
       setTimeout(() => {
         this.form.patchValue({
@@ -154,18 +125,13 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
 
   onProtocolSelectionChange(value: any) {
-    console.log('valor recogido',value.id);
-    console.log('valor recogido 2:', value.code);
-    // const [id, code] = value.split('-');
-    // console.log( 'id protocolo: ' + id + 'code protocolo: ' + code);
     this.protocolSelectedId = value.id;
     this.protocolSelectedCode = value.code;
     const protocolData = { id: value.id, code: value.code };
-    // this.sharedDataService.updateSharedData(protocolData);
   }
 
   crearFila(orden: number): FormGroup {
-    console.log('crearFila', orden);
+    console.log('al ingresar a IPR esta es la primera fila de pregunta que se crea', orden);
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
@@ -241,27 +207,23 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     const formulaInputId = 'formulaInput_' + rowIndex;
   
     // Establecer el valor de stringCombinado en el input de fórmula correspondiente
-      const formulaInputElement = document.getElementById(formulaInputId) as HTMLInputElement;
-    
-      const question = this.form.get('question');
-    
-      if (question instanceof FormArray) {
-        const control = question.at(rowIndex)?.get('formula');
-        
-        if (control) {
-          const truncatedString = stringCombinado.length > 5 ? stringCombinado.substring(0, 10) + '...' : stringCombinado;
-          control.setValue(truncatedString);
-          formulaInputElement.title = stringCombinado;
-        } else {
-          console.error('FormControl "formula" no encontrado en el control:', control);
-        }
+    const formulaInputElement = document.getElementById(formulaInputId) as HTMLInputElement;
+
+    const question = this.form.get('question');
+
+    if (question instanceof FormArray) {
+      const control = question.at(rowIndex)?.get('formula');
+
+      if (control) {
+        const truncatedString = stringCombinado.length > 5 ? stringCombinado.substring(0, 10) + '...' : stringCombinado;
+        control.setValue(truncatedString);
+        formulaInputElement.title = stringCombinado;
       } else {
-        console.error('No se encontró un FormArray con el nombre "question" en el formulario.');
+        console.error('FormControl "formula" no encontrado en el control:', control);
       }
-
-
-
-
+    } else {
+      console.error('No se encontró un FormArray con el nombre "question" en el formulario.');
+    }
   }
 
 
@@ -300,14 +262,11 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
   eliminarFila(index: number) {
     // Elimina la fila en el índice dado
     this.question.removeAt(index);
-
     //actualizar orden 
     this.refreshOrder();
-
   }
 
   refreshOrder(){
-
     // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
     this.question.controls.forEach((control, i) => {
       control.get('orderQuestion')?.setValue(i + 1);
@@ -349,17 +308,13 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
 
   saveForm() {
-
       // Verificar si el formulario es válido
     if (this.form.invalid) {
       console.log('El formulario no es válido. No se puede guardar.');
       return; // Salir de la función si el formulario no es válido
     }
-
     console.log('guardamos');
-
     this.prepareIprQuestionDTOList();
-
     const jsonData = {
       id: this.idIpr,
       name: this.form.get('name')?.value,
@@ -369,27 +324,16 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
       iprQuestionDTOList: this.iprQuestionDTOList
     };
 
-    console.log(jsonData);
-
-    // const config: RequestConfig = {
-    //   resourceName: 'ipr',
-    // };
-
-    console.log(this.idIpr);
-
     this.crudService.update(this.idIpr, jsonData, {
       resourceName: 'ipr',
       pathParams: { id: this.idIpr }
     })
     .subscribe(
       response => {
-        console.log('IPR creado exitosamente:', response);
-
         this.notification.show({
           title: 'text.other.dataSaved',
           message: 'IPR creado exitosamente',
         });
-
 
         // Redirigir a la nueva URL
         const newUrl = `/app/campanas/${this.idCampaign}/ver`;
@@ -406,8 +350,5 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
         });
       }
     );
-
-    
   }
-
 }

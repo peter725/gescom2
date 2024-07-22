@@ -1,15 +1,9 @@
 <div mat-dialog-title>
-  <div
-    *ngIf="activeNotification"
-    class="flex justify-start items-center"
-  >
-    <mat-icon
-      class="mr-2"
-      inline
-      [color]="activeNotification.color"
-    >{{ activeNotification.icon }}</mat-icon>
-
-    <h1>{{ activeNotification.title }}</h1>
+  <div *ngIf="activeNotification">
+    <mat-icon  [color]="activeNotification.color">
+      {{ activeNotification.icon }}
+    </mat-icon>
+    <h2 >{{ activeNotification.title }}</h2>
   </div>
 </div>
 

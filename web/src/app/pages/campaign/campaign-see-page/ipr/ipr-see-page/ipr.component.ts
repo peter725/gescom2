@@ -58,18 +58,13 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
       resourceName: 'protocolListCampaign',
       pathParams: { id },
     }));
-
-    // console.log('protocol rest', JSON.stringify(this.protocolArray));
   }
 
   onProtocolSelectionChange(value: string) {
-    
     const [id, code] = value.split('-');
-    console.log( 'id protocolo: ' + id + 'code protocolo: ' + code);
     this.protocolSelectedId = id;
     this.protocolSelectedCode = code;
     const protocolData = { id: id, code: code };
-    // this.sharedDataService.updateSharedData(protocolData);
   }
 
 
@@ -95,7 +90,6 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
   }
 
   crearFila(orden: number): FormGroup {
-    console.log('crearFila', orden);
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
@@ -128,18 +122,11 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
         console.log('selectedItem', selectedItem);
         this.updateFormRowWithSelectedItem(rowIndex, selectedItem);
       }
-
       this.sharedDataService.sharedData$.subscribe(data => {
         this.responseUser = data;
       });
-  
-      console.log('datos respuesta recibidos: ' + JSON.stringify(this.responseUser))
-
       this.createCombinedFormula(this.responseUser, rowIndex);
-
     });
-
-
   }
 
 
@@ -147,15 +134,11 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     
     this.respuestasUsuarioCombined = respuestas;
     let stringCombinado = '';
-
-    console.log(rowIndex);
-  
     this.respuestasUsuarioCombined.forEach((respuesta, index) => {
       const respuestaValue = respuesta.respuesta ?? ''; // Si respuesta.respuesta es undefined, se asigna un espacio en blanco
       const preguntaValue = respuesta.pregunta ?? ''; // Si respuesta.pregunta es undefined, se asigna un espacio en blanco
       
       stringCombinado += respuestaValue;
-      
       if (index < this.respuestasUsuarioCombined.length - 1) {
         stringCombinado += ' + ';
       }
@@ -165,30 +148,24 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     const formulaInputId = 'formulaInput_' + rowIndex;
   
     // Establecer el valor de stringCombinado en el input de fórmula correspondiente
-      const formulaInputElement = document.getElementById(formulaInputId) as HTMLInputElement;
-    
-      const question = this.form.get('question');
-    
-      if (question instanceof FormArray) {
-        const control = question.at(rowIndex)?.get('formula');
-        
-        if (control) {
-          const truncatedString = stringCombinado.length > 5 ? stringCombinado.substring(0, 10) + '...' : stringCombinado;
-          control.setValue(truncatedString);
-          formulaInputElement.title = stringCombinado;
-        } else {
-          console.error('FormControl "formula" no encontrado en el control:', control);
-        }
+    const formulaInputElement = document.getElementById(formulaInputId) as HTMLInputElement;
+
+    const question = this.form.get('question');
+
+    if (question instanceof FormArray) {
+      const control = question.at(rowIndex)?.get('formula');
+
+      if (control) {
+        const truncatedString = stringCombinado.length > 5 ? stringCombinado.substring(0, 10) + '...' : stringCombinado;
+        control.setValue(truncatedString);
+        formulaInputElement.title = stringCombinado;
       } else {
-        console.error('No se encontró un FormArray con el nombre "question" en el formulario.');
+        console.error('FormControl "formula" no encontrado en el control:', control);
       }
-
-
-
-
+    } else {
+      console.error('No se encontró un FormArray con el nombre "question" en el formulario.');
+    }
   }
-
-
 
   updateFormRowWithSelectedItem(rowIndex: number, selectedItem: any) {
     const questions = this.form.get('question') as unknown as FormArray;
@@ -217,28 +194,33 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     const questionsControl = this.form.get('question') as FormArray;
     const nuevoOrden = questionsControl.length + 1;
     questionsControl.insert(index + 1, this.crearFila(nuevoOrden));
-    
     this.refreshOrder();
   }
 
   eliminarFila(index: number) {
-    // Elimina la fila en el índice dado
-    this.question.removeAt(index);
+    // Verifica si hay más de una fila antes de eliminar
+    if (this.question.length > 1) {
+        // Elimina la fila en el índice dado
+        this.question.removeAt(index);
 
-    //actualizar orden 
-    this.refreshOrder();
-
+        // Actualizar orden
+        this.refreshOrder();
+    } else {
+        // Opcional: Puedes mostrar un mensaje indicando que la fila precargada no se puede eliminar
+        console.warn("La fila precargada no se puede eliminar.");
+         this.notification.show({
+          title: 'text.err.questionEraseFailed',
+          message: 'No se puede crear un IPR sin preguntas',
+        });
+    }
   }
 
   refreshOrder(){
-
     // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
     this.question.controls.forEach((control, i) => {
       control.get('orderQuestion')?.setValue(i + 1);
     });
-
   }
-
 
   toggleResp(filaIndex: number) {
     const fila = (this.form.get('question') as unknown as FormArray).at(filaIndex) as FormGroup;
@@ -247,7 +229,6 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
   }
 
   prepareIprQuestionDTOList() {
-
     const questionControl = this.form.get('question');
     if (questionControl !== null && questionControl instanceof FormArray) {
       const questionArray = questionControl as FormArray;
@@ -271,16 +252,15 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     }
   }
 
-
   saveForm() {
-
-      // Verificar si el formulario es válido
+    // Verificar si el formulario es válido
     if (this.form.invalid) {
       console.log('El formulario no es válido. No se puede guardar.');
-      return; // Salir de la función si el formulario no es válido
+      return this.notification.show({
+          title: 'text.err.questionEraseFailed',
+          message: 'El formulario no es válido. No se puede guardar.',
+        }); // Salir de la función si el formulario no es válido
     }
-
-    console.log('guardamos');
 
     this.prepareIprQuestionDTOList();
 
@@ -290,9 +270,6 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
       protocolId: this.protocolSelectedId,
       iprQuestionDTOList: this.iprQuestionDTOList
     };
-
-    console.log(jsonData);
-
     const config: RequestConfig = {
       resourceName: 'ipr', 
     };
@@ -300,31 +277,21 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     this.crudService.create(jsonData, config)
     .subscribe(
       response => {
-        console.log('IPR creado exitosamente:', response);
-
         this.notification.show({
           title: 'text.other.dataSaved',
           message: 'IPR creado exitosamente',
         });
 
-
         // Redirigir a la nueva URL
         const newUrl = `/app/campanas/${this.idCampaign}/ver`;
         this.router.navigate([newUrl]);
-
-
       },
       error => {
-        console.error('Error al crear IPR:', error);
-
         this.notification.show({
           title: 'Error',
           message: 'Ha ocurrido un error',
         });
       }
     );
-
-    
   }
-
 }

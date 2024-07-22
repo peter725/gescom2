@@ -36,7 +36,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
     });
     this.items = [...copy];
+  }
 
+  onKeydown(event: KeyboardEvent, index: number) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.expandItem(index);
+    }
   }
 
 }

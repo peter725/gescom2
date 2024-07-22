@@ -335,6 +335,7 @@
       "technical-legal-viability": {"title": "4. VIABILIDAD TÉCNICA Y LEGAL"}
     },
     "err": {
+      "questionEraseFailed": "Ha ocurrido un error",
       "dataSave": "Ha ocurrido un error al intentar guardar los datos",
       "loginFailed": "Ha ocurrido un error en el proceso de conexión",
       "logoutFailed": "Ha ocurrido un error en el proceso de desconexión",

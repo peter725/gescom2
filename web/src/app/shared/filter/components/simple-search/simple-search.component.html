@@ -1,9 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="search()">
   <mat-form-field appearance="outline" class="w-full">
-    <mat-label>{{ 'generic.actions.searchSimple' | translate }}</mat-label>
+    <mat-label id="search-label" >{{ 'generic.actions.searchSimple' | translate }}</mat-label>
     <tsw-search-input
       placeholder="Escribe el término de tu búsqueda..."
       formControlName="search"
+      [attr.aria-labelledby]="'search-label'"
     ></tsw-search-input>
 
     <div matSuffix>

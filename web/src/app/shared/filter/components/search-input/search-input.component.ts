@@ -65,6 +65,7 @@ export const SearchBaseMixin = mixinDisabled(mixinErrorState(CustomSearch));
     {
       provide: MatFormFieldControl,
       useExisting: SearchInputComponent,
+      
     },
   ],
 })
@@ -79,7 +80,8 @@ export class SearchInputComponent
 
   @HostBinding() id = `custom-form-field-id-${ SearchInputComponent.nextId++ }`;
   @HostBinding('attr.aria-describedby') describedBy = '';
-
+  @Input() ariaLabelledby?: string;
+  @ViewChild('inputElement', { static: true }) inputElement?: ElementRef;
   @Input() required = false;
   @Input() step = '';
 
@@ -200,6 +202,9 @@ export class SearchInputComponent
   }
 
   ngOnInit(): void {
+    if (this.inputElement?.nativeElement && this.ariaLabelledby) {
+      this.inputElement.nativeElement.setAttribute('aria-labelledby', this.ariaLabelledby);
+    }
     if (!this.input) {
       setTimeout(() => this.ngOnInit(), 1000);
       return;

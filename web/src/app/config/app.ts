@@ -2,7 +2,7 @@ import { Version } from '@angular/core';
 import { environment } from '@env';
 
 const getVersion = () => {
-  let version = '0.0.2';
+  let version = '0.0.3';
   if (environment.name) {
     version += '-' + environment.name;
   }

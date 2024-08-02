@@ -310,7 +310,7 @@
 				<activatedProperties>pre,jndi-jdbc</activatedProperties>
 				<env.domain>pre</env.domain>
                 <frontURL>https://servicios-pre.consumo.gob.es/auth/login</frontURL>
-				<baseURL>http://micapps01pre.consumo.gob.es:8080</baseURL>
+				<baseURL>http://micapps01pre.consumo.gob.es:8080/gescom-auth-app</baseURL>
 				<pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
 				<config.files>/documentospro/properties/GESCO</config.files>
 			</properties>

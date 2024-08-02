@@ -5,16 +5,11 @@ import es.consumo.gescom.commons.controller.AbstractCrudController;
 import es.consumo.gescom.commons.converter.DataConverter;
 import es.consumo.gescom.commons.dto.FilterCriteria;
 import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
-import es.consumo.gescom.modules.campaignProductService.model.dto.CampaignProductServiceDTO;
-import es.consumo.gescom.modules.campaignProductService.model.entity.CampaignProductServiceEntity;
-import es.consumo.gescom.modules.campaignProductService.service.CampaignProductServiceService;
 import es.consumo.gescom.modules.protocol_results.model.criteria.ProtocolResultsCriteria;
 import es.consumo.gescom.modules.protocol_results.model.dto.ProtocolResultsDTO;
 import es.consumo.gescom.modules.protocol_results.model.entity.ProtocolResultsEntity;
 import es.consumo.gescom.modules.protocol_results.service.ProtocolResultsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

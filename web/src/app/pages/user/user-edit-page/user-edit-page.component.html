@@ -43,7 +43,7 @@
 
                     <mat-form-field>
                         <mat-label>{{ 'fields.phone' | translate }}</mat-label>
-                        <input matInput formControlName="phone" maxlength="10">
+                        <input matInput formControlName="phone" type="text" pattern="[0-9]*">
                         <mat-error>{{ form.controls.phone.errors | extractValidationError }}</mat-error>
                     </mat-form-field>
                 </div>

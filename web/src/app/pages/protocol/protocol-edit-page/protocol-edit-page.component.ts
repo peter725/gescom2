@@ -38,18 +38,15 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   }
 
   ngAfterViewInit(): void {
-    console.log(this.form.value)
     let campaignId = this.form.get('campaignId')?.value;
     this.cancelRedirectPath = campaignId ? `../../campanas/${campaignId}/ver` : '../../campanas/consulta';
   }
 
   private subscribeToCampaignData(): void {
     this.dataSharingService.currentCampaign.subscribe(campaignData => {
-      console.log('campaignData', campaignData);
       if (campaignData) {
         this.name = campaignData.nameCampaign;
         this.campaignId = campaignData.id;
-        console.log('campaignData', this.name);
         // Aquí configuras los datos de la campaña en el formulario de protocolo
         // Por ejemplo, podrías querer establecer el valor de algún campo basado en campaignData
         this.form.patchValue({
@@ -214,6 +211,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     const codeInfringementControl = fila.get('codeInfringement');
     if (newValue === 'NO') {
       codeInfringementControl?.disable();
+      codeInfringementControl?.reset();  // Restablecer el campo
     } else {
       codeInfringementControl?.enable();
     }

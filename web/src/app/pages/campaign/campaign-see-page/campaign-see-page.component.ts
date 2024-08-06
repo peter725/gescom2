@@ -69,12 +69,9 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     super.ngOnInit();
     this.loadPhases();
     this.loadDocuments();
-    this.console.log(this.userAutonomousCommunity.substring(0, 5));
-    this.console.log('this.autonomousCommunityResponsible', this.autonomousCommunityResponsible.toString())
   }
 
   get autonomousCommunityResponsible() : string {
-    console.log(this.form.controls.autonomousCommunityResponsible.value ? this.form.controls.autonomousCommunityResponsible.value.name : "")
     return this.removeAccents(this.form.controls.autonomousCommunityResponsible.value ? this.form.controls.autonomousCommunityResponsible.value.name : "");
   }
 
@@ -97,7 +94,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
           this.phases = page.content;
         },
         error: (err) => {
-          console.error('Error al cargar las fases de la campaña:', err);
           // Manejar el error (mostrar mensaje al usuario, por ejemplo)
         }
       });
@@ -177,19 +173,16 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     if (this.form.get('protocolResultsDTOS')?.value) {
       this.campaignResults = this.form.get('protocolResultsDTOS')?.value;
     }
-    console.log('return this.form.get(\'protocolResultsDTOS\')?.value!', this.form.get('protocolResultsDTOS')?.value!)
     return this.form.get('protocolResultsDTOS')?.value!;
   }
 
   //BORRADO RESULTADO DE CCAA
   async deleteResult(idResult: number) {
-    console.log('id a borrar: ' + idResult);
     try {
       await this.crudService.deleteId(idResult, {
         resourceName: 'protocolResult',
         pathParams: { id: idResult } // Pasamos el ID del documento aquí
       }).toPromise();
-      console.log('Documento eliminado correctamente');
       location.reload();
       // this.loadDocuments();
     } catch (error) {
@@ -219,7 +212,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
         }
       });
     }
-    
     return name;
   }
 
@@ -292,11 +284,8 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
             codeProductService: prod.code,
             productServiceId: prod.id
           };
-
           newProducts.push(newProductService);
         });
-
-
         this.campaignService.saveCampaignProduct(newProducts).subscribe((result: any) => {
           location.reload();
         });
@@ -305,17 +294,11 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   borrarProducto(id: number): void {
-    
-
     this.campaignService.deleteProduct(id).subscribe({
       next: () => {
-        // Handle successful response
-        
-        console.log('Producto eliminado correctamente');
         location.reload();
       },
       error: (err) => {
-        // Handle error
         console.error('Error al eliminar el producto:', err);
       },
       complete: () => {
@@ -325,14 +308,8 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   openDialogCopyProtocol() {
-
-    
     const campaignId = this.form.get('id')?.value;
-
-    this.console.log('id campaña' + campaignId);
-
     this.sharedDataService.updateSharedData({ campaignId: campaignId });
-
 
     const dialogRef = this.dialog.open(ProtocolListPageComponent,{
       width: '90%',
@@ -341,12 +318,9 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('El diálogo se cerró');
       this.dataSourceDialog = result;
     });
-
   }
-
   
   navegarAComponenteProtocol(protocolId: number) {
     // Asumiendo que 'this.campaign' contiene los datos de la campaña actual
@@ -385,7 +359,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   navegarAComponenteVerResultados(resultado: ProtocolResults | undefined) {
     this.campaign = this.form.value;
-    console.log('Aqui entra al presionar el boton de vizualizar')
     const navigationExtras: NavigationExtras = {
       state: {
         campaign: this.campaign,
@@ -397,29 +370,24 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
 
   navegarAComponenteEditarResultados(resultado: ProtocolResults | undefined) {
     this.campaign = this.form.value;
-    console.log('Aquí entra al presionar el botón de editar');
     const navigationExtras: NavigationExtras = {
       state: {
         campaign: this.campaign,
         resultadoSelected: resultado ? resultado : undefined
       }
     };
-    console.log('resultado seleccionado', resultado)
-    console.log('campaña enviada:', navigationExtras.state)
     this.router.navigate([`app/campanas/${this.campaign.id}/results/editar`], navigationExtras);
   }
 
 
   navegarAComponenteIpr() {
     this.campaign = this.form.value;
-    
     this.router.navigate([`app/campanas/${this.campaign.id}/ipr`]); 
   }
 
   
   navegarAComponenteIprEdit(ipr: number) {
     this.campaign = this.form.value;
-
     this.router.navigate([`app/campanas/${this.campaign.id}/ipr/${ipr}`]); 
   }
 
@@ -431,7 +399,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       // Aquí puedes manejar datos de retorno si es necesario
     });
   }
@@ -470,7 +437,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   async deleteProtocol(protocol: Protocol): Promise<void> {
-    console.log(protocol);
     await this.crudService.deleteId(protocol.id, {
       resourceName: 'protocol',
       pathParams: { id: protocol.id }
@@ -479,11 +445,6 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
 
   verDetallesIpr(ipr: any): void {
-    // const campaign = this.form.value;
-    // const datos = {
-    //   protocol,
-    //   campaign,
-    // };
     const dialogRef = this.dialog.open(IprDetailComponent, {
       width: '1000px',
       data: ipr

@@ -87,7 +87,6 @@ export class UploadFileComponent <T=any> {
 
   ngOnInit(): void {
     this.idCampaign = this.route.snapshot.paramMap.get('id');
-    console.log('ID de la URL:', this.idCampaign);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -96,7 +95,6 @@ export class UploadFileComponent <T=any> {
 
   //CARGAR DOCUMENTOS
   private async loadDocuments(): Promise<void> {
-    console.log('actualizo');
 
     this.documentsArray = [];
     const id = this.idCampaign;
@@ -112,8 +110,6 @@ export class UploadFileComponent <T=any> {
       // Ordena el array por el ID de más nuevo a más viejo
       this.documentsArray.sort((a, b) => b.id - a.id);
 
-      // Muestra el array con los nombres e IDs de los documentos
-      console.log('Documents Array:', this.documentsArray);
     } else {
       console.log('No documents found.');
     }
@@ -122,7 +118,6 @@ export class UploadFileComponent <T=any> {
   // AGREGAR DOCUMENTO
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
-    console.log("Archivo=" + this.selectedFile?.name)
   }
 
   getExtensionFromFileName(fileName: string): string {
@@ -159,7 +154,6 @@ export class UploadFileComponent <T=any> {
         // Enviar el nuevo documento a la API utilizando el servicio CRUD
         this.crudService.create(nuevoDocumento, config).subscribe(
           (response: any) => {
-            console.log("Documento agregado:", response);
             location.reload();
             // this.loadDocuments();
           },
@@ -178,13 +172,11 @@ export class UploadFileComponent <T=any> {
 
   //BORRADO DEL DOCUMENTO
   async deleteFile(idDocument: number) {
-    console.log('id a borrar: ' + idDocument);
     try {
       await this.crudService.deleteId(idDocument, {
         resourceName: 'document',
         pathParams: { id: idDocument } // Pasamos el ID del documento aquí
       }).toPromise();
-      console.log('Documento eliminado correctamente');
       location.reload();
       // this.loadDocuments();
     } catch (error) {

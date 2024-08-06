@@ -470,6 +470,7 @@
     "validation": {
       "disallowedName": "El valor introduction solo puede contener letras",
       "email": "Email incorrecto",
+      "pattern": "El valor debe ser numérico",
       "number": "El valor debe ser numérico",
       "zeroErrorMessage": "Debe ser mayor que 0",
       "onlyIntegerValues": "El valor debe ser entero",

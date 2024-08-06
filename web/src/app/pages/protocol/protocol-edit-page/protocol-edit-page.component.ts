@@ -71,51 +71,23 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
       question: this.fb.array([])
     });
 
-    // // Usar setTimeout para agregar la primera fila
-    // setTimeout(() => {
-    //   const questionsControl = form.get('question') as FormArray;
-    //   questionsControl.push(this.crearFila(1));
-    // }, 0);
-
-  
-
     return form;
   }
 
-  // protected override async afterLoadDataSuccess(result: any) {
-
-  //   super.afterLoadDataSuccess(result);
-
-  //   const questions = this.form.get('question') as unknown as FormArray; 
-  //   if (this.srcData && this.srcData.question) {
-  //   this.srcData.question.forEach((q: any) => {
-
-  //     questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
-  //   });
-  // }
-
-
-  // }
-
-    // Método para cargar los datos desde el endpoint
-    override async loadData() {
-
-
+  // Método para cargar los datos desde el endpoint
+  override async loadData() {
       try {
         this.resetDataBeforeLoad();
-    
         // Cargar datos
         this.srcData = await firstValueFrom(this.fetchExistingSrc());
         const startValue = await firstValueFrom(this.mapModelToForm(this.srcData));
         this.afterLoadDataSuccess(startValue);
-    
         // Ordenar las preguntas según orderQuestion
         const questions = this.form.get('question') as unknown as FormArray;
         this.srcData.question.sort((a: any, b: any) => a.orderQuestion - b.orderQuestion);
         this.srcData.question.forEach((q: any) => {
           questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
         });
-        console.log('Questions Protocol-edit', questions)
       } catch (err: any) {
         this.afterLoadDataError(err);
       }
@@ -135,6 +107,18 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   }
 
   openDialog(rowIndex: number): void {
+    const questions = this.form.get('question') as unknown as FormArray;
+    const fila = questions.at(rowIndex) as FormGroup;
+    const responseValue = fila.get('response')?.value;
+    if (responseValue === 'NO') {
+      // No abrir el diálogo si la respuesta es NO
+      this.notification.show({
+        type: 'warn',
+        message: 'No se puede asignar una infracción porque la respuesta es NO'
+      });
+      return;
+    }
+
     const dialogRef = this.dialog.open(InfringementDialogComponent, {
       width: '75%',
     });
@@ -153,17 +137,14 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     if (questions.at(rowIndex)) {
       const question = questions.at(rowIndex) as FormGroup;
       question.patchValue({
-        // Suponiendo que el campo se llama 'infringement' en tu formulario y 'nombre' en tu objeto seleccionado
         codeInfringement: selectedItem.code,
-        // Aquí puedes actualizar otros campos relevantes
       });
       console.log('row', question);
     }
   }
 
   crearFila(orden: number): FormGroup {
-    console.log('crearFila', orden);
-    return this.fb.group({
+    const fila = this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
       codeQuestion: ['', Validators.required],
@@ -171,6 +152,18 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
       codeInfringement: null,
       response: ['SI'] // Inicializar con 'SI'
     });
+
+    // Observador para el campo response
+    fila.get('response')?.valueChanges.subscribe(responseValue => {
+      const codeInfringementControl = fila.get('codeInfringement');
+      if (responseValue === 'NO') {
+        codeInfringementControl?.disable();
+        codeInfringementControl?.reset();
+      } else {
+        codeInfringementControl?.enable();
+      }
+    });
+    return fila;
   }
 
   get question() {
@@ -186,7 +179,6 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   }
 
   refreshOrder(){
-
     // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
     this.question.controls.forEach((control, i) => {
       control.get('orderQuestion')?.setValue(i + 1);
@@ -216,7 +208,15 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   toggleResp(filaIndex: number) {
     const fila = (this.form.get('question') as unknown as FormArray).at(filaIndex) as FormGroup;
     const currentValue = fila.get('response')?.value;
-    fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
+    const newValue = currentValue === 'SI' ? 'NO' : 'SI';
+    fila.get('response')?.setValue(newValue);
+    // Habilitar/deshabilitar codeInfringement según el nuevo valor de response
+    const codeInfringementControl = fila.get('codeInfringement');
+    if (newValue === 'NO') {
+      codeInfringementControl?.disable();
+    } else {
+      codeInfringementControl?.enable();
+    }
   }
 
   async saveForm() {

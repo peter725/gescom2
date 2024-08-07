@@ -11,7 +11,7 @@
                 <div class="grid grid-cols-1 gap-1.5 mt-4">
                     <mat-form-field>
                       <mat-label>{{ 'fields.campaign.name' | translate }}</mat-label>
-                      <input matInput formControlName="nameCampaign">
+                      <input matInput formControlName="nameCampaign" >
                     </mat-form-field>
                 </div>
             </div>
@@ -29,13 +29,13 @@
 
             <div class="grid grid-cols-1 gap-1.5 mt-4">
                 <mat-form-field>
-                    <mat-label>I.P.R</mat-label>
+                    <mat-label> {{ 'text.campaign.template' | translate}}</mat-label>
                     <mat-select name="ipr" formControlName="ipr" (selectionChange)="iprOnChange()" required>
                         <mat-option [value]="iprResultadosProtocolo">
                             {{iprResultadosProtocolo.name}}
                         </mat-option>
                         <mat-option *ngFor="let i of iprList" [value]="i">
-                          {{i.name}}
+                          {{'Resultados según: [IPR] '+i.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

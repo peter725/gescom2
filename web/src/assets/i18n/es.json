@@ -326,7 +326,8 @@
         "products": "Productos",
         "resultados": "Resultados CCAA",
         "planificationDocument": "Documento de planificación",
-        "trasparencySheet": "Ficha de transparencia"
+        "trasparencySheet": "Ficha de transparencia",
+        "template": "Plantilla"
     },
     "approach": {
       "campaign-proposal": {"title": "PROPUESTA DE CAMPAÑA"},

@@ -58,12 +58,12 @@ export class ResultadosFinalesComponent implements OnInit{
   protocoloResultados: ResultsResponseDTO[] = [];
 
   resultadoSelected: ProtocolResults | undefined = undefined;
-  iprResultadosProtocoloName = 'Resultados segun plantilla de protocolo';
+  iprResultadosProtocoloName = 'protocolo de inspección';
 
   iprResultadosProtocolo: IprDTO = {
     id: 0,
     code: '',
-    name: this.iprResultadosProtocoloName,
+    name: 'Resultados según: '+this.iprResultadosProtocoloName,
     product: '',
     campaignId: 0,
     protocolCode: '',
@@ -80,7 +80,7 @@ export class ResultadosFinalesComponent implements OnInit{
       id: this.fb.control(null),
       year: this.fb.control(null),
       codeCpa: this.fb.control(null),
-      nameCampaign: this.fb.control(null, []),
+      nameCampaign: this.fb.control({ value: null, disabled: true }, []),
       campaignType: this.fb.control(null),
       participants: this.fb.control([]),
       ambit: this.fb.control(null),
@@ -95,8 +95,8 @@ export class ResultadosFinalesComponent implements OnInit{
       campaignProductServiceDTOS: this.fb.control([]),
     }),
     protocolo: [],
-    producto: [],
-    ipr: []
+    producto: [{ value: '', disabled: true }],
+    ipr: [{ value: '', disabled: true }]
     // producto: [null, [Validators.required, Validators.maxLength(50)]],
   });
 
@@ -105,28 +105,27 @@ export class ResultadosFinalesComponent implements OnInit{
     private router: Router,
     private protocolResultsService: ProtocolResultsService,
     private excelService: ExcelService,
-    protected notification: NotificationService) {
-      const navigation = this.router.getCurrentNavigation();
-      let state = undefined;
-      if (navigation) {
-        state = navigation!.extras.state as {
-        campaign: any,
-        resultadoSelected: any
-        }
-        this.campaign = state.campaign;
-        this.resultadoSelected = state.resultadoSelected;
-        this.productoSelected = state.campaign.productoSelected;
-        this.cancelRedirectPath = `../../campanas/${this.campaign.id}/resultados`;
-      } else {
-        this.goBack();
+    protected notification: NotificationService)
+  {
+    const navigation = this.router.getCurrentNavigation();
+    let state = undefined;
+    if (navigation) {
+      state = navigation!.extras.state as {
+      campaign: any,
+      resultadoSelected: any
       }
-      
+      this.campaign = state.campaign;
+      this.resultadoSelected = state.resultadoSelected;
+      this.productoSelected = state.campaign.productoSelected;
+      this.cancelRedirectPath = `../../campanas/${this.campaign.id}/resultados`;
+    } else {
+      this.goBack();
+    }
     
   }
 
   ngOnInit(): void {
     this.campaign;
-    console.log("Prueba");
     this.updateForm1(this.campaign);
     this.loadOptions(this.campaign);
   }
@@ -148,7 +147,6 @@ export class ResultadosFinalesComponent implements OnInit{
     if (campania && campania.campaignProductServiceDTOS) {
       this.productosList = campania.campaignProductServiceDTOS;
     }
-
   }
 
   getProductService(id: any): any {
@@ -168,7 +166,6 @@ export class ResultadosFinalesComponent implements OnInit{
         sumaMayor = true;
       }
     }
-
     return sumaMayor;
   }
 
@@ -176,23 +173,20 @@ export class ResultadosFinalesComponent implements OnInit{
     if (this.editForm1.get('protocolo')?.value) {
       this.protocoloSelected = this.editForm1.get('protocolo')?.value!;
       this.preguntasIpr = this.protocoloSelected.resultsResponseDTO?.questionsResponseDTOS;
-      console.log('dentro de protocolo',this.preguntasIpr);
       this.iprList = this.protocoloSelected.iprDTOS;
       this.protocoloResultados = this.protocoloSelected.resultsResponseDTO;
+      this.editForm1.get('ipr')!.enable()
     }
   }
 
   iprOnChange() {
-    console.log('iprOnChange');
     if (this.editForm1.get('ipr')?.value) {
       this.iprSelected = this.editForm1.get('ipr')?.value!;
       this.preguntasIpr = this.iprSelected.resultsResponseDTO?.questionsResponseDTOS;
-      console.log('preguntasIpr', this.preguntasIpr);
       this.isTablaProtocolo = this.iprSelected == this.iprResultadosProtocolo;
-      console.log('seleccion de ipr',this.isTablaProtocolo);
       this.sortQuestionsByOrder();
+      this.editForm1.get('producto')!.enable()
     }
-    console.log('IPR seleccionado',this.iprSelected);
   }
 
   sortQuestionsByOrder() {
@@ -245,7 +239,6 @@ export class ResultadosFinalesComponent implements OnInit{
         }
       );
     } else {
-      console.log('this.iprSelected',this.iprSelected)
         this.excelService.exportExcelResultadosIpr(this.iprSelected).subscribe(
           (res: Blob | MediaSource) => {
             const fileName = 'resultados_finales.xlsx';
@@ -295,8 +288,6 @@ export class ResultadosFinalesComponent implements OnInit{
       if (!this.preguntasProtocolo || this.preguntasProtocolo.length == 0) {
         this.preguntasProtocolo = this.protocoloSelected.resultsResponseDTO.questionsResponseDTOS;
       }
-      
     }
-
   }
 }

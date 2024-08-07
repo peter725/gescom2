@@ -67,33 +67,50 @@ export class Validator {
           }
         }
       }
-  
       return Object.keys(errors).length !== 0 ? errors : null;
     };
   }
 
    // custom validator to check that two fields match
+  //este metodo verifica que la suma de productos correctos mas los incorrectos sea igual a el numero de productos controlados
    public static totalProductsValidator(controlados: string, correctos: string, incorrectos: string) {
+
     return (group: AbstractControl) => {
       const controlControlados = group.get(controlados);
       const controlCorrectos = group.get(correctos);
       const controlIncorrectos = group.get(incorrectos);
 
-      if (!controlControlados || !controlCorrectos || !controlIncorrectos || 
-        !controlControlados.value || !controlCorrectos.value || !controlIncorrectos.value) {
-          return null;
+      //este if rompe el metodo evitando la validacion mientras se ingresan los valores necesarios para la validacion
+      if (controlControlados === null || controlCorrectos === null || controlIncorrectos === null ||
+        controlControlados.value === null || controlCorrectos.value === null || controlIncorrectos.value === null ||
+        controlControlados.value === undefined || controlCorrectos.value === undefined || controlIncorrectos.value === undefined) {
+        return null;
+      }
+
+      //Convertimos los valores de los controles a números
+      const contro: number = controlControlados?.value;
+      const corre: number = controlCorrectos?.value;
+      const inco: number = controlIncorrectos?.value;
+
+      //Verificamos si alguno de estos valores convertidos es NaN (Not a Number) usando isNaN().
+      if (isNaN(contro) || isNaN(corre) || isNaN(inco)) {
+        controlControlados.setErrors({ mustMatch: true });
+        return null;
       }
 
       // return if another validator has already found an error on the matchingControl
-      if (controlControlados.errors && !controlControlados.errors['mustMatch']) {
+      if (controlControlados?.errors && !controlControlados.errors['mustMatch']) {
           return null;
       }
 
-      // set error on matchingControl if validation fails
-      if (controlControlados.value !== (controlCorrectos.value + controlIncorrectos.value)) {
-        controlControlados.setErrors({ mustMatch: true });
+      // Comparamos si el valor de controlControlados (contro) es diferente de la suma de
+      // controlCorrectos (corre) y controlIncorrectos (inco)
+      // Si los valores no coinciden, se establece un error de validación
+      if (contro !== (corre + inco)) {
+        controlControlados?.setErrors({ mustMatch: true });
       } else {
-        controlControlados.setErrors(null);
+        //Si los valores coinciden, se eliminan los errores de validación
+        controlControlados?.setErrors(null);
       }
       return null;
     }

@@ -64,9 +64,9 @@ export class ResultadosComponent implements OnInit{
     id: [],
     campania: this.fb.group<ControlsOf<CampaignForm>>({
       id: this.fb.control(null),
-      year: this.fb.control({ value: null, disabled: true }),
+      year: this.fb.control(null ),
       codeCpa: this.fb.control(null),
-      nameCampaign: this.fb.control({ value: null, disabled: true }, []),
+      nameCampaign: this.fb.control(null),
       campaignType: this.fb.control(null),
       participants: this.fb.control([]),
       ambit: this.fb.control(null),
@@ -80,7 +80,7 @@ export class ResultadosComponent implements OnInit{
       protocols: this.fb.control([]),
       campaignProductServiceDTOS: this.fb.control([]),
     }),
-    protocolo: [],
+    protocolo: [null, Validators.required],
     producto: [],
     ca: [] as AutonomousCommunity[],
     // producto: [null, [Validators.required, Validators.maxLength(50)]],
@@ -168,24 +168,32 @@ export class ResultadosComponent implements OnInit{
     return this.protocolosList?.find(protocolo => protocolo.id === id);
   }
 
-  getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): boolean {
-    let sumaMayor = false;
-
-    if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
+  getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): void {
+  if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
       pregSi !== undefined && pregNo !== undefined && pregNoProcede !== undefined) {
-      if (pregSi + pregNo + pregNoProcede !== this.totalProductosControlados) {
-        sumaMayor = true;
-      }
+    if (pregSi + pregNo + pregNoProcede !== this.totalProductosControlados) {
+      this.notification.show({
+        type: 'warn', // or 'danger' depending on the severity
+        message: 'La suma no coincide con el total de productos controlados.',
+        title: 'Error de validación'
+      });
     }
-
-    return sumaMayor;
   }
+}
 
   save() {
     let respuestasInvalid = false;
     this.preguntasProtocolo.forEach((preg) => {
-      if (preg.response === 'S' && preg.numResponseSi !== null && preg.numResponseNo !== null && preg.numResponseNoProcede !== null &&
-        preg.numResponseSi !== undefined && preg.numResponseNo !== undefined && preg.numResponseNoProcede !== undefined) {
+      if (preg.numResponseSi === undefined || preg.numResponseSi === null) {
+        preg.numResponseSi = 0;
+      }
+      if (preg.numResponseNo === undefined || preg.numResponseNo === null) {
+        preg.numResponseNo = 0;
+      }
+      if (preg.numResponseNoProcede === undefined || preg.numResponseNoProcede === null) {
+        preg.numResponseNoProcede = 0;
+      }
+      if (preg.response === 'S') {
         if (preg.numResponseSi + preg.numResponseNo + preg.numResponseNoProcede !== this.totalProductosControlados) {
           respuestasInvalid = true;
         }
@@ -193,7 +201,7 @@ export class ResultadosComponent implements OnInit{
     });
 
     if (respuestasInvalid) {
-      this.notification.show({ message: 'text.other.pleaseReview' });
+      this.notification.show({ message: 'Por favor revisa las respuestas introducidas' });
     } else {
       let preguntas: TotalProtocolResults[] = [];
       let totalProtocoloResults: TotalProtocolResults;

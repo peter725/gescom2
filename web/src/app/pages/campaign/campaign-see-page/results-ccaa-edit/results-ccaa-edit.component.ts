@@ -111,12 +111,10 @@ export class ResultsCcaaEditComponent implements OnInit{
     } else {
       this.router.navigate([`app/campanas/consulta`]);
     }
-    console.log('Este es el componente de resultados finales, pero aquí llega para ver resultados de cada CCAA');
   }
 
   ngOnInit(): void {
     this.campaign;
-    console.log("Prueba");
     this.updateForm1(this.campaign);
     this.loadOptions(this.campaign);
     if (this.resultadoSelected) {
@@ -130,7 +128,6 @@ export class ResultsCcaaEditComponent implements OnInit{
     this.productoSelected = resultadoSelected?.productServiceDTO;
     this.caSelected = resultadoSelected?.autonomousCommunityCountryDTO;
     this.preguntasProtocolo = this.protocoloSelected?.question;
-    console.log('Preguntas antes de forEach', this.preguntasProtocolo)
     this.sortQuestionsByOrder();
 
     this.numExistentes = resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion === this.codNumExistentes)?.ccaaRes || null;
@@ -140,18 +137,14 @@ export class ResultsCcaaEditComponent implements OnInit{
     this.totalProdIncorrectos = resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion === this.codProdIncorrectos)?.ccaaRes || null;
 
     this.preguntasProtocolo.forEach((question, index) => {
-      console.log('Pregunstas',question);
       const numericCodeQuestion = Number(resultadoSelected.totalProtocolResultsDTOS?.find(r => r.codeQuestion))
       const resultado = resultadoSelected.totalProtocolResultsDTOS?.find(r => Number(r.codeQuestion) === question.orderQuestion);
-      console.log('Resultado: ', resultado)
       if (resultado) {
         question.numResponseSi = resultado.ccaaRes;
         question.numResponseNo = resultado.ccaaRen;
         question.numResponseNoProcede = resultado.ccaaRep;
       }
     });
-
-    console.log('Preguntas despues de forEach', this.preguntasProtocolo)
 
     // Asignar el ID correcto de `protocolResults`
     this.editForm1.patchValue({
@@ -167,9 +160,6 @@ export class ResultsCcaaEditComponent implements OnInit{
       totalProdIncorrectos: this.totalProdIncorrectos,
     });
   }
-
-
-
 
   sortQuestionsByOrder() {
     this.preguntasProtocolo.sort((a, b) => {
@@ -247,101 +237,122 @@ export class ResultsCcaaEditComponent implements OnInit{
   }
 
   saveResults(): void {
+    let respuestasInvalid = false;
     if (this.editForm1.valid) {
-      const resultsToSave = {
-        id: this.editForm1.get('id')?.value,
-        name: this.campaign.nameCampaign,
-        autonomousCommunityCountryId: this.caSelected?.id,
-        autonomousCommunityCountryCode: this.caSelected?.code,
-        autonomousCommunityCountryDTO: this.caSelected,
-        productServiceId: this.productoSelected?.id,
-        productServiceCode: this.productoSelected?.code,
-        productServiceDTO: this.productoSelected,
-        campaignId: this.campaign.id,
-        protocolId: this.protocoloSelected?.id,
-        protocolCode: this.protocoloSelected?.code,
-        protocolDTO: this.protocoloSelected,
-        protocolName: this.protocoloSelected?.name,
-        code: this.protocoloSelected?.code,
-        totalProtocolResultsDTOS: [
-          ...this.preguntasProtocolo.map((pregunta: any) => ({
-            id: pregunta.id,
-            ccaaRen: pregunta.numResponseNo,
-            ccaaRep: pregunta.numResponseNoProcede,
-            ccaaRes: pregunta.numResponseSi,
-            code: pregunta.code,
-            protocolResultsCode: this.protocoloSelected?.code,
-            codeQuestion: pregunta.orderQuestion.toString(),
-            protocolResultsId: this.editForm1.get('id')?.value
-          })),
-          // Agregar los campos adicionales a totalProtocolResultsDTOS
-          {
-            id: null,
-            ccaaRen: null,
-            ccaaRep: null,
-            ccaaRes: this.editForm1.get('numExistentes')?.value,
-            code: this.codNumExistentes,
-            protocolResultsCode: this.protocoloSelected?.code,
-            codeQuestion: this.codNumExistentes,
-            protocolResultsId: this.editForm1.get('id')?.value
-          },
-          {
-            id: null,
-            ccaaRen: null,
-            ccaaRep: null,
-            ccaaRes: this.editForm1.get('numControlados')?.value,
-            code: this.codNumControlados,
-            protocolResultsCode: this.protocoloSelected?.code,
-            codeQuestion: this.codNumControlados,
-            protocolResultsId: this.editForm1.get('id')?.value
-          },
-          {
-            id: null,
-            ccaaRen: null,
-            ccaaRep: null,
-            ccaaRes: this.editForm1.get('totalProdControlados')?.value,
-            code: this.codProdControlados,
-            protocolResultsCode: this.protocoloSelected?.code,
-            codeQuestion: this.codProdControlados,
-            protocolResultsId: this.editForm1.get('id')?.value
-          },
-          {
-            id: null,
-            ccaaRen: null,
-            ccaaRep: null,
-            ccaaRes: this.editForm1.get('totalProdCorrectos')?.value,
-            code: this.codProdCorrectos,
-            protocolResultsCode: this.protocoloSelected?.code,
-            codeQuestion: this.codProdCorrectos,
-            protocolResultsId: this.editForm1.get('id')?.value
-          },
-          {
-            id: null,
-            ccaaRen: null,
-            ccaaRep: null,
-            ccaaRes: this.editForm1.get('totalProdIncorrectos')?.value,
-            code: this.codProdIncorrectos,
-            protocolResultsCode: this.protocoloSelected?.code,
-            codeQuestion: this.codProdIncorrectos,
-            protocolResultsId: this.editForm1.get('id')?.value
-          }
-        ]
-      };
-
-      this.protocolResultsService.updateResults(resultsToSave).subscribe(
-        (response) => {
-          console.log('Resultados guardados con éxito:', response);
-          this.notification.show({
-            title: 'text.other.dataSaved',
-            message: 'Datos guardados exitosamente',
-          });
-          // Redirigir a la página de la campaña específica que se acaba de editar
-          this.router.navigate([`/app/campanas/${this.campaign.id}/ver`]);
-        },
-        (error) => {
-          console.error('Error al guardar los resultados:', error);
+      this.preguntasProtocolo.forEach((pregunta) => {
+        if (pregunta.numResponseSi === undefined || pregunta.numResponseSi === null) {
+          pregunta.numResponseSi = 0;
         }
-      );
+        if (pregunta.numResponseNo === undefined || pregunta.numResponseNo === null) {
+          pregunta.numResponseNo = 0;
+        }
+        if (pregunta.numResponseNoProcede  === undefined || pregunta.numResponseNoProcede === null) {
+          pregunta.numResponseNoProcede = 0;
+        }
+        if (pregunta.response === 'S') {
+          if (pregunta.numResponseSi + pregunta.numResponseNo + pregunta.numResponseNoProcede !== this.editForm1.get('numControlados')?.value) {
+            respuestasInvalid = true;
+          }
+        }
+      })
+      if (respuestasInvalid) {
+        this.notification.show({ message: 'Por favor revisa las respuestas introducidas' });
+      } else {
+        const resultsToSave = {
+          id: this.editForm1.get('id')?.value,
+          name: this.campaign.nameCampaign,
+          autonomousCommunityCountryId: this.caSelected?.id,
+          autonomousCommunityCountryCode: this.caSelected?.code,
+          autonomousCommunityCountryDTO: this.caSelected,
+          productServiceId: this.productoSelected?.id,
+          productServiceCode: this.productoSelected?.code,
+          productServiceDTO: this.productoSelected,
+          campaignId: this.campaign.id,
+          protocolId: this.protocoloSelected?.id,
+          protocolCode: this.protocoloSelected?.code,
+          protocolDTO: this.protocoloSelected,
+          protocolName: this.protocoloSelected?.name,
+          code: this.protocoloSelected?.code,
+          totalProtocolResultsDTOS: [
+            ...this.preguntasProtocolo.map((pregunta: any) => ({
+              id: pregunta.id,
+              ccaaRen: pregunta.numResponseNo,
+              ccaaRep: pregunta.numResponseNoProcede,
+              ccaaRes: pregunta.numResponseSi,
+              code: pregunta.code,
+              protocolResultsCode: this.protocoloSelected?.code,
+              codeQuestion: pregunta.orderQuestion.toString(),
+              protocolResultsId: this.editForm1.get('id')?.value
+            })),
+            // Agregar los campos adicionales a totalProtocolResultsDTOS
+            {
+              id: null,
+              ccaaRen: null,
+              ccaaRep: null,
+              ccaaRes: this.editForm1.get('numExistentes')?.value,
+              code: this.codNumExistentes,
+              protocolResultsCode: this.protocoloSelected?.code,
+              codeQuestion: this.codNumExistentes,
+              protocolResultsId: this.editForm1.get('id')?.value
+            },
+            {
+              id: null,
+              ccaaRen: null,
+              ccaaRep: null,
+              ccaaRes: this.editForm1.get('numControlados')?.value,
+              code: this.codNumControlados,
+              protocolResultsCode: this.protocoloSelected?.code,
+              codeQuestion: this.codNumControlados,
+              protocolResultsId: this.editForm1.get('id')?.value
+            },
+            {
+              id: null,
+              ccaaRen: null,
+              ccaaRep: null,
+              ccaaRes: this.editForm1.get('totalProdControlados')?.value,
+              code: this.codProdControlados,
+              protocolResultsCode: this.protocoloSelected?.code,
+              codeQuestion: this.codProdControlados,
+              protocolResultsId: this.editForm1.get('id')?.value
+            },
+            {
+              id: null,
+              ccaaRen: null,
+              ccaaRep: null,
+              ccaaRes: this.editForm1.get('totalProdCorrectos')?.value,
+              code: this.codProdCorrectos,
+              protocolResultsCode: this.protocoloSelected?.code,
+              codeQuestion: this.codProdCorrectos,
+              protocolResultsId: this.editForm1.get('id')?.value
+            },
+            {
+              id: null,
+              ccaaRen: null,
+              ccaaRep: null,
+              ccaaRes: this.editForm1.get('totalProdIncorrectos')?.value,
+              code: this.codProdIncorrectos,
+              protocolResultsCode: this.protocoloSelected?.code,
+              codeQuestion: this.codProdIncorrectos,
+              protocolResultsId: this.editForm1.get('id')?.value
+            }
+          ]
+        };
+
+        this.protocolResultsService.updateResults(resultsToSave).subscribe(
+          (response) => {
+            console.log('Resultados guardados con éxito:', response);
+            this.notification.show({
+              title: 'text.other.dataSaved',
+              message: 'Datos guardados exitosamente',
+            });
+            // Redirigir a la página de la campaña específica que se acaba de editar
+            this.router.navigate([`/app/campanas/${this.campaign.id}/ver`]);
+          },
+          (error) => {
+            console.error('Error al guardar los resultados:', error);
+          }
+        );
+      }
     } else {
       this.notification.show({ message: 'text.other.pleaseReview' });
       console.log('Formulario inválido');

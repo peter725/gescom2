@@ -24,6 +24,9 @@
                           {{proto.name}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="editForm1.get('protocolo')?.hasError('required')">
+                      Debe seleccionar un protocolo.
+                    </mat-error>
                 </mat-form-field>
             </div>
 
@@ -35,6 +38,9 @@
                           {{prod.productName}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="editForm1.get('producto')?.hasError('required')">
+                      Debe seleccionar un producto.
+                    </mat-error>
                 </mat-form-field>
             </div>
 
@@ -46,6 +52,9 @@
                           {{ca.name}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="editForm1.get('ca')?.hasError('required')">
+                      Debe seleccionar un comunidad autonoma.
+                    </mat-error>
                 </mat-form-field>
             </div>
         <div class="justify-center mt-3">
@@ -86,7 +95,7 @@
 
 
             <div class="grid grid-cols-6 gap-1.5">
-                <mat-form-field class="col-span-6">
+                <mat-form-field class="col-span-6" >
                     <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
                     <input matInput [value]="caSelected?.name" readonly>
                 </mat-form-field>
@@ -191,9 +200,9 @@
                   <div class="table-header-group bg-gray-200">
                     <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
                     <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
-                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Si</div>
-                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No</div>
-                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Si*</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No*</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede*</div>
                   </div>
 
                   <!-- Filas de la tabla -->
@@ -223,19 +232,16 @@
                                     {{ preg['question'] }}
                                 </td>
                                 <td class="p-4">
-                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" />
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
                                 </td>
                                 <td class="p-4">
-                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" />
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
                                 </td>
                                 <td class="p-4">
-                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" />
+                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
                                 </td>
-                                <div class="p-4 position-absolute" *ngIf="getSumaRespuestas(preg?.numResponseSi, preg?.numResponseNo, preg?.numResponseNoProcede)">
-                                    <mat-error>La suma no coincide con el total de productos controlados.</mat-error>
-                                </div>
                         </ng-container>
-                      
+
                     </tr>
                   </div>
                 </div>
@@ -244,7 +250,7 @@
         <div class="justify-center mt-3">
             <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" (click)="goBack()">Cancelar</button>
             <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" matStepperPrevious>Anterior</button>
-            <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 rounded" (click)="save()">Guardar</button>
+            <button mat-raised-button tswConfirmAction color="primary" class="text-white font-bold py-2 px-4 rounded" (confirmed)="save()">Guardar</button>
         </div>
       
   </mat-step>

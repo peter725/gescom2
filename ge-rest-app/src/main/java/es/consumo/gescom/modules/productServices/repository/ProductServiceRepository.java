@@ -15,10 +15,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductServiceRepository extends GESCOMRepository<ProductServiceEntity, Long>, QueryByCriteria<ProductServiceEntity.SimpleProjection, ProductServiceCriteria> {
+public interface ProductServiceRepository extends GESCOMRepository<ProductServiceEntity, Long>, QueryByCriteria<ProductServiceEntity, ProductServiceCriteria> {
 
     @Query(value = "SELECT h FROM CampaignProductServiceEntity h where h.id = :id ")
-    Page<ProductServiceEntity.SimpleProjection> findAllProductServiceById(Pageable pageable, Long id);
+    Page<ProductServiceEntity> findAllProductServiceById(Pageable pageable, Long id);
 
     @Query(value = "SELECT h FROM ProductServiceEntity h where h.code = :code ")
     ProductServiceEntity findProductServiceByCode(String code);
@@ -34,5 +34,8 @@ public interface ProductServiceRepository extends GESCOMRepository<ProductServic
             + " OR UPPER(pr.name) LIKE :#{#criteria.search} "
             + " OR UPPER(pr.code) LIKE :#{#criteria.search} "
     )
-    public Page<ProductServiceEntity.SimpleProjection> findAllByCriteria(ProductServiceCriteria criteria, Pageable pageable);
+    public Page<ProductServiceEntity> findAllByCriteria(ProductServiceCriteria criteria, Pageable pageable);
+
+    @Override
+    Page<ProductServiceEntity> findAll(Pageable pageable);
 }

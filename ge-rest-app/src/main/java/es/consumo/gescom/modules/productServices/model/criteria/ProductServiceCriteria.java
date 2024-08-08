@@ -14,4 +14,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductServiceCriteria extends FilterCriteria {
     private Long id;
+    private String name;
+    private String code;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ProductServiceService extends CrudService<ProductServiceEntity, Long>{
 
-    Page<ProductServiceEntity.SimpleProjection> findAllProductServiceById(CriteriaWrapper<ProductServiceCriteria> wrapper, Long id);
+    Page<ProductServiceEntity> findAllProductServiceById(CriteriaWrapper<ProductServiceCriteria> wrapper, Long id);
 
 
     ProductServiceDTO findByCode(String code);

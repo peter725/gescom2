@@ -36,7 +36,7 @@ public class ProductServiceServiceImpl extends EntityCrudService<ProductServiceE
     private ProductServiceConverter productServiceConverter;
 
 
-    public Page<ProductServiceEntity.SimpleProjection> findAllProductServiceById(CriteriaWrapper<ProductServiceCriteria> wrapper, Long id) {
+    public Page<ProductServiceEntity> findAllProductServiceById(CriteriaWrapper<ProductServiceCriteria> wrapper, Long id) {
         return ((ProductServiceRepository) repository).findAllProductServiceById(wrapper.getCriteria().toPageable(), id);
     }
 
@@ -53,17 +53,13 @@ public class ProductServiceServiceImpl extends EntityCrudService<ProductServiceE
 
 
     @Override
-    protected Page<ProductServiceEntity.SimpleProjection> findAllFromCriteria(FilterCriteria criteria) {
+    protected Page<ProductServiceEntity> findAllFromCriteria(FilterCriteria criteria) {
         ProductServiceCriteria productServiceCriteria = (ProductServiceCriteria) criteria;
         if (productServiceCriteria.getSearch() != null) {
             productServiceCriteria.setSearch(productServiceCriteria.getSearch().toUpperCase());
         }
-        productServiceCriteria.setSort(new String[]{"id:asc"});
-
-        // Establece siempre el Pageable a la página 0 con un tamaño de página por defecto, p.ej. 10
-        Pageable resetPageable = PageRequest.of(0, 50, Sort.by("id").ascending());
-
-        Page<ProductServiceEntity.SimpleProjection> productSimpleProjections = ((ProductServiceRepository) repository).findAllByCriteria(productServiceCriteria, resetPageable);
+        productServiceCriteria.setSort(productServiceCriteria.getSort());
+        Page<ProductServiceEntity> productSimpleProjections = ((ProductServiceRepository) repository).findAllByCriteria(productServiceCriteria, criteria.toPageable());
 
         return productSimpleProjections;
     }

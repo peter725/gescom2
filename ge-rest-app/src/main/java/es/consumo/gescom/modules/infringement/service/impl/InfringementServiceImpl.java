@@ -32,9 +32,9 @@ public class InfringementServiceImpl extends EntityCrudService<InfringementEntit
         if (infringimentCriteria.getSearch() != null) {
         	infringimentCriteria.setSearch(infringimentCriteria.getSearch().toUpperCase());
         }
-        infringimentCriteria.setSort(new String[]{"id;desc"});
+        infringimentCriteria.setSort(infringimentCriteria.getSort());
         
-        return ((InfringementRepository) repository).findAllByCriteria(infringimentCriteria, infringimentCriteria.toPageable());
+        return ((InfringementRepository) repository).findAllByCriteria(infringimentCriteria, criteria.toPageable());
     }
 
     @Override

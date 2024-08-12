@@ -63,6 +63,7 @@ export class UploadFileComponent <T=any> {
   @Input() documentTypeId: any;
   @Input() canUpload: boolean = true;
   @Input() canDelete: boolean = true;
+  @Input() idPrefix!: string;  // Nuevo input para el identificador único
   displayedColumns: string[] = ['name'];
   dataSource = [...ELEMENT_DATA];
   form: FormGroup;
@@ -83,6 +84,10 @@ export class UploadFileComponent <T=any> {
       typeDocument: this.fb.control(null),
       date: this.fb.control(null),
     });
+  }
+
+  get uniqueId() {
+    return `${this.idPrefix}-${this.documentTypeId}`;
   }
 
   ngOnInit(): void {

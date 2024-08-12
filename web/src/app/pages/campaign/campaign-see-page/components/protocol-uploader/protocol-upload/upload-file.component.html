@@ -2,8 +2,8 @@
 <form *ngIf="canUpload" [formGroup]="form" class="mt-7 justify-between flex">
     <!-- Sección personalizada para el input de tipo archivo -->
     <div class="basis-3/4 flex items-center">
-      <label for="fileInput" class="mr-2">{{ 'fields.uploadFile' | translate }}</label>
-      <input type="file" id="fileInput" (change)="onFileSelected($event)">
+      <label [for]="uniqueId" class="mr-2">{{ 'fields.uploadFile' | translate }}</label>
+      <input type="file" [id]="uniqueId" (change)="onFileSelected($event)">
     </div>
     
     <!-- Botón para añadir archivo -->

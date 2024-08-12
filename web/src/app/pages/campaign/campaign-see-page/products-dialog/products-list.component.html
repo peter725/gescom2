@@ -29,7 +29,7 @@
     ></tr>
 
     <ng-container matColumnDef="select" [sticky]="true">
-      <th mat-header-cell *matHeaderCellDef style="width: 10%">
+      <th mat-header-cell *matHeaderCellDef style="width: 10%">Selección
         <!--<mat-checkbox
           (click)="$event.stopPropagation()"
           (change)="selectAll($event)"
@@ -47,8 +47,9 @@
         <mat-checkbox
           (click)="$event.stopPropagation()"
           (change)="select($event, row)"
-          [checked]="selection.isSelected(row)"
-        ></mat-checkbox>
+          [checked]="selection.isSelected(row)">
+          <span class="sr-only">Select row {{row.someProperty}}</span>
+        </mat-checkbox>
       </td>
     </ng-container>
 

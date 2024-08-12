@@ -3,7 +3,6 @@
     <tsw-tab-panel></tsw-tab-panel>
     <tsw-section-wrapper class="mb-2" headerLabel="{{'pages.approach.edit' | translate}}" icon="edit_note">
       <div section-content>
-        <fieldset>
           <div class="grid grid-cols-1 mb-4">
             <mat-radio-group aria-label="Select an option"
                 formControlName="campaignTypeId" class="flex gap-7">
@@ -50,7 +49,6 @@
               <mat-error>{{ form.controls.viability.errors | extractValidationError }}</mat-error>
             </mat-form-field>
           </div>
-        </fieldset>
       </div>
 
     </tsw-section-wrapper>

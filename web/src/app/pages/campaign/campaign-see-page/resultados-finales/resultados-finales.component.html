@@ -73,120 +73,115 @@
                         <input matInput formControlName="year" readonly>
                     </mat-form-field>
             </div>
-            
         </form>
 
-            <div class="grid grid-cols-6 gap-1.5">
-                <mat-form-field class="col-span-3">
-                    <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
-                    <input matInput [value]="protocoloSelected?.name" readonly>
-                </mat-form-field>
+        <div class="grid grid-cols-6 gap-1.5">
+            <mat-form-field class="col-span-3">
+                <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
+                <input matInput [value]="protocoloSelected?.name" readonly>
+            </mat-form-field>
 
-                <mat-form-field class="col-span-3">
-                    <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
-                    <input matInput [value]="productoSelected?.productName" readonly>
-                </mat-form-field>
-            </div>
+            <mat-form-field class="col-span-3">
+                <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
+                <input matInput [value]="productoSelected?.productName" readonly>
+            </mat-form-field>
+        </div>
 
-            <div class="grid grid-cols-1 gap-1.5">
-                <mat-form-field>
-                    <mat-label>I.P.R.</mat-label>
-                    <input matInput [value]="iprSelected?.name" readonly>
-                </mat-form-field>
+        <div class="grid grid-cols-1 gap-1.5">
+            <mat-form-field>
+                <mat-label> {{ 'text.campaign.template' | translate}}</mat-label>
+                <input matInput [value]="iprSelected?.name" readonly>
+            </mat-form-field>
 
-            </div>
+        </div>
 
-            <div *ngIf="isTablaProtocolo">
-                <div class="w-3/4 mx-auto mt-4" *ngIf="preguntasProtocolo && preguntasProtocolo.length > 0">
-                    <div class="table w-full border-collapse">
-                      <div class="table-header-group bg-gray-200">
-                          <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
-                          <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
-                          <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Si</div>
-                          <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No</div>
-                          <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede</div>
-                      </div>
+        <div *ngIf="isTablaProtocolo">
+            <div class="w-3/4 mx-auto mt-4" *ngIf="preguntasProtocolo && preguntasProtocolo.length > 0">
+                <div class="table w-full border-collapse">
+                  <div class="table-header-group bg-gray-200">
+                      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
+                      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
+                      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Si</div>
+                      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No</div>
+                      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede</div>
+                  </div>
 
-                      <!-- Filas de la tabla -->
-                      <div class="table-row-group">
-                        <tr *ngFor="let preg of preguntasProtocolo; let i = index"
-                            [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0, 'no-responses': preg.response === 'N'}">
-                          <ng-container *ngIf="preg.response === 'N'; else showResponses">
-                            <td class="p-4" colspan="5" [ngClass]="{'text-highlight': preg.response === 'N'}">
-                              {{ preg.orderQuestion }} - {{ preg.question }}
-                            </td>
-                          </ng-container>
-                          <ng-template #showResponses>
-                            <td class="p-4">
-                              {{ preg.orderQuestion }}
-                            </td>
-                            <td class="p-4">
-                              {{ preg.question }}
-                            </td>
-                            <td class="p-4">
-                              <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
-                            </td>
-                            <td class="p-4">
-                              <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
-                            </td>
-                            <td class="p-4">
-                              <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
-                            </td>
-                          </ng-template>
-                        </tr>
-                      </div>
-
-
-                    </div>
+                  <!-- Filas de la tabla -->
+                  <div class="table-row-group">
+                    <tr *ngFor="let preg of preguntasProtocolo; let i = index"
+                        [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0, 'no-responses': preg.response === 'N'}">
+                      <ng-container *ngIf="preg.response === 'N'; else showResponses">
+                        <td class="p-4" colspan="5" [ngClass]="{'text-highlight': preg.response === 'N'}">
+                          {{ preg.orderQuestion }} - {{ preg.question }}
+                        </td>
+                      </ng-container>
+                      <ng-template #showResponses>
+                        <td class="p-4">
+                          {{ preg.orderQuestion }}
+                        </td>
+                        <td class="p-4">
+                          {{ preg.question }}
+                        </td>
+                        <td class="p-4">
+                          <label for="'numResponseSi-' + i" class="sr-only">Respuesta Sí</label>
+                          <input id="'numResponseSi-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
+                        </td>
+                        <td class="p-4">
+                          <label for="'numResponseNo-' + i" class="sr-only">Respuesta No</label>
+                          <input id="'numResponseNo-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
+                        </td>
+                        <td class="p-4">
+                          <label for="'numResponseNoProcede-' + i" class="sr-only">Respuesta No Procede</label>
+                          <input id="'numResponseNoProcede-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
+                        </td>
+                      </ng-template>
+                    </tr>
+                  </div>
                 </div>
             </div>
+        </div>
 
-            <div *ngIf="!isTablaProtocolo">
-                <div class="w-3/4 mx-auto mt-4" *ngIf="preguntasIpr && preguntasIpr.length > 0">
-                    <div class="table w-full border-collapse">
-                    <div class="table-header-group bg-gray-200">
-                        <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
-                        <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
-                        <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-6/12">Total</div>
-                        <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-6/12">Porcentaje (%)</div>
-                        <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-2/12">% respecto al</div>
-                    </div>
+        <div *ngIf="!isTablaProtocolo">
+          <div class="w-3/4 mx-auto mt-4" *ngIf="preguntasIpr && preguntasIpr.length > 0">
+            <div class="table w-full border-collapse">
+              <div class="table-header-group bg-gray-200">
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-6/12">Total</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-6/12">Porcentaje (%)</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-2/12">% respecto al</div>
+              </div>
         
-                    <!-- Filas de la tabla -->
-                    <div class="table-row-group">
-                        <tr *ngFor="let preg of preguntasIpr let i = index" [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}">
-                            <ng-container>                  
-                                    <td class="p-4">
-                                        {{ preg['orderQuestion'] }}
-                                        
-                                    </td>
-                                    <td  class="p-4">
-                                        {{ preg['question'] }}
-                                    </td>
-                                    <td class="p-4">
-                                        <input class="input-con-borde" type="number" [(ngModel)]="preg.total" readonly/>
-                                    </td>
-                                    <td class="p-4">
-                                        <input class="input-con-borde" type="number" [(ngModel)]="preg.percentage" readonly/>
-                                    </td>
-                                    <td class="p-4">
-                                        <input class="input-con-borde" type="number" [(ngModel)]="preg.percentageRespectTo" readonly/>
-                                    </td>
-                            </ng-container>
-                          
-                        </tr>
-                      </div>
-                    </div>
-                </div>
+              <!-- Filas de la tabla -->
+              <div class="table-row-group">
+                <tr *ngFor="let preg of preguntasIpr let i = index" [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}">
+                  <ng-container>
+                    <td class="p-4">
+                        {{ preg['orderQuestion'] }}
+                    </td>
+                    <td  class="p-4">
+                        {{ preg['question'] }}
+                    </td>
+                    <td class="p-4">
+                        <input class="input-con-borde" type="number" [(ngModel)]="preg.total" readonly/>
+                    </td>
+                    <td class="p-4">
+                        <input class="input-con-borde" type="number" [(ngModel)]="preg.percentage" readonly/>
+                    </td>
+                    <td class="p-4">
+                        <input class="input-con-borde" type="number" [(ngModel)]="preg.percentageRespectTo" readonly/>
+                    </td>
+                  </ng-container>
+                </tr>
+              </div>
             </div>
+          </div>
+        </div>
 
         <div class="justify-center mt-3">
-            <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" (click)="goBack()">Cancelar</button>
-            <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" matStepperPrevious>Anterior</button>
-            <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 rounded" (click)="exportExcel()">Exportar</button>
+          <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" (click)="goBack()">Cancelar</button>
+          <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" matStepperPrevious>Anterior</button>
+          <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 rounded" (click)="exportExcel()">Exportar</button>
         </div>
-      
-  </mat-step>
-
-
-  </mat-stepper>
+    </mat-step>
+</mat-stepper>

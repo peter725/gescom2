@@ -232,13 +232,16 @@
                                     {{ preg['question'] }}
                                 </td>
                                 <td class="p-4">
-                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
+                                  <label for="numResponseSi" class="sr-only">Respuesta Sí</label>
+                                  <input id="numResponseSi" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
                                 </td>
                                 <td class="p-4">
-                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
+                                  <label for="numResponseNo" class="sr-only">Respuesta No</label>
+                                  <input id="numResponseNo" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
                                 </td>
                                 <td class="p-4">
-                                    <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
+                                  <label for="numResponseNoProcede" class="sr-only">Respuesta No Procede</label>
+                                  <input id="numResponseNoProcede" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
                                 </td>
                         </ng-container>
 

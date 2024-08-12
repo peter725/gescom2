@@ -71,7 +71,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorizeHttpRequests(requests -> requests
                         .antMatchers(OPTIONS, "/**").permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/login_response")).permitAll()
-                        .antMatchers("/api/v1/roles/**").hasRole("ADMINISTRADOR DE ÁMBITO")
                         .anyRequest().authenticated());
     }
 

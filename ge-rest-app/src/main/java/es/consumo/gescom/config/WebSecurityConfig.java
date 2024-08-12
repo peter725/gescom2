@@ -56,7 +56,6 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .antMatchers(OPTIONS, "/**").permitAll()
                         .antMatchers(getPublicEndpoints()).permitAll()
-                        .antMatchers("/api/v1/roles/**").hasRole("ADMINISTRADOR DE ÁMBITO")
                         .antMatchers("api/v1/campaign_proposal/**").hasAnyRole("DGC", "CCAA", "CICC", "ADMINISTRADOR DE ÁMBITO")
                         .anyRequest().authenticated())
                 .addFilterBefore(chainExceptionFilter, UsernamePasswordAuthenticationFilter.class)

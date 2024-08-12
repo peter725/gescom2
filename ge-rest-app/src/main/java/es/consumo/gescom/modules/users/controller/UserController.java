@@ -81,7 +81,6 @@ public class UserController extends AbstractCrudController<UserEntity, UserDTO, 
     }
 
     @Override
-    @RolesAllowed({"DGC", "CCAA", "CICC", "ADMINISTRADOR DE ÁMBITO"})
     public Page<?> performFindAll(CriteriaWrapper<?> criteriaWrapper) {
         try {
             initializeAuthentication();
@@ -98,7 +97,6 @@ public class UserController extends AbstractCrudController<UserEntity, UserDTO, 
     }
 
     @PostMapping("/{id}/switch")
-    @RolesAllowed({"DGC", "ADMINISTRADOR DE ÁMBITO"})
     public ResponseEntity<UserEntity> switchStatus(@RequestBody ChangeStatusDTO changeStatus, @PathVariable  Long id) {
         try {
             initializeAuthentication();
@@ -135,7 +133,6 @@ public class UserController extends AbstractCrudController<UserEntity, UserDTO, 
 
 
     @Override
-    @RolesAllowed({"DGC", "ADMINISTRADOR DE ÁMBITO"})
     public ResponseEntity<Object> update(Long id, @Valid  @RequestBody UserDTO payload) {
         UserEntity result = null;
         try {

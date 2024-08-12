@@ -117,7 +117,7 @@
   
               <!-- Filas de la tabla -->
               <div class="table-row-group">
-                <tr *ngFor="let preg of preguntasProtocolo">
+                <tr *ngFor="let preg of preguntasProtocolo; let i=index">
                     <ng-container *ngIf="preg.response == 'N'">
                         <!-- Pregunta con respuesta 'N' -->                        
                             <td class="p-4 bg-gray-200">
@@ -140,20 +140,22 @@
                                 {{ preg['question'] }}
                             </td>
                             <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
+                                <label for="'numResponseSi-' + i" class="sr-only">Respuesta Sí</label>
+                                <input id="'numResponseSi-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
                             </td>
                             <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
+                                <label for="'numResponseNo-' + i" class="sr-only">Respuesta No</label>
+                                <input id="'numResponseNo-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
                             </td>
                             <td class="p-4">
-                                <input class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
+                                <label for="'numResponseNoProcede-' + i" class="sr-only">Respuesta No Procede</label>
+                                <input id="'numResponseNoProcede-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
                             </td>
                     </ng-container>
-                  
                 </tr>
               </div>
             </div>
-          </div>
+        </div>
 
 <div class="border-b border-gray-300 mb-4"></div>
 <!-- Contenedor para el botón al final del formulario -->

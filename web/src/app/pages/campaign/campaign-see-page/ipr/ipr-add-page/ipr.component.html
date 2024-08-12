@@ -52,25 +52,28 @@
               <div *ngFor="let fila of question.controls; let i=index" [formGroupName]="i" class="table-row">
 
                 <div class="table-cell p-2 border border-gray-300">
-                  <input formControlName="orderQuestion" class="w-full" >
+                  <label [for]="'orderQuestion_' + i" class="sr-only">Número de pregunta</label>
+                  <input [id]="'orderQuestion_' + i" formControlName="orderQuestion" class="w-full" >
                 </div>
 
                 <div class="table-cell p-2 border border-gray-300">
                   <mat-form-field class="w-full">
+                    <label [for]="'question_' + i" class="sr-only">Pregunta</label>
                     <textarea
-                    formControlName="question"
-                    matInput
-                    cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize"
-                    cdkAutosizeMinRows="0"
-                  ></textarea>
+                      [id]="'question_' + i"
+                      formControlName="question"
+                      matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="0"
+                    ></textarea>
                   </mat-form-field>
-
                 </div>
                 
                 <!-- Input de fórmula con un identificador único -->
                 <div class="table-cell p-2 border border-gray-300" style="position: relative;">
-                  <mat-form-field class="w-full" appearance="outline" subscriptSizing="dynamic">  
+                  <mat-form-field class="w-full" appearance="outline" subscriptSizing="dynamic">
+                    <label [for]="'formulaInput_' + i" class="sr-only">Fórmula</label>
                     <input [id]="'formulaInput_' + i" formControlName="formula" matInput class="w-full">
                     <a (click)="protocolSelectedId && openDialog(i)" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
                       <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
@@ -80,11 +83,10 @@
 
 
                 <div class="table-cell p-2 border border-gray-300" >
-
-                  <mat-form-field appearance="outline" subscriptSizing="dynamic">  
-                      <input formControlName="porcentaje" matInput style="background: transparent; border: none; width: 100%;" >
-                </mat-form-field> 
-
+                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                    <label [for]="'porcentaje_' + i" class="sr-only">Porcentaje</label>
+                    <input [id]="'porcentaje_' + i" formControlName="porcentaje" matInput style="background: transparent; border: none; width: 100%;" >
+                  </mat-form-field>
                 </div>
 
 

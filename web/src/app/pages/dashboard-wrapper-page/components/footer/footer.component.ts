@@ -9,7 +9,7 @@ import { dgc, appName, version } from '@base/config/app';
     <div>&nbsp;</div>
     <div class="text-center">
       {{ appName }} ({{ version }}) &copy; {{ currentYear }}
-      <a [href]="dgc.web" target="_blank" class="font-bold">{{ dgc.shortName }}</a>
+      <!--<a [href]="dgcLink.web" target="_blank" class="font-bold">{{ dgcLink.shortName }}</a>-->
     </div>
   `,
   styleUrls: ['./footer.component.scss'],
@@ -17,6 +17,7 @@ import { dgc, appName, version } from '@base/config/app';
 export class FooterComponent {
   appName = appName;
   currentYear = new Date().getFullYear();
-  dgc = dgc;
+  dgcLink = dgc;
+
   version = version.full;
 }

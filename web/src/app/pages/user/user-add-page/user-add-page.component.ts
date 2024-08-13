@@ -41,7 +41,7 @@ export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser
     const err = AppError.parse(e);
     this.notification.show({
       title: 'Error al guardar usuario',
-      message: 'No se puede crear el usuario porque el NIF ya está registrado en el sistema.'
+      message: err.message
     });
 
     this.notification.afterClosed().subscribe(() => {

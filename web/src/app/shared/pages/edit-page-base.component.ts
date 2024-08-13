@@ -240,7 +240,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
    * Generates an operation to create a new resource or update an existing one.
    */
   protected createSaveOperation(payload: T) {
-    console.log('createSaveOperation', payload);
     const config: RequestConfig = {
       resourceName: this.resourceName,
     };

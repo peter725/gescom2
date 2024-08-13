@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
+import { Component, ViewChild } from '@angular/core';
 import {Approach, CreateApproach} from "@libs/sdk/approach";
 import {ComponentStatus, ControlsOf} from "@libs/commons";
 import {FormGroup, Validators} from "@angular/forms";
 import {EditPageBaseComponent} from "@base/shared/pages/edit-page-base.component";
 import {FORM_STATUS} from "@base/shared/components/form";
-import { MAT_RADIO_DEFAULT_OPTIONS } from "@angular/material/radio";
+import { MAT_RADIO_DEFAULT_OPTIONS, MatRadioGroup } from '@angular/material/radio';
 
 @Component({
     selector: "tsw-approach-campaign-proposal",
@@ -23,7 +23,13 @@ export class ApproachCampaignProposalComponent extends EditPageBaseComponent<App
     protected override _createResourceTitle = "pages.approach.add";
     protected override _editResourceTitle = "pages.approach.edit";
 
+    @ViewChild(MatRadioGroup) radioGroup: MatRadioGroup | undefined;
 
+    selectFirstOption(): void {
+        if (!this.radioGroup?.value) {
+          this.radioGroup!.value = 1;  // Selecciona el valor del primer radio button
+        }
+    }
     protected buildForm(): FormGroup<ControlsOf<CreateApproach>> {
         return this.fb.group<ControlsOf<CreateApproach>>({
             id: this.fb.control(null),

@@ -52,6 +52,13 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     await this.fetchProtocol();
   }
 
+  handleKeydown(event: KeyboardEvent, index: number): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevenir comportamiento predeterminado como desplazarse en el caso de la tecla Espacio
+      this.openDialog(index);
+    }
+  }
+
   private async fetchProtocol(): Promise<any> {
     const id = Number(this.idCampaign);
     this.protocolArray = await firstValueFrom(this.crudService.findById(id, {

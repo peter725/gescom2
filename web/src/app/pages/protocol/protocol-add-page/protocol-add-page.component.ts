@@ -45,6 +45,13 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     return ['../consulta'];
   }
 
+  handleKeydown(event: KeyboardEvent, index: number): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevenir comportamiento predeterminado como desplazarse en el caso de la tecla Espacio
+      this.openDialog(index);
+    }
+  }
+
   private subscribeToCampaignData(): void {
     this.dataSharingService.currentCampaign.subscribe(campaignData => {
       console.log('campaignData', campaignData);

@@ -150,11 +150,16 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     if (questions.at(rowIndex)) {
       const question = questions.at(rowIndex) as FormGroup;
       question.patchValue({
-        // Suponiendo que el campo se llama 'infringement' en tu formulario y 'nombre' en tu objeto seleccionado
         codeInfringement: selectedItem.code,
-        // Aquí puedes actualizar otros campos relevantes
       });
       console.log('row', question);
+    }
+  }
+
+  handleKeydown(event: KeyboardEvent, index: number): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Prevenir comportamiento predeterminado como desplazarse en el caso de la tecla Espacio
+      this.openDialog(index);
     }
   }
 

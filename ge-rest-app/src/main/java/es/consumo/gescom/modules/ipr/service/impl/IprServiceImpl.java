@@ -127,6 +127,11 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
     @Override
     public IprDTO updateIpr(Long id, IprDTO payload) {
         IprEntity iprEntity = iprConverter.convertToEntity(payload);
+        IprEntity oldEntity = iprRepository.findById(id).orElse(null);
+        assert oldEntity != null;
+        iprEntity.setCreatedAt(oldEntity.getCreatedAt());
+        iprEntity.setUpdatedAt(oldEntity.getUpdatedAt());
+        iprEntity.setState(oldEntity.getState());
 
         final List<Long> toDelete = new ArrayList<>();
 

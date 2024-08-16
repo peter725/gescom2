@@ -233,15 +233,25 @@
                                 </td>
                                 <td class="p-4">
                                   <label for="'numResponseSi-' + i" class="sr-only">Respuesta Sí</label>
-                                  <input id="'numResponseSi-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
+                                  <input id="'numResponseSi-' + i"
+                                     class="input-con-borde"
+                                     type="number"
+                                     [(ngModel)]="preg.numResponseSi"
+                                     (blur)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)">
                                 </td>
                                 <td class="p-4">
                                   <label for="'numResponseNo-' + i" class="sr-only">Respuesta No</label>
-                                  <input id="'numResponseNo-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
+                                  <input id="'numResponseNo-' + i"
+                                     class="input-con-borde" type="number"
+                                     [(ngModel)]="preg.numResponseNo"
+                                     (blur)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
                                 </td>
                                 <td class="p-4">
                                   <label for="'numResponseNoProcede-' + i" class="sr-only">Respuesta No Procede</label>
-                                  <input id="'numResponseNoProcede-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" (ngModelChange)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
+                                  <input id="'numResponseNoProcede-' + i"
+                                     class="input-con-borde" type="number"
+                                     [(ngModel)]="preg.numResponseNoProcede"
+                                     (blur)="getSumaRespuestas(preg.numResponseSi, preg.numResponseNo, preg.numResponseNoProcede)" />
                                 </td>
                         </ng-container>
 

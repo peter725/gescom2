@@ -193,15 +193,11 @@ export class ResultadosComponent implements OnInit{
       if (preg.numResponseNoProcede === undefined || preg.numResponseNoProcede === null) {
         preg.numResponseNoProcede = 0;
       }
-      if (preg.response === 'S') {
-        if (preg.numResponseSi + preg.numResponseNo + preg.numResponseNoProcede !== this.totalProductosControlados) {
-          respuestasInvalid = true;
-        }
-      }
+      this.getSumaRespuestas(preg.numResponseSi,preg.numResponseNo,preg.numResponseNoProcede);
     });
 
     if (respuestasInvalid) {
-      this.notification.show({ message: 'Por favor revisa las respuestas introducidas' });
+      /*this.notification.show({ message: 'Por favor revisa las respuestas introducidas' });*/
     } else {
       let preguntas: TotalProtocolResults[] = [];
       let totalProtocoloResults: TotalProtocolResults;

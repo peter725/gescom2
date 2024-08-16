@@ -123,10 +123,17 @@ $row-hover-bg-color: #f3f3f3;
     .additional-actions {
       opacity: 0;
     }
-    @media (pointer:coarse) {
+
+    @media (pointer: coarse) {
       .additional-actions {
         opacity: 1;
       }
+    }
+
+    .additional-actions a:focus,
+    .additional-actions a:focus-within,
+    .additional-actions:focus-within {
+      opacity: 1;
     }
   }
 

@@ -31,7 +31,7 @@
           <div class="table w-full border-collapse">
             <div class="table-header-group bg-gray-200">
               <div class="table-cell p-2 border border-gray-300 w-1/12">Orden</div>
-              <div class="table-cell p-2 border border-gray-300 w-2/12">Cod. Pregunta</div>
+              <div class="table-cell p-2 border border-gray-300 w-2/12">Cod. Pregunta*</div>
               <div class="table-cell p-2 border border-gray-300 w-6/12">Pregunta *</div>
               <div class="table-cell p-2 border border-gray-300 w-2/12">Infracción</div>
               <div class="table-cell p-2 border border-gray-300 w-1/12">Resp</div>
@@ -54,7 +54,9 @@
 
                 <div class="table-cell p-2 border border-gray-300" style="position: relative;">
                   <input formControlName="codeInfringement" readonly style="background: transparent; border: none; width: 100%;" onclick="this.blur();">
-                  <a (click)="openDialog(i)" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
+
+
+                  <a (click)="openDialog(i)" (keydown)="handleKeydown($event, i)" tabindex="0" role="button" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
                     <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
                   </a>
                 </div>

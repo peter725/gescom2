@@ -43,6 +43,17 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
     });
   }
 
+  clearInfringement(): void {
+    this.form.get('codeInfringement')!.reset();
+  }
+
+  handleKeydown(event: KeyboardEvent, index: number): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Previenie comportamiento predeterminado como desplazarse en el caso de la tecla Espacio
+      this.openDialog(index);
+    }
+  }
+
   protected buildForm(): FormGroup {
     const form = this.fb.group({
       name: [null, Validators.required],

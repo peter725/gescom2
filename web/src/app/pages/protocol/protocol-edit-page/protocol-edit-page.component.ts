@@ -213,20 +213,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
   toggleResp(filaIndex: number) {
     const fila = (this.form.get('question') as unknown as FormArray).at(filaIndex) as FormGroup;
     const currentValue = fila.get('response')?.value;
-<<<<<<< HEAD
-    const newValue = currentValue === 'SI' ? 'NO' : 'SI';
-    fila.get('response')?.setValue(newValue);
-    // Habilitar/deshabilitar codeInfringement según el nuevo valor de response
-    const codeInfringementControl = fila.get('codeInfringement');
-    if (newValue === 'NO') {
-      codeInfringementControl?.disable();
-      codeInfringementControl?.reset();  // Restablecer el campo
-    } else {
-      codeInfringementControl?.enable();
-    }
-=======
     fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
->>>>>>> parent of 82c1d88b (protocol update)
   }
 
   async saveForm() {

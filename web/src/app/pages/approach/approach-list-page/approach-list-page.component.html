@@ -64,10 +64,7 @@
             </td>
         </ng-container>
 
-        <ng-container
-                matColumnDef="actions"
-                [stickyEnd]="true"
-        >
+        <ng-container matColumnDef="actions" [stickyEnd]="true">
             <th *matHeaderCellDef mat-header-cell style="width: 230px; text-align: center" >Acciones</th>
             <td mat-cell *matCellDef="let element" class="text-right">
                 <ng-container>
@@ -75,18 +72,15 @@
                         <a mat-button
                            [routerLink]="'approachManagementSee' | namedRoute: { id: element.id }"
                            matTooltip="Ver"
-                           matTooltipPosition="above"
-                        >
+                           matTooltipPosition="above">
                           <mat-icon>visibility</mat-icon>
                         </a>
                       <a *ngIf="canModify && (canDelete || !userAutonomousCommunity || element.autonomousCommunityName === userAutonomousCommunity)"
                         mat-button
                         [routerLink]="'approachManagementEdit' | namedRoute: { id: element.id }"
                         matTooltip="Editar"
-                        matTooltipPosition="above"
-                      >
+                        matTooltipPosition="above">
                         <mat-icon>edit</mat-icon>
-
                       </a>
                     </div>
                     <tsw-state-toggle

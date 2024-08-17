@@ -41,7 +41,7 @@ export class UserAddPageComponent extends EditPageBaseComponent<User, CreateUser
     const err = AppError.parse(e);
     this.notification.show({
       title: 'Error al guardar usuario',
-      message: err.message
+      message: err.error,
     });
 
     this.notification.afterClosed().subscribe(() => {

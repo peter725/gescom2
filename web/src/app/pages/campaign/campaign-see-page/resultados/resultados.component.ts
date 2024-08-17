@@ -168,18 +168,31 @@ export class ResultadosComponent implements OnInit{
     return this.protocolosList?.find(protocolo => protocolo.id === id);
   }
 
-  getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): void {
-  if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
-      pregSi !== undefined && pregNo !== undefined && pregNoProcede !== undefined) {
-    if (pregSi + pregNo + pregNoProcede !== this.totalProductosControlados) {
-      this.notification.show({
+  /*getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): void {
+    if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
+    pregSi !== undefined && pregNo !== undefined && pregNoProcede !== undefined) {
+      if (pregSi + pregNo + pregNoProcede !== this.totalProductosControlados) {
+          this.notification.show({
         type: 'warn', // or 'danger' depending on the severity
         message: 'La suma no coincide con el total de productos controlados.',
         title: 'Error de validación'
-      });
+        });
+      }
     }
+  }*/
+
+  getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): boolean {
+    let sumaMayor = false;
+
+    if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
+      pregSi !== undefined && pregNo !== undefined && pregNoProcede !== undefined) {
+      if (pregSi + pregNo + pregNoProcede !== this.totalProductosControlados) {
+        sumaMayor = true;
+      }
+    }
+
+    return sumaMayor;
   }
-}
 
   save() {
     let respuestasInvalid = false;
@@ -193,11 +206,11 @@ export class ResultadosComponent implements OnInit{
       if (preg.numResponseNoProcede === undefined || preg.numResponseNoProcede === null) {
         preg.numResponseNoProcede = 0;
       }
-      this.getSumaRespuestas(preg.numResponseSi,preg.numResponseNo,preg.numResponseNoProcede);
+      respuestasInvalid = this.getSumaRespuestas(preg.numResponseSi,preg.numResponseNo,preg.numResponseNoProcede);
     });
 
     if (respuestasInvalid) {
-      /*this.notification.show({ message: 'Por favor revisa las respuestas introducidas' });*/
+      this.notification.show({ message: 'Por favor revisa las respuestas introducidas' });
     } else {
       let preguntas: TotalProtocolResults[] = [];
       let totalProtocoloResults: TotalProtocolResults;

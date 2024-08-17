@@ -7,10 +7,8 @@ export const CIF_TEST = /^[ABCDEFGHJKLMNPQRSUVW]\d{7}[\dA-J]$/;
 export const NIF_CHAR_SEQUENCE = 'TRWAGMYFPDXBNJZSQVHLCKE';
 
 export const validNIF = (value: string): ValidationErrors | null => {
-  console.log("entra a validNIF");
   const matchDigits = value.match(/\d+/);
   if (value.length != 9 || !matchDigits) {
-    console.log("entra aqui != 9 || !matchDigits")
     return { invalidNif: true };
   }
 
@@ -26,11 +24,8 @@ export const validNIF = (value: string): ValidationErrors | null => {
   const digits = prefix + rawDigits;
 
   const module = (+digits) % 23;
-  console.log("module",module);
   const lastChar = value[8];
-  console.log("lastchar", lastChar);
   if (lastChar === NIF_CHAR_SEQUENCE[module]) {
-    console.log("entra a lastChar")
     return null;
   }
 

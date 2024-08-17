@@ -218,7 +218,6 @@ export abstract class EditPageBaseComponent<T, F extends Record<string, any> = a
     try {
       const payload = await this.createSavePayload();
       this.activeOperation = this.createSaveOperation(payload);
-      console.log('save', payload);
 
       this.status.status = 'PROCESS';
       const result = await firstValueFrom(this.activeOperation);

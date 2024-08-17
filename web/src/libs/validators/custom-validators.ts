@@ -12,7 +12,6 @@ export class CustomValidators {
     const value = control.value.toUpperCase().replace(/[_\W\s]+/g, '');
 
     if (NIF_TEST.test(value)) {
-      console.log("entra a validar el nif")
       // Value is current NIF format (NIF/DNI/NIE)
       return validNIF(value);
     } else if (CIF_TEST.test(value)) {

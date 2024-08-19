@@ -67,10 +67,18 @@
               
               <div class="px-10 sm:px-5">
                 <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.code' | translate}}</p>
-                <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('codeCpa')?.value }}</h3>
-                <h3 *ngIf="!form.get('codeCpa')?.value">-</h3>
-                <hr>
-              </div>
+                <div>
+                  <span *ngIf="form.get('codeCpa')?.value; else noValue" class="text-base font-semibold leading-7 text-gray-900">
+                      {{ form.get('codeCpa')?.value }}
+                  </span>
+                  <ng-template #noValue>
+                    <span>-</span>
+                  </ng-template>
+                </div>
+              <hr>
+            </div>
+
+
               <div class="px-10 sm:px-5">
                 <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.campaignType' | translate}}</p>
                 <h3 class="text-base font-semibold leading-7 text-gray-900">{{ form.get('campaignType')?.value?.name }}</h3>

@@ -236,6 +236,18 @@ export class ResultsCcaaEditComponent implements OnInit{
     this.location.back();
   }
 
+  getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): boolean {
+    let sumaMayor = false;
+
+    if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
+      pregSi !== undefined && pregNo !== undefined && pregNoProcede !== undefined) {
+      if (pregSi + pregNo + pregNoProcede !== this.totalProdControlados) {
+        sumaMayor = true;
+      }
+    }
+    return sumaMayor;
+  }
+
   saveResults(): void {
     let respuestasInvalid = false;
     if (this.editForm1.valid) {
@@ -250,7 +262,7 @@ export class ResultsCcaaEditComponent implements OnInit{
           pregunta.numResponseNoProcede = 0;
         }
         if (pregunta.response === 'S') {
-          if (pregunta.numResponseSi + pregunta.numResponseNo + pregunta.numResponseNoProcede !== this.editForm1.get('numControlados')?.value) {
+          if (this.getSumaRespuestas(pregunta.numResponseSi, pregunta.numResponseNo, pregunta.numResponseNoProcede)) {
             respuestasInvalid = true;
           }
         }

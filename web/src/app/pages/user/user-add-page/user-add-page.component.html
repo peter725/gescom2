@@ -55,6 +55,7 @@
                         <tsw-custom-select
                                 resourceName="autonomousCommunity"
                                 formControlName="autonomousCommunity"
+                                [required]="true"
                                 [showNoneValue]="false"
                         ></tsw-custom-select>
                         <mat-error>{{ form.controls.autonomousCommunity.errors | extractValidationError }}</mat-error>
@@ -65,6 +66,7 @@
                         <tsw-custom-select
                                 resourceName="roles"
                                 formControlName="role"
+                                [required]="true"
                                 [showNoneValue]="false"
                         ></tsw-custom-select>
                         <mat-error>{{ form.controls.role.errors | extractValidationError }}</mat-error>
@@ -75,6 +77,7 @@
                       <tsw-custom-select
                         resourceName="userType"
                         formControlName="userType"
+                        [required]="true"
                         [showNoneValue]="false"
                       ></tsw-custom-select>
                       <mat-error>{{ form.controls.userType.errors | extractValidationError }}</mat-error>

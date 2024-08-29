@@ -9,10 +9,11 @@
             <input matInput formControlName="nameCampaign">
             <mat-error>{{ form.controls.nameCampaign.errors | extractValidationError }}</mat-error>
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field >
             <mat-label>{{ 'fields.year' | translate }}</mat-label>
-            <input type='number' matInput formControlName="year">
-            <mat-error>{{ form.controls.year.errors | extractValidationError }}</mat-error>
+            <input type='text' matInput formControlName="year">
+            <mat-error *ngIf="form.get('year')?.hasError('pattern')">Requiere 4 dígitos</mat-error>
+            <mat-error *ngIf="form.get('year')?.hasError('required')">{{ form.controls.year.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field>

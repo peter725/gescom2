@@ -13,6 +13,7 @@ import es.consumo.gescom.modules.userType.model.entity.UserTypeEntity;
 import es.consumo.gescom.modules.userType.service.UserTypeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -158,7 +159,6 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         RoleEntity roleEntity = roleRepository.findById(userDTO.getRole().getId()).orElseThrow();
         if (userEntity.getLogin() == null){
             // Verificar si ya existe un usuario con el mismo DNI/NIF
-
             Optional<LoginEntity> existingLogin = loginRepository.findByUsername(userDTO.getDni());
             if (existingLogin.isPresent()) {
                 throw new Exception("Un usuario con este DNI/NIF ya existe.");
@@ -197,7 +197,7 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         userEntity.setSurname(userDTO.getSurname());
         userEntity.setRole(roleEntity);
         userEntity.setLogin(loginEntity);
-        repository.save(userEntity);
+       repository.save(userEntity);
 
         return userEntity;
     }

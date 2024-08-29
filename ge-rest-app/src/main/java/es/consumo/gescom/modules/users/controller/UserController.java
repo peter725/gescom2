@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
+import es.consumo.gescom.commons.exception.AppException;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.users.model.entity.LoginEntity;
 import org.hibernate.Hibernate;
@@ -141,12 +142,12 @@ public class UserController extends AbstractCrudController<UserEntity, UserDTO, 
                 result = ((UserService) service).update(payload);
                 return ResponseEntity.ok(result);
             }else {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access Denied");
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acceso denegado");
             }
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", e);
+            throw new AppException("Error de la aplicacion, consulte con el administrador", e);
         }
 
     }

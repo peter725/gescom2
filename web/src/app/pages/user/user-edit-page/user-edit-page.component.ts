@@ -39,9 +39,10 @@ export class UserEditPageComponent extends EditPageBaseComponent<User, CreateUse
 
     protected override async afterSaveError(e: any) {
         const err = AppError.parse(e);
+        console.log('message: err.error', err.code)
         this.notification.show({
             title: 'Error al guardar usuario',
-            message: 'No se puede crear el usuario porque el NIF ya está registrado en el sistema.',
+            message: err.error,
             icon: 'error_outline', // Mejor icono
             color: 'warn', // Color de la notificación
             type: 'danger', // Tipo de notificación

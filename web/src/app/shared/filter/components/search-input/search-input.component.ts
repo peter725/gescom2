@@ -193,7 +193,8 @@ export class SearchInputComponent
   }
 
   setDescribedByIds(ids: string[]): void {
-    this.describedBy = ids.join(' ');
+    /*this.describedBy = '';
+    this.describedBy = ids.join(' ');*/
   }
 
   onContainerClick(): void {

@@ -409,7 +409,11 @@ export abstract class CustomSelectBaseComponent<T = ComboValue>
   }
 
   setDescribedByIds(ids: string[]): void {
-    this.userAriaDescribedBy = ids.join(' ');
+    /*console.log('this.userAriaDescribedBy:BEFORE RESET', this.userAriaDescribedBy)
+    this.userAriaDescribedBy = '';
+    console.log('this.userAriaDescribedBy:AFTER RESET', this.userAriaDescribedBy)
+    this.userAriaDescribedBy = ids.join('');
+    console.log('this.userAriaDescribedBy:AFTER', this.userAriaDescribedBy)*/
   }
 
   onContainerClick(): void {

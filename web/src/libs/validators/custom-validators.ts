@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { CIF_TEST, NIF_TEST, validCIF, validNIF } from './nif.validator';
+import { CIF_TEST, NIF_TEST, validNIF } from './nif.validator';
 
 
 export class CustomValidators {
@@ -14,10 +14,10 @@ export class CustomValidators {
     if (NIF_TEST.test(value)) {
       // Value is current NIF format (NIF/DNI/NIE)
       return validNIF(value);
-    } else if (CIF_TEST.test(value)) {
+    } /*else if (CIF_TEST.test(value)) {
       // Value is old CIF format (CIF/ESP)
       return validCIF(value);
-    }
+    }*/
 
     return {
       invalidNif: true,

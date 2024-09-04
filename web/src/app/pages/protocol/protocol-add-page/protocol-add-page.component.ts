@@ -53,20 +53,27 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   }
 
   private subscribeToCampaignData(): void {
-    this.dataSharingService.currentCampaign.subscribe(campaignData => {
-      console.log('campaignData', campaignData);
-      if (campaignData) {
-        this.name = campaignData.nameCampaign;
-        this.campaignId = campaignData.id;
-        console.log('campaignData', this.name);
-        // Aquí configuras los datos de la campaña en el formulario de protocolo
-        // Por ejemplo, podrías querer establecer el valor de algún campo basado en campaignData
-        this.form.patchValue({
-          campaignId: campaignData.id,
-          nameCampaign: campaignData.nameCampaign,// Asume que el formulario tiene un campo 'campaign'
-          // Puedes agregar más campos aquí si es necesario
-        });
-      }
+    const storedCampaign = localStorage.getItem('currentCampaign');
+
+    if (storedCampaign) {
+      const campaignData = JSON.parse(storedCampaign);
+      this.loadCampaignData(campaignData);
+    } else {
+      this.dataSharingService.currentCampaign.subscribe(campaignData => {
+        if (campaignData) {
+          localStorage.setItem('currentCampaign', JSON.stringify(campaignData));
+          this.loadCampaignData(campaignData);
+        }
+      });
+    }
+  }
+
+  private loadCampaignData(campaignData: any) {
+    this.name = campaignData.nameCampaign;
+    this.campaignId = campaignData.id;
+    this.form.patchValue({
+      campaignId: campaignData.id,
+      nameCampaign: campaignData.nameCampaign
     });
   }
 

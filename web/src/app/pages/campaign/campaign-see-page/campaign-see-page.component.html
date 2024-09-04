@@ -197,7 +197,7 @@
                   <div *ngFor="let protocol of protocolsDisplay; let i = index"
                        [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
                        class="flex justify-between items-center p-4 shadow-md rounded-lg">
-                    <p class="flex-1">
+                    <p class="flex-1 truncate mr-4">
                       {{protocol.name}}
                     </p>
                     <div>

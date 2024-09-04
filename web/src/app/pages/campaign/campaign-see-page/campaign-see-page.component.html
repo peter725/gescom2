@@ -112,23 +112,20 @@
 
             <div class="px-10 sm:px-5 py-5" >
               <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.proponents' | translate}}</p>
-              <h3 *ngIf="proponentsDisplay; else noProponents" class="text-base font-semibold leading-7 text-gray-900">
-                {{ proponentsDisplay }}
-              </h3>
-              <ng-template #noProponents>
-                <p class="text-base font-semibold leading-7 text-gray-500">-</p>
-              </ng-template>
+                <div *ngFor="let ccaa of fullAutonomousCommunityProponents; let i = index" class="flex items-baseline gap-2">
+                <i class="material-icons text-[0.75rem]">fiber_manual_record</i>
+                <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ ccaa.name }}</h3>
+              </div>
               <hr>
             </div>
 
             <div class="px-10 sm:px-5 mb-10" >
               <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.specialist' | translate}}</p>
-              <h3 *ngIf="specialistsDisplay; else noSpecialists" class="text-base font-semibold leading-7 text-gray-900">
-                {{ specialistsDisplay }}
-              </h3>
-              <ng-template #noSpecialists>
-                <p class="text-base font-semibold leading-7 text-gray-500">-</p>
-              </ng-template>
+              <div *ngFor="let ccaa of fullAutonomousCommunitySpecialists; let i = index" class="flex items-baseline gap-2">
+                <i class="material-icons text-[0.75rem]">fiber_manual_record</i>
+                <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ ccaa.name }}</h3>
+              </div>
+              <h3 *ngIf="!specialistsDisplay">-</h3>
               <hr>
             </div>
 

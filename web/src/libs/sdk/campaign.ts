@@ -71,7 +71,8 @@ export interface CampaignForm {
 export interface CampaignIpr{
   nameCampaign: string | null;
   year: number | null;
-  protocols: Protocol[] | null;
+  iprName: string | null;
+  protocols: Protocol | null;
   porcentaje: number | null;
   formula: string | null;
   question: [] | null

@@ -25,17 +25,18 @@
           <mat-form-field class="w-full">
             <mat-label>I.P.R</mat-label>
             <input matInput formControlName="iprName">
+            <mat-error>{{ form.controls.iprName.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 
-          <mat-form-field> 
+          <mat-form-field>
             <mat-label>Protocolo</mat-label>
-            <mat-select formControlName="protocols"  (selectionChange)="onProtocolSelectionChange($event.value)" matNativeControl >
+            <mat-select formControlName="protocols" required (selectionChange)="onProtocolSelectionChange($event.value)">
               <mat-option *ngFor="let protocol of protocolArray" [value]="protocol.id + '-' + protocol.code">                  
                 {{protocol.name}}
               </mat-option>
-            </mat-select>   
-          </mat-form-field>  
-
+            </mat-select>
+            <mat-error>{{ form.controls.protocols.errors | extractValidationError }}</mat-error>
+          </mat-form-field>
         </div>
 
         <div class="w-3/4 mx-auto ">

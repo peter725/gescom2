@@ -52,6 +52,8 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     await this.fetchProtocol();
   }
 
+
+
   handleKeydown(event: KeyboardEvent, index: number): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault(); // Prevenir comportamiento predeterminado como desplazarse en el caso de la tecla Espacio
@@ -75,12 +77,13 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
   }
 
 
+
   
   protected buildForm(): FormGroup {
     const form = this.fb.group({
       nameCampaign: { value: null, disabled: true },
       year: { value: null, disabled: true },
-      iprName : this.fb.control(null,[Validators.required]),
+      iprName: this.fb.control(null,[Validators.required, Validators.maxLength(100)]),
       protocols: this.fb.control(null,[Validators.required]),
       question: this.fb.array([]),
       formula: null,

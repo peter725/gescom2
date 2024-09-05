@@ -162,18 +162,27 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   }
 
   eliminarFila(index: number) {
-    // Elimina la fila en el índice dado
-    this.question.removeAt(index);
+    // Verificar si hay más de una fila antes de eliminar
+    if (this.question.length > 1) {
+      // Elimina la fila en el índice dado
+      this.question.removeAt(index);
 
-    // Recorre todas las filas restantes para actualizar el campo 'orden'
-    this.question.controls.forEach((control, i) => {
-      console.log('control', control);
-      control.get('order')?.setValue(i + 1);
-    });
+      // Recorre todas las filas restantes para actualizar el campo 'orden'
+      this.question.controls.forEach((control, i) => {
+        control.get('order')?.setValue(i + 1);
+      });
 
-    //actualizar orden 
-    this.refreshOrder();
+      // Actualizar el orden
+      this.refreshOrder();
+    } else {
+      // Si solo hay una fila, lanzar un mensaje de error
+      this.notification.show({
+        title: 'Error',
+        message: 'No se puede crear un protocolo sin preguntas',
+      });
+    }
   }
+
 
 
   toggleResp(filaIndex: number) {

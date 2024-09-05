@@ -24,7 +24,8 @@
 
           <mat-form-field class="w-full">
             <mat-label>I.P.R</mat-label>
-            <input matInput formControlName="name">
+            <input matInput formControlName="iprName">
+            <mat-error>{{ form.controls.iprName.errors | extractValidationError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field> 

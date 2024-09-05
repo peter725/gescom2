@@ -58,7 +58,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     const form = this.fb.group({
       nameCampaign: { value: null, disabled: true },
       year: { value: null, disabled: true },
-      name : this.fb.control(null,[Validators.required]),
+      iprName : this.fb.control(null,[Validators.required]),
       protocols: this.fb.control(null,[Validators.required]),
       question: this.fb.array([]),
       formula: null,
@@ -267,10 +267,21 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
   }
 
   eliminarFila(index: number) {
-    // Elimina la fila en el índice dado
-    this.question.removeAt(index);
-    //actualizar orden 
-    this.refreshOrder();
+    // Verifica si hay más de una fila antes de eliminar
+    if (this.question.length > 1) {
+        // Elimina la fila en el índice dado
+        this.question.removeAt(index);
+
+        // Actualizar orden
+        this.refreshOrder();
+    } else {
+        // Opcional: Puedes mostrar un mensaje indicando que la fila precargada no se puede eliminar
+        console.warn("La fila precargada no se puede eliminar.");
+         this.notification.show({
+          title: 'text.err.questionEraseFailed',
+          message: 'No se puede crear un IPR sin preguntas',
+        });
+    }
   }
 
   refreshOrder(){

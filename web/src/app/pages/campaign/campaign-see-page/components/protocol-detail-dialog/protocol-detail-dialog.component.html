@@ -35,12 +35,19 @@
   
   <div class="div-margin" >
     <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.participants' | translate}}</p>
-    <h3 class="text-base font-semibold leading-7 text-gray-900" >{{ participantes }}</h3>
+    <div *ngIf="participantes?.length != undefined">
+    <ul>
+      <li class="text-base font-semibold leading-7 text-gray-900" *ngFor="let participante of participantes">{{ participante }}</li>
+    </ul>
+  </div>
+  <ng-template #noParticipants>
+    <p>No hay participantes.</p>
+  </ng-template>
   </div>
 
   <hr>
     <div class="centered-title nombre-protocolo">
-      <h2 class="text-base font-semibold leading-7">{{ protocol?.name }}</h2>
+      <h2 class="text-base font-semibold leading-7 text-ellipsis overflow-hidden whitespace-nowrap">{{ protocol?.name }}</h2>
     </div>
   <hr class="mb-4">
 

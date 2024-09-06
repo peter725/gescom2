@@ -87,7 +87,6 @@ public class RoleServiceImpl extends EntityCrudService<RoleEntity, Long> impleme
     	if (roleCriteria.getState() == null || roleCriteria.getState().length == 0) {
     		roleCriteria.setState(new Integer[]{1});
         }
-    	roleCriteria.setSort(new String[]{"id;desc"});
         Page<RoleEntity> roleEntities = roleRepository.findAllByCriteria(roleCriteria, roleCriteria.toPageable());
 
         return roleEntities;

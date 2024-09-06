@@ -19,42 +19,36 @@
             <div class="grid grid-cols-1 gap-1.5 mt-4">
                 <mat-form-field>
                     <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
-                    <mat-select name="protocolos" formControlName="protocolo" required>
+                    <mat-select name="protocolo" formControlName="protocolo" required>
                         <mat-option *ngFor="let proto of protocolosList" [value]="proto">
                           {{proto.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="editForm1.get('protocolo')?.hasError('required')">
-                      Debe seleccionar un protocolo.
-                    </mat-error>
+                    <mat-error>{{ editForm1.controls.protocolo.errors | extractValidationError }}</mat-error>
                 </mat-form-field>
             </div>
 
             <div class="grid grid-cols-1 gap-1.5 mt-4">
                 <mat-form-field>
                     <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
-                    <mat-select name="protocolos" formControlName="producto" required>
+                    <mat-select name="producto" formControlName="producto" required>
                         <mat-option *ngFor="let prod of productosList" [value]="prod">
                           {{prod.productName}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="editForm1.get('producto')?.hasError('required')">
-                      Debe seleccionar un producto.
-                    </mat-error>
+                    <mat-error>{{ editForm1.controls.producto.errors | extractValidationError }}</mat-error>
                 </mat-form-field>
             </div>
 
             <div class="grid grid-cols-1 gap-1.5 mt-4">
                 <mat-form-field>
                     <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
-                    <mat-select name="protocolos" formControlName="ca" required>
+                    <mat-select name="ca" formControlName="ca" required>
                         <mat-option *ngFor="let ca of caList" [value]="ca">
                           {{ca.name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="editForm1.get('ca')?.hasError('required')">
-                      Debe seleccionar un comunidad autonoma.
-                    </mat-error>
+                    <mat-error>{{ editForm1.controls.ca.errors | extractValidationError }}</mat-error>
                 </mat-form-field>
             </div>
         <div class="justify-center mt-3">
@@ -111,12 +105,13 @@
                     <div class="grid grid-cols-6 gap-1.5">
                         <mat-form-field class="col-span-3">
                             <mat-label>{{ 'pages.results.numExistentes' | translate }}</mat-label>
-                            <input matInput formControlName="numExistentes" type="number">
+                            <input matInput formControlName="numExistentes" type="number" (keypress)="validateNumber($event)">
                         </mat-form-field>
         
                         <mat-form-field class="col-span-3">
                             <mat-label>{{ 'pages.results.numControlados' | translate }}</mat-label>
-                            <input matInput formControlName="numControlados" type="number" required>
+                            <input matInput formControlName="numControlados" type="number" (keypress)="validateNumber($event)" (paste)="validatePaste($event)">
+                          <mat-error>{{ editForm2.controls.numControlados.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
                     </div>
                 </mat-card-content>
@@ -131,18 +126,20 @@
                     <div class="grid grid-cols-6 gap-1.5">
                         <mat-form-field class="col-span-2">
                             <mat-label>{{ 'pages.results.tProdControlados' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdControlados" type="number" required>
+                              <input matInput formControlName="totalProdControlados" type="number" (keypress)="validateNumber($event)" (paste)="validatePaste($event)">
                               <mat-error>{{ editForm2.controls.totalProdControlados.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
         
                         <mat-form-field class="col-span-2">
                             <mat-label>{{ 'pages.results.tProdCorrectos' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdCorrectos" type="number" required>
+                              <input matInput formControlName="totalProdCorrectos" type="number" (keypress)="validateNumber($event)" (paste)="validatePaste($event)">
+                              <mat-error>{{ editForm2.controls.totalProdCorrectos.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="col-span-2">
                             <mat-label>{{ 'pages.results.tProdIncorrectos' | translate }}</mat-label>
-                              <input matInput formControlName="totalProdIncorrectos" type="number" required>
+                              <input matInput formControlName="totalProdIncorrectos" type="number" (keypress)="validateNumber($event)" (paste)="validatePaste($event)">
+                              <mat-error>{{ editForm2.controls.totalProdIncorrectos.errors | extractValidationError }}</mat-error>
                         </mat-form-field>
                     </div>
                 </mat-card-content>

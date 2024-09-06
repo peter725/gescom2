@@ -88,15 +88,31 @@ export class ResultadosComponent implements OnInit{
 
   editForm2 = this.fb.group({
     numExistentes: [],
-    numControlados: [],
-    totalProdControlados: [],
-    totalProdCorrectos: [],
-    totalProdIncorrectos: [],
+    numControlados: [ ,[Validators.required, Validators.pattern('^[0-9]*$')]],
+    totalProdControlados: [ , [Validators.required, Validators.pattern('^[0-9]*$')]],
+    totalProdCorrectos: [ , [Validators.required, Validators.pattern('^[0-9]*$')]],
+    totalProdIncorrectos: [ , [Validators.required, Validators.pattern('^[0-9]*$')]],
 
   },
   {
     validators: [ Validator.totalProductsValidator('totalProdControlados', 'totalProdCorrectos', 'totalProdIncorrectos') ]
   });
+
+  validateNumber(event: KeyboardEvent): void {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      event.preventDefault();  // Prevenir entrada si no es número
+    }
+  }
+
+  validatePaste(event: ClipboardEvent): void {
+    const pasteData = event.clipboardData?.getData('text');
+
+    // Bloquear si el contenido pegado no es un número
+    if (!/^\d+$/.test(pasteData || '')) {
+      event.preventDefault();  // Prevenir pegado si no es un número
+    }
+  }
 
   goBack() {
     this.location.back();

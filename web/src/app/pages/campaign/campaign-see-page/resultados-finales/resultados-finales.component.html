@@ -162,13 +162,16 @@
                         {{ preg['question'] }}
                     </td>
                     <td class="p-4">
-                        <input class="input-con-borde" type="number" [(ngModel)]="preg.total" readonly/>
+                        <label [for]="'total_' + i" class="sr-only">Porcentaje</label>
+                        <input [id]="'total_' + i" class="input-con-borde" type="number" [(ngModel)]="preg.total" readonly/>
                     </td>
                     <td class="p-4">
-                        <input class="input-con-borde" type="number" [(ngModel)]="preg.percentage" readonly/>
+                      <label [for]="'porcentaje_' + i" class="sr-only">Porcentaje</label>
+                      <input [id]="'porcentaje_' + i" class="input-con-borde" type="number" [(ngModel)]="preg.percentage" readonly/>
                     </td>
                     <td class="p-4">
-                        <input class="input-con-borde" type="number" [(ngModel)]="preg.percentageRespectTo" readonly/>
+                        <label [for]="'porcentajeRespectoA_' + i" class="sr-only">Porcentaje Respecto A</label>
+                        <input [id]="'porcentajeRespectoA_' + i" class="input-con-borde" type="number" [(ngModel)]="preg.percentageRespectTo" readonly/>
                     </td>
                   </ng-container>
                 </tr>

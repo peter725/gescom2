@@ -309,7 +309,7 @@ public class CampaignServiceImpl extends EntityCrudService<CampaignEntity, Long>
         campaignDTO.setUpdatedBy(campaign.getUpdatedBy());
         campaignDTO.setPhaseCampaign(campaign.getPhaseCampaign());
 
-        return createCampaign(campaignDTO);
+            return createCampaign(campaignDTO);
 
     }
 

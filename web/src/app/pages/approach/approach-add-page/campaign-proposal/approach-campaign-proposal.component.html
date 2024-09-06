@@ -11,7 +11,7 @@
                   <mat-radio-button [value]=2 tabindex="0">{{ 'fields.approachFields.campaign-proposal.campaign-type.key2' | translate }}</mat-radio-button>
                   <mat-radio-button [value]=3 tabindex="0">{{ 'fields.approachFields.campaign-proposal.campaign-type.key3' | translate }}</mat-radio-button>
                 </mat-radio-group>
-                <mat-error  *ngIf="form.controls.campaignTypeId.touched">{{ form.controls.campaignTypeId.errors | extractValidationError }}</mat-error>
+                <mat-error *ngIf="form.get('campaignTypeId')?.hasError('required') && form.get('campaignTypeId')?.touched">{{ form.controls.campaignTypeId.errors | extractValidationError }}</mat-error>
               </div>
 
               <div class="grid grid-cols-1 gap-1.5 mb-2">

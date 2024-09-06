@@ -298,9 +298,9 @@
                       <div>
                         <button
                           *ngIf="(
-                          form.controls.phaseCampaign.value?.phase !== PHASE_RESULTADOS_FINALES &&
-                          form.controls.phaseCampaign.value?.phase !== PHASE_RESULTADOS_FINALES_DEBATE &&
-                          form.controls.phaseCampaign.value?.phase !== PHASE_FICHA_TRANSPARENCIA)"
+                          form.controls.phaseCampaign.value?.phase === PHASE_RESULTADOS_FINALES ||
+                          form.controls.phaseCampaign.value?.phase === PHASE_RESULTADOS_FINALES_DEBATE ||
+                          form.controls.phaseCampaign.value?.phase === PHASE_FICHA_TRANSPARENCIA)"
                           mat-button
                           (click)="navegarAComponenteEditarResultados(resultado)">
                           <mat-icon>edit</mat-icon>

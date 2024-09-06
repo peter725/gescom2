@@ -26,9 +26,14 @@ export class ApproachCampaignProposalComponent extends EditPageBaseComponent<App
     @ViewChild(MatRadioGroup) radioGroup: MatRadioGroup | undefined;
 
     selectFirstOption(): void {
-        if (!this.radioGroup?.value) {
-          this.radioGroup!.value = 1;  // Selecciona el valor del primer radio button
-        }
+        console.log('entra a hacer click')
+        if (!this.form.get('campaignTypeId')?.value) {
+            this.form.get('campaignTypeId')?.setValue(1);  // Selecciona el valor del primer radio button
+
+            // Marca el campo como "touched" para que el sistema reconozca que ha sido interactuado
+            this.form.get('campaignTypeId')?.markAsTouched();
+    }
+
     }
     protected buildForm(): FormGroup<ControlsOf<CreateApproach>> {
         return this.fb.group<ControlsOf<CreateApproach>>({

@@ -58,7 +58,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     const form = this.fb.group({
       nameCampaign: { value: null, disabled: true },
       year: { value: null, disabled: true },
-      iprName : this.fb.control(null,[Validators.required]),
+      name: this.fb.control(null,[Validators.required, Validators.maxLength(100)]),
       protocols: this.fb.control(null,[Validators.required]),
       question: this.fb.array([]),
       formula: null,

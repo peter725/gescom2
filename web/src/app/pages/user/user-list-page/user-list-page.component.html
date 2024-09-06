@@ -54,7 +54,7 @@
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th *matHeaderCellDef mat-header-cell style="font-weight: bold">
+      <th *matHeaderCellDef mat-sort-header style="font-weight: bold">
         {{ "fields.name" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
@@ -73,35 +73,35 @@
     </ng-container>
 
     <ng-container matColumnDef="firstSurname">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+      <th *matHeaderCellDef mat-sort-header>
         {{ "fields.firstSurname" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.surname }}</td>
     </ng-container>
 
     <ng-container matColumnDef="secondSurname">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+      <th *matHeaderCellDef mat-sort-header>
         {{ "fields.secondSurname" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.lastSurname }}</td>
     </ng-container>
 
     <ng-container matColumnDef="role">
-      <th *matHeaderCellDef mat-header-cell style="width: 10%; font-weight: bold">
+      <th *matHeaderCellDef mat-sort-header style="width: 10%; font-weight: bold">
         {{ "fields.role" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.role?.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="userType">
-      <th *matHeaderCellDef mat-header-cell style="font-weight: bold">
+      <th *matHeaderCellDef mat-sort-header style="font-weight: bold">
         {{ "fields.userType" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>{{ element.userType?.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="phone">
-      <th *matHeaderCellDef mat-header-cell  style="font-weight: bold">
+      <th *matHeaderCellDef mat-sort-header  style="font-weight: bold">
         {{ "fields.phone" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>
@@ -110,7 +110,7 @@
     </ng-container>
 
     <ng-container matColumnDef="email">
-      <th mat-header-cell style="width: 30%; font-weight: bold" *matHeaderCellDef>
+      <th mat-sort-header style="width: 30%; font-weight: bold" *matHeaderCellDef>
         {{ "fields.email" | translate }}
       </th>
       <td *matCellDef="let element" mat-cell>

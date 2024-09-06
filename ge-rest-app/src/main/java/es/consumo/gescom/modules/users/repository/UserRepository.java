@@ -24,13 +24,13 @@ public interface UserRepository extends GESCOMRepository<UserEntity, Long> , Que
         + "AND (:#{#criteria.state} is null OR a.state in :#{#criteria.state}) "
         + "AND ("
         + ":#{#criteria.search} is null "
-        + "OR UPPER(a.name) like :#{#criteria.search} )"
+        + "OR UPPER(a.name) like :#{#criteria.search} "
         + "OR UPPER(a.surname) LIKE :#{#criteria.search} "
         + "OR UPPER(a.lastSurname) LIKE :#{#criteria.search} "
         + "OR UPPER(a.dni) LIKE :#{#criteria.search} "
         + "OR UPPER(a.email) LIKE :#{#criteria.search} "
         + "OR UPPER(a.phone) LIKE :#{#criteria.search} "
-        + "OR UPPER(a.role.name) LIKE :#{#criteria.search} "
+        + "OR UPPER(a.role.name) LIKE :#{#criteria.search} )"
         )
         public Page<UserEntity.SimpleProjection> findAllByCriteria(UserCriteria criteria, Pageable pageable);
 

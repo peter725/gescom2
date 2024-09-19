@@ -51,7 +51,7 @@ public class CampaignController extends AbstractCrudController<CampaignEntity, C
     private UserDetails userDetails;
     private LoginEntity loginEntity;
 
-    // Método para inicializar la autenticación y verificar roles
+    // Metodo para inicializar la autenticación y verificar roles
     private void initializeAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {

@@ -1,14 +1,18 @@
 package es.consumo.gescom.modules.users.repository;
 
 import es.consumo.gescom.commons.db.repository.QueryByCriteria;
+import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 import es.consumo.gescom.modules.users.model.entity.UserEntity;
 import es.consumo.gescom.modules.users.model.criteria.UserCriteria;
+
+import java.time.LocalDate;
 
 @Repository
 public interface UserRepository extends GESCOMRepository<UserEntity, Long> , QueryByCriteria<UserEntity.SimpleProjection, UserCriteria> {
@@ -33,6 +37,11 @@ public interface UserRepository extends GESCOMRepository<UserEntity, Long> , Que
         + "OR UPPER(a.role.name) LIKE :#{#criteria.search} )"
         )
         public Page<UserEntity.SimpleProjection> findAllByCriteria(UserCriteria criteria, Pageable pageable);
+
+
+        @Query(value ="SELECT a FROM UserEntity a WHERE a.dni =:username")
+        UserEntity findByUsername(@Param("username") String username);
+
 
 
 }

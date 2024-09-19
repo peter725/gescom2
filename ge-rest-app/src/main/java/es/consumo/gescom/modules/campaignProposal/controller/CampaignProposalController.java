@@ -9,11 +9,16 @@ import es.consumo.gescom.modules.campaignProposal.model.criteria.CampaignProposa
 import es.consumo.gescom.modules.campaignProposal.model.dto.CampaignProposalDTO;
 import es.consumo.gescom.modules.campaignProposal.model.entity.CampaignProposalEntity;
 import es.consumo.gescom.modules.campaignProposal.service.CampaignProposalService;
+import es.consumo.gescom.modules.users.model.entity.LoginEntity;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +32,18 @@ public class CampaignProposalController extends AbstractCrudController<CampaignP
     @Autowired
     public CampaignProposalController(CampaignProposalService service, DataConverter<CampaignProposalEntity, CampaignProposalDTO> dataConverter) {
         super(service, dataConverter);
+    }
+
+    // Variable de clase para almacenar los detalles del usuario y los roles
+    private UserDetails userDetails;
+
+    // Metodo para inicializar la autenticación y verificar roles
+    private void initializeAuthentication() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new AccessDeniedException("Unauthorized");
+        }
+        userDetails = (UserDetails) authentication.getPrincipal();
     }
 
     @Override
@@ -54,12 +71,6 @@ public class CampaignProposalController extends AbstractCrudController<CampaignP
     @PostMapping("/{id}/switch")
     public ResponseEntity<CampaignProposalEntity> switchStatus(@RequestBody ChangeStatusDTO changeStatus, @PathVariable  Long id) {
         CampaignProposalEntity result = ((CampaignProposalService) service).switchStatus(changeStatus, id);
-        return ResponseEntity.ok(result);
-    }
-
-    @GetMapping("/data/{id}")
-    public ResponseEntity<Page<CampaignProposalEntity.SimpleProjection>> findListByCriteria(CampaignProposalCriteria campaignProposalCriteria, @PathVariable  Long id) {
-        Page<CampaignProposalEntity.SimpleProjection> result = ((CampaignProposalService) service).findAllCampaignProposalById(new CriteriaWrapper<>(campaignProposalCriteria), id);
         return ResponseEntity.ok(result);
     }
 

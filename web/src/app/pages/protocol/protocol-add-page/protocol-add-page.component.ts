@@ -53,19 +53,20 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
   }
 
   private subscribeToCampaignData(): void {
-    const storedCampaign = localStorage.getItem('currentCampaign');
+    //const storedCampaign = localStorage.getItem('currentCampaign');
+   // console.log('storedCampaign', storedCampaign);
 
-    if (storedCampaign) {
-      const campaignData = JSON.parse(storedCampaign);
-      this.loadCampaignData(campaignData);
-    } else {
+    //if (storedCampaign) {
+      //const campaignData = JSON.parse(storedCampaign);
+      //this.loadCampaignData(campaignData);
+    //} else {
       this.dataSharingService.currentCampaign.subscribe(campaignData => {
         if (campaignData) {
           localStorage.setItem('currentCampaign', JSON.stringify(campaignData));
           this.loadCampaignData(campaignData);
         }
       });
-    }
+    //}
   }
 
   private loadCampaignData(campaignData: any) {

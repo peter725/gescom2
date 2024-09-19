@@ -1,6 +1,7 @@
 package es.consumo.gescom.modules.campaignProposal.service.impl;
 
 import es.consumo.gescom.commons.dto.FilterCriteria;
+import es.consumo.gescom.commons.exception.AppException;
 import es.consumo.gescom.modules.arbitration.model.dto.ChangeStatusDTO;
 import es.consumo.gescom.modules.autonomousCommunity.model.entity.AutonomousCommunityEntity;
 import es.consumo.gescom.modules.autonomousCommunity.repository.AutonomousCommunityRepository;
@@ -13,9 +14,16 @@ import es.consumo.gescom.modules.campaignProposal.service.CampaignProposalServic
 import es.consumo.gescom.modules.campaignType.model.entity.CampaignTypeEntity;
 import es.consumo.gescom.modules.campaignType.repository.CampaignTypeRepository;
 
+import es.consumo.gescom.modules.users.model.entity.UserEntity;
+import es.consumo.gescom.modules.users.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import es.consumo.gescom.commons.db.repository.GESCOMRepository;
@@ -35,6 +43,9 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
     }
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private CampaignProposalRepository campaignProposalRepository;
 
     @Autowired
@@ -52,14 +63,26 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
 
     @Override
     public CampaignProposalDTO createCampaignProposal(CampaignProposalDTO campaignProposalDTO) {
+        String username = getCurrentUsername();
+        UserEntity userEntity = userRepository.findByUsername(username);
+
         campaignProposalDTO.setDate(LocalDate.now());
         campaignProposalDTO.setSent(true);
         //ojo cambiar al momento de estar activo el perfil de usuario aqui se debe guardar la comunidad autonoma de usuario logueado
-        campaignProposalDTO.setAutonomousCommunityId(20L);
+        campaignProposalDTO.setAutonomousCommunityId(userEntity.getAutonomousCommunity().getId());
         CampaignProposalEntity campaignProposal =  campaignProposalConverter.convertToEntity(campaignProposalDTO);
         campaignProposalRepository.save(campaignProposal);
 
         return campaignProposalConverter.convertToModel(campaignProposal);
+    }
+
+    // Metodo para obtener el username del usuario autenticado
+    private String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal().equals("anonymousUser")) {
+            throw new AppException("Unauthorized", null);
+        }
+        return ((UserDetails) authentication.getPrincipal()).getUsername();
     }
 
     @Override
@@ -91,7 +114,6 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("autonomusCommunity")) {
         	campaignProposalCriteria.setSort(null);
         }
-        campaignProposalCriteria.setSort(campaignProposalCriteria.getSort());
     	
         Page<CampaignProposalEntity> campaignProposalEntityPage = null;
         if (originalSort != null && originalSort[0].contains("autonomusCommunity")) {
@@ -115,7 +137,6 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
                 campaignProposalDTO.setCampaignTypeName(optionalCampaignTypeEntity.get().getName());
             }
         });
-
         return campaignProposalDTOPage;
     }
 
@@ -129,11 +150,6 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         campaignProposalDTO.setCampaignTypeName(campaignTypeEntity.getName());
         campaignProposalDTO.setYear(campaignProposalEntity.getDate().getYear());
         return campaignProposalDTO;
-    }
-
-    @Override
-    public Page<CampaignProposalEntity.SimpleProjection> findAllCampaignProposalById(CriteriaWrapper<CampaignProposalCriteria> wrapper, Long id) {
-        return ((CampaignProposalRepository) repository).findAllCampaignProposalById(wrapper.getCriteria().toPageable(), id);
     }
 
     @Override
@@ -168,28 +184,6 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         modelMapper.map( payload,campaignProposalEntity);
         repository.save(campaignProposalEntity);
         return campaignProposalEntity;
-    }
-
-    @Override
-    protected Page<CampaignProposalEntity> findAllFromCriteria(FilterCriteria criteria) {
-
-        CampaignProposalCriteria campaignProposalCriteria = (CampaignProposalCriteria) criteria;
-        if (campaignProposalCriteria.getSearch() != null) {
-            campaignProposalCriteria.setSearch(campaignProposalCriteria.getSearch().toUpperCase());
-        }
-        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("year")) {
-        	campaignProposalCriteria.setSort(new String[] {campaignProposalCriteria.getSort()[0].replace("year", "date")});
-        }
-        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("type")) {
-        	campaignProposalCriteria.setSort(new String[] {campaignProposalCriteria.getSort()[0].replace("type", "campaignTypeId")});
-        }
-        if (campaignProposalCriteria.getSort() != null && campaignProposalCriteria.getSort()[0].contains("autonomusCommunity")) {
-        	campaignProposalCriteria.setSort(new String[] {campaignProposalCriteria.getSort()[0].replace("autonomusCommunity", "autonomousCommunityId")});
-        }
-        campaignProposalCriteria.setSort(campaignProposalCriteria.getSort());
-        Page<CampaignProposalEntity> campaignProposalSimpleProjections = ((CampaignProposalRepository) repository).findAllByCriteria(campaignProposalCriteria, campaignProposalCriteria.toPageable());
-
-        return campaignProposalSimpleProjections;
     }
 
 }

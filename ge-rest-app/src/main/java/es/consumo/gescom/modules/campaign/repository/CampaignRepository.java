@@ -14,7 +14,7 @@ import es.consumo.gescom.commons.db.repository.GESCOMRepository;
 @Repository
 public interface CampaignRepository extends GESCOMRepository<CampaignEntity, Long>, QueryByCriteria<CampaignEntity, CampaignCriteria> {
 
-//    @Override
+
     @Query(value = "SELECT a FROM CampaignEntity a "
             + "WHERE "
             + "(:#{#criteria.search} is null OR UPPER(a.nameCampaign) LIKE :#{#criteria.search}) "

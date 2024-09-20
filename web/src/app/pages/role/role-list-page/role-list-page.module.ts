@@ -9,6 +9,7 @@ import { NamedRoutesModule } from '@libs/named-routes';
 import {StateToggleModule} from "@base/shared/components/state-toggle";
 import { RoleListPageComponent } from './role-list-page.component';
 import { RoleListPageRoutingModule } from './role-list-page-routing.module';
+import { RoleListPageFilterComponent } from '@base/pages/role/role-list-page/components';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { RoleListPageRoutingModule } from './role-list-page-routing.module';
     StateToggleModule,
   ],
   declarations: [
-    RoleListPageComponent
+    RoleListPageComponent,
+    RoleListPageFilterComponent,
   ],
 })
 export class RoleListPageModule {

@@ -18,10 +18,12 @@ export class ApproachListPageFilterComponent extends FilterComponent<ApproachFil
             autonomusCommunity: this.fb.control(null),
             approach: this.fb.control(null),
             type: this.fb.control(null),
-            // createdAtGTE: this.fb.control(null),
-            // createdAtLTE: this.fb.control(null),
-            // updatedAtGTE: this.fb.control(null),
-            // updatedAtLTE: this.fb.control(null)
+            state: this.fb.control(null),
         });
+    }
+
+    protected override getQuerySource(): ApproachFilterForm {
+        console.log('enviamos', super.getQuerySource())
+        return super.getQuerySource();
     }
 }

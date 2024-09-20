@@ -255,13 +255,6 @@
                 <directory>src/main/security</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>**/cliente-keystore-integra-nuevo.jks</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/security</directory>
-                <filtering>false</filtering>
-                <includes>
                     <include>**/KeyStore.jks</include>
                 </includes>
             </resource>

@@ -27,10 +27,7 @@
             <input matInput formControlName="name">
             <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
           </mat-form-field>
-
-          <mat-form-field>
-            
-          </mat-form-field>
+          
           <mat-form-field>
             <mat-label>ProtocoloHOLA</mat-label>
             <mat-select formControlName="protocols" required (selectionChange)="onProtocolSelectionChange($event.value)">

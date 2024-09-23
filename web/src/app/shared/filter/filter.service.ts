@@ -10,8 +10,14 @@ import { Query } from './query';
 @Injectable({ providedIn: 'root' })
 export class FilterService {
 
+  private readonly SHOW_DELETED_KEY = 'showDeleted';
   private readonly source = new BehaviorSubject<AppliedFilter | undefined>(undefined);
+  private readonly showDeletedSubject = new BehaviorSubject<boolean>(
+    sessionStorage.getItem(this.SHOW_DELETED_KEY) === 'true'
+  );
   private skipNextRouteParamsChange = false;
+
+  showDeleted$ = this.showDeletedSubject.asObservable();
 
   constructor(
     private router: Router,
@@ -48,6 +54,16 @@ export class FilterService {
       return value;
     }
     return undefined;
+  }
+
+  setShowDeleted(value: boolean): void {
+    this.showDeletedSubject.next(value);
+    sessionStorage.setItem(this.SHOW_DELETED_KEY, JSON.stringify(value));
+  }
+
+  getShowDeleted() {
+    return this.showDeletedSubject.getValue();
+
   }
 
   /**

@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { NotificationService } from '@base/shared/notification';
 import { AppError, BtnStatus, ComponentStatus } from '@libs/commons';
 import { CrudImplService, RequestConfig } from '@libs/crud-api';
 import { ModelStates, SimpleModel, StatefulAltModel, StatefulModel } from '@libs/sdk/common';
 import { Subscription } from 'rxjs';
+import { FilterService } from '@base/shared/filter';
 
 
 const BTN_ON_TEXT = 'generic.actions.turnOn';
@@ -18,6 +19,7 @@ const BTN_OFF_COLOR: ThemePalette = 'warn';
   selector: 'tsw-state-toggle',
   template: `
     <tsw-button
+      tswConfirmAction
       [status]="btnStatus"
       [matTooltip]="btnText | translate"
       matTooltipPosition="above"
@@ -25,13 +27,15 @@ const BTN_OFF_COLOR: ThemePalette = 'warn';
       [startIcon]="btnIcon"
       [color]="btnColor"
       [disabled]="(btnStatus.is$('PROCESS', 'LOAD') | async)"
-      (click)="toggleStatus()"
+      (confirmed)="toggleStatus()"
     ></tsw-button>
   `,
 })
-export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> {
+export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> implements OnInit, OnDestroy{
 
   @Input() resource = '';
+
+  @ViewChild(FilterService) filter: FilterService | undefined;
 
   resourceStatus: StatefulAltModel | undefined;
 
@@ -43,12 +47,33 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
   private _id: string | number | undefined;
   private _data: T | undefined;
   private activeOperation: Subscription | undefined;
+  showDeleted: boolean = false;
+  private subscription: Subscription | undefined;  // Almacena la suscripción para limpiarla después
 
   constructor(
     private crudService: CrudImplService<T, string | number>,
     private notification: NotificationService,
+    private filterService: FilterService
   ) {
   }
+
+
+  ngOnInit() {
+    // Suscribirse al observable `showDeleted$`
+    this.subscription = this.filterService.showDeleted$.subscribe((value: boolean) => {
+      console.log('value', value);
+      this.showDeleted = value;  // Actualiza el valor en el componente
+    });
+    console.log('Show Deleted State:', this.filterService.getShowDeleted());
+  }
+
+  ngOnDestroy() {
+    // Desuscribirse cuando el componente se destruye para evitar fugas de memoria
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
 
   @Input()
   set data(data: T) {
@@ -67,6 +92,7 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
     this._id = id;
   }
 
+
   toggleStatus() {
     if (!this.resource || !this._data) return;
 
@@ -78,6 +104,8 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
 
     const id = this._id || 0;
     const payload = { status: this.getNextStatus() };
+    console.log('payload', payload);
+    console.log('show deleted 1', this.showDeleted);
     const config: RequestConfig = {
       resourceName: this.resource,
       pathParams: { id },
@@ -88,7 +116,10 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
         this.btnStatus.status = 'IDLE';
         this.updateResourceState();
         this.updateBtnDetails();
-        if(payload.status === ModelStates.OFF) location.reload();
+        if (payload.status === ModelStates.OFF && !this.showDeleted) {
+          console.log('show deleted 2', this.showDeleted);
+          location.reload();  // Solo recargar si "ver eliminados" está desactivado
+        }
       },
       error: e => {
         this.btnStatus.status = 'ERROR';

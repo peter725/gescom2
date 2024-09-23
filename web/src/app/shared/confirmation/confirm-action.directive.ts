@@ -52,7 +52,6 @@ export class ConfirmActionDirective {
   @HostListener('click', ['$event'])
   confirmClick() {
     if (this.expectedEvent === 'click') this.confirmAction();
-
   }
 
   @HostListener('submit', ['$event'])

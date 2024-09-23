@@ -42,14 +42,10 @@ export class CampaignAddPageComponent extends EditPageBaseComponent<Campaign, Cr
   }
 
   protected async enviarFormulario(){
-
     if(this.form.valid){
       this.submitForm();
       this.resetForm();
-      
     }
-
-
   }
 
   override resetForm() {

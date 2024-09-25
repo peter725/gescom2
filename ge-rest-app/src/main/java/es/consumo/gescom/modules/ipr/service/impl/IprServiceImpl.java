@@ -189,11 +189,14 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         IprDTO iprDTO = iprConverter.convertToModel(iprEntity);
         iprDTO.setNameCampaign(campaignRepository.findById(iprEntity.getCampaignId()).get().getNameCampaign());
         iprDTO.setYear(campaignRepository.findById(iprEntity.getCampaignId()).get().getYear());
-        if (iprDTO.getProtocolCode() != null){
-            iprDTO.setProtocolName(protocolRepository.findProtocolNameByCode(iprDTO.getProtocolCode()).getName());
+        ProtocolDTO protocolDTO;
+        if (iprEntity.getProtocolCode() != null){
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolByCode(iprEntity.getProtocolCode()));
         }else{
-            iprDTO.setProtocolName(protocolRepository.findProtocolNameById(iprDTO.getProtocolId()).getName());
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolById(iprEntity.getProtocolId()));
         }
+        iprDTO.setProtocol(protocolDTO);
+        iprDTO.setProtocolName(protocolDTO.getName());
 
         List<IprQuestionEntity> iprQuestionEntities = new ArrayList<>();
         if (iprDTO.getCode() == null){
@@ -290,9 +293,9 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         CampaignEntity campaignEntity = campaignRepository.findById(searchDTO.getCampaignId()).orElseThrow();
         if (searchDTO.getProtocolCode() != null) {
-            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameByCode(searchDTO.getProtocolCode()));
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolByCode(searchDTO.getProtocolCode()));
         }else {
-            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameById(searchDTO.getProtocolId()));
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolById(searchDTO.getProtocolId()));
         }
 
         if (searchDTO.getProtocolCode() != null) {
@@ -411,24 +414,23 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
     @Override
     public List<IprDTO> findAllIprByCampaignId(Long campaignId) {
-        ResultsResponseDTO resultsResponseDTO = new ResultsResponseDTO();
-        SearchDTO searchDTO = new SearchDTO();
+        //ResultsResponseDTO resultsResponseDTO;
+        //SearchDTO searchDTO = new SearchDTO();
         Optional<CampaignEntity> campaignEntity = campaignRepository.findById(campaignId);
         List<IprDTO> iprDTOS = iprConverter.convertToModel(iprRepository.findAllByCampaignId(campaignId));
-        List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(campaignId);
-        searchDTO.setCampaignId(campaignId);
-        List<IprQuestionEntity> iprQuestionEntities = new ArrayList<>();
-        ProtocolEntity protocol = new ProtocolEntity();
+        //List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(campaignId);
+        //searchDTO.setCampaignId(campaignId);
+        ProtocolEntity protocol;
 
         for (IprDTO iprDTO : iprDTOS) {
             CampaignEntity entity = campaignEntity.get();
             iprDTO.setNameCampaign(entity.getNameCampaign());
-            if (iprDTO.getProtocolCode() != null){
-                protocol = protocolRepository.findProtocoloByCode(iprDTO.getProtocolCode())
-                        .orElseThrow(() -> new IllegalStateException("Protocolo no encontrado con el código: " + iprDTO.getProtocolCode()));
+            if (iprDTO.getProtocol().getCode() != null){
+                protocol = protocolRepository.findProtocoloByCode(iprDTO.getProtocol().getCode())
+                        .orElseThrow(() -> new IllegalStateException("Protocolo no encontrado con el código: " + iprDTO.getProtocol().getCode()));
             } else {
-                protocol = protocolRepository.findById(iprDTO.getProtocolId())
-                        .orElseThrow(() -> new IllegalStateException("Protocolo no encontrado con el ID: " + iprDTO.getProtocolId()));
+                protocol = protocolRepository.findById(iprDTO.getProtocol().getId())
+                        .orElseThrow(() -> new IllegalStateException("Protocolo no encontrado con el ID: " + iprDTO.getProtocol().getId()));
             }
 
             iprDTO.setProtocolName(protocol.getName());
@@ -471,9 +473,9 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         //obtenemos la entidad protocolo y la convertimos en DTO
         //se hace una comprobacion de campo CODE la data antigua maneja un CODE mientras la data nueva maneja ID
         if (searchDTO.getProtocolCode() != null) {
-            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameByCode(searchDTO.getProtocolCode()));
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolByCode(searchDTO.getProtocolCode()));
         }else {
-            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolNameById(searchDTO.getProtocolId()));
+            protocolDTO = protocolConverter.convertToModel(protocolRepository.findProtocolById(searchDTO.getProtocolId()));
         }
 
         //aqui se crean las respuestas del ipr, cruzando los datos de dos tablas: questions e iprQuestions

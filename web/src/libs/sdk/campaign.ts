@@ -72,7 +72,7 @@ export interface CampaignIpr{
   nameCampaign: string | null;
   year: number | null;
   name: string | null;
-  protocols: Protocol | null;
+  protocol: Protocol | null;
   porcentaje: number | null;
   formula: string | null;
   question: [] | null

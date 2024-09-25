@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -80,15 +81,15 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
 
     private String updLoadFile(long campaignId, String name, String base64) throws IOException {
         Path repo = getFilePath(campaignId);
-
+        byte[] decodedBytes = Base64.getDecoder().decode(base64);
         if ((Files.notExists(repo))) {
             Files.createDirectories(repo);
         }
         String md5 = DigestUtils.md5Hex(name).toUpperCase();
-        Path file = Path.of(repo.toString(), "/", md5);
+        Path file = Path.of(repo.toString(), "/", name);
         Files.deleteIfExists(file);
         Path create = Files.createFile(file);
-        Files.write(create, base64.getBytes());
+        Files.write(create, decodedBytes);
 
         return md5;
     }
@@ -98,10 +99,8 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     }
 
     private String getFile(DocumentEntity documentEntity) throws IOException {
-        Path file = Path.of(getFilePath(documentEntity.getCampaignId()).toString(), "/", documentEntity.getPath());
-        try (BufferedReader reader = Files.newBufferedReader(file)) {
-            return reader.lines().collect(Collectors.joining());
-        }
+        Path file = Path.of(getFilePath(documentEntity.getCampaignId()).toString(), "/", documentEntity.getName());
+        return Base64.getEncoder().encodeToString(Files.readAllBytes(file));
     }
 
     @Override

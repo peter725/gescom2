@@ -29,23 +29,19 @@
           </mat-form-field>
 
           <mat-form-field> 
-            <mat-label>Protocolo</mat-label>
-            <mat-select formControlName="protocols"  (selectionChange)="onProtocolSelectionChange($event.value)" matNativeControl >
-              <mat-option *ngFor="let protocol of protocolArray" [value]="protocol">                  
-                {{protocol.name}}
-              </mat-option>
-            </mat-select>   
+            <mat-label>{{ 'fields.protocol' | translate }}</mat-label>
+            <input matInput formControlName="protocol" [value]="form.controls.protocol.value?.name" readonly>
           </mat-form-field>  
 
         </div>
 
         <div class="w-3/4 mx-auto ">
-          <div class="table w-full border-collapse">
+          <div class="table w-full border-collapse table-fixed" >
             <div class="table-header-group bg-gray-200">
               <div class="table-cell p-2 border border-gray-300 w-1/12">Nº</div>
               <div class="table-cell p-2 border border-gray-300 w-8/12">Pregunta*</div>
-              <div class="table-cell p-2 border border-gray-300 w-2/12">Fórmula*</div>
-              <div class="table-cell p-2 border border-gray-300 w-1/12">% respecto al</div>
+              <div class="table-cell p-2 border border-gray-300 w-4/12">Fórmula*</div>
+              <div class="table-cell p-2 border border-gray-300 w-2/12 truncate">% respecto al</div>
             </div>
 
             <!-- Filas de la tabla -->
@@ -76,17 +72,17 @@
                 <div class="table-cell p-2 border border-gray-300" style="position: relative;">
                   <mat-form-field class="w-full" appearance="outline" subscriptSizing="dynamic">  
                     <label [for]="'formulaInput_' + i" class="sr-only">Fórmula</label>
-                    <input [id]="'formulaInput_' + i" formControlName="formula" matInput class="w-full">
-                    <a (click)="protocolSelectedId && openDialog(i)" (keydown)="handleKeydown($event, i)" tabindex="0" role="button" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
+                    <input [id]="'formulaInput_' + i" formControlName="formula" matInput class="w-full truncate" readonly style="padding-right: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <a (click)="openDialog(i)" (keydown)="handleKeydown($event, i)" tabindex="0" role="button" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
                       <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
                     </a>
                   </mat-form-field>
                 </div>
 
                 <div class="table-cell p-2 border border-gray-300" >
-                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                  <mat-form-field class="w-full" appearance="outline" subscriptSizing="dynamic">
                       <label [for]="'porcentaje_' + i" class="sr-only">Porcentaje</label>
-                      <input [id]="'porcentaje_' + i" formControlName="porcentaje" matInput style="background: transparent; border: none; width: 100%;" >
+                      <input [id]="'porcentaje_' + i" formControlName="porcentaje" matInput style="background: transparent; border: none;" >
                   </mat-form-field>
                 </div>
 

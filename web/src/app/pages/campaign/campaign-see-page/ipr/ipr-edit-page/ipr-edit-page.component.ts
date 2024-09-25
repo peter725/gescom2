@@ -12,7 +12,7 @@ import { Validator } from '@base/shared/functions/validators';
 
 
 @Component({
-  selector: 'tsw-ipr',
+  selector: 'tsw-ipr-edit',
   templateUrl: './ipr-edit-page.component.html',
   styleUrls: ['./ipr-edit-page.component.scss'],
   providers: [
@@ -27,9 +27,9 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
   readonly resourceName = 'ipr';
   name: string | null = ''; // Variable para almacenar el nombre de la campaña
   campaignId: number | null = null; // Variable para almacenar el id de la campaña
-  private location: Location = inject(Location);
-  idCampaign: number | null = null;
-  protocolSelectedId: string | undefined;
+  //private location: Location = inject(Location);
+  idCampaign!: number;
+  protocolSelectedId: number | undefined;
   protocolSelectedCode: string | undefined
   protocolArray: any;
   responseUser: any;
@@ -59,13 +59,11 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
       nameCampaign: { value: null, disabled: true },
       year: { value: null, disabled: true },
       name: this.fb.control(null,[Validators.required, Validators.maxLength(100)]),
-      protocols: this.fb.control(null,[Validators.required]),
+      protocol: this.fb.control(null),
       question: this.fb.array([]),
       formula: null,
       porcentaje: null,
     });
-
-      
     return form;
   }
 
@@ -95,6 +93,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
     // Guardar los valores iniciales del formulario
     this.initialFormValues = this.form.getRawValue();
+    this.initialFormValues.protocolId = startValue.protocolId;
     this.initialFormValues.nameCampaign = startValue.nameCampaign;
     this.initialFormValues.year = startValue.year;
     this.initialFormValues.name = startValue.name;
@@ -103,39 +102,38 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
   }
   
   private async fetchProtocol(): Promise<void> {
-    const id = Number(this.idCampaign);
-    this.protocolArray = await firstValueFrom(this.crudService.findById(id, {
+    //const id = Number(this.idCampaign);
+    /*this.protocolArray = await firstValueFrom(this.crudService.findById(id, {
       resourceName: 'protocolListCampaign',
       pathParams: { id },
-    }));
+    }));*/
     // Primero busca el protocolo por code
-    let selectedProtocol = this.protocolArray.find((protocol: any) => protocol.code === this.protocolCodeLoad);
+    //console.log(this.protocolArray);
+    //let selectedProtocol = this.protocolArray.find((protocol: any) => protocol.code === this.protocolCodeLoad);
 
     // Si no se encuentra por code, busca por id
-    if (!selectedProtocol) {
+    /*if (!selectedProtocol) {
       selectedProtocol = this.protocolArray.find((protocol: any) => protocol.id === this.protocolIdLoad);
-    }
+    }*/
   
     // Verifica si se encontró el protocolo y luego establece el valor en el formulario
-    if (selectedProtocol) {
-
+    /*if (selectedProtocol) {
       this.protocolSelectedId = selectedProtocol.id;
       this.protocolSelectedCode = selectedProtocol.code;
 
       setTimeout(() => {
         this.form.patchValue({
-          protocols: selectedProtocol
+          protocol: selectedProtocol
         });
       }, 0);
-    }
+    }*/
   }
 
-
-  onProtocolSelectionChange(value: any) {
+  /*onProtocolSelectionChange(value: any) {
     this.protocolSelectedId = value.id;
     this.protocolSelectedCode = value.code;
     const protocolData = { id: value.id, code: value.code };
-  }
+  }*/
 
   crearFila(orden: number): FormGroup {
     console.log('al ingresar a IPR esta es la primera fila de pregunta que se crea', orden);
@@ -164,7 +162,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
   openDialog(rowIndex: number): void {
 
-    const protocolData = { id: String(this.protocolSelectedId), code: String(this.protocolSelectedCode) };
+    const protocolData = { id: String(this.form.controls.protocol.value?.id), code: String(this.form.controls.protocol.value?.code) };
     console.log('protocolData', protocolData)
     this.sharedDataService.updateSharedData(protocolData);
     console.log('protocolData', protocolData)
@@ -209,7 +207,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
         stringCombinado += ' + ';
       }
     });
-  
+    console.log('StringCombinado 1', stringCombinado);
     // Obtener el identificador único del input de fórmula
     const formulaInputId = 'formulaInput_' + rowIndex;
   
@@ -222,8 +220,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
       const control = question.at(rowIndex)?.get('formula');
 
       if (control) {
-        const truncatedString = stringCombinado.length > 5 ? stringCombinado.substring(0, 10) + '...' : stringCombinado;
-        control.setValue(truncatedString);
+        control.setValue(stringCombinado);
         formulaInputElement.title = stringCombinado;
       } else {
         console.error('FormControl "formula" no encontrado en el control:', control);
@@ -293,11 +290,11 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
   }
 
 
-  toggleResp(filaIndex: number) {
+  /*toggleResp(filaIndex: number) {
     const fila = (this.form.get('question') as unknown as FormArray).at(filaIndex) as FormGroup;
     const currentValue = fila.get('response')?.value;
     fila.get('response')?.setValue(currentValue === 'SI' ? 'NO' : 'SI');
-  }
+  }*/
 
   prepareIprQuestionDTOList() {
 
@@ -326,19 +323,20 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
 
   saveForm() {
-      // Verificar si el formulario es válido
+    // Verificar si el formulario es válido
     if (this.form.invalid) {
-      console.log('El formulario no es válido. No se puede guardar.');
-      return; // Salir de la función si el formulario no es válido
+      return this.notification.show({
+        title: 'text.err.questionEraseFailed',
+        message: 'El formulario no es válido. No se puede guardar.',
+      }); // Salir de la función si el formulario no es válido
     }
-    console.log('guardamos');
+
     this.prepareIprQuestionDTOList();
     const jsonData = {
       id: this.idIpr,
       name: this.form.get('name')?.value,
-      protocolCode: this.protocolSelectedCode,
+      protocol: this.form.get('protocol')?.value,
       campaignId: this.idCampaign,
-      protocolId: this.protocolSelectedId,
       iprQuestionDTOList: this.iprQuestionDTOList
     };
 
@@ -360,8 +358,6 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
 
       },
       error => {
-        console.error('Error al crear IPR:', error);
-
         this.notification.show({
           title: 'Error',
           message: 'Ha ocurrido un error',

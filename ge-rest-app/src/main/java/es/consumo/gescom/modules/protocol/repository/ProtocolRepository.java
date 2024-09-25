@@ -30,15 +30,16 @@ public interface ProtocolRepository extends GESCOMRepository<ProtocolEntity, Lon
     Optional<ProtocolEntity> findProtocoloByCode(String code);
 
     @Query(value = "SELECT pr FROM ProtocolEntity pr WHERE pr.code =:code ")
-    ProtocolEntity findProtocolNameByCode(String code);
+    ProtocolEntity findProtocolByCode(String code);
 
     @Query(value = "SELECT pr FROM ProtocolEntity pr WHERE pr.id =:id ")
-    ProtocolEntity findProtocolNameById(Long id);
+    ProtocolEntity findProtocolById(Long id);
 
     @Override
     @Query(value = "SELECT pr FROM ProtocolEntity pr "
             + "WHERE "
             + "(:#{#criteria.search} is null OR UPPER(pr.name) LIKE :#{#criteria.search}) "
+            + "AND (:#{#criteria.campaignId} is null OR pr.campaignId.id in :#{#criteria.campaignId}) "
     )
     public Page<ProtocolEntity.SimpleProjection> findAllByCriteria(ProtocolCriteria criteria, Pageable pageable);
 }

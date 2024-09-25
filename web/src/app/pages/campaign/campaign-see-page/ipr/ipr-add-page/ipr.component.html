@@ -27,16 +27,32 @@
             <input matInput formControlName="name">
             <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
           </mat-form-field>
-          
+
+
           <mat-form-field>
-            <mat-label>ProtocoloHOLA</mat-label>
+            <mat-label>{{ 'fields.protocol' | translate}}</mat-label>
+            <tsw-custom-select resourceName="protocol"  [searchQueryParams]="protocolSelectQuery" formControlName="protocol" [required]="true" (valueSelected)="onProtocolSelectionChange()" >
+            </tsw-custom-select>
+            <mat-error>{{ form.controls.protocol.errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+
+          <!--<mat-form-field>
+            <mat-label>Protocolo</mat-label>
+            <input matInput formControlName="protocols">
+            <mat-error *ngIf="form.get('protocols')?.hasError('required') || form.get('protocols')?.touched">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>-->
+          
+          <!--<mat-form-field>
+            <mat-label>Protocolo</mat-label>
             <mat-select formControlName="protocols" required (selectionChange)="onProtocolSelectionChange($event.value)">
               <mat-option *ngFor="let protocol of protocolArray" [value]="protocol.id + '-' + protocol.code">                  
                 {{protocol.name}}
               </mat-option>
             </mat-select>
             <mat-error>{{ form.controls.protocols.errors | extractValidationError }}</mat-error>
-          </mat-form-field>
+          </mat-form-field>-->
         </div>
 
         <div class="w-3/4 mx-auto ">

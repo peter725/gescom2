@@ -309,7 +309,7 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
     @Override
     public ProtocolDTO findProtocolByCode(String code) {
-        return protocolConverter.convertToModel(protocolRepository.findProtocolNameByCode(code));
+        return protocolConverter.convertToModel(protocolRepository.findProtocolByCode(code));
     }
 
     @Override

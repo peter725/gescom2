@@ -17,5 +17,5 @@ public class ProtocolCriteria extends FilterCriteria {
     private Long id;
     private String code;
     private String name;
-    private CampaignEntity campaignId;
+    private Long campaignId;
 }

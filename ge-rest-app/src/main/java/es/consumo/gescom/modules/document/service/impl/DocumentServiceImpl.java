@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long> implements DocumentService {
-    @Value("${path.documentos}")
+    @Value("${path.document}")
     private String repoPath;
     private final ReadService<CampaignEntity, Long> campaingService;
 
@@ -70,7 +70,7 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
         payload.setCreateAt(LocalDateTime.now());
         DocumentEntity entity = super.performCreate(payload);
         try {
-            String path = updLoadFile(entity.getCampaignId(), entity.getName(), payload.getBase64());
+            String path = updLoadFile(payload);
             entity.setPath(path);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -79,27 +79,46 @@ public class DocumentServiceImpl extends EntityCrudService<DocumentEntity, Long>
     }
 
 
-    private String updLoadFile(long campaignId, String name, String base64) throws IOException {
-        Path repo = getFilePath(campaignId);
-        byte[] decodedBytes = Base64.getDecoder().decode(base64);
+    private String updLoadFile(DocumentEntity payload) throws IOException {
+        Path repo = getAbsoluteFilePath(payload);
+        Path relativePath = getRelativeFilePath(payload);
+        byte[] decodedBytes = Base64.getDecoder().decode(payload.getBase64());
         if ((Files.notExists(repo))) {
             Files.createDirectories(repo);
         }
-        String md5 = DigestUtils.md5Hex(name).toUpperCase();
-        Path file = Path.of(repo.toString(), "/", name);
+        Path file = Path.of(repo.toString(), "/", payload.getName());
+        //String md5 = DigestUtils.md5Hex(file.toString()).toUpperCase();
         Files.deleteIfExists(file);
         Path create = Files.createFile(file);
         Files.write(create, decodedBytes);
 
-        return md5;
+        return relativePath.toString();
     }
 
-    private Path getFilePath(long campaingId) {
-        return Path.of(repoPath, "/campaign/attachment/", String.valueOf(campaingId));
+    private Path getRelativeFilePath(DocumentEntity payload) {
+        String basePath = "/campaign/attachment/";
+        String folderName = "";
+
+        Long id = payload.getDocumentType().getId();
+        if (id == 1) {
+            folderName = String.valueOf(payload.getCampaignId());
+        } else if (id == 2) {
+            folderName = payload.getCampaignId() + "/DOC_PLAN";
+        } else if (id == 3) {
+            folderName = payload.getCampaignId() + "/FICHA_TRANSPARENCIA";
+        } else {
+            throw new IllegalArgumentException("Tipo de documento no soportado");
+        }
+
+        return Path.of(basePath, folderName);
+    }
+
+    private Path getAbsoluteFilePath(DocumentEntity payload) {
+        return Path.of(repoPath, getRelativeFilePath(payload).toString());
     }
 
     private String getFile(DocumentEntity documentEntity) throws IOException {
-        Path file = Path.of(getFilePath(documentEntity.getCampaignId()).toString(), "/", documentEntity.getName());
+        Path file = Path.of(repoPath,documentEntity.getPath(), "/", documentEntity.getName());
         return Base64.getEncoder().encodeToString(Files.readAllBytes(file));
     }
 

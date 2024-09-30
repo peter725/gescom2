@@ -96,8 +96,6 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
 
     // Método para cargar los datos desde el endpoint
     override async loadData() {
-
-
       try {
         this.resetDataBeforeLoad();
     
@@ -123,7 +121,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
-      codeQuestion: [codeQuestion, Validators.required],
+      codeQuestion: [codeQuestion],
       question: [question, Validators.required],
       codeInfringement: codeInfringement,
       response: formattedResponse // Inicializar con 'SI'
@@ -168,7 +166,7 @@ export class ProtocolEditPageComponent extends EditPageBaseComponent<Protocol, C
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
-      codeQuestion: ['', Validators.required],
+      codeQuestion: [''],
       question: ['', Validators.required],
       codeInfringement: null,
       response: ['SI'] // Inicializar con 'SI'

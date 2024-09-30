@@ -144,7 +144,7 @@ export class ProtocolAddPageComponent extends EditPageBaseComponent<Protocol, Cr
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
-      codeQuestion: ['', Validators.required],
+      codeQuestion: [''],
       question: ['', Validators.required],
       codeInfringement: null,
       response: ['SI'] // Inicializar con 'SI'

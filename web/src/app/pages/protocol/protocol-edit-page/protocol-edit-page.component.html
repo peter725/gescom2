@@ -8,11 +8,6 @@
 
       <div section-content>
         <div class="grid grid-cols-4 gap-1.5 mb-2">
-          <!-- <mat-form-field class="col-span-1">
-            <mat-label>{{ 'fields.code' | translate }}</mat-label>
-            <input matInput formControlName="code" readonly>
-          </mat-form-field> -->
-
           <mat-form-field class="col-span-4">
             <mat-label>{{ 'fields.protocolFields.name' | translate }}</mat-label>
             <input matInput formControlName="name">
@@ -32,7 +27,7 @@
             <div class="table-header-group bg-gray-200">
               <div class="table-cell p-2 border border-gray-300 w-1/12">Orden</div>
               <div class="table-cell p-2 border border-gray-300 w-2/12">Cod. Pregunta</div>
-              <div class="table-cell p-2 border border-gray-300 w-6/12">Pregunta *</div>
+              <div class="table-cell p-2 border border-gray-300 w-6/12">Pregunta*</div>
               <div class="table-cell p-2 border border-gray-300 w-2/12">Infracción</div>
               <div class="table-cell p-2 border border-gray-300 w-1/12">Resp</div>
             </div>
@@ -41,12 +36,12 @@
             <div formArrayName="question" class="table-row-group">
               <div *ngFor="let fila of question.controls; let i=index" [formGroupName]="i" class="table-row">
                 <div class="table-cell p-2 border border-gray-300">
-                  <label [for]="'orderQuestion-' + i" class="sr-only">Pregunta</label>
+                  <label [for]="'orderQuestion-' + i" class="sr-only">Orden</label>
                   <input [id]="'orderQuestion-' + i" formControlName="orderQuestion" class="w-full" >
                 </div>
 
                 <div class="table-cell p-2 border border-gray-300">
-                  <label [for]="'codeQuestion-' + i" class="sr-only">Código de Infracción</label>
+                  <label [for]="'codeQuestion-' + i" class="sr-only">Código de Pregunta</label>
                   <input [id]="'codeQuestion-' + i" formControlName="codeQuestion" class="w-full">
                 </div>
 

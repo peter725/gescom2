@@ -14,6 +14,7 @@ interface TableRow {
   index: number;
   codeQuestion: string;
   question: string;
+  response: string;
   si: boolean;
   no: boolean;
   noProcede: boolean;
@@ -98,7 +99,7 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
       },
     }));
 
-    console.log('aqui imorime las preguntas que van al componente',this.dataSourceQuestion);
+    console.log('aqui imprime las preguntas que van al componente',this.dataSourceQuestion);
     this.questionsArray = this.dataSourceQuestion;
   
   }
@@ -191,21 +192,25 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
   }
 
   // Método para seleccionar todos los elementos de una columna específica en la tabla
-selectAllChecks(column: string): void {
-  this.questionsArray.forEach((element: TableRow) => {
-    element[column] = true;
-  });
-}
+  selectAllChecks(column: string): void {
+    this.questionsArray.forEach((element: TableRow) => {
+      console.log('selectAllChecks', element.response);
+      if (element.response === 'S'){
+        element[column] = true;
+      }
 
-// Método para verificar si todos los elementos de una columna específica están seleccionados
-allSelected(column: string): boolean {
-  if(this.questionsArray){
-    return this.questionsArray.every((element: TableRow) => element[column]);
-  }else{
-    return false;
+    });
   }
-  
-}
+
+  // Método para verificar si todos los elementos de una columna específica están seleccionados
+  allSelected(column: string): boolean {
+    if(this.questionsArray){
+      return this.questionsArray.every((element: TableRow) => element[column]);
+    }else{
+      return false;
+    }
+
+  }
 
   protected getColumns(): ColumnSrc[] {
     return [

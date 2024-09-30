@@ -41,6 +41,7 @@ export class ProtocolQuestionDialogComponent {
   }
 
   handleSelectionChange(event: {row: any, selected: boolean}) {
+    console.log('handleSelectionChange',event);
     if (event.selected) {
       // Añadir el elemento si no existe
       if (!this.dataSource.some(item => item.id === event.row.id)) {
@@ -55,7 +56,8 @@ export class ProtocolQuestionDialogComponent {
  
 
   closeDialog() {
-    console.log(this.dataSource);
+    console.log('closeDialog',this.protocolQuestionListComponent.guardarRespuestas());
+    console.log('closeDialog',this.dataSource)
     // Llama al método guardarRespuestas() del componente hijo
     this.protocolQuestionListComponent.guardarRespuestas();
     this.dialogRef.close(this.dataSource);

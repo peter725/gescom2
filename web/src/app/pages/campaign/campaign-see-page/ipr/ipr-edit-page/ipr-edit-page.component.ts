@@ -141,7 +141,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
       question: this.fb.control(null,[Validators.required]),
-      formula: this.fb.control(null,[Validators.required]),
+      formula: this.fb.control(null),
       porcentaje: this.fb.control(null, Validator.validateNumber()),
     });
   }
@@ -151,7 +151,7 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
       id: data?.id || null,
       orderQuestion: [{ value: data?.orderQuestion, disabled: true }],
       question: [data?.question || null, Validators.required],
-      formula: [data?.formula || null, Validators.required],
+      formula: [data?.formula || null],
       porcentaje: [data?.percentageRespectTo || null, Validator.validateNumber()],
     });
   }

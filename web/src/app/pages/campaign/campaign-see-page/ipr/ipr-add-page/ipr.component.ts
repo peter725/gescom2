@@ -112,7 +112,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
       question: this.fb.control(null,[Validators.required]),
-      formula: this.fb.control(null,[Validators.required]),
+      formula: this.fb.control(null),
       porcentaje: this.fb.control(null, Validator.validateNumber()),
     });
   }
@@ -150,6 +150,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
   protected createCombinedFormula(respuestas: any[], rowIndex: number){
     console.log('Respuesta', respuestas);
     this.respuestasUsuarioCombined = respuestas;
+    console.log('Respuestas', respuestas);
     let stringCombinado = '';
     this.respuestasUsuarioCombined.forEach((respuesta, index) => {
       const respuestaValue = respuesta.respuesta ?? ''; // Si respuesta.respuesta es undefined, se asigna un espacio en blanco

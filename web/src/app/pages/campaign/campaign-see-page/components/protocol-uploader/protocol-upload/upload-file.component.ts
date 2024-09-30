@@ -232,8 +232,14 @@ export class UploadFileComponent <T=any> {
       case 'docx':
         mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
         break;
+      case 'doc':
+        mimeType = 'application/msword';
+        break;
       case 'xlsx':
         mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        break;
+      case 'xls':
+        mimeType = 'application/vnd.ms-excel';
         break;
       case 'pdf':
         mimeType = 'application/pdf';

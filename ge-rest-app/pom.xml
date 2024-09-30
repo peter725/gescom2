@@ -189,6 +189,7 @@
                 <activatedProperties>local,swagger,jdbc</activatedProperties>
                 <env.domain>local</env.domain>
                 <baseURL>http://localhost:8085</baseURL>
+                <documents>C:/documentospro/documentos/gescom</documents>
                 <pathLogs>C:/home/maldonado/OneDrive/Documents/Documents</pathLogs>
                 <config.files>C:/Users/acolina/IdeaProjects/repo</config.files>
             </properties>
@@ -209,6 +210,7 @@
                 <activatedProperties>dev,swagger,jndi-jdbc</activatedProperties>
                 <env.domain>dev</env.domain>
                 <baseURL>http://micapps01des.consumo.gob.es:8080</baseURL>
+                <documents>/documentosdes/documentos/GESCOM</documents>
                 <pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
                 <config.files>/documentospro/properties/GESCO</config.files>
             </properties>

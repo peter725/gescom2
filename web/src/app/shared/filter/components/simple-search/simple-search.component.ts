@@ -10,6 +10,8 @@ import { FilterComponent } from '../filter.component';
 })
 export class SimpleSearchComponent extends FilterComponent<SimpleSearchForm> {
 
+  @Input() showToggleHidden: boolean = true;
+
   readonly resourceName = 'global';
   override readonly searchMode = SearchMode.SEARCH;
 

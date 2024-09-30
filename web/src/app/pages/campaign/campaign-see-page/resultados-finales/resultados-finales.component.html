@@ -1,8 +1,3 @@
-<!-- <form [formGroup]="form">
-  
-</form> -->
-
-
 <mat-stepper [linear]="true" (selectionChange)="onStepChange($event)" #stepper>
     <mat-step [stepControl]="editForm1">
     <ng-template matStepLabel>Criterios</ng-template>
@@ -115,23 +110,23 @@
                         </td>
                       </ng-container>
                       <ng-template #showResponses>
-                        <td class="p-4">
+                        <td class="p-4 w-1/12">
                           {{ preg.orderQuestion }}
                         </td>
-                        <td class="p-4">
+                        <td class="p-4 w-8/12">
                           {{ preg.question }}
                         </td>
-                        <td class="p-4">
+                        <td class="p-4 w-1/12 text-center">
                           <label for="'numResponseSi-' + i" class="sr-only">Respuesta Sí</label>
-                          <input id="'numResponseSi-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
+                          <input id="'numResponseSi-' + i" class="input-con-borde w-full max-w-xs" type="number" [(ngModel)]="preg.numResponseSi" readonly/>
                         </td>
-                        <td class="p-4">
+                        <td class="p-4 w-1/12 text-center">
                           <label for="'numResponseNo-' + i" class="sr-only">Respuesta No</label>
-                          <input id="'numResponseNo-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
+                          <input id="'numResponseNo-' + i" class="input-con-borde w-full max-w-xs" type="number" [(ngModel)]="preg.numResponseNo" readonly/>
                         </td>
-                        <td class="p-4">
+                        <td class="p-4 w-1/12 text-center">
                           <label for="'numResponseNoProcede-' + i" class="sr-only">Respuesta No Procede</label>
-                          <input id="'numResponseNoProcede-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
+                          <input id="'numResponseNoProcede-' + i" class="input-con-borde w-full max-w-xs" type="number" [(ngModel)]="preg.numResponseNoProcede" readonly/>
                         </td>
                       </ng-template>
                     </tr>
@@ -145,9 +140,9 @@
             <div class="table w-full border-collapse">
               <div class="table-header-group bg-gray-200">
                     <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
-                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
-                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-6/12">Total</div>
-                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-6/12">Porcentaje (%)</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-6/12">Pregunta</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Total</div>
+                    <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-2/12">Porcentaje (%)</div>
                     <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-2/12">% respecto al</div>
               </div>
         
@@ -161,17 +156,17 @@
                     <td  class="p-4">
                         {{ preg['question'] }}
                     </td>
-                    <td class="p-4">
-                        <label [for]="'total_' + i" class="sr-only">Porcentaje</label>
-                        <input [id]="'total_' + i" class="input-con-borde" type="number" [(ngModel)]="preg.total" readonly/>
+                    <td class="p-4 w-1/12">
+                        <label [for]="'total_' + i" class="sr-only">Total</label>
+                        <input [id]="'total_' + i" class="input-con-borde w-full" type="number" [(ngModel)]="preg.total" readonly/>
                     </td>
-                    <td class="p-4">
+                    <td class="p-4 w-2/12">
                       <label [for]="'porcentaje_' + i" class="sr-only">Porcentaje</label>
-                      <input [id]="'porcentaje_' + i" class="input-con-borde" type="number" [(ngModel)]="preg.percentage" readonly/>
+                      <input [id]="'porcentaje_' + i" class="input-con-borde w-full" type="number" [(ngModel)]="preg.percentage" readonly/>
                     </td>
-                    <td class="p-4">
+                    <td class="p-4 w-2/12">
                         <label [for]="'porcentajeRespectoA_' + i" class="sr-only">Porcentaje Respecto A</label>
-                        <input [id]="'porcentajeRespectoA_' + i" class="input-con-borde" type="number" [(ngModel)]="preg.percentageRespectTo" readonly/>
+                        <input [id]="'porcentajeRespectoA_' + i" class="input-con-borde w-full" type="number" [(ngModel)]="preg.percentageRespectTo" readonly/>
                     </td>
                   </ng-container>
                 </tr>

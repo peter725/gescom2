@@ -331,13 +331,13 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   }
   
   navegarAComponenteProtocol(protocolId: number) {
-    // Asumiendo que 'this.campaign' contiene los datos de la campaña actual
+
     this.campaign = this.form.value;
     const minimalCampaignData = {
       id: this.campaign.id,
       nameCampaign: this.campaign.nameCampaign
     };
-
+    localStorage.setItem('currentCampaign', JSON.stringify(minimalCampaignData));
     this.dataSharingService.changeCampaign(minimalCampaignData);
     this.router.navigate([`/app/protocol/${protocolId}`]);
   }

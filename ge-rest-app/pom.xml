@@ -221,6 +221,7 @@
                 <activatedProperties>pre,swagger,jndi-jdbc</activatedProperties>
                 <env.domain>pre</env.domain>
                 <baseURL>http://micapps01pre.consumo.gob.es:8080</baseURL>
+                <documents>/documentospro/documentos/GESCO</documents>
                 <pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
                 <config.files>/documentospro/properties/GESCO</config.files>
             </properties>

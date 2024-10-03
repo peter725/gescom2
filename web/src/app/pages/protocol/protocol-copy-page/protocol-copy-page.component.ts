@@ -25,14 +25,17 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
   protected override _editResourceTitle = 'pages.protocol.edit';
 
   campaignIdShared = 0;
+  cancelRedirectPath = '../../protocol/consulta';
 
   override ngOnInit(): void {
     super.ngOnInit();
-  
     // Obtener el campaignIdShared del localStorage
     const campaignIdSharedString = localStorage.getItem('campaignIdShared');
     this.campaignIdShared = campaignIdSharedString ? parseInt(campaignIdSharedString, 10) : 0;
-  
+
+    console.log('ngOnInit', this.campaignIdShared)
+    // Actualizar la ruta de redirección al inicio, si ya existe un campaignIdShared
+    this.updateRedirectPath();
     // Suscribirse al evento sharedData$
     this.sharedDataService.sharedData$.subscribe(data => {
       this.campaignIdShared = data?.campaignId;
@@ -40,7 +43,13 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
       localStorage.setItem('campaignIdShared', String(this.campaignIdShared));
       }
       console.log('Campaign ID shared service copy:', this.campaignIdShared);
+      //this.updateRedirectPath();
     });
+  }
+
+  private updateRedirectPath(): void {
+    this.cancelRedirectPath = this.campaignIdShared ? `../../../campanas/${this.campaignIdShared}/ver` : '../../protocol/consulta';
+    console.log('Cancel Redirect Path:', this.cancelRedirectPath);
   }
 
   clearInfringement(): void {
@@ -125,7 +134,6 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
   }
 
   refreshOrder(){
-
     // Recorre todas las filas restantes para actualizar el campo 'orderQuestion'
     this.question.controls.forEach((control, i) => {
       control.get('orderQuestion')?.setValue(i + 1);
@@ -208,15 +216,12 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
   }
 
 
+
   protected override async afterSaveSuccess(result: any) {
-
-
     // Redirige a la página anterior
     this.redirectAfterSavePath = ['/app/campanas', String(this.campaignIdShared), 'ver'];
 
-    await super.afterSaveSuccess(result); 
-
-   
+    await super.afterSaveSuccess(result);
   }
 
 

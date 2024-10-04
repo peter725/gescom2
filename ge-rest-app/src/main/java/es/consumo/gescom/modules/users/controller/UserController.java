@@ -147,7 +147,7 @@ public class UserController extends AbstractCrudController<UserEntity, UserDTO, 
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            throw new AppException("Error de la aplicacion, consulte con el administrador", e);
+        	throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", e);
         }
 
     }

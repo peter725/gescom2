@@ -12,8 +12,11 @@ import java.util.Optional;
 @Repository
 public interface LoginRepository extends GESCOMRepository<LoginEntity, Long> {
 
-    @Query("SELECT u FROM LoginEntity u where lower(u.username) =lower(:username)")
+	@Query("SELECT u FROM LoginEntity u where lower(u.username) =lower(:username)")
     Optional<LoginEntity> findByUsername(String username);
+	
+	@Query("SELECT u FROM LoginEntity u where lower(u.username) =lower(:username) AND u.id != :id")
+    Optional<LoginEntity> findByUsernameAndIdNotIn(String username, Long id);
 
     @Query("SELECT u FROM LoginEntity u where u.id = :id")
     List<LoginEntity> findByLoginId(Long id);

@@ -178,6 +178,11 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
             loginRepository.save(loginEntity);
         }else {
             loginEntity = userEntity.getLogin();
+            // Verificar si ya existe un usuario con el mismo DNI/NIF
+            Optional<LoginEntity> existingLogin = loginRepository.findByUsernameAndIdNotIn(userDTO.getDni(), loginEntity.getId());
+            if (existingLogin.isPresent()) {
+                throw new Exception("Un usuario con este DNI/NIF ya existe.");
+            }
             Set<RoleEntity> rolesSet = new HashSet<>();
             rolesSet.add(roleEntity);
             loginEntity.setRoles(rolesSet);

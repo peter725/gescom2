@@ -38,8 +38,11 @@ public interface ProtocolRepository extends GESCOMRepository<ProtocolEntity, Lon
     @Override
     @Query(value = "SELECT pr FROM ProtocolEntity pr "
             + "WHERE "
-            + "(:#{#criteria.search} is null OR UPPER(pr.name) LIKE :#{#criteria.search}) "
+            + "(:#{#criteria.code} is null OR UPPER(pr.code) LIKE :#{#criteria.code}) "
+            + "AND (:#{#criteria.name} is null OR UPPER(TRIM(pr.name)) LIKE :#{#criteria.name}) "
+            + "AND (:#{#criteria.search} is null OR UPPER(TRIM(pr.name)) LIKE :#{#criteria.search}) "
             + "AND (:#{#criteria.campaignId} is null OR pr.campaignId.id in :#{#criteria.campaignId}) "
+
     )
     public Page<ProtocolEntity.SimpleProjection> findAllByCriteria(ProtocolCriteria criteria, Pageable pageable);
 }

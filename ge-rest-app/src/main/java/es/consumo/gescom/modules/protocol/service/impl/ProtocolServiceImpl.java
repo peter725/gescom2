@@ -36,6 +36,10 @@ import es.consumo.gescom.modules.totalProtocolResults.repository.TotalProtocolRe
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -396,13 +400,24 @@ public class ProtocolServiceImpl extends EntityCrudService<ProtocolEntity, Long>
 
     @Override
     protected Page<ProtocolEntity.SimpleProjection> findAllFromCriteria(FilterCriteria criteria) {
-
+        Pageable pageable = criteria.toPageable();
+        Sort sort = pageable.getSort();
+        for (Sort.Order order : sort) {
+            if (order.getProperty().equals("name")) {
+                // Crea un nuevo Pageable con la ordenación personalizada usando JpaSort.unsafe
+                pageable = PageRequest.of(
+                    pageable.getPageNumber(),
+                    pageable.getPageSize(),
+                    JpaSort.unsafe(order.getDirection(), "TRIM(pr.name)") // Aquí solo pasamos TRIM
+                );
+            }
+        }
         ProtocolCriteria protocolCriteria = (ProtocolCriteria) criteria;
         if (protocolCriteria.getSearch() != null) {
             protocolCriteria.setSearch(protocolCriteria.getSearch().toUpperCase());
         }
-        protocolCriteria.setSort(new String[]{"id;asc"});
-        Page<ProtocolEntity.SimpleProjection> protocolSimpleProjections = ((ProtocolRepository) repository).findAllByCriteria(protocolCriteria, protocolCriteria.toPageable());
+        //protocolCriteria.setSort(new String[]{"id;asc"});
+        Page<ProtocolEntity.SimpleProjection> protocolSimpleProjections = ((ProtocolRepository) repository).findAllByCriteria(protocolCriteria, pageable);
 
         return protocolSimpleProjections;
 

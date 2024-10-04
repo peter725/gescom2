@@ -194,6 +194,20 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
     }
   }
 
+  override resetForm(): void {
+    super.resetForm();
+    
+    if (this.srcData) {
+      // Ordenar las preguntas según orderQuestion
+      const questions = this.form.get('question') as unknown as FormArray;
+      questions.clear();
+      this.srcData.question.sort((a: any, b: any) => a.orderQuestion - b.orderQuestion);
+      this.srcData.question.forEach((q: any) => {
+        questions.push(this.loadRowQuestion(q.orderQuestion, q.codeQuestion, q.question, q.codeInfringement, q.response));
+      });
+    }
+  }
+
   loadRowQuestion(orden: number, codeQuestion: string, question: string, codeInfringement: string, response: string): FormGroup {
 
     const formattedResponse = response === 'N' ? 'NO' : response === 'S' ? 'SI' : response;

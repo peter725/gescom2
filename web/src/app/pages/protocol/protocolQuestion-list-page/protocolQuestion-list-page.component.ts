@@ -192,13 +192,12 @@ export class ProtocolQuestionListPageComponent extends BaseListPageComponent<any
   }
 
   // Método para seleccionar todos los elementos de una columna específica en la tabla
-  selectAllChecks(column: string): void {
+  selectAllChecks(column: string, checked: boolean): void {
     this.questionsArray.forEach((element: TableRow) => {
-      console.log('selectAllChecks', element.response);
-      if (element.response === 'S'){
-        element[column] = true;
-      }
 
+      if (element.response === 'S'){
+        element[column] = checked;
+      }
     });
   }
 

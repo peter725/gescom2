@@ -41,7 +41,7 @@ export class ProtocolQuestionDialogComponent {
   }
 
   handleSelectionChange(event: {row: any, selected: boolean}) {
-    console.log('handleSelectionChange',event);
+    console.log('Entra AQUI',event);
     if (event.selected) {
       // Añadir el elemento si no existe
       if (!this.dataSource.some(item => item.id === event.row.id)) {

@@ -49,36 +49,62 @@
       <ng-container matColumnDef="si">
         <th *matHeaderCellDef mat-header-cell style="width: 10%">
           <div style="display: flex; align-items: center;">
-            <span>Si</span>
-            <mat-checkbox style="margin-left: 8px;" (change)="selectAllChecks('si')" [checked]="allSelected('si')"></mat-checkbox>
+              <mat-checkbox
+                id = "generalCheckSi"
+                style="margin-left: 8px;"
+                (change)="selectAllChecks('si', $event.checked)"
+                [checked]="allSelected('si')"
+                aria-label="Seleccionar todos 'Sí'">
+                Si
+              </mat-checkbox>
           </div>
         </th>
         <td *matCellDef="let element" mat-cell>
-          <mat-checkbox *ngIf="element.response !== 'N'" [(ngModel)]="element.si"></mat-checkbox>
+          <mat-checkbox
+            *ngIf="element.response !== 'N'"
+            [(ngModel)]="element.si"
+            aria-label="Seleccionar todos 'Si'"><div class="hidden">Si</div>
+          </mat-checkbox>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="no">
         <th *matHeaderCellDef mat-header-cell style="width: 10%">
           <div style="display: flex; align-items: center;">
-            <span>No</span>
-            <mat-checkbox style="margin-left: 8px;" (change)="selectAllChecks('no')" [checked]="allSelected('no')"></mat-checkbox>
+            <mat-checkbox style="margin-left: 8px;"
+              (change)="selectAllChecks('no', $event.checked)"
+              [checked]="allSelected('no')"
+              aria-label="Seleccionar todos 'No'">
+              No
+            </mat-checkbox>
           </div>
         </th>
         <td *matCellDef="let element" mat-cell>
-          <mat-checkbox *ngIf="element.response !== 'N'" [(ngModel)]="element.no"></mat-checkbox>
+          <mat-checkbox
+            *ngIf="element.response !== 'N'"
+            [(ngModel)]="element.no"
+            aria-label="Respuesta 'No'"><div class="hidden">No</div>
+          </mat-checkbox>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="noProcede">
         <th *matHeaderCellDef mat-header-cell style="width: 15%">
           <div style="display: flex; align-items: center;">
-            <span>No procede</span>
-            <mat-checkbox style="margin-left: 8px;" (change)="selectAllChecks('noProcede')" [checked]="allSelected('noProcede')"></mat-checkbox>
+            <mat-checkbox style="margin-left: 8px;"
+              (change)="selectAllChecks('noProcede', $event.checked)"
+              [checked]="allSelected('noProcede')"
+              aria-label="Respuesta 'No procede'">
+              No procede
+            </mat-checkbox>
           </div>
         </th>
         <td *matCellDef="let element" mat-cell>
-          <mat-checkbox *ngIf="element.response !== 'N'" [(ngModel)]="element.noProcede"></mat-checkbox>
+          <mat-checkbox
+            *ngIf="element.response !== 'N'"
+            [(ngModel)]="element.noProcede"
+            aria-label="Respuesta 'No procede'"><div class="hidden">NP</div>
+          </mat-checkbox>
         </td>
       </ng-container>
     </table>
@@ -92,9 +118,9 @@
   </div>
   <div class="blockCheck">
     <h3 style="margin-right: 40px;">Total de productos/servicios:</h3>
-    <label for="Controlados">Controlados<input type="checkbox" id="DC9"></label>
-    <label for="Correctos">Correctos<input type="checkbox" id="DC10"></label>
-    <label for="Incorrectos">Incorrectos<input type="checkbox" id="DC11"></label>
+    <label for="DC9">Controlados<input type="checkbox" id="DC9"></label>
+    <label for="DC10">Correctos<input type="checkbox" id="DC10"></label>
+    <label for="DC11">Incorrectos<input type="checkbox" id="DC11"></label>
   </div>
 </div>
 

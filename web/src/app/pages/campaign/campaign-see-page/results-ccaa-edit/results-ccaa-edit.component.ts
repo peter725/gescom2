@@ -1,5 +1,5 @@
-import { Component, inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, HostListener, inject, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
@@ -62,36 +62,55 @@ export class ResultsCcaaEditComponent implements OnInit{
   editForm1: FormGroup = this.fb.group({
     id: [],
     campania: this.fb.group({
-      id: this.fb.control<number | null>(null),
-      year: this.fb.control<number | null>(null),
-      codeCpa: this.fb.control<string | null>(null),
-      nameCampaign: this.fb.control<string | null>(null),
-      campaignType: this.fb.control<string | null>(null),
-      participants: this.fb.control<any[]>([]),
-      ambit: this.fb.control<string | null>(null),
-      specialists: this.fb.control<any[]>([]),
-      proponents: this.fb.control<any[]>([]),
-      autonomousCommunityResponsible: this.fb.control<string | null>(null),
-      phaseCampaign: this.fb.control<string | null>(null),
-      createdAt: this.fb.control<string | null>(null),
-      updatedAt: this.fb.control<string | null>(null),
-      state: this.fb.control<string | null>(null),
-      protocols: this.fb.control<any[]>([]),
-      campaignProductServiceDTOS: this.fb.control<any[]>([]),
+      id: this.fb.control<number | null>({ value: null, disabled: true }),
+      year: this.fb.control<number | null>({ value: null, disabled: true }),
+      codeCpa: this.fb.control<string | null>({ value: null, disabled: true }),
+      nameCampaign: this.fb.control<string | null>({ value: null, disabled: true }),
+      campaignType: this.fb.control<string | null>({ value: null, disabled: true }),
+      participants: this.fb.control<any[]>({ value: [], disabled: true }),
+      ambit: this.fb.control<string | null>({ value: null, disabled: true }),
+      specialists: this.fb.control<any[]>({ value: [], disabled: true }),
+      proponents: this.fb.control<any[]>({ value: [], disabled: true }),
+      autonomousCommunityResponsible: this.fb.control<string | null>({ value: null, disabled: true }),
+      phaseCampaign: this.fb.control<string | null>({ value: null, disabled: true }),
+      createdAt: this.fb.control<string | null>({ value: null, disabled: true }),
+      updatedAt: this.fb.control<string | null>({ value: null, disabled: true }),
+      state: this.fb.control<string | null>({ value: null, disabled: true }),
+      protocols: this.fb.control<any[]>({ value: [], disabled: true }),
+      campaignProductServiceDTOS: this.fb.control<any[]>({ value: [], disabled: true }),
     }),
     protocolo: [],
     producto: [],
     ca: [],
     numExistentes: this.fb.control<number | null>(null),
-    numControlados: this.fb.control<number | null>(null),
-    totalProdControlados: this.fb.control<number | null>(null),
-    totalProdCorrectos: this.fb.control<number | null>(null),
-    totalProdIncorrectos: this.fb.control<number | null>(null),
+    numControlados: this.fb.control<number | null>(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+    totalProdControlados: this.fb.control<number | null>(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+    totalProdCorrectos: this.fb.control<number | null>(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
+    totalProdIncorrectos: this.fb.control<number | null>(null, [Validators.required, Validators.pattern('^[0-9]*$')]),
   },
     {
         validators: [ Validator.totalProductsValidator('totalProdControlados', 'totalProdCorrectos', 'totalProdIncorrectos') ]
 
   });
+
+  @HostListener( 'window:keydown', [ '$event' ] )
+  handleKeyboardEventkeydown(event: KeyboardEvent) {
+    const prohibitedKeys = ['-', '+', 'e', '.'];
+    const allowedKeys = ['Backspace', 'Tab', 'Delete', 'ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'];
+    console.log(event);
+    if (!allowedKeys.includes(event.key) && (prohibitedKeys.includes(event.key) || !event.key.match(/^[0-9]+$/))) {
+      console.log("PROHIBITED!");
+      event.preventDefault();
+    }
+  }
+
+  @HostListener( 'window:paste', [ '$event' ] )
+  handlePasteEvent(event: ClipboardEvent) {
+    let pastedText = event.clipboardData?.getData('text');
+    if (pastedText && (pastedText.includes('-') || pastedText.includes('+') || pastedText.includes('e') || pastedText.includes('.') || !pastedText.match(/^[0-9]+$/))) {
+      event.preventDefault();
+    }
+  }
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -109,7 +128,7 @@ export class ResultsCcaaEditComponent implements OnInit{
       this.campaign = state.campaign;
       this.resultadoSelected = state.resultadoSelected;
     } else {
-      this.router.navigate([`app/campanas/consulta`]);
+      this.router.navigate([`../../ver`], { relativeTo: this.activatedRoute });
     }
   }
 
@@ -238,10 +257,11 @@ export class ResultsCcaaEditComponent implements OnInit{
 
   getSumaRespuestas(pregSi: number, pregNo: number, pregNoProcede: number): boolean {
     let sumaMayor = false;
+    const totProductosControlados = this.editForm1.controls['totalProdControlados'].value;
 
     if (pregSi !== null && pregNo !== null && pregNoProcede !== null &&
       pregSi !== undefined && pregNo !== undefined && pregNoProcede !== undefined) {
-      if (pregSi + pregNo + pregNoProcede !== this.totalProdControlados) {
+      if (pregSi + pregNo + pregNoProcede !== totProductosControlados) {
         sumaMayor = true;
       }
     }

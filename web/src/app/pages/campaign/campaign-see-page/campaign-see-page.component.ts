@@ -34,6 +34,7 @@ export class CampaignSeePageComponent extends EditPageBaseComponent<any , Campai
   @ViewChild("fileUpload", {read: ElementRef})
   fileUpload!: ElementRef;
   @Input() requiredFileType = '';
+  cancelRedirectPath = '../../consulta';
 
   readonly resourceName = 'campaign';
   readonly protocolFileUpload = 'protocolFileUpload';

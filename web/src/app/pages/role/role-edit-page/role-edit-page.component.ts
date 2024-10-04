@@ -86,4 +86,12 @@ export class RoleEditPageComponent extends EditPageBaseComponent<Role, RoleForm>
   errorsModulePermissions(index: number) {
     return (this.modules.controls[index] as FormGroup).controls['permissions'].errors;
   }
+
+  override resetForm(): void {
+    super.resetForm();
+
+    (this.form.controls.modules as unknown as FormArray).clear();
+    (this.form.controls.modules as unknown as FormArray).push(this.crearFilaModule(1));
+    this.afterLoadDataSuccess(this.startValue);
+  }
 }

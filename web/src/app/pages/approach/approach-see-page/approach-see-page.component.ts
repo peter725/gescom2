@@ -23,6 +23,8 @@ export class ApproachSeePageComponent extends EditPageBaseComponent<Approach, Cr
     protected override _editResourceTitle = "pages.approach.see";
     public override redirectAfterSave = false;
 
+    cancelRedirectPath = '../../consulta';
+
     protected buildForm(){
         return this.fb.group<ControlsOf<CreateApproach>>({
             id: this.fb.control(null),

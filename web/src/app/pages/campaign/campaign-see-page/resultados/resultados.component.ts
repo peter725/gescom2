@@ -63,22 +63,22 @@ export class ResultadosComponent implements OnInit{
   editForm1 = this.fb.group({
     id: [],
     campania: this.fb.group<ControlsOf<CampaignForm>>({
-      id: this.fb.control(null),
-      year: this.fb.control(null ),
-      codeCpa: this.fb.control(null),
-      nameCampaign: this.fb.control(null),
-      campaignType: this.fb.control(null),
-      participants: this.fb.control([]),
-      ambit: this.fb.control(null),
-      specialists: this.fb.control([]),
-      proponents: this.fb.control([]),
-      autonomousCommunityResponsible: this.fb.control(null),
-      phaseCampaign: this.fb.control(null),
-      createdAt: this.fb.control(null),
-      updatedAt: this.fb.control(null),
-      state: this.fb.control(null),
-      protocols: this.fb.control([]),
-      campaignProductServiceDTOS: this.fb.control([]),
+      id: this.fb.control({ value: null, disabled: true }),
+      year: this.fb.control({ value: null, disabled: true }),
+      codeCpa: this.fb.control({ value: null, disabled: true }),
+      nameCampaign: this.fb.control({ value: null, disabled: true }),
+      campaignType: this.fb.control({ value: null, disabled: true }),
+      participants: this.fb.control({ value: [], disabled: true }),
+      ambit: this.fb.control({ value: null, disabled: true }),
+      specialists: this.fb.control({ value: [], disabled: true }),
+      proponents: this.fb.control({ value: [], disabled: true }),
+      autonomousCommunityResponsible: this.fb.control({ value: null, disabled: true }),
+      phaseCampaign: this.fb.control({ value: null, disabled: true }),
+      createdAt: this.fb.control({ value: null, disabled: true }),
+      updatedAt: this.fb.control({ value: null, disabled: true }),
+      state: this.fb.control({ value: null, disabled: true }),
+      protocols: this.fb.control({ value: [], disabled: true }),
+      campaignProductServiceDTOS: this.fb.control({ value: [], disabled: true }),
     }),
     protocolo: [null, Validators.required],
     producto: [],
@@ -97,6 +97,16 @@ export class ResultadosComponent implements OnInit{
   {
     validators: [ Validator.totalProductsValidator('totalProdControlados', 'totalProdCorrectos', 'totalProdIncorrectos') ]
   });
+
+  onKeyDown(event: KeyboardEvent) {
+    const prohibitedKeys = ['-', '+', 'e', '.'];
+    const allowedKeys = ['Backspace', 'Tab', 'Delete', 'ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'];
+    console.log(event);
+    if (!allowedKeys.includes(event.key) && (prohibitedKeys.includes(event.key) || !event.key.match(/^[0-9]+$/))) {
+      console.log("PROHIBITED!");
+      event.preventDefault();
+    }
+  }
 
   validateNumber(event: KeyboardEvent): void {
     const charCode = (event.which) ? event.which : event.keyCode;

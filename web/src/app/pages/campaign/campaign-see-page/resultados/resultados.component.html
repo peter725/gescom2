@@ -78,12 +78,12 @@
             <div class="grid grid-cols-6 gap-1.5">
                 <mat-form-field class="col-span-3">
                     <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
-                    <input matInput [value]="protocoloSelected?.name" readonly>
+                    <input matInput [value]="protocoloSelected?.name" readonly disabled>
                 </mat-form-field>
 
                 <mat-form-field class="col-span-3">
                     <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
-                    <input matInput [value]="productoSelected?.productName" readonly>
+                    <input matInput [value]="productoSelected?.productName" readonly disabled>
                 </mat-form-field>
             </div>
 
@@ -91,7 +91,7 @@
             <div class="grid grid-cols-6 gap-1.5">
                 <mat-form-field class="col-span-6" >
                     <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
-                    <input matInput [value]="caSelected?.name" readonly>
+                    <input matInput [value]="caSelected?.name" readonly disabled>
                 </mat-form-field>
             </div>
 
@@ -175,12 +175,12 @@
             <div class="grid grid-cols-6 gap-1.5">
                 <mat-form-field class="col-span-3">
                     <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
-                    <input matInput [value]="protocoloSelected?.name" readonly>
+                    <input matInput [value]="protocoloSelected?.name" readonly disabled>
                 </mat-form-field>
 
                 <mat-form-field class="col-span-3">
                     <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
-                    <input matInput [value]="productoSelected?.productName" readonly>
+                    <input matInput [value]="productoSelected?.productName" readonly disabled>
                 </mat-form-field>
             </div>
 
@@ -188,7 +188,7 @@
             <div class="grid grid-cols-6 gap-1.5">
                 <mat-form-field class="col-span-6">
                     <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
-                    <input matInput [value]="caSelected?.name" readonly>
+                    <input matInput [value]="caSelected?.name" readonly disabled>
                 </mat-form-field>
             </div>
 
@@ -204,14 +204,14 @@
 
                   <!-- Filas de la tabla -->
                   <div class="table-row-group">
-                    <tr *ngFor="let preg of preguntasProtocolo; let i = index">
+                    <tr *ngFor="let preg of preguntasProtocolo; let i = index" class="border-gray-300 border">
                         <ng-container *ngIf="preg.response == 'N'">
                             <!-- Pregunta con respuesta 'N' -->                        
-                                <td class="p-4 bg-gray-200">
+                                <td class="p-4 bg-gray-200 border-gray-300 border">
                                     {{ preg['orderQuestion'] }}
                                     
                                 </td>
-                                <td  class="p-4 bg-gray-200">
+                                <td  class="p-4 bg-gray-200 border-gray-300 border">
                                     {{ preg['question'] }}
                                 </td>
                                 <td class="p-4 bg-gray-200"></td>
@@ -221,27 +221,26 @@
 
                         <ng-container *ngIf="preg.response == 'S'">
                             <!-- Pregunta con respuesta 'S' -->                        
-                                <td class="p-4">
+                                <td class="p-4 border-gray-300 border">
                                     {{ preg['orderQuestion'] }}
                                 </td>
-                                <td  class="p-4">
+                                <td  class="p-4 border-gray-300 border">
                                   {{ preg['question'] }}
                                 </td>
                                 <td class="p-4">
                                   <label for="'numResponseSi-' + i" class="sr-only">Respuesta Sí</label>
-                                  <input id="'numResponseSi-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" />
+                                  <input id="'numResponseSi-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" min="0" (keydown)="onKeyDown($event)"/>
                                   <div class="position-absolute" *ngIf="getSumaRespuestas(preg?.numResponseSi, preg?.numResponseNo, preg?.numResponseNoProcede)">
                                     <mat-error>La suma no coincide con el total de productos controlados.</mat-error>
                                   </div>
                                 </td>
                                 <td class="p-4">
                                   <label for="'numResponseNo-' + i" class="sr-only">Respuesta No</label>
-                                  <input id="'numResponseNo-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" />
+                                  <input id="'numResponseNo-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" min="0" (keydown)="onKeyDown($event)"/>
                                 </td>
                                 <td class="p-4">
                                   <label for="'numResponseNoProcede-' + i" class="sr-only">Respuesta No Procede</label>
-                                  <input id="'numResponseNoProcede-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" />
-
+                                  <input id="'numResponseNoProcede-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" min="0" (keydown)="onKeyDown($event)"/>
                                 </td>
                         </ng-container>
                     </tr>

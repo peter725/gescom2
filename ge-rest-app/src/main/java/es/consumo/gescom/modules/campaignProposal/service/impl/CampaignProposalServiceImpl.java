@@ -69,7 +69,8 @@ public class CampaignProposalServiceImpl extends EntityCrudService<CampaignPropo
         campaignProposalDTO.setDate(LocalDate.now());
         campaignProposalDTO.setSent(true);
         //ojo cambiar al momento de estar activo el perfil de usuario aqui se debe guardar la comunidad autonoma de usuario logueado
-        campaignProposalDTO.setAutonomousCommunityId(userEntity.getAutonomousCommunity().getId());
+        if (userEntity.getAutonomousCommunity() != null) campaignProposalDTO.setAutonomousCommunityId(userEntity.getAutonomousCommunity().getId());
+        else campaignProposalDTO.setAutonomousCommunityId(autonmousCommunityRepository.findIdByName("DIRECCIÓN GENERAL DE CONSUMO"));
         CampaignProposalEntity campaignProposal =  campaignProposalConverter.convertToEntity(campaignProposalDTO);
         campaignProposalRepository.save(campaignProposal);
 

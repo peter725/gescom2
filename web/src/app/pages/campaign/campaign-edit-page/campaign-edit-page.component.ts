@@ -23,9 +23,9 @@ export class CampaignEditPageComponent extends EditPageBaseComponent<Campaign, C
   protected buildForm(){
     return this.fb.group<ControlsOf<CreateCampaign>>({
       id: this.fb.control(null),
-      year: this.fb.control(null, [Validators.required]),
+      year: this.fb.control(null, [Validators.required, Validators.pattern(/^\d{4}$/)]),
       codeCpa: this.fb.control(null, [Validators.required]),
-      nameCampaign: this.fb.control(null, []),
+      nameCampaign: this.fb.control(null, [Validators.required]),
       campaignType: this.fb.control(null, [Validators.required]),
       participants: this.fb.control([], [Validators.required]),
       ambit: this.fb.control(null, [Validators.required]),

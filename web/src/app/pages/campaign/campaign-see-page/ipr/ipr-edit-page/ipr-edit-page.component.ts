@@ -321,6 +321,9 @@ export class IprEditPageComponent extends EditPageBaseComponent<any, CampaignIpr
     }
   }
 
+  getQuestionError(index: number, field: string) {
+    return ((this.form.controls.question as unknown as FormArray).at(index) as FormGroup).controls[field].errors
+  }
 
   saveForm() {
     // Verificar si el formulario es válido

@@ -14,5 +14,8 @@ public interface AutonomousCommunityRepository extends GESCOMRepository<Autonomo
 
     @Query(value = "SELECT h FROM AuthorityDGCEntity h  where h.name = :name ")
     Page<AutonomousCommunityEntity.SimpleProjection> findAllAutonomousCommunityByName( Pageable pageable, @Param("name") String name);
+    
+    @Query(value = "SELECT a.id FROM AutonomousCommunityEntity a WHERE a.name = :name")
+    Long findIdByName(String name);
 
 }

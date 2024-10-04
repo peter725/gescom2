@@ -1,20 +1,16 @@
-import { Component, inject, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
-import { EditPageBaseComponent } from '@base/shared/pages/edit-page-base.component';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
-import { CreateProtocol, Protocol, Question } from '@libs/sdk/protocol';
-import { InfringementDialogComponent} from '@base/pages/infringement-dialog/infringement-dialog.component';
+import { Protocol, Question } from '@libs/sdk/protocol';
 import { DataSharingService } from '@base/services/dataSharingService';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Campaign, CampaignForm } from '@libs/sdk/campaign';
+import { CampaignForm } from '@libs/sdk/campaign';
 import { AutonomousCommunity } from '@libs/sdk/autonomousCommunity';
 import { CampaignProductServiceDTO } from '@libs/sdk/productService';
-import { ProtocolResults, TotalProtocolResults } from '@libs/sdk/protocolResults';
-import { ProtocolResultsService } from '@base/shared/utilsService/protocolResults.service';
-
+import { ProtocolResults } from '@libs/sdk/protocolResults';
 
 @Component({
   selector: 'tsw-resultados-see',
@@ -100,7 +96,7 @@ export class ResultadosSeeComponent implements OnInit{
         this.resultadoSelected = state.resultadoSelected;
         console.log('componente ver, resultadoSelected.protocolDTO', this.resultadoSelected?.protocolDTO)
       } else {
-        this.router.navigate([`app/campanas/consulta`]);
+        this.router.navigate([`../../ver`], { relativeTo: this.activatedRoute });
       }
   }
 

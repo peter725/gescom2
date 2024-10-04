@@ -103,7 +103,10 @@ public class UserServiceImpl extends EntityCrudService<UserEntity, Long> impleme
         if (userCriteria.getState() == null || userCriteria.getState().length == 0) {
         	userCriteria.setState(new Integer[]{1});
         }
-        userCriteria.setSort(userCriteria.getSort());
+        if (userCriteria.getSort() != null && userCriteria.getSort()[0].contains("surnames")) {
+        	String order = userCriteria.getSort()[0].split(";")[1];
+        	userCriteria.setSort(new String[] {userCriteria.getSort()[0].replace("surnames", "surname"), "lastSurname;" + order});
+        }
 
         Page<UserEntity.SimpleProjection>  userSimpleProjections = ((UserRepository) repository).findAllByCriteria(userCriteria, userCriteria.toPageable());
 

@@ -111,7 +111,7 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     return this.fb.group({
       id: null,
       orderQuestion: [{ value: orden, disabled: true }],
-      question: this.fb.control(null,[Validators.required]),
+      question: this.fb.control(null, [Validators.required]),
       formula: this.fb.control(null),
       porcentaje: this.fb.control(null, Validator.validateNumber()),
     });
@@ -260,6 +260,10 @@ export class IprComponent extends EditPageBaseComponent<any, CampaignIpr> implem
     } else {
       console.error('FormArray "question" not found in form controls.');
     }
+  }
+
+  getQuestionError(index: number, field: string) {
+    return ((this.form.controls.question as unknown as FormArray).at(index) as FormGroup).controls[field].errors
   }
 
   saveForm() {

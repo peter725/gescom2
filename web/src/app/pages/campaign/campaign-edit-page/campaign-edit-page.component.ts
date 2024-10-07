@@ -4,6 +4,7 @@ import { Campaign, CreateCampaign } from '@libs/sdk/campaign';
 import { ComponentStatus, ControlsOf } from '@libs/commons';
 import { Validators } from '@angular/forms';
 import { FORM_STATUS } from '@base/shared/components/form';
+import { RequestParams } from '@libs/crud-api';
 
 @Component({
   selector: 'app-campaign-edit-page',
@@ -19,6 +20,10 @@ export class CampaignEditPageComponent extends EditPageBaseComponent<Campaign, C
   readonly resourceName = 'campaign';
   protected override _createResourceTitle = 'pages.campaign.add';
   protected override _editResourceTitle = 'pages.campaign.edit';
+
+  participantsParams: RequestParams = {
+    name: "ONLY_AACC"
+  };
 
   protected buildForm(){
     return this.fb.group<ControlsOf<CreateCampaign>>({

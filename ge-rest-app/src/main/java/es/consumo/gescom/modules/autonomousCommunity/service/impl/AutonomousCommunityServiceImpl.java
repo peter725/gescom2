@@ -16,6 +16,7 @@ import es.consumo.gescom.commons.dto.wrapper.CriteriaWrapper;
 import es.consumo.gescom.commons.service.EntityCrudService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -38,10 +39,12 @@ public class AutonomousCommunityServiceImpl extends EntityCrudService<Autonomous
 
     @Override
     public Page<?> findAllCCAAActive(CriteriaWrapper<?> wrapper) {
+    	AutonomousCommunityCriteria autonomousCommunityCriteria = (AutonomousCommunityCriteria) wrapper.getCriteria();
+    	List<String> noAACC = Arrays.asList("DIRECCIÓN GENERAL DE CONSUMO", "CICC");
         List<AutonomousCommunityEntity> autonomousCommunityEntities = new ArrayList<>();
         Page<AutonomousCommunityEntity> autonomousCommunityEntityPage = repository.findAll(wrapper.getCriteria().toPageable());
         autonomousCommunityEntityPage.forEach( autonomousCommunity -> {
-            if(autonomousCommunity.getState().equals(1)){
+            if(autonomousCommunity.getState().equals(1) && (autonomousCommunityCriteria == null || autonomousCommunityCriteria.getName() == null || (autonomousCommunityCriteria.getName().toUpperCase().equals("ONLY_AACC") && !noAACC.contains(autonomousCommunity.getName())))) {
                 autonomousCommunityEntities.add(autonomousCommunity);
             }
         });

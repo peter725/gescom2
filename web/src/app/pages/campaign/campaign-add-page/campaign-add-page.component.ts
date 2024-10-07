@@ -6,6 +6,7 @@ import { ComponentStatus, ControlsOf } from '@libs/commons';
 import { CustomValidators } from '@libs/validators';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 import { Campaign, CreateCampaign } from '@libs/sdk/campaign';
+import { RequestParams } from '@libs/crud-api';
 
 @Component({
   selector: 'app-campaign-add-page',
@@ -24,6 +25,10 @@ export class CampaignAddPageComponent extends EditPageBaseComponent<Campaign, Cr
   protected override _editResourceTitle = 'pages.campaign.edit';
 
   override redirectAfterSave = false;
+
+  participantsParams: RequestParams = {
+    name: "ONLY_AACC"
+  };
 
   protected buildForm(){
     return this.fb.group<ControlsOf<CreateCampaign>>({

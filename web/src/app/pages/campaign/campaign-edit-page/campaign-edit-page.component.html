@@ -48,7 +48,7 @@
         <div class="grid grid-cols-1 gap-1.5 mb-2">
           <mat-form-field>
             <mat-label>{{ 'fields.ccaaParticipants' | translate}}</mat-label>
-            <tsw-custom-select [multiple]="true" resourceName="participants" formControlName="participants" [required]="true">
+            <tsw-custom-select [multiple]="true" resourceName="participants" formControlName="participants" [required]="true" [searchQueryParams]="participantsParams">
             </tsw-custom-select>
             <mat-error>{{ form.controls.participants.errors | extractValidationError }}</mat-error>
           </mat-form-field>

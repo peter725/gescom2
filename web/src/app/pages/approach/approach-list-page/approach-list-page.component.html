@@ -75,7 +75,7 @@
                            matTooltipPosition="above">
                           <mat-icon>visibility</mat-icon>
                         </a>
-                      <a *ngIf="canModify && (canDelete || !userAutonomousCommunity || element.autonomousCommunityName === userAutonomousCommunity)"
+                      <a *ngIf="element.state === 1 && canModify && (canDelete || !userAutonomousCommunity || element.autonomousCommunityName === userAutonomousCommunity)"
                         mat-button
                         [routerLink]="'approachManagementEdit' | namedRoute: { id: element.id }"
                         matTooltip="Editar"

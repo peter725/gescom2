@@ -102,7 +102,7 @@
               matTooltip="Abrir">
               <mat-icon>visibility</mat-icon>
             </a>
-            <a *ngIf="canModify"
+            <a *ngIf="element.state === 1 && canModify"
               mat-button
               [routerLink]="'campaignManagementEdit' | namedRoute: { id: element.id }"
                matTooltip="Editar datos iniciales">

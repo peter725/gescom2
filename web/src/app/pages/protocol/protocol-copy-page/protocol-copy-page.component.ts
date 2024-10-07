@@ -33,7 +33,6 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
     const campaignIdSharedString = localStorage.getItem('campaignIdShared');
     this.campaignIdShared = campaignIdSharedString ? parseInt(campaignIdSharedString, 10) : 0;
 
-    console.log('ngOnInit', this.campaignIdShared)
     // Actualizar la ruta de redirección al inicio, si ya existe un campaignIdShared
     this.updateRedirectPath();
     // Suscribirse al evento sharedData$
@@ -49,7 +48,7 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
 
   private updateRedirectPath(): void {
     this.cancelRedirectPath = this.campaignIdShared ? `../../../campanas/${this.campaignIdShared}/ver` : '../../protocol/consulta';
-    console.log('Cancel Redirect Path:', this.cancelRedirectPath);
+
   }
 
   clearInfringement(): void {
@@ -153,7 +152,6 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
 
     // Recorre todas las filas restantes para actualizar el campo 'orden'
     this.question.controls.forEach((control, i) => {
-      console.log('control', control);
       control.get('order')?.setValue(i + 1);
     });
 
@@ -228,8 +226,6 @@ export class ProtocolCopyPageComponent extends EditPageBaseComponent<Protocol, C
     });
      this.save();
   }
-
-
 
   protected override async afterSaveSuccess(result: any) {
     // Redirige a la página anterior

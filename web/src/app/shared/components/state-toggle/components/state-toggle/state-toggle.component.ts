@@ -57,7 +57,6 @@ export class StateToggleComponent<T extends (StatefulModel | StatefulAltModel)> 
   ) {
   }
 
-
   ngOnInit() {
     // Suscribirse al observable `showDeleted$`
     this.subscription = this.filterService.showDeleted$.subscribe((value: boolean) => {

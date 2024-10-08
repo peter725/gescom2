@@ -63,7 +63,6 @@ export class FilterService {
 
   getShowDeleted() {
     return this.showDeletedSubject.getValue();
-
   }
 
   /**

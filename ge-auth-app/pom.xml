@@ -303,7 +303,7 @@
 				<activatedProperties>pre,jndi-jdbc</activatedProperties>
 				<env.domain>pre</env.domain>
                 <frontURL>https://servicios-pre.consumo.gob.es/auth/login</frontURL>
-				<baseURL>https://servicios-des.consumo.gob.es</baseURL>
+				<baseURL>https://servicios-pre.consumo.gob.es</baseURL>
 				<pathLogs>/documentospro/logs/GESCOM.log</pathLogs>
 				<config.files>/documentospro/properties/GESCO</config.files>
 			</properties>

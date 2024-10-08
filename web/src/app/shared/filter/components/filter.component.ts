@@ -67,6 +67,7 @@ export abstract class FilterComponent<T extends AppQuerySource = AppQuerySource>
   private async loadData() {
     console.log("loadData filter.component.ts");
     try {
+      this.filterService.setShowDeleted(false);
       const external = await firstValueFrom(this.filterService.get(this.resourceName));
       this.updateSource(external.query.getSource());
     } catch (e) {

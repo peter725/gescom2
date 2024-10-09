@@ -88,6 +88,7 @@ public class ExcelUtils {
         // Estilo titulo protocolo
         XSSFCellStyle styleProtocolo = workbook.createCellStyle();
         styleProtocolo.cloneStyleFrom(style);
+        styleProtocolo.setAlignment(HorizontalAlignment.CENTER);
         styleProtocolo.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
 
         // Establecer el borde
@@ -102,6 +103,8 @@ public class ExcelUtils {
 
         XSSFCellStyle stylePreguntas = workbook.createCellStyle();
         stylePreguntas.cloneStyleFrom(styleTituloPreguntas);
+        stylePreguntas.setIndention((short) 5);
+        stylePreguntas.setAlignment(HorizontalAlignment.LEFT);
 
         // Establecer la fuente Arial 10 sin negrita
         XSSFFont fontPreguntas = workbook.createFont();
@@ -112,6 +115,7 @@ public class ExcelUtils {
 
         XSSFCellStyle styleRespuestas = workbook.createCellStyle();
         styleRespuestas.cloneStyleFrom(styleTituloPreguntas);
+        styleRespuestas.setAlignment(HorizontalAlignment.RIGHT);
         styleRespuestas.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 
         // Establecer el color de fondo Interlineado
@@ -199,8 +203,9 @@ public class ExcelUtils {
         row = sheet.createRow(rowNum++);
         row.setHeightInPoints(25);
         cell = row.createCell(colHeader);
+        //TODO aqui debo intervenir para mostrar: PRODUCTO: codigo+nombre
         if ( result ) {
-            cell.setCellValue(protocolo.getResultsResponseDTO().getProductName());
+            cell.setCellValue("PRODUCTO: " + protocolo.getResultsResponseDTO().getProductName());
             cell.setCellStyle(styleProtocolo);
         } else {
             cell.setCellStyle(styleProtocolo);
@@ -252,10 +257,6 @@ public class ExcelUtils {
                     colHeader = 0;
 
                     if (pregunta.getNumResponseSi() == 0 && pregunta.getNumResponseNo() == 0 && pregunta.getNumResponseNoProcede() == 0){
-                        row = sheet.createRow(rowNum++);
-                        row.setHeightInPoints(5);
-                        cell = row.createCell(colHeader);
-                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
                         row = sheet.createRow(rowNum++);
                         cell = row.createCell(colHeader++);
@@ -271,23 +272,28 @@ public class ExcelUtils {
                         cell = row.createCell(colHeader++);
                         cell.setCellStyle(stylePreguntas);
 
-                        row = sheet.createRow(rowNum++);
-                        row.setHeightInPoints(5);
-                        cell = row.createCell(colHeader);
-                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
                     } else {
                         if (pregunta.getCodeQuestion() != null){
-                            if (pregunta.getCodeQuestion().startsWith("DC")){
+                            if (pregunta.getCodeQuestion().equals("DC1")){
                                 row = sheet.createRow(rowNum++);
                                 row.setHeightInPoints(5);
                                 cell = row.createCell(colHeader);
                                 sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
                                 row = sheet.createRow(rowNum++);
-                                row.setHeightInPoints(5);
-                                cell = row.createCell(colHeader);
-                                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
+                                cell = row.createCell(colHeader++);
+                                cell.setCellStyle(styleTituloPreguntas);
+
+                                cell = row.createCell(colHeader++);
+                                cell.setCellStyle(stylePreguntas);
+
+                                cell = row.createCell(colHeader++);
+                                cell.setCellStyle(stylePreguntas);
+
+                                cell = row.createCell(colHeader++);
+                                cell.setCellStyle(stylePreguntas);
+                                colHeader = 0;
                             }
                         }
 
@@ -300,13 +306,15 @@ public class ExcelUtils {
                         cell.setCellStyle(styleRespuestas);
                         cell.setCellValue(pregunta.getNumResponseSi());
 
-                        cell = row.createCell(colHeader++);
-                        cell.setCellStyle(styleRespuestas);
-                        cell.setCellValue(pregunta.getNumResponseNo());
+                        if (!pregunta.getCodeQuestion().startsWith("DC")) {
+                            cell = row.createCell(colHeader++);
+                            cell.setCellStyle(styleRespuestas);
+                            cell.setCellValue(pregunta.getNumResponseNo());
 
-                        cell = row.createCell(colHeader++);
-                        cell.setCellStyle(styleRespuestas);
-                        cell.setCellValue(pregunta.getNumResponseNoProcede());
+                            cell = row.createCell(colHeader++);
+                            cell.setCellStyle(styleRespuestas);
+                            cell.setCellValue(pregunta.getNumResponseNoProcede());
+                        }
                     }
                 }
 
@@ -381,13 +389,10 @@ public class ExcelUtils {
 
 
     //excel de resultados finales
-
     public <E> byte[] createExportExcelResults(IprDTO ipr) {
         log.debug("ExcelUtils.createExportExcelResults.init()-----");
 
         ByteArrayOutputStream bosResults = new ByteArrayOutputStream();
-
-
 
         // Creamos el libro de trabajo de Excel formato OOXML
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -579,7 +584,7 @@ public class ExcelUtils {
         row = sheet.createRow(rowNum++);
         row.setHeightInPoints(25);
         cell = row.createCell(colHeader);
-        cell.setCellValue(ipr.getResultsResponseDTO().getProductName());
+        //cell.setCellValue("PRODUCTO: "+ipr.getResultsResponseDTO().getProductName());
         cell.setCellStyle(styleProtocolo);
         sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
@@ -659,6 +664,7 @@ public class ExcelUtils {
         }
 
         try {
+            workbook.createName();
             workbook.write(bosResults);
             workbook.close();
         } catch (FileNotFoundException e) {

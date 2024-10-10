@@ -505,6 +505,10 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
             resultsResponseDTO.setProtocolName(protocolDTO.getName());
         }
 
+        //seteamos el nombre del producto
+        ProductServiceEntity productServiceEntity = productServiceRepository.findProductServiceByCode(searchDTO.getProductServiceCode());
+        resultsResponseDTO.setProductName(productServiceEntity.getCode()+"-"+productServiceEntity.getName());
+
         if (iprResponseDTOS.isEmpty()){
             for (QuestionsDTO questionsDTO : questionsDTOS){
                 QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();

@@ -388,7 +388,7 @@ public class ExcelUtils {
 
 
 
-    //excel de resultados finales
+    //excel de resultados finales por ipr
     public <E> byte[] createExportExcelResults(IprDTO ipr) {
         log.debug("ExcelUtils.createExportExcelResults.init()-----");
 
@@ -515,7 +515,7 @@ public class ExcelUtils {
 
         // Primera fila
         XSSFRow row = sheet.createRow(rowNum++);
-        row.setHeightInPoints(50);
+        row.setHeightInPoints(30);
         XSSFCell cell = row.createCell(colHeader);
         cell.setCellValue(ipr.getResultsResponseDTO().getCampaignName());
         cell.setCellStyle(style);
@@ -523,7 +523,7 @@ public class ExcelUtils {
 
         // Segunda fila
         row = sheet.createRow(rowNum++);
-        row.setHeightInPoints(25);
+        row.setHeightInPoints(21);
         cell = row.createCell(colHeader);
         cell.setCellValue(ipr.getResultsResponseDTO().getProtocolName());
         cell.setCellStyle(styleProtocolo);
@@ -543,8 +543,9 @@ public class ExcelUtils {
 
         // Tercera fila
         row = sheet.createRow(rowNum++);
-        row.setHeightInPoints(25);
+        row.setHeightInPoints(21);
         cell = row.createCell(colHeader);
+        cell.setCellValue("IPR: "+ipr.getName());
         cell.setCellStyle(styleProtocolo);
         sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
@@ -562,7 +563,7 @@ public class ExcelUtils {
 
         // Cuarta fila
         row = sheet.createRow(rowNum++);
-        row.setHeightInPoints(25);
+        row.setHeightInPoints(21);
         cell = row.createCell(colHeader);
         cell.setCellValue((String) "RESULTADOS A NIVEL ESTATAL");
         cell.setCellStyle(styleProtocolo);
@@ -582,9 +583,9 @@ public class ExcelUtils {
 
         // Quinta fila
         row = sheet.createRow(rowNum++);
-        row.setHeightInPoints(25);
+        row.setHeightInPoints(21);
         cell = row.createCell(colHeader);
-        //cell.setCellValue("PRODUCTO: "+ipr.getResultsResponseDTO().getProductName());
+        cell.setCellValue("PRODUCTO: "+ipr.getResultsResponseDTO().getProductName());
         cell.setCellStyle(styleProtocolo);
         sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
@@ -664,7 +665,6 @@ public class ExcelUtils {
         }
 
         try {
-            workbook.createName();
             workbook.write(bosResults);
             workbook.close();
         } catch (FileNotFoundException e) {

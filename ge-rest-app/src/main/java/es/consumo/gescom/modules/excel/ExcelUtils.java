@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import es.consumo.gescom.modules.campaign.model.dto.QuestionsResponseDTO;
 import es.consumo.gescom.modules.ipr.model.dto.IprDTO;
+import lombok.Getter;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -25,25 +26,19 @@ import es.consumo.gescom.modules.questions.model.dto.QuestionsDTO;
 
 public class ExcelUtils {
 
+    @Getter
     private static final ExcelUtils instance = new ExcelUtils();
     private static final Logger log = LoggerFactory.getLogger(ExcelUtils.class);
 
     private ExcelUtils() {}
 
-    public static ExcelUtils getInstance() {
-        return instance;
-    }
-
     public <E> byte[] createExportExcelTablas(ProtocolDTO protocolo, boolean result) {
         log.debug("ExcelUtils.createExportExcelTablas.init()-----");
-
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
         // Creamos el libro de trabajo de Excel formato OOXML
         XSSFWorkbook workbook = new XSSFWorkbook();
-
         XSSFSheet sheetPortada = workbook.createSheet("PORTADA");
-
         int rowNumP = 0;
         int colHeaderP = 0;
         XSSFCellStyle styleP = workbook.createCellStyle();
@@ -203,7 +198,7 @@ public class ExcelUtils {
         row = sheet.createRow(rowNum++);
         row.setHeightInPoints(25);
         cell = row.createCell(colHeader);
-        //TODO aqui debo intervenir para mostrar: PRODUCTO: codigo+nombre
+
         if ( result ) {
             cell.setCellValue("PRODUCTO: " + protocolo.getResultsResponseDTO().getProductName());
             cell.setCellStyle(styleProtocolo);
@@ -252,11 +247,15 @@ public class ExcelUtils {
         if (result){
             List<QuestionsResponseDTO> preguntasOrder = protocolo.getResultsResponseDTO().getQuestionsResponseDTOS().stream().sorted(Comparator.comparingInt(QuestionsResponseDTO::getOrderQuestion)).collect(Collectors.toList());
             if (null != protocolo.getResultsResponseDTO().getQuestionsResponseDTOS()) {
-
+                Boolean question = true;
                 for (QuestionsResponseDTO pregunta : preguntasOrder) {
                     colHeader = 0;
 
                     if (pregunta.getNumResponseSi() == 0 && pregunta.getNumResponseNo() == 0 && pregunta.getNumResponseNoProcede() == 0){
+                        if (!question) {
+                            row = sheet.createRow(rowNum++);
+                        }
+
 
                         row = sheet.createRow(rowNum++);
                         cell = row.createCell(colHeader++);
@@ -272,14 +271,11 @@ public class ExcelUtils {
                         cell = row.createCell(colHeader++);
                         cell.setCellStyle(stylePreguntas);
 
-
+                        question = false;
                     } else {
                         if (pregunta.getCodeQuestion() != null){
                             if (pregunta.getCodeQuestion().equals("DC1")){
                                 row = sheet.createRow(rowNum++);
-                                row.setHeightInPoints(5);
-                                cell = row.createCell(colHeader);
-                                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));
 
                                 row = sheet.createRow(rowNum++);
                                 cell = row.createCell(colHeader++);
@@ -317,7 +313,6 @@ public class ExcelUtils {
                         }
                     }
                 }
-
             }
         }else {
             if (null != protocolo.getQuestion()) {
@@ -346,11 +341,6 @@ public class ExcelUtils {
                         cell = row.createCell(colHeader++);
                         cell.setCellStyle(stylePreguntas);
 
-                        /*row = sheet.createRow(rowNum++);
-                        row.setHeightInPoints(5);
-                        cell = row.createCell(colHeader);
-                        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, colHeader, colHeader + 3));*/
-
                     } else {
                         row = sheet.createRow(rowNum++);
                         cell = row.createCell(colHeader++);
@@ -367,7 +357,6 @@ public class ExcelUtils {
                         cell.setCellStyle(styleRespuestas);
                     }
                 }
-
             }
         }
         try {
@@ -380,25 +369,19 @@ public class ExcelUtils {
             log.debug("IOException" + e.toString());
             return null;
         }
-
         log.debug("Excel Done!!");
         log.debug("ExcelUtils.createExportExcelTablas.end()-----");
         return bos.toByteArray();
     }
 
-
-
     //excel de resultados finales por ipr
     public <E> byte[] createExportExcelResults(IprDTO ipr) {
         log.debug("ExcelUtils.createExportExcelResults.init()-----");
-
         ByteArrayOutputStream bosResults = new ByteArrayOutputStream();
 
         // Creamos el libro de trabajo de Excel formato OOXML
         XSSFWorkbook workbook = new XSSFWorkbook();
-
         XSSFSheet sheetPortada = workbook.createSheet("PORTADA");
-
         int rowNumP = 0;
         int colHeaderP = 0;
         XSSFCellStyle styleP = workbook.createCellStyle();
@@ -444,7 +427,6 @@ public class ExcelUtils {
         styleLeft.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
         styleLeft.setIndention((short)5); // Añade una sangría de 1 espacio
 
-
         // bordes
         styleLeft.setBorderBottom(BorderStyle.THIN);
         styleLeft.setBorderTop(BorderStyle.THIN);
@@ -483,6 +465,7 @@ public class ExcelUtils {
 
         XSSFCellStyle styleRespuestas = workbook.createCellStyle();
         styleRespuestas.cloneStyleFrom(styleTituloPreguntas);
+        styleRespuestas.setAlignment(HorizontalAlignment.RIGHT);
         styleRespuestas.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 
         // Establecer el color de fondo Interlineado
@@ -491,7 +474,6 @@ public class ExcelUtils {
         styleInterlineado.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         log.debug("Creating excel");
-
         int rowNum = 0;
         int colHeader = 0;
 
@@ -630,23 +612,53 @@ public class ExcelUtils {
             int numPregunta = 0;
 
             for (QuestionsResponseDTO pregunta : ipr.getResultsResponseDTO().getQuestionsResponseDTOS()) {
+
+                // Verificar si la pregunta actual es "DC1. Nº de establecimientos existentes"
+                if ("DC1.Nº de establecimientos existentes".equals(pregunta.getQuestion())) {
+                    // Añadir una fila vacía antes de comenzar el nuevo bloque
+                    row = sheet.createRow(rowNum++);
+                    row.createCell(0); // Crear una celda vacía
+
+                    row = sheet.createRow(rowNum++);
+                    cell = row.createCell(0);
+                    cell.setCellStyle(styleTituloPreguntas);
+
+                    cell = row.createCell(1);
+                    cell.setCellStyle(styleTituloPreguntas);
+
+                    cell = row.createCell(2);
+                    cell.setCellStyle(styleTituloPreguntas);
+
+                    cell = row.createCell(3);
+                    cell.setCellStyle(styleTituloPreguntas);
+                }
                 colHeader = 0;
                 numPregunta++;
                 row = sheet.createRow(rowNum++);
                 cell = row.createCell(colHeader++);
-                cell.setCellValue(numPregunta + " - " + pregunta.getQuestion());
-                cell.setCellStyle(styleLeft);
+                if (!pregunta.getQuestion().startsWith("DC")) {
+                    cell.setCellValue(numPregunta + ". " + pregunta.getQuestion());
+                    cell.setCellStyle(styleLeft);
+                }else{
+                    cell.setCellValue(pregunta.getQuestion());
+                    cell.setCellStyle(styleLeft);
+                }
 
                 cell = row.createCell(colHeader++);
                 cell.setCellStyle(styleRespuestas);
                 cell.setCellValue(pregunta.getTotal());
 
                 cell = row.createCell(colHeader++);
-                if (pregunta.getPercentage() != null) {
-                    cell.setCellValue(pregunta.getPercentage()  / 100);
-                    cell.setCellStyle(percentageStyle); // Aplica el estilo de porcentaje
-                } else {
-                    cell.setCellValue(0);
+                if (!pregunta.getQuestion().startsWith("DC")){
+                    if (pregunta.getPercentage() != null) {
+                        cell.setCellValue(pregunta.getPercentage()  / 100);
+                        cell.setCellStyle(percentageStyle); // Aplica el estilo de porcentaje
+                    } else {
+                        cell.setCellValue("");
+                        cell.setCellStyle(percentageStyle);
+                    }
+                }else{
+                    cell.setCellValue("");
                     cell.setCellStyle(percentageStyle);
                 }
 
@@ -656,32 +668,24 @@ public class ExcelUtils {
                     cell.setCellStyle(stylePorcentajeRespectTo);
 
                 } else {
-                    cell.setCellValue(0);
+                    cell.setCellValue("");
                     cell.setCellStyle(stylePorcentajeRespectTo);
                 }
-
             }
-
         }
 
         try {
             workbook.write(bosResults);
             workbook.close();
         } catch (FileNotFoundException e) {
-            log.debug("Error_FileNotFoundException" + e.toString());
+            log.debug("Error_FileNotFoundException" + e);
             return null;
         } catch (IOException e) {
-            log.debug("IOException" + e.toString());
+            log.debug("IOException" + e);
             return null;
         }
-
         log.debug("Excel Done!!");
         log.debug("ExcelUtils.createExportExcelTablas.end()-----");
         return bosResults.toByteArray();
     }
-
-
-
-
-
 }

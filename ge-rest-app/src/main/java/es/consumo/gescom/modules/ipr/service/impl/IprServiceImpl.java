@@ -119,8 +119,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
         IprDTO iprDTONew = iprConverter.convertToModel(iprEntitySave);
         iprDTONew.setIprQuestionDTOList(iprQuestionDTOList);
-
-
         return iprDTONew;
     }
 
@@ -166,7 +164,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
             iprQuestionRepository.save(iprQuestionEntity);
         });
-
         return iprConverter.convertToModel(iprSave);
     }
 
@@ -180,8 +177,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
             }
         }
     }
-
-
 
     @Override
     public IprDTO findIprDTOById(Long id) {
@@ -206,7 +201,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         }
         List<IprQuestionDTO> iprQuestionsDTOS = iprQuestionConverter.convertToModel(iprQuestionEntities);
         iprDTO.setIprQuestionDTOList(iprQuestionsDTOS);
-
 
         return iprDTO;
     }
@@ -310,9 +304,6 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
         resultsResponseDTOS.setCampaignName(campaignEntity.getNameCampaign());
         resultsResponseDTOS.setProtocolName(protocolDTO.getName());
 
-
-
-
         for (QuestionsDTO questionsDTO : questionsDTOS){
 
             QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
@@ -414,12 +405,8 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
 
     @Override
     public List<IprDTO> findAllIprByCampaignId(Long campaignId) {
-        //ResultsResponseDTO resultsResponseDTO;
-        //SearchDTO searchDTO = new SearchDTO();
         Optional<CampaignEntity> campaignEntity = campaignRepository.findById(campaignId);
         List<IprDTO> iprDTOS = iprConverter.convertToModel(iprRepository.findAllByCampaignId(campaignId));
-        //List<CampaignProductServiceEntity> campaignProductServiceEntities = campaignProductServiceRepository.findCampaignProductServiceByCampaignId(campaignId);
-        //searchDTO.setCampaignId(campaignId);
         ProtocolEntity protocol;
 
         for (IprDTO iprDTO : iprDTOS) {
@@ -536,106 +523,79 @@ public class IprServiceImpl extends EntityCrudService<IprEntity, Long> implement
             return resultsResponseDTO;
 
         }else {
-
+            Set<String> targetCodes = Set.of("DC0", "DC1", "DC8", "DC9", "DC10", "DC11");
             for (IprResponseDTO iprResponseDTO : iprResponseDTOS) {
-
-
                 QuestionsResponseDTO questionsResponseDTO = new QuestionsResponseDTO();
                 String question = iprResponseDTO.getQuestion();
                 String questionText = question != null ? question : "null"; // Si question es null, usa "null", de lo contrario, usa el valor de question
                 questionsResponseDTO.setQuestion(questionText);
                 questionsResponseDTO.setOrderQuestion(iprResponseDTO.getOrderQuestion());
 
+                String formula = iprResponseDTO.getFormula();
 
-                if (Objects.equals(iprResponseDTO.getFormula(), "DC0")) {
-                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC0")) {
-                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                            if (iprResponseDTO.getPercentageRespectTo() != null)
-                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                        }
-                    }
-                    questionsResponseDTOS.add(questionsResponseDTO);
-                    continue;
-                }
-                if (Objects.equals(iprResponseDTO.getFormula(), "DC8")) {
-                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC8")) {
-                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                            if (iprResponseDTO.getPercentageRespectTo() != null)
-                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                        }
-                    }
-                    questionsResponseDTOS.add(questionsResponseDTO);
-                    continue;
-                }
-                if (Objects.equals(iprResponseDTO.getFormula(), "DC9")) {
-                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC9")) {
-                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                            if (iprResponseDTO.getPercentageRespectTo() != null)
-                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                        }
-                    }
-                    questionsResponseDTOS.add(questionsResponseDTO);
-                    continue;
-                }
-                if (Objects.equals(iprResponseDTO.getFormula(), "DC10")) {
-                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC10")) {
-                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                            if (iprResponseDTO.getPercentageRespectTo() != null)
-                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                        }
-                    }
-                    questionsResponseDTOS.add(questionsResponseDTO);
-                    continue;
-
-                }
-                if (Objects.equals(iprResponseDTO.getFormula(), "DC11")) {
-                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), "DC11")) {
-                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
-                            if (iprResponseDTO.getPercentageRespectTo() != null)
-                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-                        }
-                    }
-                    questionsResponseDTOS.add(questionsResponseDTO);
-                    continue;
-                }
-
-                if (iprResponseDTO.getFormula() == null) {
+                if (formula == null) {
                     questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
                     questionsResponseDTOS.add(questionsResponseDTO);
-
                     continue;
-                } else {
-
-                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
-
-                        if (iprResponseDTO.getPercentageRespectTo() != null)
-                            questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
-
-                        if (iprResponseDTO.getFormula() != null && !protocolResultsResponseDTO.getCodeQuestion().startsWith("DC")) {
-                            List<String> componentes = descomponerFormula(iprResponseDTO.getFormula());
-                            interpretarYProcesarComponentes(componentes, protocolResultsResponseDTO, questionsResponseDTO);
-                        } else {
-                            continue;
-                        }
-
-                    }
                 }
 
+                // Si la fórmula está en el conjunto de códigos que nos interesa
+                if (targetCodes.contains(formula)) {
+                    for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                        if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), formula)) {
+                            questionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+                            if (iprResponseDTO.getPercentageRespectTo() != null) {
+                                questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+                            }
+                        }
+                    }
+                    questionsResponseDTOS.add(questionsResponseDTO);
+                    continue;
+                }
 
+                for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                    if (iprResponseDTO.getPercentageRespectTo() != null)
+                        questionsResponseDTO.setPercentageRespectTo(iprResponseDTO.getPercentageRespectTo());
+
+                    if (formula != null && !protocolResultsResponseDTO.getCodeQuestion().startsWith("DC")) {
+                        List<String> componentes = descomponerFormula(formula);
+                        interpretarYProcesarComponentes(componentes, protocolResultsResponseDTO, questionsResponseDTO);
+                    }
+                }
                 questionsResponseDTOS.add(questionsResponseDTO);
             }
         }
 
         setPercentage(questionsResponseDTOS);
-
+        addFooterQuestionsforIPR(protocolResultsResponseDTOS, questionsResponseDTOS);
         resultsResponseDTO.setQuestionsResponseDTOS(questionsResponseDTOS);
 
         return resultsResponseDTO;
+    }
+
+    private void addFooterQuestionsforIPR(List<ProtocolResultsResponseDTO> protocolResultsResponseDTOS, List<QuestionsResponseDTO> questionsResponseDTOS) {
+        Map<String, String> codeDescriptions = Map.of(
+        "DC1", "Nº de establecimientos existentes",
+        "DC8", "Nº de establecimientos controlados",
+        "DC9", "Total de productos/servicios controlados",
+        "DC10", "Total de productos/servicios correctos",
+        "DC11", "Total de productos/servicios incorrectos"
+        );
+        List<String> codes = List.of("DC1", "DC8", "DC9", "DC10", "DC11");
+        for (String code : codes) {
+            QuestionsResponseDTO additionalQuestionsResponseDTO = new QuestionsResponseDTO();
+            String questionText = code + "." + codeDescriptions.get(code);
+            additionalQuestionsResponseDTO.setQuestion(questionText);
+            // Acumular el total para este código
+            for (ProtocolResultsResponseDTO protocolResultsResponseDTO : protocolResultsResponseDTOS) {
+                if (Objects.equals(protocolResultsResponseDTO.getCodeQuestion(), code)) {
+                    additionalQuestionsResponseDTO.addToTotal(protocolResultsResponseDTO.getCcaaRes());
+
+                }
+            }
+            // Agregar el nuevo registro a questionsResponseDTOS
+            questionsResponseDTOS.add(additionalQuestionsResponseDTO);
+        }
     }
 
     private List<String> descomponerFormula(String formula) {

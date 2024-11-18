@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="search()">
+  <div class="grid grid-cols-3 grid-rows-2 gap-1.5">
+    <mat-form-field>
+      <mat-label>{{ 'fields.name' | translate }}</mat-label>
+      <tsw-search-input formControlName="name"></tsw-search-input>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'fields.firstSurname' | translate }}</mat-label>
+      <tsw-search-input formControlName="surname"></tsw-search-input>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'fields.secondSurname' | translate }}</mat-label>
+      <tsw-search-input formControlName="lastSurname"></tsw-search-input>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'fields.email' | translate }}</mat-label>
+      <tsw-search-input formControlName="email"></tsw-search-input>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'fields.phone' | translate }}</mat-label>
+      <tsw-search-input formControlName="phone"></tsw-search-input>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'fields.nif' | translate }}</mat-label>
+      <tsw-search-input formControlName="dni"></tsw-search-input>
+    </mat-form-field>
+  </div>
+
+  <tsw-filters-container-actions (resetEv)="clear()">
+    <tsw-filter-hidden formControlName="state"></tsw-filter-hidden>
+  </tsw-filters-container-actions>
+</form>

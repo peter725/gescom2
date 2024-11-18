@@ -1,0 +1,71 @@
+<form [formGroup]="form">
+  <tsw-form-container>
+    <tsw-section-wrapper
+      class="mb-5"
+      [headerLabel]="headerTitle"
+      icon="edit_note"
+    >
+      <div section-content>
+        <div class="grid grid-cols-1 gap-1.5 mb-2">
+          <mat-form-field>
+            <mat-label>{{ 'fields.name' | translate }}</mat-label>
+            <input matInput formControlName="name">
+            <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <h3 class="text-lg mt-4 mb-2 font-semibold">{{ 'text.other.permissionsPerRole' | translate }}</h3>
+
+        <div formArrayName="modules">
+          <div *ngFor="let fila of modules.controls; let i=index" [formGroupName]="i">
+            <div class="flex gap-2 mb-2">
+              <mat-form-field class="w-[100%]">
+                <mat-label>{{ 'fields.module' | translate }}</mat-label>
+                <tsw-custom-select
+                  resourceName="modules"
+                  formControlName="module"
+                  [required]="true"
+                  [showNoneValue]="false"
+                ></tsw-custom-select>
+                <mat-error>{{ errorsModuleModule(i) | extractValidationError }}</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-[100%]">
+                <mat-label>{{ 'fields.permissions' | translate }}</mat-label>
+                <tsw-custom-select
+                  resourceName="permissions"
+                  formControlName="permissions"
+                  [required]="true"
+                  multiple
+                ></tsw-custom-select>
+                <mat-error>{{ errorsModulePermissions(i) | extractValidationError }}</mat-error>
+              </mat-form-field>
+
+              <button *ngIf="modules.controls.length > 1" type="button" (click)="eliminarFilaModule(i)" class="text-red-500 hover:text-red-700 mt-[-15px]">
+                <span class="material-icons">cancel</span>
+              </button>
+            </div>
+
+            
+
+          </div>
+          <div class="flex justify-center mt-4"> <!-- Flex container para alinear a la derecha -->
+            <button type="button" mat-raised-button color="primary" (click)="agregarFilaModule()"
+                    class="text-white font-bold py-2 px-4 rounded">
+              Añadir Módulo
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </tsw-section-wrapper>
+
+
+
+    <tsw-form-actions
+      [saveBtnSkipConfirmation]="form.invalid"
+      (reset)="resetForm()"
+      (save)="submitForm()"
+    ></tsw-form-actions>
+  </tsw-form-container>
+</form>

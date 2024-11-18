@@ -1,0 +1,40 @@
+.table-cell input[formControlName="infringement"] {
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.required {
+  color: black;
+}
+
+
+.table-cell a.button-like-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+
+.material-icons {
+  margin-left: 8px; /* Espacio entre el texto y el icono, ya que el icono va después del texto cuando se alinea a la derecha */
+}
+
+.primary {
+  color: #1976d2; /* Ejemplo: color azul primary de Material Design. Ajusta según tu tema */
+}
+
+.button-like-link:hover mat-icon {
+  cursor: pointer;
+}
+
+.mat-form-field {
+  width: 100% !important;
+}

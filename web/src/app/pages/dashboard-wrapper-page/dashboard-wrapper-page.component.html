@@ -1,0 +1,25 @@
+<nav tsw-header></nav>
+
+<div class="dashboard__wrapper">
+  <aside tsw-sidebar></aside>
+
+  <div class="dashboard__content" [ngClass]="sidebarMode">
+    <div class="flex-1 px-3 pt-2 pb-10">
+      <div>
+        <!--<tsw-breadcrumbs></tsw-breadcrumbs>-->
+        <router-outlet></router-outlet>
+      </div>
+
+<!--      <tsw-lazy-module-load-error-->
+<!--        *ngIf="routeConfigError"-->
+<!--        [errorDetails]="routeConfigError"-->
+<!--      ></tsw-lazy-module-load-error>-->
+
+<!--      <tsw-lazy-module-loading-->
+<!--        *ngIf="routeConfigLoading"-->
+<!--      ></tsw-lazy-module-loading>-->
+    </div>
+
+    <footer tsw-footer></footer>
+  </div>
+</div>

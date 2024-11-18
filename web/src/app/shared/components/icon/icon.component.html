@@ -1,0 +1,21 @@
+<div class="hidden">
+  <ng-content></ng-content>
+</div>
+
+<ng-container *ngIf="icon">
+  <mat-icon
+    *ngIf="type === 'mat'"
+    [ngStyle]="{
+    fontSize: size
+    }"
+  >{{ icon }}</mat-icon>
+
+  <span
+    *ngIf="type === 'css'"
+    [class]="icon"
+    [attr.aria-label]="alt"
+    [ngStyle]="{
+    fontSize: size
+    }"
+  ></span>
+</ng-container>

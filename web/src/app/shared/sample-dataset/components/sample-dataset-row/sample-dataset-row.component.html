@@ -1,0 +1,36 @@
+<ng-container *ngFor="let item of (container.visibleItems$ | async); trackBy: trackByFn">
+  <ng-container [ngSwitch]="$any(item).elementType">
+    <tsw-sample-dataset-col-catalogue
+      *ngSwitchCase="FieldElementType.CAT"
+      class="block w-full"
+      [container]="$any(item)"
+    ></tsw-sample-dataset-col-catalogue>
+
+    <!-- Missing combo -->
+    <ng-container *ngSwitchCase="FieldElementType.COMBO">
+      <tsw-sample-dataset-col-combo
+        *ngIf="!$any(item).isMultiselect"
+        class="block w-full"
+        [container]="$any(item)"
+      ></tsw-sample-dataset-col-combo>
+
+      <tsw-sample-dataset-col-combo-multi
+        *ngIf="$any(item).isMultiselect"
+        class="block w-full"
+        [container]="$any(item)"
+      ></tsw-sample-dataset-col-combo-multi>
+    </ng-container>
+
+    <tsw-sample-dataset-col-numeric
+      *ngSwitchCase="FieldElementType.NUMERIC"
+      class="block w-full"
+      [container]="$any(item)"
+    ></tsw-sample-dataset-col-numeric>
+
+    <tsw-sample-dataset-col-text
+      *ngSwitchDefault
+      class="block w-full"
+      [container]="$any(item)"
+    ></tsw-sample-dataset-col-text>
+  </ng-container>
+</ng-container>

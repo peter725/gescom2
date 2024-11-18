@@ -1,0 +1,19 @@
+{
+  "generic": {
+    "actions": {
+      "add": "Add",
+      "edit": "Edit",
+      "list": "List",
+      "view": "View"
+    }
+  },
+  "pages": {
+    "home": "Home",
+    "user": {
+      "title": "User management",
+      "add": "Add user",
+      "edit": "Edit user",
+      "list": "List users"
+    }
+  }
+}

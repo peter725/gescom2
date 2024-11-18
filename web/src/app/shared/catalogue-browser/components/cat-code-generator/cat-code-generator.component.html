@@ -1,0 +1,198 @@
+<mat-card>
+  <tsw-section-title
+    icon="tune"
+    label="fields.termDescription"
+  ></tsw-section-title>
+
+  <div *ngIf="!canGenerateCode" class="border border-slate-200 bg-slate-50 rounded px-2 py-3">
+    <span>{{ 'text.err.requiredCatalogueAndHierarchy' | translate }}</span>
+  </div>
+
+  <form
+    *ngIf="canGenerateCode"
+    [formGroup]="searchForm"
+    class="w-full"
+  >
+    <mat-form-field class="w-full">
+      <mat-label>{{ 'fields.term' | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        [placeholder]="'generic.actions.typeInTerm' | translate"
+        formControlName="search"
+      >
+
+      <mat-progress-spinner
+        *ngIf="status.is$('PROCESS', 'LOAD') | async"
+        matPrefix
+        diameter="20"
+        mode="indeterminate"
+        style="display: inline-flex"
+        class="mr-2"
+      ></mat-progress-spinner>
+
+      <button
+        *ngIf="searchForm.controls.search.value"
+        mat-icon-button
+        type="button"
+        matSuffix
+        [matTooltip]="'generic.actions.clear' | translate"
+        (click)="resetSearch()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <button
+        *ngIf="status.isNot$('PROCESS', 'LOAD') | async"
+        mat-icon-button
+        type="button"
+        matSuffix
+        [matTooltip]="'generic.actions.search' | translate"
+        (click)="search()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-slide-toggle
+      *ngIf="baseTerm"
+      formControlName="restrictHierarchy"
+    >{{ 'generic.actions.restrictHierarchy' | translate }}</mat-slide-toggle>
+  </form>
+
+  <div class="overflow-auto slim__scrollbar mt-5">
+    <!-- Términos base -->
+    <ng-container *ngIf="!baseTerm">
+      <table tsw-table [dataSource]="termSource" matSort (matSortChange)="sortList($event)">
+        <tr mat-header-row *matHeaderRowDef="termColumns;"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: termColumns;"
+          class="cursor-pointer"
+          (click)="selectBaseTerm(row)"
+        ></tr>
+
+        <ng-container matColumnDef="selection">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td
+            *matCellDef="let element"
+            mat-cell
+          >
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="selectBaseTerm(element)"
+
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="termCode">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ 'fields.termCode' | translate }}</th>
+          <td *matCellDef="let element" mat-cell>
+            <span>{{ element.termCode }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="termName">
+          <th
+            *matHeaderCellDef
+            mat-header-cell
+            mat-sort-header="termDisplayName"
+          >{{ 'fields.termExtendedName' | translate }}</th>
+          <td
+            *matCellDef="let element"
+            mat-cell
+          >
+            <ng-container *ngIf="!element.termDisplayName">-</ng-container>
+            <ng-container *ngIf="element.termDisplayName">
+              {{ element.termDisplayName }}
+            </ng-container>
+          </td>
+        </ng-container>
+
+      </table>
+    </ng-container>
+
+    <!-- Facetas -->
+    <ng-container *ngIf="baseTerm">
+      <table tsw-table [dataSource]="facetSource" matSort (matSortChange)="sortList($event)">
+        <tr mat-header-row *matHeaderRowDef="facetColumns;"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: facetColumns;"
+          class="cursor-pointer"
+          (click)="selectFacet(row)"
+        ></tr>
+
+        <ng-container matColumnDef="selection">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td
+            *matCellDef="let element"
+            mat-cell
+            class="text-center"
+          >
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="selectFacet(element)"
+              [checked]="selectedTerms.isSelected(element.facetCode)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="termName">
+          <th
+            *matHeaderCellDef
+            mat-header-cell
+            mat-sort-header="termDisplayName"
+          >{{ 'fields.term' | translate }}</th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="overflow-ellipsis overflow-hidden">
+              <span>{{ element.termDisplayName }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="termCode">
+          <th
+            *matHeaderCellDef
+            mat-header-cell
+            mat-sort-header
+            class="overflow-ellipsis overflow-hidden"
+          >{{ 'fields.code' | translate }}</th>
+          <td
+            *matCellDef="let element"
+            mat-cell
+            class="overflow-ellipsis overflow-hidden"
+          >
+            {{ element.termCode }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="attribute">
+          <th
+            *matHeaderCellDef
+            mat-header-cell
+            mat-sort-header="attributeLabel"
+          >{{ 'fields.attribute' | translate }}</th>
+          <td
+            *matCellDef="let element"
+            mat-cell
+          >
+            <ng-container *ngIf="!element.attributeName">-</ng-container>
+            <ng-container *ngIf="element.attributeName">
+              ({{ element.attributeCode }}) {{ element.attributeLabel }}
+            </ng-container>
+          </td>
+        </ng-container>
+
+      </table>
+    </ng-container>
+
+    <mat-paginator
+      [length]="paginator.length"
+      [pageSize]="paginator.pageSize"
+      [pageIndex]="paginator.pageIndex"
+      (page)="pageList($event)"
+    ></mat-paginator>
+  </div>
+</mat-card>

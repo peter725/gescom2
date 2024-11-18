@@ -1,0 +1,92 @@
+<form [formGroup]="form">
+    <tsw-form-container>
+        <tsw-section-wrapper
+                class="mb-5"
+                headerLabel="{{'pages.user.edit' | translate}}"
+                icon="edit_note"
+        >
+
+            <div section-content>
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.name' | translate }}</mat-label>
+                        <input matInput formControlName="name">
+                        <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.firstSurname' | translate }}</mat-label>
+                        <input matInput formControlName="surname">
+                        <mat-error>{{ form.controls.surname.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.secondSurname' | translate }}</mat-label>
+                        <input matInput formControlName="lastSurname">
+                        <mat-error>{{ form.controls.lastSurname.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.nif' | translate }}</mat-label>
+                        <input matInput formControlName="dni">
+                      <mat-error>{{ form.controls.dni.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.email' | translate }}</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-error>{{ form.controls.email.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.phone' | translate }}</mat-label>
+                        <input matInput formControlName="phone" type="text" pattern="[0-9]*">
+                        <mat-error>{{ form.controls.phone.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-3 gap-1.5 mb-2">
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.ccaa' | translate }}</mat-label>
+                        <tsw-custom-select
+                                resourceName="autonomousCommunity"
+                                formControlName="autonomousCommunity"
+                                [showNoneValue]="false"
+                        ></tsw-custom-select>
+                        <mat-error>{{ form.controls.autonomousCommunity.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'fields.role' | translate }}</mat-label>
+                        <tsw-custom-select
+                                resourceName="roles"
+                                formControlName="role"
+                                [showNoneValue]="false"
+                        ></tsw-custom-select>
+                        <mat-error>{{ form.controls.role.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>{{ 'fields.userType' | translate }}</mat-label>
+                      <tsw-custom-select
+                        resourceName="userType"
+                        formControlName="userType"
+                        [showNoneValue]="false"
+                      ></tsw-custom-select>
+                      <mat-error>{{ form.controls.userType.errors | extractValidationError }}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </tsw-section-wrapper>
+
+        <tsw-form-actions
+                [saveBtnSkipConfirmation]="form.invalid"
+                (reset)="resetForm()"
+                (save)="submitForm()"
+        ></tsw-form-actions>
+    </tsw-form-container>
+</form>

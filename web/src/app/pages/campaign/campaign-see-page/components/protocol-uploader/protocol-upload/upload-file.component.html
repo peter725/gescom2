@@ -1,0 +1,41 @@
+<!-- <h2 mat-dialog-title>Documentos</h2> -->
+<form *ngIf="canUpload" [formGroup]="form" class="mt-7 justify-between flex">
+    <!-- Sección personalizada para el input de tipo archivo -->
+    <div class="basis-3/4 flex items-center">
+      <label [for]="uniqueId" class="mr-2">{{ 'fields.uploadFile' | translate }}</label>
+      <input type="file" [id]="uniqueId" (change)="onFileSelected($event)">
+    </div>
+    
+    <!-- Botón para añadir archivo -->
+    <div>
+      <button mat-raised-button color="primary" (click)="addFile()">Añadir</button>
+    </div>
+</form>
+
+   
+      <div class="space-y-4 mt-7">
+        <div *ngFor="let document of documentsArray; let i = index"
+             [ngClass]="{'bg-gray-200': i % 2 === 0, 'bg-white': i % 2 !== 0}"
+             class="flex justify-between items-center p-4 shadow-md rounded-lg">
+          <p class="flex-1">
+            {{document.id}}
+          </p>
+          <p class="flex-1">
+            {{document.name}}
+          </p>
+          <div>
+            <!-- Botones  -->
+            <button mat-button (click)="downloadFile(document.id)">
+              <mat-icon>download</mat-icon>
+            </button>
+            <button *ngIf="canDelete" mat-button (click)="deleteFile(document.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      
+
+
+

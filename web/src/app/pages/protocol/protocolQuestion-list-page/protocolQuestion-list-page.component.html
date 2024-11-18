@@ -1,0 +1,126 @@
+<div class="blockTable">
+  <tsw-table-container
+    [resourceName]="resourceName"
+    [queryParams]="previousRequestConfig?.queryParams"
+    class="pt-3"
+    [loading]="loading"
+    [columns]="columns"
+    [showFullScreen]="false"
+    [showRefresh]="false"
+    [showSettings]="false"
+  >
+    <table
+      tsw-table
+      [dataSource]="questionsArray"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <tr mat-header-row *matHeaderRowDef="(columns.columns | async) ?? []"></tr>
+      <tr mat-row *matRowDef="let row; columns: (columns.columns | async) ?? []"></tr>
+
+      <tr
+        *matNoDataRow
+        tsw-table-empty-row
+        [loading]="loading"
+        [columns]="columns"
+      ></tr>
+
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef style="width: 10%">Nº</th>
+        <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 10%">
+          {{ "fields.code" | translate }}
+        </th>
+        <td *matCellDef="let element" mat-cell>{{ element.codeQuestion }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="question">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 50%">
+          Pregunta
+        </th>
+        <td *matCellDef="let element" mat-cell style="white-space: pre-line; font-weight: {{ element.response === 'N' ? 'bold' : 'normal' }}">
+          {{ element.question }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="si">
+        <th *matHeaderCellDef mat-header-cell style="width: 10%">
+          <div style="display: flex; align-items: center;">
+              <mat-checkbox
+                id = "generalCheckSi"
+                style="margin-left: 8px;"
+                (change)="selectAllChecks('si', $event.checked)"
+                [checked]="allSelected('si')"
+                aria-label="Seleccionar todos 'Sí'">
+                Si
+              </mat-checkbox>
+          </div>
+        </th>
+        <td *matCellDef="let element" mat-cell>
+          <mat-checkbox
+            *ngIf="element.response !== 'N'"
+            [(ngModel)]="element.si"
+            aria-label="Seleccionar todos 'Si'"><div class="hidden">Si</div>
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="no">
+        <th *matHeaderCellDef mat-header-cell style="width: 10%">
+          <div style="display: flex; align-items: center;">
+            <mat-checkbox style="margin-left: 8px;"
+              (change)="selectAllChecks('no', $event.checked)"
+              [checked]="allSelected('no')"
+              aria-label="Seleccionar todos 'No'">
+              No
+            </mat-checkbox>
+          </div>
+        </th>
+        <td *matCellDef="let element" mat-cell>
+          <mat-checkbox
+            *ngIf="element.response !== 'N'"
+            [(ngModel)]="element.no"
+            aria-label="Respuesta 'No'"><div class="hidden">No</div>
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="noProcede">
+        <th *matHeaderCellDef mat-header-cell style="width: 15%">
+          <div style="display: flex; align-items: center;">
+            <mat-checkbox style="margin-left: 8px;"
+              (change)="selectAllChecks('noProcede', $event.checked)"
+              [checked]="allSelected('noProcede')"
+              aria-label="Respuesta 'No procede'">
+              No procede
+            </mat-checkbox>
+          </div>
+        </th>
+        <td *matCellDef="let element" mat-cell>
+          <mat-checkbox
+            *ngIf="element.response !== 'N'"
+            [(ngModel)]="element.noProcede"
+            aria-label="Respuesta 'No procede'"><div class="hidden">NP</div>
+          </mat-checkbox>
+        </td>
+      </ng-container>
+    </table>
+  </tsw-table-container>
+</div>
+
+<div class="blockChecks">
+  <div class="blockCheck">
+    <label for="DC1">Nº de establecimientos existentes<input type="checkbox" id="DC1"></label>
+    <label for="DC8">Nº de establecimientos controlados<input type="checkbox" id="DC8"></label>
+  </div>
+  <div class="blockCheck">
+    <h3 style="margin-right: 40px;">Total de productos/servicios:</h3>
+    <label for="DC9">Controlados<input type="checkbox" id="DC9"></label>
+    <label for="DC10">Correctos<input type="checkbox" id="DC10"></label>
+    <label for="DC11">Incorrectos<input type="checkbox" id="DC11"></label>
+  </div>
+</div>
+

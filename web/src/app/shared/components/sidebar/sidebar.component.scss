@@ -1,0 +1,119 @@
+$nav-item-padding: .75rem 1rem;
+
+/* Asegúrate de que todos los enlaces y divs en el sidebar tengan un estilo de enfoque claro */
+.sidebar__nav__item:focus,
+.sidebar__nav__item__child:focus {
+  outline: 2px solid #005fcc; /* Añade un contorno azul a los elementos enfocados */
+  outline-offset: 2px; /* Separa el contorno del borde del elemento */
+  background-color: rgba(0, 95, 204, 0.1); /* Añade un fondo azul claro al elemento enfocado */
+}
+
+/* Para contenedores que tienen elementos hijos enfocados */
+.sidebar__nav__item:focus-within {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+  background-color: rgba(0, 95, 204, 0.1);
+}
+
+:host {
+  position: fixed;
+  left: 0;
+  top: var(--header-height);
+  height: 100%;
+  transition: all .4s ease;
+  box-shadow: 0 0 28px rgb(0 0 0 / 7%);
+  z-index: var(--zindex-fixed);
+}
+
+.sidebar__wrapper {
+  height: 100%;
+  background-color: var(--primary-color);
+  color: var(--text-primary-color);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  transition: all .4s ease;
+
+  &.full {
+    width: var(--sidebar-width);
+  }
+}
+
+.sidebar__wrapper.short {
+  width: var(--sidebar-short-width);
+
+  .sidebar__nav__item .sidebar__nav__item_title, .sidebar__nav__item_action {
+    display: none;
+  }
+
+  .sidebar__nav__items__group {
+    display: none;
+  }
+
+  &:hover {
+    width: var(--sidebar-width);
+
+    .sidebar__nav__item .sidebar__nav__item_title, .sidebar__nav__item_action {
+      display: inherit;
+    }
+
+    .sidebar__nav__items__group {
+      display: inherit;
+    }
+  }
+}
+
+.sidebar__nav__group {
+  &.active {
+    background-color: var(--primary-darker-color);
+  }
+}
+
+.sidebar__nav__item {
+  padding: $nav-item-padding;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.active {
+    background-color: var(--primary-darker-color);
+  }
+
+  &:hover {
+    background-color: var(--primary-darker-color);
+  }
+}
+
+.sidebar__nav__item_title {
+  margin-left: .5rem;
+}
+
+.sidebar__nav__item_action {
+  margin-left: auto;
+}
+
+.sidebar__nav__items__group {
+  overflow: hidden;
+  background-color: var(--primary-darker-color);
+}
+
+.sidebar__nav__item__child {
+  padding: $nav-item-padding;
+  cursor: pointer;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    color: var(--primary-darker-color);
+    background-color: var(--primary-lighter-color);
+  }
+
+  &.active {
+    color: var(--primary-darker-color);
+    background-color: var(--primary-lighter-color);
+  }
+}

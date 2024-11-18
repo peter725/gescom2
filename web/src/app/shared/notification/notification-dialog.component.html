@@ -1,0 +1,82 @@
+<div class="pop-up">
+  <div mat-dialog-title>
+    <div *ngIf="activeNotification">
+      <mat-icon [color]="activeNotification.color">
+        {{ activeNotification.icon }}
+      </mat-icon>
+
+      <h2>{{ activeNotification.title }}</h2>
+    </div>
+  </div>
+
+  <mat-dialog-content class="slim__scrollbar">
+    <ng-container *ngIf="activeNotification">
+      <p>{{ activeNotification.message }}</p>
+
+      <div
+        *ngIf="activeNotification.expanded"
+        class="mt-4">
+        <p *ngFor="let detail of activeNotification.details">{{ detail }}</p>
+      </div>
+    </ng-container>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="w-full flex justify-between items-center">
+      <div class="flex items-center">
+        <mat-progress-spinner
+          *ngIf="autoCloseEnabled"
+          class="mr-2"
+          mode="determinate"
+          diameter="24"
+          [value]="progress"
+        ></mat-progress-spinner>
+
+        <ng-container *ngIf="src.length > 1">
+          <button
+            mat-button
+            [disabled]="srcIndex <= 0"
+            (click)="prevNotification()"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+
+          <div class="mx-2">
+            <span>{{ srcIndex + 1 }} de {{ src.length }}</span>
+          </div>
+
+          <button
+            mat-button
+            [disabled]="srcIndex >= (src.length - 1)"
+            (click)="nextNotification()"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </ng-container>
+      </div>
+
+      <div>
+        <button
+          *ngIf="activeNotification && activeNotification.details.length"
+          mat-button
+          (click)="toggleNotificationExpansion()"
+        >
+          <ng-container *ngIf="activeNotification.expanded">
+            {{ 'generic.actions.shrink' | translate }}
+          </ng-container>
+          <ng-container *ngIf="!activeNotification.expanded">
+            {{ 'generic.actions.moreDetails' | translate }}
+          </ng-container>
+        </button>
+
+        <button
+          mat-button
+          color="primary"
+          matDialogClose=""
+          cdkFocusInitial
+        >{{ 'generic.actions.close' | translate }}
+        </button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</div>

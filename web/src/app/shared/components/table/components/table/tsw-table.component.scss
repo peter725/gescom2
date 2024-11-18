@@ -1,0 +1,147 @@
+// Flex-based table structure
+$header-row-height: 42px;
+$row-height: 40px;
+$row-horizontal-padding: 24px;
+
+$cell-padding: 0 10px;
+$cell-min-width: 100%;
+
+$row-odd-bg-color: #fafafa;
+$row-hover-bg-color: #f3f3f3;
+
+.mat-mdc-table {
+  width: 100%;
+
+  // MDC Table applies `table-layout: fixed`, but this is a backwards incompatible
+  // change since the table did not previously apply it.
+  // TODO: Add a mixin to MDC to set the layout instead of including this override,
+  // see this issue: https://github.com/material-components/material-components-web/issues/6412
+  table-layout: fixed;
+
+  // The MDC table does not allow text to wrap within the cell. This allows for text to
+  // wrap when the cell reaches its maximum width.
+  white-space: nowrap;
+}
+
+.mat-mdc-table-sticky {
+  // Note that the table can either set this class or an inline style to make something sticky.
+  // We set the style as `!important` so that we get an identical specificity in both cases
+  // and to avoid cases where user styles have a higher specificity.
+  position: sticky !important;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell,
+.mat-mdc-footer-cell {
+  word-wrap: initial;
+  padding: $cell-padding;
+  line-break: unset;
+  min-width: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  box-sizing: border-box;
+  height: 32px;
+
+  align-self: stretch;
+
+  // Note: we use `first-of-type`/`last-of-type` here in order to prevent extra
+  // elements like ripples or badges from throwing off the layout (see #11165).
+  &:first-of-type {
+    padding-left: $row-horizontal-padding;
+
+    [dir='rtl'] &:not(:only-of-type) {
+      padding-left: 0;
+      padding-right: $row-horizontal-padding;
+    }
+  }
+
+  &:last-of-type {
+    padding-right: $row-horizontal-padding;
+
+    [dir='rtl'] &:not(:only-of-type) {
+      padding-right: 0;
+      padding-left: $row-horizontal-padding;
+    }
+  }
+}
+
+// MDC table rows are styled with a top border, whereas our legacy flex table styles rows with
+// a bottom border. Remove the bottom border style from the rows and let MDC display its top
+// border.
+.mat-mdc-row,
+.mat-mdc-header-row,
+.mat-mdc-footer-row {
+  border-bottom: 10px;
+}
+
+// Cells need to inherit their background in order to overlap each other when sticky.
+// The background needs to be inherited from the table, tbody/tfoot, row, and cell.
+.mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead,
+.mat-mdc-cell, .mat-mdc-footer-cell,
+.mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row,
+.mat-mdc-table .mat-mdc-header-cell {
+  background-color: inherit;
+}
+
+.mat-mdc-table .mat-mdc-row:nth-child(odd) {
+  background-color: var(--bg-color-darker-5);
+}
+
+// Disable hover styling while MDC uses an opacity for its color.
+// When the hover style is used with sticky cells, the opacity shows the cells overlapping.
+.mat-mdc-table .mat-mdc-row:hover,
+.mat-mdc-table .mat-mdc-footer-row:hover {
+  background-color: var(--bg-color-darker-10);
+}
+
+// Flex rows should not set a definite height, but instead stretch to the height of their
+// children. Otherwise, the cells grow larger than the row and the layout breaks.
+.mat-mdc-table .mat-mdc-header-row,
+.mat-mdc-table .mat-mdc-row,
+.mat-mdc-table .mat-mdc-footer-row {
+  height: unset;
+}
+
+// Height hack to override defaults until a better solution is found
+.mat-mdc-header-cell {
+  height: $header-row-height;
+  text-align: left;
+}
+
+.mat-mdc-footer-cell {
+  height: $row-height;
+}
+
+.mat-mdc-row {
+  .additional-actions {
+    display: inline-block;
+  }
+
+  .mat-column-actions {
+    .additional-actions {
+      opacity: 0;
+    }
+
+    @media (pointer: coarse) {
+      .additional-actions {
+        opacity: 1;
+      }
+    }
+
+    .additional-actions a:focus,
+    .additional-actions a:focus-within,
+    .additional-actions:focus-within {
+      opacity: 1;
+    }
+  }
+
+  &:hover, &:active {
+    .mat-column-actions {
+      .additional-actions {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+<mat-card>
+  <mat-card-content>
+    <div class="flex justify-between align-middle">
+      <div>
+        <ng-content select="[left-actions-start]"></ng-content>
+        <ng-container *ngIf="exportActions.length === 1">
+          <button mat-stroked-button (click)="exportActions[0].handler()">
+            <mat-icon>cloud_download</mat-icon>
+            {{ exportButtonText | translate: exportButtonParams }}
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="exportActions.length > 1">
+          <button
+                  mat-stroked-button
+                  [matMenuTriggerFor]="exportActionsTemplate"
+          >
+            <mat-icon>cloud_download</mat-icon>
+            {{ exportButtonText | translate: exportButtonParams }}
+          </button>
+          <mat-menu #exportActionsTemplate>
+            <button
+                    *ngFor="let action of exportActions"
+                    mat-menu-item
+                    [matTooltip]="action.text | translate: action.textParams"
+                    [matTooltipDisabled]="!action.compact"
+                    (click)="action.handler()"
+            >
+              <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+              {{ action.text | translate: action.textParams }}
+            </button>
+          </mat-menu>
+        </ng-container>
+        <ng-content select="[left-actions-end]"></ng-content>
+      </div>
+
+      <div>
+        <ng-content select="[right-actions-start]"></ng-content>
+
+        <tsw-full-screen-toggle
+                *ngIf="showFullScreen"
+                [elementSelector]="tagName"
+        ></tsw-full-screen-toggle>
+
+        <button
+                *ngIf="showRefresh"
+                mat-button
+                [matTooltip]="'generic.actions.reload' | translate"
+                (click)="reload.emit()"
+        >
+          <mat-icon>refresh</mat-icon>
+        </button>
+
+        <button
+                *ngIf="showSettings"
+                mat-button
+                [matTooltip]="'fields.settings' | translate"
+                (click)="openSettings()"
+        >
+          <mat-icon>settings</mat-icon>
+        </button>
+
+        <ng-container *ngIf="tableActions.length">
+          <button
+                  mat-button
+                  [matMenuTriggerFor]="tableActionsTemplate"
+                  [matTooltip]="'fields.options' | translate"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #tableActionsTemplate>
+            <button
+                    *ngFor="let action of tableActions"
+                    mat-menu-item
+                    [matTooltip]="action.text | translate: action.textParams"
+                    [matTooltipDisabled]="!action.compact"
+                    (click)="action.handler()"
+            >
+              <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+            </button>
+          </mat-menu>
+        </ng-container>
+
+        <ng-content select="[right-actions-end]"></ng-content>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-content class="pt-3">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <div *ngIf="false" class="flex justify-center align-middle">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div class="table__responsive slim__scrollbar">
+      <ng-content select="table"></ng-content>
+    </div>
+
+    <mat-paginator
+            *ngIf="paginator"
+            [length]="paginator.length"
+            [pageSize]="paginator.pageSize"
+            [pageIndex]="paginator.pageIndex"
+            (page)="page.emit($event)"
+    ></mat-paginator>
+  </mat-card-content>
+</mat-card>

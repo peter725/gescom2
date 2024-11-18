@@ -1,0 +1,10 @@
+.ani__accordion {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 500ms ease-out;
+
+  &.open {
+    max-height: 110vh;
+    transition: max-height 500ms ease-in;
+  }
+}

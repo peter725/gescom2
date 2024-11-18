@@ -1,0 +1,29 @@
+<form [formGroup]="form" (ngSubmit)="search()">
+  <div class="grid grid-cols-4 gap-1.5">
+
+    <mat-form-field>
+      <mat-label>{{ 'fields.approachFields.year' | translate }}</mat-label>
+      <tsw-search-input [type]="'number'" formControlName="year"></tsw-search-input>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'fields.campaignType' | translate }}</mat-label>
+      <tsw-search-input formControlName="campaignType"></tsw-search-input>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'fields.ambit' | translate }}</mat-label>
+      <tsw-search-input formControlName="ambit"></tsw-search-input>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'fields.phaseCampaign' | translate }}</mat-label>
+      <tsw-search-input formControlName="phaseCampaign"></tsw-search-input>
+    </mat-form-field>
+    <mat-form-field class="col-span-4">
+      <mat-label>{{ 'fields.nameCampaign' | translate }}</mat-label>
+      <tsw-search-input formControlName="nameCampaign"></tsw-search-input>
+    </mat-form-field>
+  </div>
+
+  <tsw-filters-container-actions (resetEv)="clear()">
+    <tsw-filter-hidden formControlName="state"></tsw-filter-hidden>
+  </tsw-filters-container-actions>
+</form>

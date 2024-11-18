@@ -1,0 +1,124 @@
+<div class="flex justify-between items-center py-3">
+  <div class="flex-1 flex items-center">
+    <button mat-raised-button (click)="createGroup()">
+      <mat-icon matPrefix>add</mat-icon>
+      <span class="ml-2">{{ 'generic.actions.entry' | translate }}</span>
+    </button>
+
+    <div *ngIf="selection.hasValue()" class="ml-2">
+      <ng-container [ngTemplateOutlet]="selectionActions"></ng-container>
+    </div>
+  </div>
+
+  <!-- Habilitar en el futuro -->
+  <!--<div class="w-full xl:w-2/12">
+    <mat-form-field class="w-full">
+      <mat-label>Buscador</mat-label>
+      <input
+        matInput
+        type="text"
+        [formControl]="searchCtrl"
+      >
+    </mat-form-field>
+  </div>-->
+</div>
+
+<mat-accordion>
+  <div *ngIf="!displayContainers$.value.length" class="flex flex-col justify-center items-center">
+    <p class="text-lg font-medium">{{ 'text.other.emptyList2' | translate }}</p>
+    <p class="mat-text-hint font-thin">{{ 'text.other.sample.addAtLeastOne' | translate }}</p>
+  </div>
+
+  <mat-expansion-panel
+    *ngFor="let item of (displayContainers$ | async); trackBy: trackByFn; index as index; first as first; last as last;"
+    [expanded]="expansionStep === index"
+    (afterExpand)="expandStep(index)"
+  >
+    <mat-expansion-panel-header>
+      <div class="flex justify-center items-center px-2">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="selection.toggle(item.position)"
+          [checked]="selection.isSelected(item.position)"
+        ></mat-checkbox>
+      </div>
+
+      <tsw-sample-dataset-collection-header
+        [container]="$any(item)"
+        class="block w-full pr-2"
+      ></tsw-sample-dataset-collection-header>
+    </mat-expansion-panel-header>
+
+    <ng-template matExpansionPanelContent>
+      <tsw-sample-dataset-group
+        [container]="$any(item)"
+        class="block w-full"
+        (click)="$event.stopPropagation()"
+      ></tsw-sample-dataset-group>
+    </ng-template>
+
+    <mat-action-row style="justify-content: space-between">
+      <div>
+        <button mat-button color="warn" (click)="removeGroup(item.position)">
+          {{ 'generic.actions.delete' | translate }}
+        </button>
+      </div>
+
+      <div>
+        <button
+          *ngIf="!first"
+          mat-button
+          (click)="expandStep(expansionStep - 1)"
+        >{{ 'generic.actions.previous' | translate }}</button>
+
+        <button
+          *ngIf="!last"
+          mat-button
+          color="primary"
+          (click)="expandStep(expansionStep + 1)"
+        >{{ 'generic.actions.next' | translate }}</button>
+      </div>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div class="flex justify-between items-center py-3">
+  <div class="flex-1 flex items-center">
+    <button mat-raised-button (click)="createGroup()">
+      <mat-icon matPrefix>add</mat-icon>
+      <span class="ml-2">{{ 'generic.actions.entry' | translate }}</span>
+    </button>
+
+    <div *ngIf="selection.hasValue()" class="ml-2">
+      <ng-container [ngTemplateOutlet]="selectionActions"></ng-container>
+    </div>
+  </div>
+
+  <mat-paginator
+    [pageSize]="page.size"
+    [pageSizeOptions]="page.options"
+    [length]="page.length"
+    (page)="changePage($event)"
+  ></mat-paginator>
+</div>
+
+<ng-template #selectionActions>
+  <button mat-stroked-button [matMenuTriggerFor]="selectionOptions">
+    <span class="mr-2">{{ 'Selección' | translate }}</span>
+    <mat-icon>expand_more</mat-icon>
+  </button>
+
+  <mat-menu #selectionOptions="matMenu">
+    <button mat-menu-item (click)="selectAllVisible()">
+      {{ 'generic.actions.selectAll' | translate }}
+    </button>
+
+    <button mat-menu-item (click)="selection.clear()">
+      {{ 'generic.actions.selectNone' | translate }}
+    </button>
+
+    <button mat-menu-item class="mat-text-warn" (click)="removeGroups()">
+      {{ 'generic.actions.delete' | translate }}
+    </button>
+  </mat-menu>
+</ng-template>

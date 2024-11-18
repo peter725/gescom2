@@ -1,0 +1,18 @@
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--bg-color);
+
+  h2 {
+    font-size: 8rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+}

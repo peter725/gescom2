@@ -1,0 +1,102 @@
+<div class="centered-title">
+  <h1>{{'fields.campaign.protocolDetails' | translate}}</h1>
+
+</div>
+<hr>
+<mat-dialog-content>
+  <div class="div-margin">
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.title' | translate}}</p>
+    <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.nameCampaign }}</h3>
+  </div>
+  
+  <div class="div-margin grid grid-cols-8 gap-1.5">
+    <div class="col-span-1 max-w-xs">
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.year' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.year }}</h3>
+    </div>
+    <div class="col-span-3">
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.code' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900 break-words">{{ campaign?.codeCpa }}</h3>
+    </div>
+    <div class="col-span-2">
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.campaignType' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.campaignType?.name }}</h3>
+    </div>
+    <div class="col-span-2">
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.ambit' | translate}}</p>
+      <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.ambit?.name }}</h3>
+    </div>
+  </div>
+  
+  <div class="div-margin">
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.responsible' | translate}}</p>
+    <h3 class="text-base font-semibold leading-7 text-gray-900">{{ campaign?.autonomousCommunityResponsible?.name }}</h3>
+  </div>
+  
+  <div class="div-margin" >
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{{'fields.campaign.participants' | translate}}</p>
+    <div *ngIf="participantes?.length != undefined">
+    <ul>
+      <li class="text-base font-semibold leading-7 text-gray-900" *ngFor="let participante of participantes">{{ participante }}</li>
+    </ul>
+  </div>
+  <ng-template #noParticipants>
+    <p>No hay participantes.</p>
+  </ng-template>
+  </div>
+
+  <hr>
+    <div class="centered-title nombre-protocolo">
+      <h2 class="text-base font-semibold leading-7 text-ellipsis overflow-hidden whitespace-nowrap">{{ protocol?.name }}</h2>
+    </div>
+  <hr class="mb-4">
+
+  <div class="flex flex-col gap-4">
+    <!-- Encabezados -->
+    <div class="flex border-b border-gray-200">
+      <div class="flex-grow header-titles p-4 break-words whitespace-normal flex-wrap">
+        {{ 'fields.campaign.question' | translate }}
+      </div>
+      <div class="flex-none w-1/5 header-titles p-4 break-words whitespace-normal flex-wrap">
+        {{ 'fields.campaign.codInfraction' | translate }}
+      </div>
+    </div>
+
+    <!-- Iteración sobre preguntas -->
+    <div class="flex flex-col">
+      <ng-container *ngFor="let pregunta of preguntasProtocol">
+        <ng-container *ngIf="pregunta.response == 'N'">
+          <!-- Pregunta con respuesta 'N' -->
+          <div class="flex border-b border-l border-gray-200 p-4 bg-gray-200">
+            <div class="w-full break-words whitespace-normal">
+              {{ pregunta.question }}
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="pregunta.response == 'S'">
+          <!-- Pregunta con respuesta 'S' -->
+          <div class="flex border-b border-l border-gray-200 p-4">
+            <div class="w-4/5 break-words whitespace-normal">
+              {{ pregunta.question }}
+            </div>
+            <div class="w-1/5 flex-none border-l border-gray-200 p-4">
+              {{ pregunta.codeInfringement }}
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="close()">Cerrar</button>
+  </div>
+  
+</mat-dialog-content>

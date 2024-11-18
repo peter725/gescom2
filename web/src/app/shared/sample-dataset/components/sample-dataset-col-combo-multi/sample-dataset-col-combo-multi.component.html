@@ -1,0 +1,47 @@
+<mat-form-field class="w-full">
+  <mat-label>{{ container.label }}</mat-label>
+
+  <div matPrefix class="mr-2 flex justify-between items-center">
+    <mat-icon
+      class="cursor-help"
+      [title]="'generic.actions.selectSome' | translate"
+    >unfold_more_double</mat-icon>
+  </div>
+
+  <mat-select
+    [formControl]="container.formCtrl"
+    multiple
+    class="slim__scrollbar"
+  >
+    <mat-option
+      *ngFor="let item of (container.comboValues$ | async); trackBy: trackComboBy"
+      [value]="item"
+    >
+      <span>{{ item.value }}</span>
+      <small class="ml-2 font-light decoration-text-accent-lighter-color">({{ item.code }})</small>
+    </mat-option>
+  </mat-select>
+
+  <div matSuffix class="flex justify-between items-center">
+    <mat-icon
+      *ngIf="helpIndicator$ | async"
+      class="cursor-help"
+      [title]="container.label + '. ' + container.description"
+    >help_outline
+    </mat-icon>
+
+    <button
+      *ngIf="container.formCtrl.value"
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="resetValue()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-error>
+    {{ container.formCtrl.errors | extractValidationError }}
+  </mat-error>
+</mat-form-field>

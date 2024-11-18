@@ -1,0 +1,16 @@
+
+<div [formGroup]="form" class="grid grid-cols-1 gap-1.5 md:grid-cols-2 xl:grid-cols-4">
+  <section *ngFor="let item of (fields$ | async)">
+    <mat-card>
+      <mat-checkbox
+      (change)="select($event, item)"
+      formArrayName="fields"
+      style="word-wrap: break-word;">
+        <mat-card-header>
+          <mat-card-title>{{ item.elementName }}</mat-card-title>
+          <mat-card-subtitle>{{ item.elementLabel }}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-checkbox>
+    </mat-card>
+  </section>
+</div>

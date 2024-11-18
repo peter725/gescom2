@@ -1,0 +1,37 @@
+<div class="flex items-center">
+  <div class="flex items-center justify-between mr-2">
+    <!-- Mostrar según el estado de la validación -->
+    <ng-container *ngIf="container.formGroup.dirty">
+      <mat-icon *ngIf="container.formGroup.valid" color="accent">check_circle</mat-icon>
+      <mat-icon *ngIf="container.formGroup.invalid" color="warn">error</mat-icon>
+    </ng-container>
+  </div>
+
+  <div class="flex-1 grid lg:grid-flow-col lg:auto-cols-[1fr] gap-1.5">
+    <div>
+      <small class="font-light">Identificación del resultado</small>
+      <br>
+      <p class="text-sm">{{ resId || '-' }}</p>
+    </div>
+
+    <div>
+      <small class="font-light">Tipo de parámetro</small>
+      <br>
+      <p class="text-sm">{{ paramType || '-' }}</p>
+    </div>
+
+    <div>
+      <small class="font-light">Parámetro</small>
+      <br>
+      <p class="text-sm">{{ paramDescription || '-' }}</p>
+    </div>
+
+    <div>
+      <small class="font-light">Evaluación del resultado</small>
+      <br>
+      <p class="text-sm">{{ evalCode || '-' }}</p>
+    </div>
+
+    <!-- Etc dinámico -->
+  </div>
+</div>

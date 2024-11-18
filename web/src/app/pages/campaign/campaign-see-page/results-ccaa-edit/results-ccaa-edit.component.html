@@ -1,0 +1,149 @@
+<form [formGroup]="editForm1">
+  <div class="grid grid-cols-6 gap-1.5 mt-4" formGroupName="campania">
+    <mat-form-field class="col-span-4">
+      <mat-label>{{ 'fields.campaign.name' | translate }}</mat-label>
+      <input matInput formControlName="nameCampaign" readonly>
+    </mat-form-field>
+
+    <mat-form-field class="col-span-2">
+      <mat-label>{{ 'fields.campaign.year' | translate }}</mat-label>
+      <input matInput formControlName="year" readonly>
+    </mat-form-field>
+  </div>
+
+  <div class="grid grid-cols-6 gap-1.5">
+    <mat-form-field class="col-span-3">
+      <mat-label>{{ 'pages.results.protocolo' | translate }}</mat-label>
+      <input matInput [value]="protocoloSelected?.name" disabled>
+    </mat-form-field>
+
+    <mat-form-field class="col-span-3">
+      <mat-label>{{ 'pages.results.producto' | translate }}</mat-label>
+      <input matInput [value]="productoSelected?.name" disabled>
+    </mat-form-field>
+  </div>
+
+  <div class="grid grid-cols-6 gap-1.5">
+    <mat-form-field class="col-span-6">
+      <mat-label>{{ 'pages.results.ca' | translate }}</mat-label>
+      <input matInput [value]="caSelected?.name" disabled>
+    </mat-form-field>
+  </div>
+
+  <mat-card class="mt-4">
+    <mat-card-header>
+      <mat-card-subtitle>{{ 'pages.results.numEstablecimientos' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="grid grid-cols-6 gap-1.5">
+        <div class="col-span-3 div-center">
+          <mat-form-field>
+            <mat-label>{{ 'pages.results.numExistentes' | translate }}</mat-label>
+            <input matInput formControlName="numExistentes" type="number">
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-3 div-center">
+          <mat-form-field>
+            <mat-label>{{ 'pages.results.numControlados' | translate }}</mat-label>
+            <input matInput formControlName="numControlados" type="number">
+            <mat-error>{{ editForm1.controls['numControlados'].errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mt-4">
+    <mat-card-header>
+      <mat-card-subtitle>{{ 'pages.results.tProductos' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="grid grid-cols-6 gap-1.5">
+        <div class="col-span-2 div-center">
+          <mat-form-field>
+            <mat-label>{{ 'pages.results.tProdControlados' | translate }}</mat-label>
+            <input matInput formControlName="totalProdControlados" type="number">
+            <mat-error>{{ editForm1.controls['totalProdControlados'].errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-2 div-center">
+          <mat-form-field class="col-span-1">
+            <mat-label>{{ 'pages.results.tProdCorrectos' | translate }}</mat-label>
+            <input matInput formControlName="totalProdCorrectos" type="number">
+            <mat-error>{{ editForm1.controls['totalProdCorrectos'].errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-2 div-center">
+          <mat-form-field class="col-span-1">
+            <mat-label>{{ 'pages.results.tProdIncorrectos' | translate }}</mat-label>
+            <input matInput formControlName="totalProdIncorrectos" type="number">
+            <mat-error>{{ editForm1.controls['totalProdIncorrectos'].errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>
+
+<div class="w-3/4 mx-auto mt-4" *ngIf="preguntasProtocolo && preguntasProtocolo.length > 0">
+  <div class="table w-full border-collapse">
+    <div class="table-header-group bg-gray-200">
+      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Nº</div>
+      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-8/12">Pregunta</div>
+      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">Si*</div>
+      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No*</div>
+      <div class="header-titles table-cell font-semibold p-2 border border-gray-300 w-1/12">No Procede*</div>
+    </div>
+
+    <!-- Filas de la tabla -->
+    <div class="table-row-group">
+      <tr *ngFor="let preg of preguntasProtocolo; let i = index" class="border-gray-300 border">
+        <ng-container *ngIf="preg.response == 'N'">
+          <!-- Pregunta con respuesta 'N' -->
+          <td class="p-4 bg-gray-200 border-gray-300 border">
+            {{ preg['orderQuestion'] }}
+          </td>
+          <td class="p-4 bg-gray-200 border-gray-300 border">
+            {{ preg['question'] }}
+          </td>
+          <td class="p-4 bg-gray-200"></td>
+          <td class="p-4 bg-gray-200"></td>
+          <td class="p-4 bg-gray-200"></td>
+        </ng-container>
+
+        <ng-container *ngIf="preg.response == 'S'">
+          <!-- Pregunta con respuesta 'S' -->
+          <td class="p-4 border-gray-300 border">
+            {{ preg['orderQuestion'] }}
+          </td>
+          <td class="p-4 border-gray-300 border">
+            {{ preg['question'] }}
+          </td>
+          <td class="p-4">
+            <label for="'numResponseSi-' + i" class="sr-only">Respuesta Sí</label>
+            <input id="'numResponseSi-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseSi" min="0">
+            <div class="position-absolute" *ngIf="getSumaRespuestas(preg?.numResponseSi, preg?.numResponseNo, preg?.numResponseNoProcede)">
+              <mat-error>La suma no coincide con el total de productos controlados.</mat-error>
+            </div>
+          </td>
+          <td class="p-4">
+            <label for="'numResponseNo-' + i" class="sr-only">Respuesta No</label>
+            <input id="'numResponseNo-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNo" min="0">
+          </td>
+          <td class="p-4">
+            <label for="'numResponseNoProcede-' + i" class="sr-only">Respuesta No Procede</label>
+            <input id="'numResponseNoProcede-' + i" class="input-con-borde" type="number" [(ngModel)]="preg.numResponseNoProcede" min="0">
+          </td>
+        </ng-container>
+      </tr>
+    </div>
+  </div>
+</div>
+
+<div class="flex justify-center mt-4">
+  <button mat-raised-button color="primary" class="text-white font-bold py-2 px-4 mr-4 rounded" (click)="goBack()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="saveResults()">Guardar</button>
+</div>

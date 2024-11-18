@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="search()">
+    <div class="grid grid-cols-3 gap-1.5">
+
+        <mat-form-field>
+            <mat-label>{{ 'fields.approachFields.year' | translate }}</mat-label>
+            <tsw-search-input [type]="'number'" formControlName="year" ></tsw-search-input>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'fields.ccaa' | translate }}</mat-label>
+            <tsw-search-input formControlName="autonomusCommunity"></tsw-search-input>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'fields.type' | translate }}</mat-label>
+            <tsw-search-input formControlName="type"></tsw-search-input>
+        </mat-form-field>
+
+    </div>
+
+    <div class="grid grid-cols-1 gap-1.5">
+
+        <mat-form-field>
+            <mat-label>{{ 'fields.approach' | translate }}</mat-label>
+            <tsw-search-input formControlName="approach"></tsw-search-input>
+        </mat-form-field>
+
+    </div>
+
+    <tsw-filters-container-actions (resetEv)="clear()">
+        <tsw-filter-hidden formControlName="state"></tsw-filter-hidden>
+    </tsw-filters-container-actions>
+</form>

@@ -1,0 +1,37 @@
+:host {
+  display: block;
+
+  &:fullscreen,
+  &:-webkit-full-screen {
+    background-color: var(--header-bg);
+    overflow-y: auto;
+  }
+}
+
+.table__responsive {
+  overflow: auto;
+  tab-index: 0;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell,
+.mat-mdc-footer-cell {
+  word-wrap: initial;
+  padding: 0 10px;
+  line-break: unset;
+  min-width: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.mat-mdc-table {
+  width: 100%;
+  max-height: 500px;
+  overflow: auto;
+}
+
+
+
+

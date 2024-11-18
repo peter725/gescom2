@@ -1,0 +1,7 @@
+<div class="text-center h-6">
+  <p class="flex items-center" *ngIf="message$ | async as msg" >  <mat-icon
+    *ngIf="status.is$('ERROR') | async"
+    color="warn"
+  >error</mat-icon>
+    {{ msg | translate }}</p>
+</div>

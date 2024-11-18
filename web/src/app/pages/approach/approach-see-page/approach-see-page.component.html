@@ -1,0 +1,56 @@
+<form [formGroup]="form">
+    <tsw-form-container>
+        <tsw-tab-panel></tsw-tab-panel>
+        <tsw-section-wrapper
+                class="mb-2"
+                headerLabel="PROPUESTA DE CAMPAÑA NACIONAL DE INSPECCIÓN Y CONTROL DE MERCADO"
+                icon="preview">
+            <div section-content>
+
+                    <div class="grid grid-cols-3 gap-1.5">
+                        <mat-form-field class="col-span-2">
+                                <mat-label>{{ 'fields.approachFields.autonomousCommunity' | translate }}</mat-label>
+                                <input matInput formControlName="autonomousCommunityName" readonly>
+                        </mat-form-field>
+                        <mat-form-field>
+                                <mat-label>{{ 'fields.approachFields.year' | translate }}</mat-label>
+                                <input matInput formControlName="year" readonly>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approachFields.campaign-proposal.title' | translate }}</mat-label>
+                            <textarea matInput formControlName="approach" rows="2" readonly></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approachFields.justification' | translate }}</mat-label>
+                            <textarea matInput formControlName="justification" rows="3"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approachFields.objectives' | translate }}</mat-label>
+                            <textarea matInput formControlName="objective" rows="3"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-1.5 mb-2">
+                        <mat-form-field>
+                            <mat-label>{{ 'fields.approachFields.technical-legal-viability' | translate }}</mat-label>
+                            <textarea matInput formControlName="viability" rows="4"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <a mat-stroked-button [routerLink]="cancelRedirectPath">{{ 'generic.actions.cancel' | translate }}</a>
+
+            </div>
+
+        </tsw-section-wrapper>
+
+    </tsw-form-container>
+</form>

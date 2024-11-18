@@ -1,0 +1,193 @@
+{
+  "name": "gesco",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "./src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/gesco",
+        "index": "./src/index.html",
+        "main": "./src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "./tsconfig.app.json",
+        "assets": [
+          "./src/favicon.ico",
+          "./src/assets",
+          "./src/WEB-INF",
+          "./src/META-INF"
+        ],
+        "styles": [
+          "@angular/material/prebuilt-themes/indigo-pink.css",
+          "./src/styles.scss"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "prod": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "2mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "150kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "gesco/web/src/environments/environment.ts",
+              "with": "gesco/web/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "pre": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "8mb",
+              "maximumError": "8mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "200kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "src/environments/environment.ts",
+              "with": "src/environments/environment.pre.ts"
+            }
+          ],
+          "baseHref": "/GESCOM/",
+          "outputHashing": "all",
+          "buildOptimizer": true,
+          "optimization": true,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        },
+        "dev": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "8mb",
+              "maximumError": "8mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "200kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "src/environments/environment.ts",
+              "with": "/src/environments/environment.dev.ts"
+            }
+          ],
+          "baseHref": "/GESCOM/",
+          "outputHashing": "all",
+          "buildOptimizer": true,
+          "optimization": true,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        },
+        "local": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "gesco:build:production"
+        },
+        "dev": {
+          "browserTarget": "gesco:build:dev"
+        },
+        "pre": {
+          "browserTarget": "gesco:build:pre"
+        },
+        "local": {
+          "browserTarget": "gesco:build:local"
+        }
+      },
+      "defaultConfiguration": "local"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "gesco:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "./src/**/*.ts",
+          "./src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectName}"
+      ],
+      "options": {
+        "jestConfig": "jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "gesco:build"
+      }
+    },
+    "build-war": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "index": "gesco/web/src/index.html",
+        "command": "jar cvf GESCOM.war  .",
+        "cwd": "dist/gesco"
+      }
+    }
+  }
+}

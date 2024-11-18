@@ -1,0 +1,63 @@
+<!--suppress ALL-->
+<div class="sidebar__wrapper" [ngClass]="sidebarMode">
+  <div class="sidebar__content">
+    <div *ngFor="let item of items; index as i" class="sidebar__nav__group">
+      <ng-template #sidebar_nav_contents>
+          <mat-icon class="sidebar__nav__item_icon">{{ item.icon }}</mat-icon>
+          <div class="sidebar__nav__item_title">
+              <span>{{ item.text | translate }}</span>
+          </div>
+      </ng-template>
+
+      <a *ngIf="!item.children?.length"
+         class="sidebar__nav__item"
+         [routerLink]="item.path | namedRoute"
+         routerLinkActive="active"
+         (click)="expandItem(i)"
+          tabindex="0">
+          <ng-container [ngTemplateOutlet]="sidebar_nav_contents"></ng-container>
+      </a>
+
+      <ng-container *ngIf="item.children?.length">
+        <div class="sidebar__nav__item"
+           [class.active]="item.expanded"
+           [class.open]="item.expanded"
+           routerLinkActive="active open"
+           (click)="expandItem(i)"
+           (keydown)="onKeydown($event, i)"
+            tabindex="0"
+            role="button"
+            [attr.aria-expanded]="item.expanded">
+            <ng-container [ngTemplateOutlet]="sidebar_nav_contents"></ng-container>
+                  <div class="sidebar__nav__item_action">
+                      <ng-container [ngSwitch]="item.expanded">
+                          <span *ngSwitchCase="false" class="icon-chevron-right"></span>
+                          <span *ngSwitchCase="true" class="icon-chevron-up"></span>
+                      </ng-container>
+                  </div>
+              </div>
+
+              <div *ngIf="item.expanded"
+                   class="sidebar__nav__items__group ani__accordion"
+                   [class.open]="item.expanded"
+                   routerLinkActive="active">
+                <div *ngFor="let child of item.children" class="sidebar__nav__group">
+                  <ng-template #sidebar_nav_child>
+                      <mat-icon class="sidebar__nav__item_icon">{{ child.icon }}</mat-icon>
+                      <div class="sidebar__nav__item_title">
+                          <span>{{ child.text | translate }}</span>
+                      </div>
+                  </ng-template>
+
+                  <a class="sidebar__nav__item"
+                     [routerLink]="child.path | namedRoute"
+                     routerLinkActive="active"
+                      tabindex="0">
+                     <ng-container [ngTemplateOutlet]="sidebar_nav_child"></ng-container>
+                  </a>
+                </div>
+              </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

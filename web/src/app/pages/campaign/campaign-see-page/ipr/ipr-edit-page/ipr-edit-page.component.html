@@ -1,0 +1,123 @@
+ <form [formGroup]="form">
+  <tsw-form-container>
+    <tsw-section-wrapper
+            class="mb-5"
+            headerLabel="Datos del I.P.R"
+            icon="edit_note"
+    >
+
+      <div section-content>
+        <div class=" w-3/4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div>
+            <mat-form-field class="w-full">
+              <mat-label>Campaña</mat-label>
+              <input matInput formControlName="nameCampaign" readonly>
+              <mat-error>{{ form.controls.nameCampaign.errors | extractValidationError }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="w-full">
+              <mat-label>Año</mat-label>
+              <input matInput formControlName="year" readonly>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field class="w-full">
+            <mat-label>I.P.R</mat-label>
+            <input matInput formControlName="name">
+            <mat-error>{{ form.controls.name.errors | extractValidationError }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field> 
+            <mat-label>{{ 'fields.protocol' | translate }}</mat-label>
+            <input matInput formControlName="protocol" [value]="form.controls.protocol.value?.name" readonly>
+          </mat-form-field>  
+
+        </div>
+
+        <div class="w-3/4 mx-auto ">
+          <div class="table w-full border-collapse table-fixed" >
+            <div class="table-header-group bg-gray-200">
+              <div class="table-cell p-2 border border-gray-300 w-1/12">Nº</div>
+              <div class="table-cell p-2 border border-gray-300 w-8/12">Pregunta*</div>
+              <div class="table-cell p-2 border border-gray-300 w-4/12">Fórmula</div>
+              <div class="table-cell p-2 border border-gray-300 w-2/12 truncate">% respecto al</div>
+            </div>
+
+            <!-- Filas de la tabla -->
+            <div formArrayName="question" class="table-row-group">
+              <div *ngFor="let fila of question.controls; let i=index" [formGroupName]="i" class="table-row">
+
+                <div class="table-cell p-2 border border-gray-300">
+                  <label [for]="'orderQuestion_' + i" class="sr-only">Número de pregunta</label>
+                  <input [id]="'orderQuestion_'+ i" formControlName="orderQuestion" class="w-full" >
+                </div>
+
+                <div class="table-cell p-2 border border-gray-300">
+                  <mat-form-field class="w-full">
+                    <label [for]="'question_' + i" class="sr-only">Pregunta</label>
+                    <textarea
+                      [id]="'question_' + i"
+                      formControlName="question"
+                      matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="0"
+                    ></textarea>
+                    <mat-error>{{ getQuestionError(i, 'question') | extractValidationError }}</mat-error>
+                  </mat-form-field>
+
+                </div>
+                
+                <!-- Input de fórmula con un identificador único -->
+                <div class="table-cell p-2 border border-gray-300" style="position: relative;">
+                  <mat-form-field class="w-full" appearance="outline" subscriptSizing="dynamic">  
+                    <label [for]="'formulaInput_' + i" class="sr-only">Fórmula</label>
+                    <input [id]="'formulaInput_' + i" formControlName="formula" matInput class="w-full truncate" readonly style="padding-right: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <a (click)="openDialog(i)" (keydown)="handleKeydown($event, i)" tabindex="0" role="button" style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: flex-end; width: 40px; height: 100%; cursor: pointer;">
+                      <mat-icon color="primary" style="cursor: pointer;">edit</mat-icon>
+                    </a>
+                  </mat-form-field>
+                </div>
+
+                <div class="table-cell p-2 border border-gray-300" >
+                  <mat-form-field class="w-full" appearance="outline" subscriptSizing="dynamic">
+                      <label [for]="'porcentaje_' + i" class="sr-only">Porcentaje</label>
+                      <input [id]="'porcentaje_' + i" formControlName="porcentaje" matInput style="background: transparent; border: none;" >
+                      <mat-error>{{ getQuestionError(i, 'porcentaje') | extractValidationError }}</mat-error>
+                  </mat-form-field>
+                </div>
+
+                <!-- Agrega los demás campos aquí -->
+                <button type="button" (click)="eliminarFila(i)" class="text-red-500 hover:text-red-700">
+                  <span class="material-icons">delete_forever</span>
+                </button>
+                
+                <button type="button" (click)="agregarFilaDespuesDe(i)" class="text-blue-500 hover:text-blue-700">
+                  <span class="material-icons">add_circle</span>
+                </button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center mt-4"> <!-- Flex container para alinear a la derecha -->
+          <button type="button" mat-raised-button color="primary" (click)="agregarFila()"
+                  class="text-white font-bold py-2 px-4 rounded">
+            Añadir Fila
+          </button>
+        </div>
+
+      </div>
+
+    </tsw-section-wrapper>
+
+    <tsw-form-actions
+            [saveBtnSkipConfirmation]="skipSaveConfirmation"
+            [cancelRedirectPath]="cancelRedirectPath"
+            (reset)="resetForm()"
+            (save)="saveForm()"
+    ></tsw-form-actions>
+
+  </tsw-form-container>
+</form>

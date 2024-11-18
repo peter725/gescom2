@@ -1,0 +1,44 @@
+<div class="centered-title">
+  <h1>{{'fields.campaign.iprDetails' | translate}}</h1>
+</div>
+<hr>
+<mat-dialog-content>
+  <div class="flex flex-col gap-4">
+    <!-- Encabezados -->
+    <div class="flex border-b border-gray-200">
+      <div class="flex-grow header-titles p-4">
+        {{ 'ipr.question' | translate }}<span class="required"></span>
+      </div>
+      <div class="flex-none w-1/5 header-titles p-4">
+        {{ 'ipr.formula' | translate }}<span class="required"></span>
+      </div>
+      <div class="flex-none w-1/5 header-titles p-4">
+        {{ 'ipr.%respect' | translate }}
+      </div>
+    </div>
+
+    <!-- Iteración sobre preguntas -->
+    <div class="flex flex-col">
+      <ng-container *ngFor="let pregunta of preguntas">
+        <ng-container>
+          <div class="flex border-b border-l border-gray-200 p-4">
+            <div class="flex-grow preguntas-blanco">
+              {{ pregunta.question }}
+            </div>
+            <div class="flex-none w-1/5 border-l border-gray-200 p-4">
+              {{ pregunta.formula }}
+            </div>
+            <div class="flex-none w-1/5 border-l border-gray-200 p-4">
+              {{ pregunta.percentageRespectTo }}
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="close()">Cerrar</button>
+  </div>
+  
+</mat-dialog-content>
